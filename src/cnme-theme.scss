@@ -1,0 +1,15 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$cnme-app-primary: mat-palette($mat-indigo);
+$cnme-app-accent: mat-palette($mat-cyan);
+$cnme-app-warn: mat-palette($mat-red, A200, A100, A400);
+
+$cnme-app-theme: mat-light-theme(
+    $cnme-app-primary,
+    $cnme-app-accent,
+    $cnme-app-warn
+);
+
+@include angular-material-theme($cnme-app-theme);
