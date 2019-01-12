@@ -7,22 +7,19 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LayoutModule } from "@angular/cdk/layout";
 import { AppRoutingModule } from "./app-routing.module";
 import { HomeComponent } from "./home/home.component";
-import { PolosComponent } from "./polos/polos.component";
-import { MainNavComponent } from './main-nav/main-nav.component';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+
+import { CoreModule } from "./core/core.module";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-    declarations: [AppComponent, HomeComponent, PolosComponent, MainNavComponent],
+    declarations: [AppComponent, HomeComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
+        HttpClientModule,
         LayoutModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule
+        CoreModule
     ],
     providers: [],
     bootstrap: [AppComponent]

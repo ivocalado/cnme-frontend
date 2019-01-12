@@ -10,8 +10,18 @@
         <mat-toolbar color="primary">CNME</mat-toolbar>
         <mat-nav-list>
             <a mat-list-item routerLink="">DashBoard</a>
-            <a mat-list-item routerLink="polos">Lista de Polos</a>
+            <a mat-list-item routerLink="polos">Polos</a>
+            <!--
+            menu com submenu
+            <a mat-list-item routerLink="polos" (click)="showSubmenu = !showSubmenu">Parent Menu</a>
+            <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
+                <a mat-list-item href="javascript:;">Novo Polo</a>
+            </div>
+            -->
         </mat-nav-list>
+
+
+
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar color="primary">
@@ -27,6 +37,6 @@
             <span></span> <span class="nav-spacer"></span>
             <a class="topnav-icon"> <mat-icon>exit_to_app</mat-icon> </a>
         </mat-toolbar>
-        <div class="main-container"><ng-content> </ng-content></div>
+        <div class="container mt-3"><ng-content> </ng-content></div>
     </mat-sidenav-content>
 </mat-sidenav-container>
