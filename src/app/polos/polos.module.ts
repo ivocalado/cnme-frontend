@@ -7,8 +7,10 @@ import {
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule
 } from "@angular/material";
+
 import { SharedModule } from "../shared/shared.module";
 import { PoloEditComponent } from './polo-edit/polo-edit.component';
 import { PoloListComponent } from './polo-list/polo-list.component';
@@ -31,6 +33,7 @@ const polosRoutes: Routes = [{
         MatSelectModule,
         MatButtonModule,
         MatCardModule,
+        MatTableModule,
         RouterModule.forChild(polosRoutes)
     ]
 })

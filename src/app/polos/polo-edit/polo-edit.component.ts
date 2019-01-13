@@ -20,12 +20,12 @@ export class PoloEditComponent implements OnInit {
 
     ngOnInit() {
         this.estados = this.estadoService.getEstados();
-        console.log(this.estados);
     }
 
     onAddPolo(form: NgForm) {
         this.poloDataService.storePolo(form.value).subscribe((response: Response) => {
-            console.log(response);
+            form.reset();
+            this.router.navigate(["../"], { relativeTo: this.route });
         });
     }
 
