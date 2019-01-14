@@ -19,7 +19,8 @@ const polosRoutes: Routes = [{
     path: "", component: PolosComponent,
     children: [
         { path: "", component: PoloListComponent },
-        { path: "novo", component: PoloEditComponent }
+        { path: "novo", component: PoloEditComponent },
+        { path: "editar/:id", component: PoloEditComponent }
     ]
 }];
 

@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <mat-form-field>
-                            <input matInput ngModel name="nome" id="nome" placeholder="Nome do Polo" required />
+                            <input matInput ngModel [(ngModel)]="polo.nome" name="nome" id="nome" placeholder="Nome do Polo" required />
                             <!--<mat-error *ngIf="nome.invalid">{{getErrorMessage()}}</mat-error>-->
                         </mat-form-field>
                     </div>
@@ -14,8 +14,8 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <mat-form-field>
-                            <mat-select ngModel name="estado" id="estado" placeholder="Escolha um estado" required>
-                                <mat-option *ngFor="let estado of estados" [value]="estado.nome">
+                            <mat-select ngModel [(ngModel)]="polo.uf" name="uf" id="uf" placeholder="Escolha um estado" required>
+                                <mat-option *ngFor="let estado of estados"  [value]="estado.uf">
                                     {{ estado.nome }}
                                 </mat-option>
                             </mat-select>
@@ -23,16 +23,16 @@
                     </div>
                     <div class="col-lg-7">
                         <mat-form-field>
-                            <input matInput ngModel name="municipio" id="municipio" placeholder="Município" required />
+                            <input matInput ngModel [(ngModel)]="polo.municipio" name="municipio" id="municipio" placeholder="Município" required />
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-10 pull-right">
                         <button mat-raised-button class="m-1" color="primary" [disabled]="!f.valid">
-                            Cadastrar
+                            {{ editMode ? "Editar" : "Cadastrar" }}
                         </button>
-                        <button mat-raised-button class="m-1" color="warn" (click)="onCancel()">
+                        <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
                             Cancelar
                         </button>
                     </div>
