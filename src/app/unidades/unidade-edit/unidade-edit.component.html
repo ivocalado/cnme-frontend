@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-lg-12">
+        <mat-card>
+            <mat-card-title>Nova Unidade</mat-card-title>
+            <form (ngSubmit)="onAddUnidade(f)" #f="ngForm">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <mat-form-field>
+                            <input matInput ngModel [(ngModel)]="unidade.nome" name="nome" id="nome" placeholder="Nome do Unidade" required />
+                            <!--<mat-error *ngIf="nome.invalid">{{getErrorMessage()}}</mat-error>-->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-4">
+                        <mat-form-field>
+                            <input matInput ngModel [(ngModel)]="unidade.inep" name="inep" id="inep" placeholder="INEP"
+                                required />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5">
+                        <mat-form-field>
+                            <mat-select ngModel [(ngModel)]="localidade.uf" name="uf" id="uf"
+                            (selectionChange)="onChange($event)" placeholder="Escolha um estado" required>
+                                <mat-option *ngFor="let estado of estados" [value]="estado.sigla">
+                                    {{ estado.nome }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-7">
+                        <mat-form-field>
+                            <mat-select ngModel [(ngModel)]="localidade.municipio" name="municipio" id="municipio" placeholder="Escolha um município" required>
+                                <mat-option *ngFor="let municipio of municipios" [value]="municipio.id">
+                                    {{ municipio.nome }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <mat-form-field>
+                            <input matInput ngModel [(ngModel)]="unidade.diretor" name="diretor" id="diretor" placeholder="Diretor"
+                                required />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-8">
+                        <mat-form-field>
+                            <input matInput ngModel [(ngModel)]="unidade.url" name="url" id="url" placeholder="Url"
+                                required />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <mat-form-field>
+                            <input matInput ngModel [(ngModel)]="unidade.email" name="email" id="email" placeholder="Email" required email/>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-4">
+                        <mat-form-field>
+                            <input matInput ngModel [(ngModel)]="unidade.telefone" name="telefone" id="telefone" placeholder="Telefone" required
+                                email />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 pull-right">
+                        <button mat-raised-button class="m-1" color="primary" [disabled]="!f.valid">
+                            {{ editMode ? "Editar" : "Cadastrar" }}
+                        </button>
+                        <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</div>

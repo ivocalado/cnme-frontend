@@ -15,7 +15,7 @@
                     <div class="col-lg-5">
                         <mat-form-field>
                             <mat-select ngModel [(ngModel)]="polo.uf" name="uf" id="uf" placeholder="Escolha um estado" required>
-                                <mat-option *ngFor="let estado of estados"  [value]="estado.uf">
+                                <mat-option *ngFor="let estado of estados"  [value]="estado.sigla">
                                     {{ estado.nome }}
                                 </mat-option>
                             </mat-select>

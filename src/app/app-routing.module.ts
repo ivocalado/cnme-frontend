@@ -5,7 +5,8 @@ import { HomeComponent } from "./home/home.component";
 
 const appRoutes: Routes = [
     { path: "", component: HomeComponent },
-    { path: "polos", loadChildren: "./polos/polos.module#PolosModule" }
+    { path: "polos", loadChildren: "./polos/polos.module#PolosModule" },
+    { path: "unidades",loadChildren: "./unidades/unidades.module#UnidadesModule"}
 ];
 
 @NgModule({
