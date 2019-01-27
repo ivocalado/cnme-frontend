@@ -2,72 +2,102 @@
     <div class="col-lg-12">
         <mat-card>
             <mat-card-title>Nova Unidade</mat-card-title>
-            <form (ngSubmit)="onAddUnidade(f)" #f="ngForm">
+            <form [formGroup]="unidadeForm" (ngSubmit)="onAddUnidade()">
                 <div class="row">
                     <div class="col-lg-8">
                         <mat-form-field>
-                            <input matInput ngModel [(ngModel)]="unidade.nome" name="nome" id="nome" placeholder="Nome do Unidade" required />
+                            <input matInput formControlName="nome" id="nome" placeholder="Nome do Unidade" [required]="unidadeForm.get('nome').errors !== null && unidadeForm.get('nome').errors.required"/>
                             <!--<mat-error *ngIf="nome.invalid">{{getErrorMessage()}}</mat-error>-->
                         </mat-form-field>
                     </div>
                     <div class="col-lg-4">
                         <mat-form-field>
-                            <input matInput ngModel [(ngModel)]="unidade.inep" name="inep" id="inep" placeholder="INEP"
-                                required />
+                            <input matInput formControlName="codigo_inep" id="codigo_inep" placeholder="INEP" #codigo_inep/>
+                            <mat-hint align="end">{{codigo_inep.value.length}} / 8</mat-hint>
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <mat-form-field>
+                            <input matInput formControlName="diretor" id="diretor" placeholder="Diretor" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-8">
+                        <mat-form-field>
+                            <input matInput formControlName="email" id="email" placeholder="Email" [required]="unidadeForm.get('email').errors !== null && unidadeForm.get('email').errors.required" />
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-8">
                         <mat-form-field>
-                            <mat-select ngModel [(ngModel)]="localidade.uf" name="uf" id="uf"
-                            (selectionChange)="onChange($event)" placeholder="Escolha um estado" required>
-                                <mat-option *ngFor="let estado of estados" [value]="estado.sigla">
+                            <input matInput formControlName="url" id="url"
+                            placeholder="Url"/>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-4">
+                        <mat-form-field>
+                            <input matInput formControlName="telefone" id="telefone" placeholder="Telefone" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div formGroupName="localidade">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <mat-form-field>
+                            <input matInput formControlName="cep" id="cep" placeholder="Cep" [required]="unidadeForm.get('localidade.cep').errors !== null && unidadeForm.get('localidade.cep').errors.required" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-8">
+                        <mat-form-field>
+                            <input matInput formControlName="logradouro" id="logradouro" placeholder="Logradouro" [required]="unidadeForm.get('localidade.logradouro').errors !== null && unidadeForm.get('localidade.logradouro').errors.required"/>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <input matInput formControlName="numero" id="numero" placeholder="Número"[required]="unidadeForm.get('localidade.numero').errors !== null && unidadeForm.get('localidade.numero').errors.required"
+                             />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <mat-form-field>
+                            <input matInput formControlName="complemento" id="complemento" placeholder="Complemento" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field>
+                            <input matInput formControlName="bairro" id="bairro" placeholder="Bairro" [required]="unidadeForm.get('localidade.bairro').errors !== null && unidadeForm.get('localidade.bairro').errors.required"
+                             />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field>
+                            <mat-select formControlName="estado_id" id="estado_id"
+                            (selectionChange)="onChange($event)" placeholder="Escolha um estado" [required]="unidadeForm.get('localidade.estado_id').errors !== null && unidadeForm.get('localidade.estado_id').errors.required">
+                                <mat-option *ngFor="let estado of estados" [value]="estado.id">
                                     {{ estado.nome }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-7">
+
+                    <div class="col-lg-6">
                         <mat-form-field>
-                            <mat-select ngModel [(ngModel)]="localidade.municipio" name="municipio" id="municipio" placeholder="Escolha um município" required>
+                            <mat-select formControlName="municipio_id" id="municipio_id" placeholder="Escolha um município" [required]="unidadeForm.get('localidade.municipio_id').errors !== null && unidadeForm.get('localidade.municipio_id').errors.required">
                                 <mat-option *ngFor="let municipio of municipios" [value]="municipio.id">
                                     {{ municipio.nome }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <mat-form-field>
-                            <input matInput ngModel [(ngModel)]="unidade.diretor" name="diretor" id="diretor" placeholder="Diretor"
-                                required />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-8">
-                        <mat-form-field>
-                            <input matInput ngModel [(ngModel)]="unidade.url" name="url" id="url" placeholder="Url"
-                                required />
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <mat-form-field>
-                            <input matInput ngModel [(ngModel)]="unidade.email" name="email" id="email" placeholder="Email" required email/>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-4">
-                        <mat-form-field>
-                            <input matInput ngModel [(ngModel)]="unidade.telefone" name="telefone" id="telefone" placeholder="Telefone" required
-                                email />
-                        </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-10 pull-right">
-                        <button mat-raised-button class="m-1" color="primary" [disabled]="!f.valid">
+                        <button mat-raised-button class="m-1" color="primary" [disabled]="!unidadeForm.valid">
                             {{ editmode ? "Editar" : "Cadastrar" }}
                         </button>
                         <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">

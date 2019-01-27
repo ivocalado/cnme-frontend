@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PoloDataService } from 'src/app/shared/polo-data.service';
-import { Polo } from '../polos.model';
+import { PoloDataService } from 'src/app/shared/services/polo-data.service';
+import { Polo } from '../../shared/models/polos.model';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

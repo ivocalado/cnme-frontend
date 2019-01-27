@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { PoloDataService } from '../shared/polo-data.service';
+import { PoloDataService } from '../shared/services/polo-data.service';
 import { PoloService } from './polo.service';
 
 @Component({

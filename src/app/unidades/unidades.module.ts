@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { UnidadesComponent } from "./unidades.component";
 import { Routes, RouterModule } from "@angular/router";
-import { FormsModule } from "@angular/forms";
+import { FormsModule,ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
 import {
     MatInputModule,
@@ -14,6 +14,7 @@ import {
 import { SharedModule } from "../shared/shared.module";
 import { UnidadeListComponent } from './unidade-list/unidade-list.component';
 import { UnidadeEditComponent } from './unidade-edit/unidade-edit.component';
+
 
 const unidadesRoutes: Routes = [{
     path: "", component: UnidadesComponent,
@@ -29,6 +30,7 @@ const unidadesRoutes: Routes = [{
     imports: [
         SharedModule,
         FormsModule,
+        ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,

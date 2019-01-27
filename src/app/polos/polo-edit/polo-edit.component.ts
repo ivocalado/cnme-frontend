@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { PoloDataService } from 'src/app/shared/polo-data.service';
-import { Estado, EstadoService } from 'src/app/shared/estado.service';
+import { PoloDataService } from 'src/app/shared/services/polo-data.service';
+import { Estado, EstadoService } from 'src/app/shared/services/estado.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Polo } from '../polos.model';
+import { Polo } from '../../shared/models/polos.model';
 
 @Component({
     selector: 'app-polo-edit',

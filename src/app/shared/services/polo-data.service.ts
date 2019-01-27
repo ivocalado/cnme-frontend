@@ -1,5 +1,5 @@
 
-import { Polo } from '../polos/polos.model';
+import { Polo } from '../models/polos.model';
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
@@ -15,10 +15,7 @@ export class PoloDataService {
     storePolo(polo: Polo) {
         //let polos = this.poloService.getPolos();
         //polos.push(polo);
-        return this.httpClient.post(
-            "https://cnme-8ab59.firebaseio.com/polos.json",
-            polo
-        );
+        return this.httpClient.post("https://cnme-8ab59.firebaseio.com/polos.json",polo);
     }
 
     getPolos() {

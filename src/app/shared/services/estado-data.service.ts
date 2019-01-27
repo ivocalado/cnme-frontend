@@ -1,10 +1,10 @@
 
-import { Estado } from './estado.model';
+import { Estado } from '../models/estado.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { map } from 'rxjs/operators';
-import { Localidade } from './localidade.model';
-import { Municipio } from './municipio.model';
+import { Localidade } from '../models/localidade.model';
+import { Municipio } from '../models/municipio.model';
 
 @Injectable()
 export class EstadoDataService{
@@ -23,6 +23,10 @@ export class EstadoDataService{
                 return estados;
             })
         );
+    }
+
+    getEstadoId(sigla:string){
+
     }
 
     getMunicipios(sigla:string){
