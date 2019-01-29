@@ -6,7 +6,8 @@ import {
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule
 } from "@angular/material";
 import { EstadoService } from "../shared/services/estado.service";
 import { SharedModule } from "../shared/shared.module";
@@ -22,7 +23,8 @@ import { CommonModule } from "@angular/common";
         MatButtonModule,
         MatSidenavModule,
         MatIconModule,
-        MatListModule
+        MatListModule,
+        MatSnackBarModule
     ],
     exports: [AppRoutingModule, MainNavComponent],
     providers: [EstadoService]

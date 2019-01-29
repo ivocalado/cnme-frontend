@@ -1,16 +1,16 @@
-<div class="row">
+<div class="row" *ngIf="unidadeForm">
     <div class="col-lg-12">
         <mat-card>
             <mat-card-title>Nova Unidade</mat-card-title>
             <form [formGroup]="unidadeForm" (ngSubmit)="onAddUnidade()">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="nome" id="nome" placeholder="Nome do Unidade" [required]="unidadeForm.get('nome').errors !== null && unidadeForm.get('nome').errors.required"/>
-                            <!--<mat-error *ngIf="nome.invalid">{{getErrorMessage()}}</mat-error>-->
+                            <input matInput formControlName="nome" id="nome" placeholder="Nome do Unidade" [required]="true"/>
+                            <mat-error *ngIf="!unidadeForm.get('nome').valid">{{unidadeForm.get('nome').errors['serverside']}}</mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mt-1">
                         <mat-form-field>
                             <input matInput formControlName="codigo_inep" id="codigo_inep" placeholder="INEP" #codigo_inep/>
                             <mat-hint align="end">{{codigo_inep.value.length}} / 8</mat-hint>
@@ -20,25 +20,29 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mt-1">
                         <mat-form-field>
                             <input matInput formControlName="diretor" id="diretor" placeholder="Diretor" />
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="email" id="email" placeholder="Email" [required]="unidadeForm.get('email').errors !== null && unidadeForm.get('email').errors.required" />
+                            <input matInput formControlName="email" id="email" placeholder="Email" [required]="true" />
+                            <mat-error *ngIf="!unidadeForm.get('email').valid">{{unidadeForm.get('email').errors['serverside']}}</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="url" id="url"
-                            placeholder="Url"/>
+                            <input matInput formControlName="url" id="url"placeholder="Url"/>
+                            <mat-error *ngIf="!unidadeForm.get('url').valid">{{unidadeForm.get('url').errors['serverside']}}</mat-error>
+                            <mat-error *ngIf="!unidadeForm.hasError('pattern')">
+                                Digite uma <strong>url</strong> válida exemplo: http://google.com
+                            </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mt-1">
                         <mat-form-field>
                             <input matInput formControlName="telefone" id="telefone" placeholder="Telefone" />
                         </mat-form-field>
@@ -46,37 +50,37 @@
                 </div>
                 <div formGroupName="localidade">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="cep" id="cep" placeholder="Cep" [required]="unidadeForm.get('localidade.cep').errors !== null && unidadeForm.get('localidade.cep').errors.required" />
+                            <input matInput formControlName="cep" id="cep" placeholder="Cep" [required]="true" />
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="logradouro" id="logradouro" placeholder="Logradouro" [required]="unidadeForm.get('localidade.logradouro').errors !== null && unidadeForm.get('localidade.logradouro').errors.required"/>
+                            <input matInput formControlName="logradouro" id="logradouro" placeholder="Logradouro" [required]="true"/>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="numero" id="numero" placeholder="Número"[required]="unidadeForm.get('localidade.numero').errors !== null && unidadeForm.get('localidade.numero').errors.required"
+                            <input matInput formControlName="numero" id="numero" placeholder="Número"[required]="true"
                              />
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 mt-1">
                         <mat-form-field>
                             <input matInput formControlName="complemento" id="complemento" placeholder="Complemento" />
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="bairro" id="bairro" placeholder="Bairro" [required]="unidadeForm.get('localidade.bairro').errors !== null && unidadeForm.get('localidade.bairro').errors.required"
+                            <input matInput formControlName="bairro" id="bairro" placeholder="Bairro" [required]="true"
                              />
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 mt-1">
                         <mat-form-field>
                             <mat-select formControlName="estado_id" id="estado_id"
-                            (selectionChange)="onChange($event)" placeholder="Escolha um estado" [required]="unidadeForm.get('localidade.estado_id').errors !== null && unidadeForm.get('localidade.estado_id').errors.required">
+                            (selectionChange)="onChange($event)" placeholder="Escolha um estado" [required]="true">
                                 <mat-option *ngFor="let estado of estados" [value]="estado.id">
                                     {{ estado.nome }}
                                 </mat-option>
@@ -84,9 +88,9 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 mt-1">
                         <mat-form-field>
-                            <mat-select formControlName="municipio_id" id="municipio_id" placeholder="Escolha um município" [required]="unidadeForm.get('localidade.municipio_id').errors !== null && unidadeForm.get('localidade.municipio_id').errors.required">
+                            <mat-select formControlName="municipio_id" id="municipio_id" placeholder="Escolha um município" [required]="true">
                                 <mat-option *ngFor="let municipio of municipios" [value]="municipio.id">
                                     {{ municipio.nome }}
                                 </mat-option>
@@ -96,7 +100,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-10 pull-right">
+                    <div class="col-lg-10 mt-1 pull-right">
                         <button mat-raised-button class="m-1" color="primary" [disabled]="!unidadeForm.valid">
                             {{ editmode ? "Editar" : "Cadastrar" }}
                         </button>

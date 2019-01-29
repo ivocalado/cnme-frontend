@@ -5,3 +5,42 @@
         </button>
     </div>
 </div>
+<hr class="m-2">
+<div class="row">
+    <div class="col-lg-12">
+        <mat-card>
+            <mat-card-title>Lista de Unidades</mat-card-title>
+            <hr class="m-2">
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <!-- Position Column -->
+                <ng-container matColumnDef="nome">
+                    <mat-header-cell *matHeaderCellDef> Unidade </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="tipo">
+                    <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.tipo_unidade.nome}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="estado">
+                    <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.localidade.estado.nome}}</mat-cell>
+                </ng-container>
+                <!-- actions -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                    <mat-cell *matCellDef="let row; let i=index;">
+                        <button mat-icon-button color="accent" (click)="onEdit(row.id)">
+                            <mat-icon aria-label="Edit">edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="accent">
+                            <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </mat-card>
+    </div>
+</div>
