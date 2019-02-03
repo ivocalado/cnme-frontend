@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Unidade } from 'src/app/_shared/models/unidade.model';
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { Unidade } from 'src/app/_shared/models/unidade.model';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
-    selector: "app-unidade-list",
-    templateUrl: "./unidade-list.component.html",
-    styleUrls: ["./unidade-list.component.scss"]
+    selector: "app-polo-list",
+    templateUrl: "./polo-list.component.html",
+    styleUrls: ["./polo-list.component.scss"]
 })
-export class UnidadeListComponent implements OnInit {
+export class PoloListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     displayedColumns: string[] = ["nome", "tipo", "estado", "actions"];
     dataSource;
@@ -28,12 +28,12 @@ export class UnidadeListComponent implements OnInit {
         this.router.navigate(["editar", id], { relativeTo: this.route });
     }
 
-    onDetails(id:Number){
+    onDetails(id: Number) {
         this.router.navigate(['detalhes', id], { relativeTo: this.route });
     }
 
     onDelete(id: number) {
-        if (confirm("Tem certeza que deseja deletar esta unidade")) {
+        if (confirm("Tem certeza que deseja deletar este polo")) {
             this.unidadeDataService.deleteUnidade(id).subscribe(res => {
                 this.fetchUnidades();
             });

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { UnidadesComponent } from "./unidades.component";
-import { FormsModule,ReactiveFormsModule } from "@angular/forms";
+import { PolosComponent } from "./polos.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
 import {
     MatInputModule,
@@ -12,14 +12,14 @@ import {
 import { NgxMaskModule } from "ngx-mask";
 
 import { SharedModule } from "../_shared/shared.module";
-import { UnidadeListComponent } from './unidade-list/unidade-list.component';
-import { UnidadeEditComponent } from './unidade-edit/unidade-edit.component';
-import { UnidadeDetailsComponent } from './unidade-details/unidade-details.component';
-import { UnidadesRoutingModule } from './unidades-routing.module';
+import { PoloListComponent } from './polo-list/polo-list.component';
+import { PoloEditComponent } from './polo-edit/polo-edit.component';
+import { PoloDetailsComponent } from './polo-details/polo-details.component';
+import { PolosRoutingModule } from './polos-routing.module';
 
 
 @NgModule({
-    declarations: [UnidadesComponent, UnidadeListComponent, UnidadeEditComponent, UnidadeDetailsComponent],
+    declarations: [PolosComponent, PoloListComponent, PoloEditComponent, PoloDetailsComponent],
     imports: [
         SharedModule,
         FormsModule,
@@ -30,8 +30,8 @@ import { UnidadesRoutingModule } from './unidades-routing.module';
         MatButtonModule,
         MatCardModule,
         MatTableModule,
-        UnidadesRoutingModule,
+        PolosRoutingModule,
         NgxMaskModule.forRoot()
     ]
 })
-export class UnidadesModule {}
+export class PolosModule { }

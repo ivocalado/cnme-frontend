@@ -9,8 +9,8 @@ import {
     MatListModule,
     MatSnackBarModule
 } from "@angular/material";
-import { EstadoService } from "../shared/services/estado.service";
-import { SharedModule } from "../shared/shared.module";
+import { EstadoService } from "../_shared/services/estado.service";
+import { SharedModule } from "../_shared/shared.module";
 import { CommonModule } from "@angular/common";
 
 @NgModule({

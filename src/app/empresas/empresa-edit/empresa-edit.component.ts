@@ -1,31 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Unidade } from '../../_shared/models/unidade.model';
-import { Localidade } from 'src/app/_shared/models/localidade.model';
-import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
-import { EstadoDataService } from 'src/app/_shared/services/estado-data.service';
-import { UnidadeDataService } from "src/app/_shared/services/unidade-data.service";
 import { Estado } from 'src/app/_shared/models/estado.model';
 import { Municipio } from 'src/app/_shared/models/municipio.model';
+import { Localidade } from 'src/app/_shared/models/localidade.model';
+import { Unidade } from 'src/app/_shared/models/unidade.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { EstadoDataService } from 'src/app/_shared/services/estado-data.service';
+import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
-    selector: "app-unidade-edit",
-    templateUrl: "./unidade-edit.component.html",
-    styleUrls: ["./unidade-edit.component.scss"]
+    selector: 'app-empresa-edit',
+    templateUrl: './empresa-edit.component.html',
+    styleUrls: ['./empresa-edit.component.scss']
 })
-
-export class UnidadeEditComponent implements OnInit {
+export class EmpresaEditComponent implements OnInit {
     estados: Estado[];
     municipios: Municipio[];
-    estado:Estado = new Estado(null,"","")
-    municipio:Municipio = new Municipio(null,"",null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "",null,null,this.estado,this.municipio);
-    unidade: Unidade = new Unidade("", "", "", "", "", "", "",null, this.localidade);
-    unidadeForm: FormGroup;
+    estado: Estado = new Estado(null, "", "")
+    municipio: Municipio = new Municipio(null, "", null);
+    localidade: Localidade = new Localidade("", "", "", "", "", "", null, null, this.estado, this.municipio);
+    unidade: Unidade = new Unidade("", "", "", "", "", "", "", null, this.localidade);
+    empresaForm: FormGroup;
     unidadeId: number;
     editmode = false;
-
 
     constructor(
         private route: ActivatedRoute,
@@ -33,28 +31,26 @@ export class UnidadeEditComponent implements OnInit {
         private estadoDataService: EstadoDataService,
         private unidadeDataService: UnidadeDataService,
         private snackBarService: SnackBarService
-    ) {}
-
+    ) { }
 
     ngOnInit() {
-
         this.estadoDataService.getEstados().subscribe((estados: Estado[]) => {
             this.estados = estados;
         });
 
-        this.route.params.subscribe((params:Params) =>{
+        this.route.params.subscribe((params: Params) => {
             this.unidadeId = +params["id"];
             this.editmode = params["id"] != null;
-            console.log("editMode: "+this.editmode);
+            console.log("editMode: " + this.editmode);
 
             if (this.editmode) {
                 this.unidadeDataService.getUnidade(this.unidadeId)
-                    .subscribe((unidade:Unidade) => {
+                    .subscribe((unidade: Unidade) => {
                         this.unidade = unidade;
                         this.initForm(this.unidade);
                         this.fetchMunicipio(this.unidade.localidade.estado.id);
                     });
-            }else{
+            } else {
                 this.initForm(this.unidade);
             }
         })
@@ -64,15 +60,15 @@ export class UnidadeEditComponent implements OnInit {
         this.fetchMunicipio(e.value);
     }
 
-    fetchMunicipio(id:number){
+    fetchMunicipio(id: number) {
         let estado = this.estados.find(obj => obj.id == id);
         this.estadoDataService
             .getMunicipios(estado.sigla)
             .subscribe((municipios: Municipio[]) => {
                 this.municipios = municipios;
-                if(this.editmode){
-                    this.unidadeForm.patchValue({
-                        localidade:{
+                if (this.editmode) {
+                    this.empresaForm.patchValue({
+                        localidade: {
                             municipio_id: this.unidade.localidade.municipio.id
                         }
                     })
@@ -80,40 +76,40 @@ export class UnidadeEditComponent implements OnInit {
             });
     }
 
-    onAddUnidade() {
-        if(this.editmode){
-            this.unidadeDataService.updateUnidade(this.unidadeId, this.unidadeForm.value)
-            .subscribe(
-                res => {
-                    this.snackBarService.openSnackBar("Unidade atualizada com sucesso");
-                    this.router.navigate(["/unidades"], { relativeTo: this.route });
-                }
-            )
+    onAddEmpresa() {
+        if (this.editmode) {
+            this.unidadeDataService.updateUnidade(this.unidadeId, this.empresaForm.value)
+                .subscribe(
+                    res => {
+                        this.snackBarService.openSnackBar("Empresa atualizada com sucesso");
+                        this.router.navigate(["/empresas"], { relativeTo: this.route });
+                    }
+                )
         }
-        else{
-            this.unidadeDataService.storeUnidade(this.unidadeForm.value, 1)
-            .subscribe(
-                (unidade:Unidade) =>{
-                    this.snackBarService.openSnackBar("Unidade cadastrada com sucesso");
-                    this.router.navigate(["/unidades"], { relativeTo: this.route });
-                },
-                error => {
-                    this.unidadeForm.setErrors = error;
-                    const fields = Object.keys(error || {});
-                    fields.forEach((field) => {
-                        this.unidadeForm.get(field).setErrors({ serverside: error[field]});
-                    })
-                }
-            );
+        else {
+            this.unidadeDataService.storeUnidade(this.empresaForm.value, 1)
+                .subscribe(
+                    (unidade: Unidade) => {
+                        this.snackBarService.openSnackBar("Empresa cadastrada com sucesso");
+                        this.router.navigate(["/empresas"], { relativeTo: this.route });
+                    },
+                    error => {
+                        this.empresaForm.setErrors = error;
+                        const fields = Object.keys(error || {});
+                        fields.forEach((field) => {
+                            this.empresaForm.get(field).setErrors({ serverside: error[field] });
+                        })
+                    }
+                );
         }
     }
 
     onCancel() {
-        this.router.navigate(["/unidades"], { relativeTo: this.route });
+        this.router.navigate(["/empresas"], { relativeTo: this.route });
     }
 
-    private initForm(unidade:Unidade){
-        this.unidadeForm = new FormGroup({
+    private initForm(unidade: Unidade) {
+        this.empresaForm = new FormGroup({
             nome: new FormControl(unidade.nome, Validators.required),
             'codigo_inep': new FormControl(unidade.codigo_inep, Validators.minLength(8)),
             diretor: new FormControl(unidade.diretor),
@@ -134,18 +130,5 @@ export class UnidadeEditComponent implements OnInit {
             })
         });
     }
-
-    /*
-        custom validator para email já cadastrado
-        forbiddenEmail(control:FormControl):Promise<any> | Observable<any>{
-        const promise = new Promise<any>((resolve, reject) =>{
-            if(control.value ==="a"){
-            resolve({"emailIsForbidden":true});
-            }else{
-                resolve(null);
-            }
-        })
-        return promise;
-    }*/
 
 }

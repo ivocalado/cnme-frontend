@@ -8,7 +8,7 @@ import { LayoutModule } from "@angular/cdk/layout";
 import { AppRoutingModule } from "./app-routing.module";
 import { HomeComponent } from "./home/home.component";
 
-import { CoreModule } from "./core/core.module";
+import { CoreModule } from "./_core/core.module";
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({

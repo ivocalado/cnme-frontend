@@ -1,24 +1,23 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Unidade } from 'src/app/_shared/models/unidade.model';
-import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Unidade } from "src/app/_shared/models/unidade.model";
+import { UnidadeDataService } from "src/app/_shared/services/unidade-data.service";
+import { MatSort, MatTableDataSource } from "@angular/material";
 
 @Component({
-    selector: "app-unidade-list",
-    templateUrl: "./unidade-list.component.html",
-    styleUrls: ["./unidade-list.component.scss"]
+    selector: 'app-empresa-list',
+    templateUrl: './empresa-list.component.html',
+    styleUrls: ['./empresa-list.component.scss']
 })
-export class UnidadeListComponent implements OnInit {
+export class EmpresaListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     displayedColumns: string[] = ["nome", "tipo", "estado", "actions"];
     dataSource;
-
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private unidadeDataService: UnidadeDataService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.fetchUnidades();
@@ -28,12 +27,12 @@ export class UnidadeListComponent implements OnInit {
         this.router.navigate(["editar", id], { relativeTo: this.route });
     }
 
-    onDetails(id:Number){
+    onDetails(id: Number) {
         this.router.navigate(['detalhes', id], { relativeTo: this.route });
     }
 
     onDelete(id: number) {
-        if (confirm("Tem certeza que deseja deletar esta unidade")) {
+        if (confirm("Tem certeza que deseja deletar esta empresa")) {
             this.unidadeDataService.deleteUnidade(id).subscribe(res => {
                 this.fetchUnidades();
             });
@@ -48,4 +47,5 @@ export class UnidadeListComponent implements OnInit {
                 this.dataSource.sort = this.sort;
             });
     }
+
 }

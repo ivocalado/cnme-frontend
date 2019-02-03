@@ -21,8 +21,8 @@ export class UnidadeDataService {
 
     }
 
-    storeUnidade(unidade: Unidade): Observable<Unidade> {
-        unidade.tipo_unidade_id = 1;
+    storeUnidade(unidade: Unidade, tipoUnidadeId: number): Observable<Unidade> {
+        unidade.tipo_unidade_id = tipoUnidadeId;
         return this.httpClient
             .post<Unidade>(
                 "http://cnme-dev.nees.com.br:8080/api/unidades",
