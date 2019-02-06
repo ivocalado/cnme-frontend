@@ -8,7 +8,8 @@ const appRoutes: Routes = [
     { path: "unidades",loadChildren: "./unidades/unidades.module#UnidadesModule"},
     { path: "polos", loadChildren: "./polos/polos.module#PolosModule" },
     { path: "empresas", loadChildren: "./empresas/empresas.module#EmpresasModule" },
-    { path: "usuarios", loadChildren: "./usuarios/usuarios.module#UsuariosModule" }
+    { path: "usuarios", loadChildren: "./usuarios/usuarios.module#UsuariosModule" },
+    { path: "projetos", loadChildren: "./projetos/projetos.module#ProjetosModule" }
 ];
 
 @NgModule({
