@@ -11,7 +11,7 @@ export class EstadoDataService{
     constructor(private httpClient:HttpClient){}
 
     getEstados() {
-        return this.httpClient.get<Estado[]>("http://cnme-dev.nees.com.br:8080/api/localidades/estados")
+        return this.httpClient.get<Estado[]>("/api/localidades/estados")
         .pipe(
             map(res => {
                 let estados:Estado[]=[];
@@ -31,7 +31,7 @@ export class EstadoDataService{
 
     getMunicipios(sigla:string){
         return this.httpClient.get<Municipio[]>(
-            "http://cnme-dev.nees.com.br:8080/api/localidades/estados/" +sigla+"/municipios"
+            "/api/localidades/estados/" +sigla+"/municipios"
         )
         .pipe(
             map(res =>{
