@@ -6,7 +6,8 @@ O projeto foi gerado com o [Angular CLI](https://github.com/angular/angular-cli)
 Rodar `npm install -g @angular/cli` caso não tenha o angular cli instalado. Caso tenha uma versão anterior rodar o `ng update`.  
 
 #Development Server
-Rodar `ng serve` para iniciar o servidor. Navegar até `http://localhost:4200/`. O aplicativo vai atualizar automaticamente caso alguma coisa seja alterada nos arquivos fontes.
+Rodar `ng serve` para iniciar o servidor. Navegar até `http://localhost:4200/`. O aplicativo vai atualizar automaticamente caso alguma coisa seja alterada nos arquivos fontes. É possível invocar o servidor de dev com um proxy afim de possibilitar o acesso CORS. Rodar `ng serve --proxy-config proxy.config.js`
+
 
 ## Build
 Rodar `ng build --prod --aot` para compilar o projeto. Os arquivos serão armazenados na pasta `dist/`. 
