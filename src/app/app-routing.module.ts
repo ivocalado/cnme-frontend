@@ -11,7 +11,7 @@ const appRoutes: Routes = [
     { path: "usuarios", loadChildren: "./usuarios/usuarios.module#UsuariosModule" },
     { path: "equipamentos",loadChildren: "./equipamentos/equipamentos.module#EquipamentosModule"},
     { path: "kits",loadChildren: "./kits/kits.module#KitsModule"},
-    { path: "tipoEquipamentos",loadChildren: "./tipoEquipamentos/tipoEquipamentos.module#TipoEquipamentosModule"}
+    { path: "tipoEquipamentos",loadChildren: "./tipoEquipamentos/tipoEquipamentos.module#TipoEquipamentosModule"},
     { path: "projetos", loadChildren: "./projetos/projetos.module#ProjetosModule" }
 ];
 
