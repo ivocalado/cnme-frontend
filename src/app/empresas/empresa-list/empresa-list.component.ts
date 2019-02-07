@@ -32,7 +32,7 @@ export class EmpresaListComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        if (confirm("Tem certeza que deseja deletar esta empresa")) {
+        if (confirm("Tem certeza que deseja deletar esta empresa?")) {
             this.unidadeDataService.deleteUnidade(id).subscribe(res => {
                 this.fetchUnidades();
             });
