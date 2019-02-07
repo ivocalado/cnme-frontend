@@ -10,7 +10,8 @@ const appRoutes: Routes = [
     { path: "empresas", loadChildren: "./empresas/empresas.module#EmpresasModule" },
     { path: "usuarios", loadChildren: "./usuarios/usuarios.module#UsuariosModule" },
     { path: "equipamentos",loadChildren: "./equipamentos/equipamentos.module#EquipamentosModule"},
-    { path: "kits",loadChildren: "./kits/kits.module#KitsModule"}
+    { path: "kits",loadChildren: "./kits/kits.module#KitsModule"},
+    { path: "tipoEquipamentos",loadChildren: "./tipoEquipamentos/tipoEquipamentos.module#TipoEquipamentosModule"}
 ];
 
 @NgModule({
