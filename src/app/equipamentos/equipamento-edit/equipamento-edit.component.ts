@@ -3,10 +3,10 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Equipamento } from '../../_shared/models/equipamento.model';
 import { Localidade } from 'src/app/_shared/models/localidade.model';
 import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
-import { EstadoDataService } from 'src/app/_shared/services/estado-data.service';
+//import { TipoEquipamentoDataService } from 'src/app/_shared/services/tipoEquipamento-data.service';
 import { EquipamentoDataService } from "src/app/_shared/services/equipamento-data.service";
-import { Estado } from 'src/app/_shared/models/estado.model';
-import { Municipio } from 'src/app/_shared/models/municipio.model';
+//import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
+
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
@@ -16,12 +16,9 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 })
 
 export class EquipamentoEditComponent implements OnInit {
-    estados: Estado[];
-    municipios: Municipio[];
-    estado:Estado = new Estado(null,"","")
-    municipio:Municipio = new Municipio(null,"",null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "",null,null,this.estado,this.municipio);
-    equipamento: Equipamento = new Equipamento("", "", "", "", "", "", "",null, this.localidade);
+  /*  tipoEquipamentos: TipoEquipamento[];
+    tipoEquipamento:TipoEquipamento = new TipoEquipamento("","","")*/
+    equipamento: Equipamento = new Equipamento("", "", "", "", null);
     equipamentoForm: FormGroup;
     equipamentoId: number;
     editmode = false;
@@ -30,18 +27,21 @@ export class EquipamentoEditComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private estadoDataService: EstadoDataService,
+        //private tipoEquipamentoDataService: TipoEquipamentoDataService,
         private equipamentoDataService: EquipamentoDataService,
         private snackBarService: SnackBarService
     ) {}
 
 
     ngOnInit() {
+        
+        /*this.tipoEquipamentoDataService.getTipoEquipamentos().subscribe((tipoEquipamentos: TipoEquipamento[]) => {
+            this.tipoEquipamentos = tipoEquipamentos;
+        }, result => {
+            console.log(result);
+        });*/
 
-        this.estadoDataService.getEstados().subscribe((estados: Estado[]) => {
-            this.estados = estados;
-        });
-
+        
         this.route.params.subscribe((params:Params) =>{
             this.equipamentoId = +params["id"];
             this.editmode = params["id"] != null;
@@ -52,7 +52,6 @@ export class EquipamentoEditComponent implements OnInit {
                     .subscribe((equipamento:Equipamento) => {
                         this.equipamento = equipamento;
                         this.initForm(this.equipamento);
-                        this.fetchMunicipio(this.equipamento.localidade.estado.id);
                     });
             }else{
                 this.initForm(this.equipamento);
@@ -60,32 +59,12 @@ export class EquipamentoEditComponent implements OnInit {
         })
     }
 
-    onChange(e) {
-        this.fetchMunicipio(e.value);
-    }
-
-    fetchMunicipio(id:number){
-        let estado = this.estados.find(obj => obj.id == id);
-        this.estadoDataService
-            .getMunicipios(estado.sigla)
-            .subscribe((municipios: Municipio[]) => {
-                this.municipios = municipios;
-                if(this.editmode){
-                    this.equipamentoForm.patchValue({
-                        localidade:{
-                            municipio_id: this.equipamento.localidade.municipio.id
-                        }
-                    })
-                }
-            });
-    }
-
     onAddEquipamento() {
         if(this.editmode){
             this.equipamentoDataService.updateEquipamento(this.equipamentoId, this.equipamentoForm.value)
             .subscribe(
                 res => {
-                    this.snackBarService.openSnackBar("Equipamento atualizada com sucesso");
+                    this.snackBarService.openSnackBar("Equipamento atualizado com sucesso");
                     this.router.navigate(["/equipamentos"], { relativeTo: this.route });
                 }
             )
@@ -94,7 +73,7 @@ export class EquipamentoEditComponent implements OnInit {
             this.equipamentoDataService.storeEquipamento(this.equipamentoForm.value, 1)
             .subscribe(
                 (equipamento:Equipamento) =>{
-                    this.snackBarService.openSnackBar("Equipamento cadastrada com sucesso");
+                    this.snackBarService.openSnackBar("Equipamento cadastrado com sucesso");
                     this.router.navigate(["/equipamentos"], { relativeTo: this.route });
                 },
                 error => {
@@ -113,39 +92,12 @@ export class EquipamentoEditComponent implements OnInit {
     }
 
     private initForm(equipamento:Equipamento){
+        console.log("Pasouuuuuuuuuuu 2222");
         this.equipamentoForm = new FormGroup({
             nome: new FormControl(equipamento.nome, Validators.required),
-            'codigo_inep': new FormControl(equipamento.codigo_inep, Validators.minLength(8)),
-            diretor: new FormControl(equipamento.diretor),
-            email: new FormControl(equipamento.email, [Validators.required, Validators.email,]),
-            url: new FormControl(
-                equipamento.url,
-                Validators.pattern(/https?:\/\/(www\.)?(?!www\.)([A-Za-z0-9\-@_~]+\.)[A-Za-z]{2,}(:[0-9]{2,5})?(\.[A-Za-z0-9\/_\-~?&=]+)*/)
-            ),
-            telefone: new FormControl(equipamento.telefone),
-            localidade: new FormGroup({
-                cep: new FormControl(equipamento.localidade.cep, Validators.required),
-                logradouro: new FormControl(equipamento.localidade.logradouro, Validators.required),
-                numero: new FormControl(equipamento.localidade.numero, Validators.required),
-                complemento: new FormControl(equipamento.localidade.complemento),
-                bairro: new FormControl(equipamento.localidade.bairro, Validators.required),
-                estado_id: new FormControl(equipamento.localidade.estado.id, Validators.required),
-                municipio_id: new FormControl(equipamento.localidade.municipio.id, Validators.required)
-            })
+            descricao: new FormControl(equipamento.descricao, Validators.required),
+            requisitos: new FormControl(equipamento.requisito),
+          //  tipoEquipamento: new FormControl(equipamento.tipoEquipamento.id)
         });
     }
-
-    /*
-        custom validator para email já cadastrado
-        forbiddenEmail(control:FormControl):Promise<any> | Observable<any>{
-        const promise = new Promise<any>((resolve, reject) =>{
-            if(control.value ==="a"){
-            resolve({"emailIsForbidden":true});
-            }else{
-                resolve(null);
-            }
-        })
-        return promise;
-    }*/
-
 }

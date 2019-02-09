@@ -17,13 +17,17 @@
 			    <mat-header-cell *matHeaderCellDef> Equipamento </mat-header-cell>
                     <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="tipo">
-                    <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.tipo_equipamento.nome}}</mat-cell>
+                <ng-container matColumnDef="tipoEquipamento">
+                    <mat-header-cell *matHeaderCellDef> Tipo do Equipamento </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.tipoEquipamento.nome}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="estado">
-                    <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.localidade.estado.nome}}</mat-cell>
+                <ng-container matColumnDef="descricao">
+                    <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.descricao}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="requisitos">
+                    <mat-header-cell *matHeaderCellDef> Requisitos </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.requisitos}}</mat-cell>
                 </ng-container>
                 <!-- actions -->
                 <ng-container matColumnDef="actions">

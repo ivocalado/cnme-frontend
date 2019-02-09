@@ -5,21 +5,9 @@
             <hr>
             <div>
                 <p>
-                    <strong>Nome: </strong>{{equipamento.nome}} (<strong>Código INEP: </strong>{{equipamento.codigo_inep}})<br />
-                    <strong>Email: </strong>{{equipamento.email}}<br />
-                    <strong>Diretor: </strong>{{equipamento.diretor}}<br />
-                    <strong>Url: </strong>{{equipamento.url}}<br />
-                    <strong>Telefone: </strong><span>{{equipamento.telefone | mask: '(00) 0000-0000?0'}}</span><br />
-                </p>
-                <p>
-                    <strong>Endereço: </strong>
-                    {{equipamento.localidade.logradouro}}
-                    {{equipamento.localidade.numero}}
-                    {{equipamento.localidade.complemento}},
-                    {{equipamento.localidade.bairro}} -
-                    {{equipamento.localidade.cep}} -
-                    {{equipamento.localidade.municipio.nome}} /
-                    {{equipamento.localidade.estado.sigla}}
+                    <strong>Nome: </strong>{{equipamento.nome}}<br />
+                    <strong>Descrição: </strong>{{equipamento.descricao}}<br />
+                    <strong>Requisitos: </strong>{{equipamento.requisitos}}<br />
                 </p>
                 <p>
                     <button mat-raised-button type="button" class="mt-1" color="warn" (click)="onCancel()">

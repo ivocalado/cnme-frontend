@@ -4,8 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Localidade } from '../models/localidade.model';
-import { Estado } from '../models/estado.model';
+import { TipoEquipamento } from '../models/tipoEquipamento.model';
 
 @Injectable()
 export class EquipamentoDataService {
@@ -22,10 +21,9 @@ export class EquipamentoDataService {
     }
 
     storeEquipamento(equipamento: Equipamento, tipoEquipamentoId: number): Observable<Equipamento> {
-        equipamento.tipo_equipamento_id = tipoEquipamentoId;
         return this.httpClient
             .post<Equipamento>(
-                "http://cnme-dev.nees.com.br:8080/api/equipamentos",
+                "/api/equipamentos",
                 equipamento,
                 {
                     headers: new HttpHeaders({
@@ -38,24 +36,27 @@ export class EquipamentoDataService {
     }
 
     updateEquipamento(id:number, equipamento:Equipamento){
-        equipamento.tipo_equipamento_id = 1;
-        return this.httpClient.put("http://cnme-dev.nees.com.br:8080/api/equipamentos/"+id, equipamento)
+        return this.httpClient.put("/api/equipamentos/"+id, equipamento)
         .pipe(
             catchError(this.handleError)
         )
     }
 
     getEquipamentos(){
-        return this.httpClient.get<Equipamento[]>("http://cnme-dev.nees.com.br:8080/api/equipamentos")
+        return this.httpClient.get<Equipamento[]>("/api/equipamentos")
         .pipe(
             map(res =>{
                 let equipamentos:Equipamento[] = [];
                 for(var key in res["data"]){
                     let equipamento:Equipamento;
+                    let tipoEquipamento: TipoEquipamento;
                     equipamento = <Equipamento>res["data"][key];
-                    if (!equipamento["localidade"]) {
-                        equipamento.localidade = new Localidade("", "", "", "", "", "",null, null,null,null);
-                        equipamento.localidade.estado = new Estado(null,"","");
+                    tipoEquipamento = <TipoEquipamento>res["data"][key]["tipo_equipamento"];
+                    if (tipoEquipamento != null) {
+                        equipamento.tipoEquipamento = tipoEquipamento;
+                        
+                    } else {
+                        equipamento.tipoEquipamento = new TipoEquipamento("", "", "");
                     }
                     equipamentos.push(equipamento);
                 }
@@ -65,7 +66,7 @@ export class EquipamentoDataService {
     }
 
     getEquipamento(id:number){
-        return this.httpClient.get<Equipamento>("http://cnme-dev.nees.com.br:8080/api/equipamentos/"+id)
+        return this.httpClient.get<Equipamento>("/api/equipamentos/"+id)
         .pipe(
             map(res =>{
                 let equipamento:Equipamento;
@@ -76,7 +77,7 @@ export class EquipamentoDataService {
     }
 
     deleteEquipamento(id:number){
-        return this.httpClient.delete("http://cnme-dev.nees.com.br:8080/api/equipamentos/"+id);
+        return this.httpClient.delete("/api/equipamentos/"+id);
     }
 }
 

@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EquipamentoDataService } from 'src/app/_shared/services/equipamento-data.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Equipamento } from 'src/app/_shared/models/equipamento.model';
-import { Estado } from 'src/app/_shared/models/estado.model';
-import { Municipio } from 'src/app/_shared/models/municipio.model';
-import { Localidade } from 'src/app/_shared/models/localidade.model';
+import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
 
 @Component({
     selector: 'app-equipamento-details',
@@ -12,10 +10,8 @@ import { Localidade } from 'src/app/_shared/models/localidade.model';
     styleUrls: ['./equipamento-details.component.scss']
 })
 export class EquipamentoDetailsComponent implements OnInit {
-    estado: Estado = new Estado(null, "", "")
-    municipio: Municipio = new Municipio(null, "", null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "", null, null, this.estado, this.municipio);
-    equipamento: Equipamento = new Equipamento("", "", "", "", "", "", "", null, this.localidade);
+    tipoEquipamento: TipoEquipamento = new TipoEquipamento(null, "", "")
+    equipamento: Equipamento = new Equipamento("", "", "", "", this.tipoEquipamento);
 
     constructor(
         private equipamentoDataService: EquipamentoDataService,
