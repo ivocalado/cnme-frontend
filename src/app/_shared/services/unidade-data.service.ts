@@ -25,7 +25,7 @@ export class UnidadeDataService {
         unidade.tipo_unidade_id = tipoUnidadeId;
         return this.httpClient
             .post<Unidade>(
-                "http://cnme-dev.nees.com.br:8080/api/unidades",
+                "/api/unidades",
                 unidade,
                 {
                     headers: new HttpHeaders({
@@ -39,14 +39,14 @@ export class UnidadeDataService {
 
     updateUnidade(id:number, unidade:Unidade){
         unidade.tipo_unidade_id = 1;
-        return this.httpClient.put("http://cnme-dev.nees.com.br:8080/api/unidades/"+id, unidade)
+        return this.httpClient.put("/api/unidades/"+id, unidade)
         .pipe(
             catchError(this.handleError)
         )
     }
 
     getUnidades(){
-        return this.httpClient.get<Unidade[]>("http://cnme-dev.nees.com.br:8080/api/unidades")
+        return this.httpClient.get<Unidade[]>("/api/unidades")
         .pipe(
             map(res =>{
                 let unidades:Unidade[] = [];
@@ -65,7 +65,7 @@ export class UnidadeDataService {
     }
 
     getUnidade(id:number){
-        return this.httpClient.get<Unidade>("http://cnme-dev.nees.com.br:8080/api/unidades/"+id)
+        return this.httpClient.get<Unidade>("/api/unidades/"+id)
         .pipe(
             map(res =>{
                 let unidade:Unidade;
@@ -76,7 +76,7 @@ export class UnidadeDataService {
     }
 
     deleteUnidade(id:number){
-        return this.httpClient.delete("http://cnme-dev.nees.com.br:8080/api/unidades/"+id);
+        return this.httpClient.delete("/api/unidades/"+id);
     }
 }
 

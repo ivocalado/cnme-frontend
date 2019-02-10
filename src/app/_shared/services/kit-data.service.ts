@@ -25,7 +25,7 @@ export class KitDataService {
         kit.tipo_kit_id = tipoKitId;
         return this.httpClient
             .post<Kit>(
-                "http://cnme-dev.nees.com.br:8080/api/kits",
+                "/api/kits",
                 kit,
                 {
                     headers: new HttpHeaders({
@@ -39,14 +39,14 @@ export class KitDataService {
 
     updateKit(id:number, kit:Kit){
         kit.tipo_kit_id = 1;
-        return this.httpClient.put("http://cnme-dev.nees.com.br:8080/api/kits/"+id, kit)
+        return this.httpClient.put("/api/kits/"+id, kit)
         .pipe(
             catchError(this.handleError)
         )
     }
 
     getKits(){
-        return this.httpClient.get<Kit[]>("http://cnme-dev.nees.com.br:8080/api/kits")
+        return this.httpClient.get<Kit[]>("/api/kits")
         .pipe(
             map(res =>{
                 let kits:Kit[] = [];
@@ -65,7 +65,7 @@ export class KitDataService {
     }
 
     getKit(id:number){
-        return this.httpClient.get<Kit>("http://cnme-dev.nees.com.br:8080/api/kits/"+id)
+        return this.httpClient.get<Kit>("/api/kits/"+id)
         .pipe(
             map(res =>{
                 let kit:Kit;
@@ -76,7 +76,7 @@ export class KitDataService {
     }
 
     deleteKit(id:number){
-        return this.httpClient.delete("http://cnme-dev.nees.com.br:8080/api/kits/"+id);
+        return this.httpClient.delete("/api/kits/"+id);
     }
 }
 
