@@ -20,7 +20,8 @@ export class EquipamentoDataService {
 
     }
 
-    storeEquipamento(equipamento: Equipamento, tipoEquipamentoId: number): Observable<Equipamento> {
+    storeEquipamento(equipamento: Equipamento, tipoEquipamentoId: string): Observable<Equipamento> {
+        equipamento.tipo_equipamento_id = tipoEquipamentoId;
         return this.httpClient
             .post<Equipamento>(
                 "/api/equipamentos",
@@ -71,6 +72,9 @@ export class EquipamentoDataService {
             map(res =>{
                 let equipamento:Equipamento;
                 equipamento = res["data"];
+                let tipoEquipamento: TipoEquipamento;
+                equipamento.tipoEquipamento = <TipoEquipamento>res["data"]["tipo_equipamento"];
+                equipamento.tipo_equipamento_id = equipamento.tipoEquipamento.id;
                 return equipamento;
             })
         );

@@ -5,7 +5,9 @@ export class Equipamento {
         public id: string,
         public nome: string,
         public descricao: string,
-        public requisito: string,
-        public tipoEquipamento:TipoEquipamento
+        public fornecedor: string,
+        public requisitos: string,
+        public tipoEquipamento:TipoEquipamento,
+        public tipo_equipamento_id: string
     ) { }
 }

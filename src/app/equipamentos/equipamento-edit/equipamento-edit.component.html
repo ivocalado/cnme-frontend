@@ -24,6 +24,23 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-lg-6 mt-1">
+                        <mat-form-field>
+                            <mat-select formControlName="tipo_equipamento_id" id="tipo_equipamento_id"
+                            placeholder="Escolha o tipo do equipamento" [required]="true">
+                                <mat-option *ngFor="let tipoEquipamento of tipoEquipamentos" [value]="tipoEquipamento.id">
+                                    {{ tipoEquipamento.nome }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6 mt-1">
+                        <mat-form-field>
+                            <input matInput formControlName="fornecedor" id="fornecedor" placeholder="Fornecedor" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-10 mt-1 pull-right">
                         <button mat-raised-button class="m-1" color="primary" [disabled]="!equipamentoForm.valid">
                             {{ editmode ? "Atualizar" : "Salvar" }}

@@ -11,7 +11,7 @@ import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
 })
 export class EquipamentoDetailsComponent implements OnInit {
     tipoEquipamento: TipoEquipamento = new TipoEquipamento(null, "", "")
-    equipamento: Equipamento = new Equipamento("", "", "", "", this.tipoEquipamento);
+    equipamento: Equipamento = new Equipamento("", "", "", "", "", this.tipoEquipamento, this.tipoEquipamento.id);
 
     constructor(
         private equipamentoDataService: EquipamentoDataService,

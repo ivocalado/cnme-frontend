@@ -11,7 +11,7 @@ const equipamentosRoutes: Routes = [
         component: EquipamentosComponent,
         children: [
             { path: "", component: EquipamentoListComponent },
-            { path: "nova", component: EquipamentoEditComponent },
+            { path: "novo", component: EquipamentoEditComponent },
             { path: "editar/:id", component: EquipamentoEditComponent },
             { path: "detalhes/:id", component: EquipamentoDetailsComponent }
         ]

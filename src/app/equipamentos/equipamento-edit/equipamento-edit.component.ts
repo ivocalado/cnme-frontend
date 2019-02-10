@@ -3,9 +3,9 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Equipamento } from '../../_shared/models/equipamento.model';
 import { Localidade } from 'src/app/_shared/models/localidade.model';
 import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
-//import { TipoEquipamentoDataService } from 'src/app/_shared/services/tipoEquipamento-data.service';
+import { TipoEquipamentoDataService } from 'src/app/_shared/services/tipoEquipamento-data.service';
 import { EquipamentoDataService } from "src/app/_shared/services/equipamento-data.service";
-//import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
+import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
 
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
@@ -16,9 +16,9 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 })
 
 export class EquipamentoEditComponent implements OnInit {
-  /*  tipoEquipamentos: TipoEquipamento[];
-    tipoEquipamento:TipoEquipamento = new TipoEquipamento("","","")*/
-    equipamento: Equipamento = new Equipamento("", "", "", "", null);
+    tipoEquipamentos: TipoEquipamento[];
+    tipoEquipamento:TipoEquipamento = new TipoEquipamento("","","")
+    equipamento: Equipamento = new Equipamento("", "", "", "", "", null, "");
     equipamentoForm: FormGroup;
     equipamentoId: number;
     editmode = false;
@@ -27,19 +27,17 @@ export class EquipamentoEditComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        //private tipoEquipamentoDataService: TipoEquipamentoDataService,
+        private tipoEquipamentoDataService: TipoEquipamentoDataService,
         private equipamentoDataService: EquipamentoDataService,
         private snackBarService: SnackBarService
     ) {}
 
 
     ngOnInit() {
-        
-        /*this.tipoEquipamentoDataService.getTipoEquipamentos().subscribe((tipoEquipamentos: TipoEquipamento[]) => {
+                
+        this.tipoEquipamentoDataService.getTipoEquipamentos().subscribe((tipoEquipamentos: TipoEquipamento[]) => {
             this.tipoEquipamentos = tipoEquipamentos;
-        }, result => {
-            console.log(result);
-        });*/
+        });
 
         
         this.route.params.subscribe((params:Params) =>{
@@ -70,7 +68,7 @@ export class EquipamentoEditComponent implements OnInit {
             )
         }
         else{
-            this.equipamentoDataService.storeEquipamento(this.equipamentoForm.value, 1)
+            this.equipamentoDataService.storeEquipamento(this.equipamentoForm.value, this.equipamentoForm.value.tipo_equipamento_id)
             .subscribe(
                 (equipamento:Equipamento) =>{
                     this.snackBarService.openSnackBar("Equipamento cadastrado com sucesso");
@@ -92,12 +90,12 @@ export class EquipamentoEditComponent implements OnInit {
     }
 
     private initForm(equipamento:Equipamento){
-        console.log("Pasouuuuuuuuuuu 2222");
         this.equipamentoForm = new FormGroup({
             nome: new FormControl(equipamento.nome, Validators.required),
             descricao: new FormControl(equipamento.descricao, Validators.required),
-            requisitos: new FormControl(equipamento.requisito),
-          //  tipoEquipamento: new FormControl(equipamento.tipoEquipamento.id)
+            fornecedor: new FormControl(equipamento.fornecedor, Validators.required),
+            requisitos: new FormControl(equipamento.requisitos),
+            tipo_equipamento_id: new FormControl(equipamento.tipo_equipamento_id, Validators.required)
         });
     }
 }
