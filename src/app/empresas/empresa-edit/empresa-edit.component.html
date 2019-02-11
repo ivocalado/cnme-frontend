@@ -4,44 +4,16 @@
             <mat-card-title>{{ editmode ? "Empresa" : "Nova empresa" }}</mat-card-title>
             <form [formGroup]="empresaForm" (ngSubmit)="onAddEmpresa()">
                 <div class="row">
-                    <div class="col-lg-8 mt-1">
+                    <div class="col-lg-6 mt-1">
                         <mat-form-field>
                             <input matInput formControlName="nome" id="nome" placeholder="Nome da Empresa" [required]="true" />
                             <mat-error *ngIf="!empresaForm.get('nome').valid">{{empresaForm.get('nome').errors['serverside']}}</mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-4 mt-1">
+                    <div class="col-lg-6 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="codigo_inep" id="codigo_inep" placeholder="INEP"
-                                #codigo_inep maxlength="8" />
-                            <mat-hint align="end">{{codigo_inep.value.length}} / 8</mat-hint>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="diretor" id="diretor" placeholder="Diretor" />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-8 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="email" id="email" placeholder="Email do diretor"
-                                [required]="true" />
+                            <input matInput formControlName="email" id="email" placeholder="Email" [required]="true" />
                             <mat-error *ngIf="!empresaForm.get('email').valid">{{empresaForm.get('email').errors['serverside']}}</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 mt-1">
-                        <mat-form-field>
-                            <input matInput id="responsavel" placeholder="Responsável" />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-8 mt-1">
-                        <mat-form-field>
-                            <input matInput id="emailResponsavel" placeholder="Email do responsável" />
                         </mat-form-field>
                     </div>
                 </div>
