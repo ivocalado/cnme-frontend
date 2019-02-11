@@ -18,10 +18,7 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 export class KitEditComponent implements OnInit {
     estados: Estado[];
     municipios: Municipio[];
-    estado:Estado = new Estado(null,"","")
-    municipio:Municipio = new Municipio(null,"",null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "",null,null,this.estado,this.municipio);
-    kit: Kit = new Kit("", "", "", "", "", "", "",null, this.localidade);
+    kit: Kit = Kit.EMPTY_MODEL
     kitForm: FormGroup;
     kitId: number;
     editmode = false;

@@ -21,16 +21,16 @@ export class UnidadeDataService {
 
     }
 
-    storeUnidade(unidade: Unidade, tipoUnidadeId: number): Observable<Unidade> {
+    storeUnidade(unidade: Unidade, tipoUnidadeId: number, classe:string): Observable<Unidade> {
         unidade.tipo_unidade_id = tipoUnidadeId;
+        unidade.classe = classe;
         return this.httpClient
             .post<Unidade>(
                 "/api/unidades",
                 unidade,
                 {
                     headers: new HttpHeaders({
-                        "Content-Type":
-                            "application/json; charset=UTF-8"
+                        "Content-Type":"application/json; charset=UTF-8"
                     })
                 }
             )
@@ -38,7 +38,6 @@ export class UnidadeDataService {
     }
 
     updateUnidade(id:number, unidade:Unidade){
-        unidade.tipo_unidade_id = 1;
         return this.httpClient.put("/api/unidades/"+id, unidade)
         .pipe(
             catchError(this.handleError)
@@ -77,6 +76,44 @@ export class UnidadeDataService {
 
     deleteUnidade(id:number){
         return this.httpClient.delete("/api/unidades/"+id);
+    }
+
+    getPolos(){
+        return this.httpClient.get<Unidade[]>("api/unidades/u/polos")
+        .pipe(
+            map(res => {
+                let unidades: Unidade[] = [];
+                for (var key in res["data"]) {
+                    let unidade: Unidade;
+                    unidade = <Unidade>res["data"][key];
+                    if (!unidade["localidade"]) {
+                        unidade.localidade = Localidade.EMPTY_MODEL;
+                        unidade.localidade.estado = Estado.EMPTY_MODEL;
+                    }
+                    unidades.push(unidade);
+                }
+                return unidades;
+            })
+        );
+    }
+
+    getEmpresas() {
+        return this.httpClient.get<Unidade[]>("api/unidades/u/empresas")
+            .pipe(
+                map(res => {
+                    let unidades: Unidade[] = [];
+                    for (var key in res["data"]) {
+                        let unidade: Unidade;
+                        unidade = <Unidade>res["data"][key];
+                        if (!unidade["localidade"]) {
+                            unidade.localidade = Localidade.EMPTY_MODEL;
+                            unidade.localidade.estado = Estado.EMPTY_MODEL;
+                        }
+                        unidades.push(unidade);
+                    }
+                    return unidades;
+                })
+            );
     }
 }
 

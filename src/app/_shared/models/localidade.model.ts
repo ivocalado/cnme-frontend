@@ -9,9 +9,21 @@ export class Localidade {
         public bairro: string,
         public complemento: string,
         public cep: string,
-        public estado_id:number,
-        public municipio_id:number,
-        public estado:Estado,
+        public estado_id: number,
+        public municipio_id: number,
+        public estado: Estado,
         public municipio: Municipio
-    ){}
+    ) { }
+    static readonly EMPTY_MODEL = {
+        uf: '',
+        logradouro: '',
+        numero: '',
+        bairro: '',
+        complemento: '',
+        cep: '',
+        estado_id: null,
+        municipio_id: null,
+        estado: Estado.EMPTY_MODEL,
+        municipio: Municipio.EMPTY_MODEL
+    }
 }

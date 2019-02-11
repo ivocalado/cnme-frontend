@@ -10,8 +10,8 @@ import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
     styleUrls: ['./equipamento-details.component.scss']
 })
 export class EquipamentoDetailsComponent implements OnInit {
-    tipoEquipamento: TipoEquipamento = new TipoEquipamento(null, "", "")
-    equipamento: Equipamento = new Equipamento("", "", "", "", "", this.tipoEquipamento, this.tipoEquipamento.id);
+    //tipoEquipamento: TipoEquipamento = new TipoEquipamento(null, "", "")
+    equipamento: Equipamento = Equipamento.EMPTY_MODEL;
 
     constructor(
         private equipamentoDataService: EquipamentoDataService,

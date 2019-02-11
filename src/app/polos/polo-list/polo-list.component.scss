@@ -1,7 +1,10 @@
-table {
+mat-table {
     width: 100%;
     .mat-column-actions{
-        width: 22%;
-        text-align:center;
+        flex: 0 0 20%;
+        justify-content:center;
+    }
+    .mat-column-nome{
+        flex: 0 0 40%;
     }
 }

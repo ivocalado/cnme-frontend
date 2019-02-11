@@ -17,8 +17,8 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 export class EquipamentoEditComponent implements OnInit {
     tipoEquipamentos: TipoEquipamento[];
-    tipoEquipamento:TipoEquipamento = new TipoEquipamento("","","")
-    equipamento: Equipamento = new Equipamento("", "", "", "", "", null, "");
+    tipoEquipamento:TipoEquipamento = TipoEquipamento.EMPTY_MODEL;
+    equipamento: Equipamento = Equipamento.EMPTY_MODEL;
     equipamentoForm: FormGroup;
     equipamentoId: number;
     editmode = false;
@@ -34,12 +34,12 @@ export class EquipamentoEditComponent implements OnInit {
 
 
     ngOnInit() {
-                
+
         this.tipoEquipamentoDataService.getTipoEquipamentos().subscribe((tipoEquipamentos: TipoEquipamento[]) => {
             this.tipoEquipamentos = tipoEquipamentos;
         });
 
-        
+
         this.route.params.subscribe((params:Params) =>{
             this.equipamentoId = +params["id"];
             this.editmode = params["id"] != null;

@@ -12,10 +12,7 @@ import { Localidade } from 'src/app/_shared/models/localidade.model';
     styleUrls: ['./polo-details.component.scss']
 })
 export class PoloDetailsComponent implements OnInit {
-    estado: Estado = new Estado(null, "", "")
-    municipio: Municipio = new Municipio(null, "", null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "", null, null, this.estado, this.municipio);
-    unidade: Unidade = new Unidade("", "", "", "", "", "", "", null, this.localidade);
+    unidade: Unidade = Unidade.EMPTY_MODEL;
     constructor(
         private unidadeDataService: UnidadeDataService,
         private route: ActivatedRoute,

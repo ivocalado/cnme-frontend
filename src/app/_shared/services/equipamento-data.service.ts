@@ -20,8 +20,8 @@ export class EquipamentoDataService {
 
     }
 
-    storeEquipamento(equipamento: Equipamento, tipoEquipamentoId: string): Observable<Equipamento> {
-        equipamento.tipo_equipamento_id = tipoEquipamentoId;
+    storeEquipamento(equipamento: Equipamento, tipoEquipamentoId: number): Observable<Equipamento> {
+        equipamento.tipo_equipamento_id = +tipoEquipamentoId;
         return this.httpClient
             .post<Equipamento>(
                 "/api/equipamentos",
@@ -55,9 +55,9 @@ export class EquipamentoDataService {
                     tipoEquipamento = <TipoEquipamento>res["data"][key]["tipo_equipamento"];
                     if (tipoEquipamento != null) {
                         equipamento.tipoEquipamento = tipoEquipamento;
-                        
+
                     } else {
-                        equipamento.tipoEquipamento = new TipoEquipamento("", "", "");
+                        equipamento.tipoEquipamento = TipoEquipamento.EMPTY_MODEL;
                     }
                     equipamentos.push(equipamento);
                 }

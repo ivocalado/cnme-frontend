@@ -12,7 +12,7 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 })
 
 export class TipoEquipamentoEditComponent implements OnInit {
-    tipoEquipamento: TipoEquipamento = new TipoEquipamento("", "", "");
+    tipoEquipamento: TipoEquipamento = TipoEquipamento.EMPTY_MODEL;
     tipoEquipamentoForm: FormGroup;
     tipoEquipamentoId: number;
     editmode = false;
@@ -76,12 +76,12 @@ export class TipoEquipamentoEditComponent implements OnInit {
     onCancel() {
         this.router.navigate(["/tipoEquipamentos"], { relativeTo: this.route });
     }
-    
+
     private initForm(tipoEquipamento:TipoEquipamento){
         this.tipoEquipamentoForm = new FormGroup({
             nome: new FormControl(tipoEquipamento.nome, Validators.required),
             descricao: new FormControl(tipoEquipamento.descricao, Validators.required)
-            
+
         });
 	}
 

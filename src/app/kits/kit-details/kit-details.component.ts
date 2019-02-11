@@ -12,10 +12,7 @@ import { Localidade } from 'src/app/_shared/models/localidade.model';
     styleUrls: ['./kit-details.component.scss']
 })
 export class KitDetailsComponent implements OnInit {
-    estado: Estado = new Estado(null, "", "")
-    municipio: Municipio = new Municipio(null, "", null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "", null, null, this.estado, this.municipio);
-    kit: Kit = new Kit("", "", "", "", "", "", "", null, this.localidade);
+    kit: Kit = Kit.EMPTY_MODEL;
 
     constructor(
         private kitDataService: KitDataService,

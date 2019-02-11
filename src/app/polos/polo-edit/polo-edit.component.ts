@@ -17,10 +17,7 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 export class PoloEditComponent implements OnInit {
     estados: Estado[];
     municipios: Municipio[];
-    estado: Estado = new Estado(null, "", "")
-    municipio: Municipio = new Municipio(null, "", null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "", null, null, this.estado, this.municipio);
-    unidade: Unidade = new Unidade("", "", "", "", "", "", "", null, this.localidade);
+    unidade: Unidade = Unidade.EMPTY_MODEL;
     poloForm: FormGroup;
     unidadeId: number;
     editmode = false;
@@ -89,7 +86,7 @@ export class PoloEditComponent implements OnInit {
                     });
                 });
         } else {
-            this.unidadeDataService.storeUnidade(this.poloForm.value, 1)
+            this.unidadeDataService.storeUnidade(this.poloForm.value, 3, "polo")
                 .subscribe(
                     (unidade: Unidade) => {
                         this.snackBarService.openSnackBar(

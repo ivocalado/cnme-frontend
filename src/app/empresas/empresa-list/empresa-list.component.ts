@@ -41,7 +41,7 @@ export class EmpresaListComponent implements OnInit {
 
     fetchUnidades() {
         this.unidadeDataService
-            .getUnidades()
+            .getEmpresas()
             .subscribe((unidades: Unidade[]) => {
                 this.dataSource = new MatTableDataSource(unidades);
                 this.dataSource.sort = this.sort;

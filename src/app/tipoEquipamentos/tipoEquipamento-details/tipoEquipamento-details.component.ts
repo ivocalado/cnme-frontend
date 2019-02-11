@@ -9,7 +9,7 @@ import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
     styleUrls: ['./tipoEquipamento-details.component.scss']
 })
 export class TipoEquipamentoDetailsComponent implements OnInit {
-    tipoEquipamento: TipoEquipamento = new TipoEquipamento("", "", "");
+    tipoEquipamento: TipoEquipamento = TipoEquipamento.EMPTY_MODEL;
 
     constructor(
         private tipoEquipamentoDataService: TipoEquipamentoDataService,

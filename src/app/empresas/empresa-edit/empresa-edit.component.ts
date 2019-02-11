@@ -17,10 +17,7 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 export class EmpresaEditComponent implements OnInit {
     estados: Estado[];
     municipios: Municipio[];
-    estado: Estado = new Estado(null, "", "")
-    municipio: Municipio = new Municipio(null, "", null);
-    localidade: Localidade = new Localidade("", "", "", "", "", "", null, null, this.estado, this.municipio);
-    unidade: Unidade = new Unidade("", "", "", "", "", "", "", null, this.localidade);
+    unidade: Unidade = Unidade.EMPTY_MODEL;
     empresaForm: FormGroup;
     unidadeId: number;
     editmode = false;
@@ -87,7 +84,7 @@ export class EmpresaEditComponent implements OnInit {
                 )
         }
         else {
-            this.unidadeDataService.storeUnidade(this.empresaForm.value, 1)
+            this.unidadeDataService.storeUnidade(this.empresaForm.value, 4, "empresa")
                 .subscribe(
                     (unidade: Unidade) => {
                         this.snackBarService.openSnackBar("Empresa cadastrada com sucesso");

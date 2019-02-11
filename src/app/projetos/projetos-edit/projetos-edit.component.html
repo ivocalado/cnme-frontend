@@ -1,135 +1,57 @@
-<div class="row">
+<div class="row" *ngIf="projetoForm">
     <div class="col-lg-12">
         <mat-card>
-            <mat-card-title>Projeto 24331-23</mat-card-title>
-            <form #f="ngForm">
+            <mat-card-title>Novo projeto de implantação</mat-card-title>
+            <form [formGroup]="projetoForm" (ngSubmit)="onAddProjeto()">
                 <div class="row">
-                    <div class="col-lg-8 mt-1">
+                    <div class="col-lg-6 mt-1">
                         <mat-form-field>
-                            <input matInput [(ngModel)]="descricao" name="descricao" id="descricao" placeholder="Descrição do projeto"
-                                required />
+                            <mat-select formControlName="unidade_id" id="unidade_id" placeholder="Escolha uma unidade"
+                                [required]="true">
+                                <mat-option *ngFor="let unidade of unidades" [value]="unidade.id">
+                                    {{ unidade.nome }}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-lg-4 mt-1">
                         <mat-form-field>
-                            <input matInput id="status" placeholder="Status" />
+                            <input matInput formControlName="numero" id="numero" placeholder="Número do projeto"
+                                [required]="true" />
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6 mt-1">
+                    <div class="col-lg-12 mt-1">
                         <mat-form-field>
-                            <input matInput id="usuario" placeholder="Nome do usuário" />
+                            <textarea matInput formControlName="descricao" id="descricao" matTextareaAutosize
+                                matAutosizeMinRows=1 matAutosizeMaxRows=5 placeholder="Descrição" [required]="true">
+                            </textarea>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-6 mt-1">
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 mt-1">
                         <mat-form-field>
-                            <input matInput id="unidade" placeholder="Nome da unidade" />
+                            <input matInput formControlName="data_implantacao_prevista" id="data_implantacao_prevista"
+                                [matDatepicker]="picker" placeholder="Data da implantação">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-hint>(Previsão)</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-10 mt-1 pull-right">
-                        <button mat-raised-button class="m-1" color="primary">
-                            Salvar
+                        <button mat-raised-button class="m-1" color="primary" [disabled]="!projetoForm.valid">
+                            {{ editmode ? "Atualizar" : "Salvar" }}
+                        </button>
+                        <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+                            Cancelar
                         </button>
                     </div>
                 </div>
             </form>
-            <hr class="mt-3">
-            <!-- stepper -->
-            <div *ngIf="f.valid">
-                <h2>Etapas</h2>
-                <mat-vertical-stepper [linear]="isLinear" #stepper>
-                    <mat-step [stepControl]="firstFormGroup">
-                        <form [formGroup]="firstFormGroup">
-                            <ng-template matStepLabel>Lista de equipamentos</ng-template>
-                            <div class="row">
-                                <div class="col-lg-4 mt-1">
-                                    <button mat-raised-button color="primary">Adicionar</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 mt-4">
-                                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-                                        <!--- Note that these columns can be defined in any order.
-                                            The actual rendered columns are set as a property on the row definition" -->
-
-                                        <!-- Position Column -->
-                                        <ng-container matColumnDef="equipamento">
-                                            <th mat-header-cell *matHeaderCellDef> Equipamento </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.equipamento}} </td>
-                                        </ng-container>
-
-                                        <!-- Name Column -->
-                                        <ng-container matColumnDef="cod_rastreio">
-                                            <th mat-header-cell *matHeaderCellDef> Cod. Rastreio </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.cod_rastreio}} </td>
-                                        </ng-container>
-
-                                        <!-- Weight Column -->
-                                        <ng-container matColumnDef="empresa">
-                                            <th mat-header-cell *matHeaderCellDef> Empresa </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.empresa}} </td>
-                                        </ng-container>
-
-                                        <!-- Symbol Column -->
-                                        <ng-container matColumnDef="status">
-                                            <th mat-header-cell *matHeaderCellDef> Status </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-                                        </ng-container>
-
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </form>
-                    </mat-step>
-                    <mat-step [stepControl]="secondFormGroup">
-                        <form [formGroup]="secondFormGroup">
-                            <ng-template matStepLabel>Instalação</ng-template>
-                            <div class="row">
-                                <div class="col-lg-6 mt-1">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Empresa">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-lg-3 mt-1">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Data">
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div>
-                                <button mat-raised-button color="primary" matStepperNext>Salvar</button>
-                            </div>
-                        </form>
-                    </mat-step>
-                    <mat-step>
-                        <form [formGroup]="thirdFormGroup">
-                            <ng-template matStepLabel>Ativação</ng-template>
-                            <div class="row">
-                                <div class="col-lg-6 mt-1">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Empresa">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-lg-3 mt-1">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Data">
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div>
-                                <button mat-raised-button color="primary" matStepperNext>Salvar</button>
-                            </div>
-                        </form>
-                    </mat-step>
-                </mat-vertical-stepper>
-            </div>
-            <!-- fim stepper -->
         </mat-card>
     </div>
 </div>

@@ -8,4 +8,13 @@ export class Usuario{
         public unidade_id: number,
         public tipo: string
     ){}
+    static readonly EMPTY_MODEL = {
+        id: null,
+        nome: '',
+        email: '',
+        password: '',
+        cpf: '',
+        unidade_id: null,
+        tipo: ''
+    }
 }

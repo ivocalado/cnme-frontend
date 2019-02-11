@@ -1,19 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { Unidade } from 'src/app/_shared/models/unidade.model';
+import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
+import { DateAdapter } from '@angular/material';
+import { Projeto } from 'src/app/_shared/models/projeto.model';
+import { DatePipe } from '@angular/common';
 
-export interface PeriodicElement {
-    equipamento: string;
-    cod_rastreio: string;
-    empresa: string;
-    status: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-    { equipamento: "equipamento", cod_rastreio: 'CPH2233398BR', empresa: "nome da empresa", status: 'entregue' },
-    { equipamento: "equipamento", cod_rastreio: 'CPH2233398BR', empresa: "nome da empresa", status: 'enviado' },
-    { equipamento: "equipamento", cod_rastreio: 'CPH2233398BR', empresa: "nome da empresa", status: 'enviado' },
-    { equipamento: "equipamento", cod_rastreio: 'CPH2233398BR', empresa: "nome da empresa", status: 'enviado' }
-];
 
 @Component({
     selector: "app-projetos-edit",
@@ -21,31 +16,74 @@ const ELEMENT_DATA: PeriodicElement[] = [
     styleUrls: ["./projetos-edit.component.scss"]
 })
 export class ProjetosEditComponent implements OnInit {
-    isLinear = false;
-    firstFormGroup: FormGroup;
-    secondFormGroup: FormGroup;
-    thirdFormGroup: FormGroup;
-    descricao="";
+    projetoForm: FormGroup;
+    unidades: Unidade[];
+    editMode=false;
+    projetoId:number;
+    projeto:Projeto = Projeto.EMPTY_MODEL;
 
-    displayedColumns: string[] = [
-        "equipamento",
-        "cod_rastreio",
-        "empresa",
-        "status"
-    ];
-    dataSource = ELEMENT_DATA;
 
-    constructor(private _formBuilder: FormBuilder) {}
+    constructor(
+        private route:ActivatedRoute,
+        private router:Router,
+        private unidadeDataService:UnidadeDataService,
+        private projetoDataService:ProjetoDataService,
+        private snackBarService:SnackBarService,
+        private dateAdapter: DateAdapter<any>
+    ) {
+        this.dateAdapter.setLocale('pt-BR');
+    }
 
     ngOnInit() {
-        this.firstFormGroup = this._formBuilder.group({
-            firstCtrl: ["", Validators.required]
+        this.fetchPolos();
+        this.route.params.subscribe((params:Params)=>{
+            this.projetoId = +params["id"];
+            this.editMode = params["id"] != null;
+            if(this.editMode){
+                this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
+                    this.projeto = projeto;
+                    this.initForm(this.projeto);
+                    console.log(projeto);
+                })
+            }else{
+                this.initForm(this.projeto);
+            }
         });
-        this.secondFormGroup = this._formBuilder.group({
-            secondCtrl: ["", Validators.required]
-        });
-        this.thirdFormGroup = this._formBuilder.group({
-            thirdCtrl: ["", Validators.required]
+    }
+
+    initForm(projeto:Projeto){
+        this.projetoForm = new FormGroup({
+            numero: new FormControl(projeto.numero, Validators.required),
+            descricao: new FormControl(projeto.descricao,Validators.required),
+            unidade_id:new FormControl(projeto.unidade.id,Validators.required),
+            data_implantacao_prevista: new FormControl(projeto.data_implantacao_prevista,Validators.required)
+        })
+    }
+
+    onAddProjeto() {
+        if(this.editMode){
+            this.projetoDataService.updateProjeto(this.projetoId,this.projetoForm.value)
+            .subscribe(res =>{
+                this.snackBarService.openSnackBar("Projeto atualizado com sucesso.");
+                this.router.navigate(["/projetos"], { relativeTo: this.route });
+            });
+        }else{
+            this.projetoDataService.storeProjeto(this.projetoForm.value)
+            .subscribe((projeto:Projeto) =>{
+                this.snackBarService.openSnackBar("Projeto incluído com sucesso.");
+                this.router.navigate(["/projetos"], {relativeTo:this.route});
+            });
+        }
+    }
+
+    onCancel() {
+        this.router.navigate(["/projetos"], { relativeTo: this.route });
+    }
+
+
+    fetchPolos(){
+        this.unidadeDataService.getPolos().subscribe((unidades: Unidade[]) => {
+            this.unidades = unidades;
         });
     }
 }

@@ -42,7 +42,7 @@ export class PoloListComponent implements OnInit {
 
     fetchUnidades() {
         this.unidadeDataService
-            .getUnidades()
+            .getPolos()
             .subscribe((unidades: Unidade[]) => {
                 this.dataSource = new MatTableDataSource(unidades);
                 this.dataSource.sort = this.sort;
