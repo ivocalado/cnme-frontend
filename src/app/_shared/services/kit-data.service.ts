@@ -4,8 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Localidade } from '../models/localidade.model';
-import { Estado } from '../models/estado.model';
+
 
 @Injectable()
 export class KitDataService {
@@ -21,8 +20,10 @@ export class KitDataService {
 
     }
 
-    storeKit(kit: Kit, tipoKitId: number): Observable<Kit> {
-        kit.tipo_kit_id = tipoKitId;
+    storeKit(kit: Kit, usuario_id: number): Observable<Kit> {
+        kit.data_inicio = "2019-01-01"
+        kit.data_fim = "2019-01-01"
+        kit.usuario_id = usuario_id
         return this.httpClient
             .post<Kit>(
                 "/api/kits",
@@ -38,7 +39,6 @@ export class KitDataService {
     }
 
     updateKit(id:number, kit:Kit){
-        kit.tipo_kit_id = 1;
         return this.httpClient.put("/api/kits/"+id, kit)
         .pipe(
             catchError(this.handleError)
@@ -53,10 +53,6 @@ export class KitDataService {
                 for(var key in res["data"]){
                     let kit:Kit;
                     kit = <Kit>res["data"][key];
-                    if (!kit["localidade"]) {
-                        kit.localidade = new Localidade("", "", "", "", "", "",null, null,null,null);
-                        kit.localidade.estado = new Estado(null,"","");
-                    }
                     kits.push(kit);
                 }
                 return kits;

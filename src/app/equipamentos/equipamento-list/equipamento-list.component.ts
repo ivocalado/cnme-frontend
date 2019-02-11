@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Equipamento } from 'src/app/_shared/models/equipamento.model';
-import { EquipamentoDataService } from 'src/app/_shared/services/equipamento-data.service';
+import { Equipamento } from '../../_shared/models/equipamento.model';
+import { EquipamentoDataService } from '../../_shared/services/equipamento-data.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({

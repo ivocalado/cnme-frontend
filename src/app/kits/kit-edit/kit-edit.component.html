@@ -6,110 +6,25 @@
                 <div class="row">
                     <div class="col-lg-8 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="nome" id="nome" placeholder="Nome da Kit" [required]="true"/>
-                            <mat-error *ngIf="!kitForm.get('nome').valid">{{kitForm.get('nome').errors['serverside']}}</mat-error>
+                            <input matInput formControlName="nome" id="nome" placeholder="Nome do Kit" [required]="true"/>
                         </mat-form-field>
                     </div>
                     <div class="col-lg-4 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="codigo_inep" id="codigo_inep" placeholder="INEP" #codigo_inep maxlength="8"/>
-                            <mat-hint align="end">{{codigo_inep.value.length}} / 8</mat-hint>
-
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="diretor" id="diretor" placeholder="Diretor" />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-8 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="email" id="email" placeholder="Email do diretor" [required]="true" />
-                            <mat-error *ngIf="!kitForm.get('email').valid">{{kitForm.get('email').errors['serverside']}}</mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 mt-1">
-                        <mat-form-field>
-                            <input matInput id="responsavel" placeholder="Responsável" />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-8 mt-1">
-                        <mat-form-field>
-                            <input matInput id="emailResponsavel" placeholder="Email do responsável" />
+                            <input matInput formControlName="versao" id="versao" placeholder="Versão"/>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-8 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="url" id="url"placeholder="Url"/>
-                            <mat-error *ngIf="!kitForm.get('url').valid">{{kitForm.get('url').errors['serverside']}}</mat-error>
-                            <mat-error *ngIf="!kitForm.hasError('pattern')">
-                                Digite uma <strong>url</strong> válida exemplo: http://google.com
-                            </mat-error>
+                            <input matInput formControlName="descricao" id="descricao" placeholder="Descrição" />
                         </mat-form-field>
                     </div>
                     <div class="col-lg-4 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="telefone" id="telefone" placeholder="Telefone"
-                            mask="(00) 0000-0000?0"/>
+                            <input matInput formControlName="status" id="status" placeholder="Status"/>
                         </mat-form-field>
-                    </div>
-                </div>
-                <div formGroupName="localidade">
-                <div class="row">
-                    <div class="col-lg-4 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="cep" id="cep" placeholder="Cep" [required]="true"
-                            mask="00000-000" />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-8 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="logradouro" id="logradouro" placeholder="Logradouro" [required]="true"/>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-3 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="numero" id="numero" placeholder="Número"[required]="true"
-                             />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-3 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="complemento" id="complemento" placeholder="Complemento" />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-6 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="bairro" id="bairro" placeholder="Bairro" [required]="true"
-                             />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-6 mt-1">
-                        <mat-form-field>
-                            <mat-select formControlName="estado_id" id="estado_id"
-                            (selectionChange)="onChange($event)" placeholder="Escolha um estado" [required]="true">
-                                <mat-option *ngFor="let estado of estados" [value]="estado.id">
-                                    {{ estado.nome }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="col-lg-6 mt-1">
-                        <mat-form-field>
-                            <mat-select formControlName="municipio_id" id="municipio_id" placeholder="Escolha um município" [required]="true">
-                                <mat-option *ngFor="let municipio of municipios" [value]="municipio.id">
-                                    {{ municipio.nome }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
                     </div>
                 </div>
                 <div class="row">

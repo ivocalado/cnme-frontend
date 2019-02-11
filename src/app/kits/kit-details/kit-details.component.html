@@ -5,21 +5,10 @@
             <hr>
             <div>
                 <p>
-                    <strong>Nome: </strong>{{kit.nome}} (<strong>Código INEP: </strong>{{kit.codigo_inep}})<br />
-                    <strong>Email: </strong>{{kit.email}}<br />
-                    <strong>Diretor: </strong>{{kit.diretor}}<br />
-                    <strong>Url: </strong>{{kit.url}}<br />
-                    <strong>Telefone: </strong><span>{{kit.telefone | mask: '(00) 0000-0000?0'}}</span><br />
-                </p>
-                <p>
-                    <strong>Endereço: </strong>
-                    {{kit.localidade.logradouro}}
-                    {{kit.localidade.numero}}
-                    {{kit.localidade.complemento}},
-                    {{kit.localidade.bairro}} -
-                    {{kit.localidade.cep}} -
-                    {{kit.localidade.municipio.nome}} /
-                    {{kit.localidade.estado.sigla}}
+                    <strong>Nome do Kit: </strong>{{kit.nome}}<br />
+                    <strong>Descrição: </strong>{{kit.descricao}}<br />
+                    <strong>Versão: </strong>{{kit.versao}}<br />
+                    <strong>Status: </strong>{{kit.status}}<br />
                 </p>
                 <p>
                     <button mat-raised-button type="button" class="mt-1" color="warn" (click)="onCancel()">

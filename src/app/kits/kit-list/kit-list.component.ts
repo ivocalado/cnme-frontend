@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Kit } from 'src/app/_shared/models/kit.model';
-import { KitDataService } from 'src/app/_shared/services/kit-data.service';
+import { Kit } from '../../_shared/models/kit.model';
+import { KitDataService } from '../../_shared/services/kit-data.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -11,7 +11,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 })
 export class KitListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
-    displayedColumns: string[] = ["nome", "tipo", "estado", "actions"];
+    displayedColumns: string[] = ["nome", "descricao", "versao", "status", "actions"];
     dataSource;
 
     constructor(
@@ -33,7 +33,7 @@ export class KitListComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        if (confirm("Tem certeza que deseja deletar esta kit")) {
+        if (confirm("Tem certeza que deseja deletar este kit")) {
             this.kitDataService.deleteKit(id).subscribe(res => {
                 this.fetchKits();
             });
