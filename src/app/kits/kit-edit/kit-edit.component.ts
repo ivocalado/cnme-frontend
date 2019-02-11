@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Kit } from '../../_shared/models/kit.model';
-import { Localidade } from '../../_shared/models/localidade.model';
 import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
 import { KitDataService } from "../../_shared/services/kit-data.service";
 import { SnackBarService } from '../../_shared/helpers/snackbar.service';
+import { Equipamento } from '../../_shared/models/equipamento.model';
+import { EquipamentoDataService } from '../../_shared/services/equipamento-data.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
     selector: "app-kit-edit",
@@ -13,6 +15,10 @@ import { SnackBarService } from '../../_shared/helpers/snackbar.service';
 })
 
 export class KitEditComponent implements OnInit {
+    @ViewChild(MatSort) sort: MatSort;
+    displayedColumns: string[] = ["nome", "tipoEquipamento", "descricao", "requisitos"];
+    dataSource;
+
     kit: Kit = Kit.EMPTY_MODEL
     kitForm: FormGroup;
     kitId: number;
@@ -23,6 +29,7 @@ export class KitEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private kitDataService: KitDataService,
+        private equipamentoDataService: EquipamentoDataService,
         private snackBarService: SnackBarService
     ) {}
 
@@ -44,6 +51,8 @@ export class KitEditComponent implements OnInit {
                 this.initForm(this.kit);
             }
         })
+
+        this.fetchEquipamentos()
     }
 
     onAddKit() {
@@ -88,6 +97,15 @@ export class KitEditComponent implements OnInit {
             status: new FormControl(kit.status, [Validators.required])
       
         });
+    }
+
+    fetchEquipamentos() {
+        this.equipamentoDataService
+            .getEquipamentos()
+            .subscribe((equipamentos: Equipamento[]) => {
+                this.dataSource = new MatTableDataSource(equipamentos);
+                this.dataSource.sort = this.sort;
+            });
     }
 
     
