@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Projeto } from '../models/projeto.model';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ProjetoStatus } from '../helpers/enum-helper';
+import { StatusProjeto } from '../helpers/enum-helper';
 
 @Injectable()
 export class ProjetoDataService{
@@ -20,9 +20,8 @@ export class ProjetoDataService{
     }
 
     storeProjeto(projeto:Projeto):Observable<Projeto>{
-        projeto.created_at = new Date();
         projeto.usuario_id = 1; //TODO: substituir para id do usuário logado
-        projeto.status = ProjetoStatus.ABERTO;
+        projeto.status = StatusProjeto.CRIADO;
         return this.httpClient.post<Projeto>("/api/projeto-cnme", projeto, {
             headers: new HttpHeaders({
                 "Content-Type": "application/json; charset=UTF-8"

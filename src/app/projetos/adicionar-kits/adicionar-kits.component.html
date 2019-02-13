@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-lg-12">
+        <mat-card>
+            <mat-card-title>
+                Seleção de kit
+            </mat-card-title>
+            <form #f="ngForm">
+                <div class="row">
+                    <div class="col-lg-12 mt-1">
+                        <mat-radio-group class="kit-radio-group" [(ngModel)]="kit" name="kit" id="kit">
+                            <mat-radio-button class="kit-radio-button" *ngFor="let kit of kits" [value]="kit">
+                                <mat-card>
+                                    <h2>{{kit.nome}}</h2>
+                                    {{kit.equipamentos}}
+
+                                </mat-card>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <div class="kit-selected-value">Kit escolhido: {{kit}}</div>
+                    </div>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+
+</div>

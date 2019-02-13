@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProjetosComponent } from './projetos.component';
 import { ProjetoListComponent } from './projeto-list/projeto-list.component';
 import { ProjetosEditComponent } from './projetos-edit/projetos-edit.component';
+import { AdicionarKitsComponent } from './adicionar-kits/adicionar-kits.component';
 
 const routes: Routes = [
     {
@@ -10,7 +11,8 @@ const routes: Routes = [
         children: [
             { path: '', component: ProjetoListComponent },
             { path: 'novo', component: ProjetosEditComponent },
-            { path: 'editar/:id', component: ProjetosEditComponent }
+            { path: 'editar/:id', component: ProjetosEditComponent},
+            { path: ':id/adicionar-kits', component: AdicionarKitsComponent }
         ]
     }
 ];

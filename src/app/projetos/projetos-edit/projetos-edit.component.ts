@@ -56,7 +56,8 @@ export class ProjetosEditComponent implements OnInit {
             numero: new FormControl(projeto.numero, Validators.required),
             descricao: new FormControl(projeto.descricao,Validators.required),
             unidade_id:new FormControl(projeto.unidade.id,Validators.required),
-            data_implantacao_prevista: new FormControl(projeto.data_implantacao_prevista,Validators.required)
+            data_inicio_previsto: new FormControl(projeto.data_inicio_previsto,Validators.required),
+            data_fim_previsto: new FormControl(projeto.data_fim_previsto, Validators.required)
         })
     }
 
@@ -65,13 +66,13 @@ export class ProjetosEditComponent implements OnInit {
             this.projetoDataService.updateProjeto(this.projetoId,this.projetoForm.value)
             .subscribe(res =>{
                 this.snackBarService.openSnackBar("Projeto atualizado com sucesso.");
-                this.router.navigate(["/projetos"], { relativeTo: this.route });
+                this.router.navigate(["../../"+this.projetoId+"/adicionar-kits"], { relativeTo: this.route });
             });
         }else{
             this.projetoDataService.storeProjeto(this.projetoForm.value)
             .subscribe((projeto:Projeto) =>{
                 this.snackBarService.openSnackBar("Projeto incluído com sucesso.");
-                this.router.navigate(["/projetos"], {relativeTo:this.route});
+                this.router.navigate(["/adicionar-kits"], {relativeTo:this.route});
             });
         }
     }

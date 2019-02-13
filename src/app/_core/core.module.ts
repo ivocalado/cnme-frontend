@@ -7,14 +7,17 @@ import {
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
 } from "@angular/material";
 import { EstadoService } from "../_shared/services/estado.service";
 import { SharedModule } from "../_shared/shared.module";
 import { CommonModule } from "@angular/common";
+import { IsOnlineComponent } from './is-online/is-online.component';
+import { SnackBarService } from '../_shared/helpers/snackbar.service';
 
 @NgModule({
-    declarations: [MainNavComponent],
+    declarations: [MainNavComponent, IsOnlineComponent],
     imports: [
         CommonModule,
         SharedModule,
@@ -27,6 +30,6 @@ import { CommonModule } from "@angular/common";
         MatSnackBarModule
     ],
     exports: [AppRoutingModule, MainNavComponent],
-    providers: [EstadoService]
+    providers: [EstadoService, SnackBarService]
 })
 export class CoreModule {}
