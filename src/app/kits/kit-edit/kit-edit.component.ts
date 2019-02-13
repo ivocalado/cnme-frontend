@@ -6,7 +6,9 @@ import { KitDataService } from "../../_shared/services/kit-data.service";
 import { SnackBarService } from '../../_shared/helpers/snackbar.service';
 import { Equipamento } from '../../_shared/models/equipamento.model';
 import { EquipamentoDataService } from '../../_shared/services/equipamento-data.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
     selector: "app-kit-edit",
@@ -16,8 +18,10 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 
 export class KitEditComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
-    displayedColumns: string[] = ["nome", "tipoEquipamento", "descricao", "requisitos"];
+    displayedColumns: string[] = ["select", "nome", "tipoEquipamento", "descricao", "requisitos"];
     dataSource;
+    equipamentos_ids;
+    selection = new SelectionModel<Equipamento>(true, []);
 
     kit: Kit = Kit.EMPTY_MODEL
     kitForm: FormGroup;
@@ -46,18 +50,21 @@ export class KitEditComponent implements OnInit {
                     .subscribe((kit:Kit) => {
                         this.kit = kit;
                         this.initForm(this.kit);
+                        this.fetchEquipamentos()
                     });
             }else{
                 this.initForm(this.kit);
+                this.fetchEquipamentos()
             }
         })
 
-        this.fetchEquipamentos()
+        
     }
 
     onAddKit() {
+        
+        
         if(this.editmode){
-
             this.kitDataService.updateKit(this.kitId, this.kitForm.value)
             .subscribe(
                 res => {
@@ -67,9 +74,15 @@ export class KitEditComponent implements OnInit {
             )
         }
         else{
+            this.equipamentos_ids = []
+            
+            this.selection.selected.forEach(row => 
+                this.equipamentos_ids.push(row.id)
+            );
             this.kitDataService.storeKit(this.kitForm.value, 1)
             .subscribe(
                 (kit:Kit) =>{
+
                     this.snackBarService.openSnackBar("Kit cadastrado com sucesso");
                     this.router.navigate(["/kits"], { relativeTo: this.route });
                 },
@@ -92,10 +105,7 @@ export class KitEditComponent implements OnInit {
     private initForm(kit:Kit){
         this.kitForm = new FormGroup({
             nome: new FormControl(kit.nome, Validators.required),
-            descricao: new FormControl(kit.descricao),
-            versao: new FormControl(kit.versao),
-            status: new FormControl(kit.status, [Validators.required])
-      
+            descricao: new FormControl(kit.descricao)
         });
     }
 
@@ -105,8 +115,32 @@ export class KitEditComponent implements OnInit {
             .subscribe((equipamentos: Equipamento[]) => {
                 this.dataSource = new MatTableDataSource(equipamentos);
                 this.dataSource.sort = this.sort;
+                if(this.kit != null) {
+                    this.kit.equipamentos.forEach(equi => {
+                        let equip_id = equi.id
+                        for(let i of this.dataSource.data) {
+                            if(i.id == equip_id) {
+                                this.selection.select(i)
+                                break
+                            }
+                        }
+                    });
+                }                
+
             });
     }
 
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    } 
     
+      /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 }

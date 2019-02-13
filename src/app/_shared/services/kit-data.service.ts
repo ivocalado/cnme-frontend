@@ -8,7 +8,8 @@ import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class KitDataService {
-
+    novos_equipamentos_ids;
+    antigos_equipamentos_ids;
     constructor(private httpClient: HttpClient) {}
 
     private handleError(errorResponse: HttpErrorResponse) {
@@ -36,6 +37,47 @@ export class KitDataService {
                 }
             )
             .pipe( map(data => data), catchError(this.handleError));
+    }
+
+    updateEquipamentosToKit(kit_id: number, novos_equipamentos_ids: number[]) {
+        this.novos_equipamentos_ids = novos_equipamentos_ids;
+        this.getKit(kit_id).subscribe((kit:Kit) => {
+            this.antigos_equipamentos_ids = []
+            kit.equipamentos.forEach(equipamento => 
+                this.antigos_equipamentos_ids.push(equipamento.id)
+            );
+
+            let idsToRemove = []
+            this.antigos_equipamentos_ids.forEach(elem => {
+                if(!(elem in this.novos_equipamentos_ids)) {
+                    idsToRemove.push(elem)
+                }
+            });
+            this._removeEquipamentosFromKit(kit_id, idsToRemove).subscribe((kit:Kit) => {
+               let idsToAdd = []
+               this.novos_equipamentos_ids.forEach(elem => {
+                   if(!(elem in this.antigos_equipamentos_ids)) {
+                        idsToAdd.push(elem)
+                   }
+               }) 
+               this._addEquipamentosToKit(kit_id, idsToAdd)
+            });
+
+        });
+    }
+
+    _removeEquipamentosFromKit(kit_id: number, ids: number[]) {
+        return this.httpClient.request('delete', "/api/kits/"+kit_id+"/remove-equipamentos", {body: {ids: ids}})
+    }
+
+    _addEquipamentosToKit(kit_id: number, ids: number[]) {
+        return this.httpClient.post<number[]>("/api/kits/"+kit_id+"/add-equipamentos", ids, {
+            headers: new HttpHeaders({
+                "Content-Type":
+                    "application/json; charset=UTF-8"
+            })
+        }
+        ).pipe( map(data => data), catchError(this.handleError));
     }
 
     updateKit(id:number, kit:Kit){

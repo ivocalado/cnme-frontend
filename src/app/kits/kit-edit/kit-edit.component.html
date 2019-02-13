@@ -9,21 +9,11 @@
                             <input matInput formControlName="nome" id="nome" placeholder="Nome do Kit" [required]="true"/>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-4 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="versao" id="versao" placeholder="Versão"/>
-                        </mat-form-field>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-8 mt-1">
                         <mat-form-field>
                             <input matInput formControlName="descricao" id="descricao" placeholder="Descrição" />
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-4 mt-1">
-                        <mat-form-field>
-                            <input matInput formControlName="status" id="status" placeholder="Status"/>
                         </mat-form-field>
                     </div>
                 </div>
@@ -35,23 +25,23 @@
                         <hr class="m-2">
                         <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                               <!-- Checkbox Column -->
-                        <!-- <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef>
-                            <mat-checkbox (change)="$event ? masterToggle() : null"
-                                            [checked]="selection.hasValue() && isAllSelected()"
-                                            [indeterminate]="selection.hasValue() && !isAllSelected()">
-                            </mat-checkbox>
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                            <mat-checkbox (click)="$event.stopPropagation()"
+                            <ng-container matColumnDef="select">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                                [checked]="selection.hasValue() && isAllSelected()"
+                                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                    </mat-checkbox>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
                                             (change)="$event ? selection.toggle(row) : null"
                                             [checked]="selection.isSelected(row)">
-                            </mat-checkbox>
-                            </td>
-                        </ng-container> -->
-                        <!-- Position Column -->
-                        <ng-container matColumnDef="nome">
-                            <mat-header-cell *matHeaderCellDef> Equipamento </mat-header-cell>
+                                    </mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="nome">
+                                <mat-header-cell *matHeaderCellDef> Equipamento </mat-header-cell>
                                 <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="tipoEquipamento">

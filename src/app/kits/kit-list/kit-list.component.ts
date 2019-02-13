@@ -11,7 +11,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 })
 export class KitListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
-    displayedColumns: string[] = ["nome", "descricao", "versao", "status", "actions"];
+    displayedColumns: string[] = ["nome", "descricao", "actions"];
     dataSource;
 
     constructor(
