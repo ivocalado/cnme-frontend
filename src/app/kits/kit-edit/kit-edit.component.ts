@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Kit } from '../../_shared/models/kit.model';
-import { Localidade } from 'src/app/_shared/models/localidade.model';
 import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
-import { EstadoDataService } from 'src/app/_shared/services/estado-data.service';
-import { KitDataService } from "src/app/_shared/services/kit-data.service";
-import { Estado } from 'src/app/_shared/models/estado.model';
-import { Municipio } from 'src/app/_shared/models/municipio.model';
-import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { KitDataService } from "../../_shared/services/kit-data.service";
+import { SnackBarService } from '../../_shared/helpers/snackbar.service';
+import { Equipamento } from '../../_shared/models/equipamento.model';
+import { EquipamentoDataService } from '../../_shared/services/equipamento-data.service';
+import { MatSort, MatTableDataSource} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
     selector: "app-kit-edit",
@@ -16,8 +17,12 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 })
 
 export class KitEditComponent implements OnInit {
-    estados: Estado[];
-    municipios: Municipio[];
+    @ViewChild(MatSort) sort: MatSort;
+    displayedColumns: string[] = ["select", "nome", "tipoEquipamento", "descricao", "requisitos"];
+    dataSource;
+    equipamentos_ids;
+    selection = new SelectionModel<Equipamento>(true, []);
+
     kit: Kit = Kit.EMPTY_MODEL
     kitForm: FormGroup;
     kitId: number;
@@ -27,17 +32,13 @@ export class KitEditComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private estadoDataService: EstadoDataService,
         private kitDataService: KitDataService,
+        private equipamentoDataService: EquipamentoDataService,
         private snackBarService: SnackBarService
     ) {}
 
 
     ngOnInit() {
-
-        this.estadoDataService.getEstados().subscribe((estados: Estado[]) => {
-            this.estados = estados;
-        });
 
         this.route.params.subscribe((params:Params) =>{
             this.kitId = +params["id"];
@@ -49,52 +50,44 @@ export class KitEditComponent implements OnInit {
                     .subscribe((kit:Kit) => {
                         this.kit = kit;
                         this.initForm(this.kit);
-                        this.fetchMunicipio(this.kit.localidade.estado.id);
+                        this.fetchEquipamentos()
                     });
             }else{
                 this.initForm(this.kit);
+                this.fetchEquipamentos()
             }
         })
-    }
 
-    onChange(e) {
-        this.fetchMunicipio(e.value);
-    }
-
-    fetchMunicipio(id:number){
-        let estado = this.estados.find(obj => obj.id == id);
-        this.estadoDataService
-            .getMunicipios(estado.sigla)
-            .subscribe((municipios: Municipio[]) => {
-                this.municipios = municipios;
-                if(this.editmode){
-                    this.kitForm.patchValue({
-                        localidade:{
-                            municipio_id: this.kit.localidade.municipio.id
-                        }
-                    })
-                }
-            });
+        
     }
 
     onAddKit() {
+        
+        
         if(this.editmode){
             this.kitDataService.updateKit(this.kitId, this.kitForm.value)
             .subscribe(
                 res => {
-                    this.snackBarService.openSnackBar("Kit atualizada com sucesso");
+                    this.snackBarService.openSnackBar("Kit atualizado com sucesso");
                     this.router.navigate(["/kits"], { relativeTo: this.route });
                 }
             )
         }
         else{
+            this.equipamentos_ids = []
+            
+            this.selection.selected.forEach(row => 
+                this.equipamentos_ids.push(row.id)
+            );
             this.kitDataService.storeKit(this.kitForm.value, 1)
             .subscribe(
                 (kit:Kit) =>{
-                    this.snackBarService.openSnackBar("Kit cadastrada com sucesso");
+
+                    this.snackBarService.openSnackBar("Kit cadastrado com sucesso");
                     this.router.navigate(["/kits"], { relativeTo: this.route });
                 },
                 error => {
+                    console.log(error)
                     this.kitForm.setErrors = error;
                     const fields = Object.keys(error || {});
                     fields.forEach((field) => {
@@ -112,37 +105,42 @@ export class KitEditComponent implements OnInit {
     private initForm(kit:Kit){
         this.kitForm = new FormGroup({
             nome: new FormControl(kit.nome, Validators.required),
-            'codigo_inep': new FormControl(kit.codigo_inep, Validators.minLength(8)),
-            diretor: new FormControl(kit.diretor),
-            email: new FormControl(kit.email, [Validators.required, Validators.email,]),
-            url: new FormControl(
-                kit.url,
-                Validators.pattern(/https?:\/\/(www\.)?(?!www\.)([A-Za-z0-9\-@_~]+\.)[A-Za-z]{2,}(:[0-9]{2,5})?(\.[A-Za-z0-9\/_\-~?&=]+)*/)
-            ),
-            telefone: new FormControl(kit.telefone),
-            localidade: new FormGroup({
-                cep: new FormControl(kit.localidade.cep, Validators.required),
-                logradouro: new FormControl(kit.localidade.logradouro, Validators.required),
-                numero: new FormControl(kit.localidade.numero, Validators.required),
-                complemento: new FormControl(kit.localidade.complemento),
-                bairro: new FormControl(kit.localidade.bairro, Validators.required),
-                estado_id: new FormControl(kit.localidade.estado.id, Validators.required),
-                municipio_id: new FormControl(kit.localidade.municipio.id, Validators.required)
-            })
+            descricao: new FormControl(kit.descricao)
         });
     }
 
-    /*
-        custom validator para email já cadastrado
-        forbiddenEmail(control:FormControl):Promise<any> | Observable<any>{
-        const promise = new Promise<any>((resolve, reject) =>{
-            if(control.value ==="a"){
-            resolve({"emailIsForbidden":true});
-            }else{
-                resolve(null);
-            }
-        })
-        return promise;
-    }*/
+    fetchEquipamentos() {
+        this.equipamentoDataService
+            .getEquipamentos()
+            .subscribe((equipamentos: Equipamento[]) => {
+                this.dataSource = new MatTableDataSource(equipamentos);
+                this.dataSource.sort = this.sort;
+                if(this.kit != null) {
+                    this.kit.equipamentos.forEach(equi => {
+                        let equip_id = equi.id
+                        for(let i of this.dataSource.data) {
+                            if(i.id == equip_id) {
+                                this.selection.select(i)
+                                break
+                            }
+                        }
+                    });
+                }                
 
+            });
+    }
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    } 
+    
+      /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipamentoDataService } from 'src/app/_shared/services/equipamento-data.service';
+import { EquipamentoDataService } from '../../_shared/services/equipamento-data.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Equipamento } from 'src/app/_shared/models/equipamento.model';
-import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
+import { Equipamento } from '../../_shared/models/equipamento.model';
+import { TipoEquipamento } from '../../_shared/models/tipoEquipamento.model';
 
 @Component({
     selector: 'app-equipamento-details',

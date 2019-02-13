@@ -11,7 +11,7 @@ const kitsRoutes: Routes = [
         component: KitsComponent,
         children: [
             { path: "", component: KitListComponent },
-            { path: "nova", component: KitEditComponent },
+            { path: "novo", component: KitEditComponent },
             { path: "editar/:id", component: KitEditComponent },
             { path: "detalhes/:id", component: KitDetailsComponent }
         ]

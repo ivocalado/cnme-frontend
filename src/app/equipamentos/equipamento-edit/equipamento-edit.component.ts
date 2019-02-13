@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Equipamento } from '../../_shared/models/equipamento.model';
-import { Localidade } from 'src/app/_shared/models/localidade.model';
+import { Localidade } from '../../_shared/models/localidade.model';
 import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
-import { TipoEquipamentoDataService } from 'src/app/_shared/services/tipoEquipamento-data.service';
-import { EquipamentoDataService } from "src/app/_shared/services/equipamento-data.service";
-import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
+import { TipoEquipamentoDataService } from '../../_shared/services/tipoEquipamento-data.service';
+import { EquipamentoDataService } from "../../_shared/services/equipamento-data.service";
+import { TipoEquipamento } from '../../_shared/models/tipoEquipamento.model';
 
-import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { SnackBarService } from '../../_shared/helpers/snackbar.service';
 
 @Component({
     selector: "app-equipamento-edit",
