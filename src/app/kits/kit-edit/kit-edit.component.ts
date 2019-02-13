@@ -10,6 +10,7 @@ import { MatSort, MatTableDataSource} from '@angular/material';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
 
+
 @Component({
     selector: "app-kit-edit",
     templateUrl: "./kit-edit.component.html",
@@ -63,28 +64,34 @@ export class KitEditComponent implements OnInit {
 
     onAddKit() {
         
-        
+        this.equipamentos_ids = []
+            
+        this.selection.selected.forEach(row => 
+            this.equipamentos_ids.push(row.id)
+        );
+
         if(this.editmode){
             this.kitDataService.updateKit(this.kitId, this.kitForm.value)
             .subscribe(
                 res => {
-                    this.snackBarService.openSnackBar("Kit atualizado com sucesso");
-                    this.router.navigate(["/kits"], { relativeTo: this.route });
+                    this.kitDataService.updateEquipamentosToKit(this.kitId, this.equipamentos_ids)
+                        this.snackBarService.openSnackBar("Kit atualizado com sucesso");
+                        this.router.navigate(["/kits"], { relativeTo: this.route });
                 }
             )
         }
         else{
-            this.equipamentos_ids = []
             
-            this.selection.selected.forEach(row => 
-                this.equipamentos_ids.push(row.id)
-            );
             this.kitDataService.storeKit(this.kitForm.value, 1)
             .subscribe(
                 (kit:Kit) =>{
-
-                    this.snackBarService.openSnackBar("Kit cadastrado com sucesso");
-                    this.router.navigate(["/kits"], { relativeTo: this.route });
+                    
+                    // this.snackBarService.openSnackBar("Kit cadastrado com sucesso");
+                    // this.router.navigate(["/kits"], { relativeTo: this.route });
+                    console.log(kit)
+                    this.kitDataService.updateEquipamentosToKit(kit.id, this.equipamentos_ids)
+                        this.snackBarService.openSnackBar("Kit cadastrado com sucesso");
+                        this.router.navigate(["/kits"], { relativeTo: this.route });
                 },
                 error => {
                     console.log(error)
@@ -115,7 +122,7 @@ export class KitEditComponent implements OnInit {
             .subscribe((equipamentos: Equipamento[]) => {
                 this.dataSource = new MatTableDataSource(equipamentos);
                 this.dataSource.sort = this.sort;
-                if(this.kit != null) {
+                if(this.kit != null && this.kit.equipamentos != null) {
                     this.kit.equipamentos.forEach(equi => {
                         let equip_id = equi.id
                         for(let i of this.dataSource.data) {

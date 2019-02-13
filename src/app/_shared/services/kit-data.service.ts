@@ -10,6 +10,7 @@ import { catchError, map } from 'rxjs/operators';
 export class KitDataService {
     novos_equipamentos_ids;
     antigos_equipamentos_ids;
+    kit: Kit;
     constructor(private httpClient: HttpClient) {}
 
     private handleError(errorResponse: HttpErrorResponse) {
@@ -36,16 +37,31 @@ export class KitDataService {
                     })
                 }
             )
-            .pipe( map(data => data), catchError(this.handleError));
+            .pipe( map(res =>{
+                let kit:Kit;
+                kit = res["data"];
+                return kit;
+            }), catchError(this.handleError));
     }
 
     updateEquipamentosToKit(kit_id: number, novos_equipamentos_ids: number[]) {
+        
+        console.log("Passo 1")
+        console.log("==updateEquipamentosToKit==")
+        console.log(kit_id)
+        console.log(novos_equipamentos_ids)
         this.novos_equipamentos_ids = novos_equipamentos_ids;
+        let result
+        console.log("Passo 2")
         this.getKit(kit_id).subscribe((kit:Kit) => {
+            console.log("Passo 4")
+            this.kit = kit
             this.antigos_equipamentos_ids = []
             kit.equipamentos.forEach(equipamento => 
                 this.antigos_equipamentos_ids.push(equipamento.id)
             );
+
+            console.log("Passo 5")
 
             let idsToRemove = []
             this.antigos_equipamentos_ids.forEach(elem => {
@@ -53,31 +69,53 @@ export class KitDataService {
                     idsToRemove.push(elem)
                 }
             });
+            console.log("Passo 6")
             this._removeEquipamentosFromKit(kit_id, idsToRemove).subscribe((kit:Kit) => {
+                console.log("Passo 8")
                let idsToAdd = []
                this.novos_equipamentos_ids.forEach(elem => {
                    if(!(elem in this.antigos_equipamentos_ids)) {
                         idsToAdd.push(elem)
                    }
                }) 
+               console.log("Passo 9")
                this._addEquipamentosToKit(kit_id, idsToAdd)
+               console.log("Passo 10")
             });
-
+            console.log("Passo 7")
         });
+        console.log("Passo 3")
+       
     }
 
     _removeEquipamentosFromKit(kit_id: number, ids: number[]) {
-        return this.httpClient.request('delete', "/api/kits/"+kit_id+"/remove-equipamentos", {body: {ids: ids}})
+        console.log("_removeEquipamentosFromKit")
+        console.log("kit_id = "+ kit_id)
+        console.log("ids = " + ids)
+        return this.httpClient.request('delete', "/api/kits/"+kit_id+"/remove-equipamentos", 
+            {
+                body: {ids: ids}, 
+                headers: new HttpHeaders({
+                    "Content-Type":
+                        "application/json; charset=UTF-8"
+                })
+            }
+        )
     }
 
     _addEquipamentosToKit(kit_id: number, ids: number[]) {
-        return this.httpClient.post<number[]>("/api/kits/"+kit_id+"/add-equipamentos", ids, {
+        console.log("_addEquipamentosToKit")
+        console.log("kit_id = "+ kit_id)
+        console.log("ids = " + ids)
+        let result = this.httpClient.post<number[]>("/api/kits/"+kit_id+"/add-equipamentos", ids, {
             headers: new HttpHeaders({
                 "Content-Type":
                     "application/json; charset=UTF-8"
             })
-        }
-        ).pipe( map(data => data), catchError(this.handleError));
+        })
+        console.log("saida!")
+        console.log(result)
+        return result.pipe( map(data => data), catchError(this.handleError));
     }
 
     updateKit(id:number, kit:Kit){
