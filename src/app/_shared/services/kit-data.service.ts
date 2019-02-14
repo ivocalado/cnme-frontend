@@ -23,8 +23,6 @@ export class KitDataService {
     }
 
     storeKit(kit: Kit, usuario_id: number): Observable<Kit> {
-        kit.data_inicio = "2019-01-01"
-        kit.data_fim = "2019-01-01"
         kit.usuario_id = usuario_id
         return this.httpClient
             .post<Kit>(
