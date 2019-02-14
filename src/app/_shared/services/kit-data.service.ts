@@ -45,53 +45,36 @@ export class KitDataService {
     }
 
     updateEquipamentosToKit(kit_id: number, novos_equipamentos_ids: number[]) {
-        
-        console.log("Passo 1")
-        console.log("==updateEquipamentosToKit==")
-        console.log(kit_id)
-        console.log(novos_equipamentos_ids)
         this.novos_equipamentos_ids = novos_equipamentos_ids;
         let result
-        console.log("Passo 2")
         this.getKit(kit_id).subscribe((kit:Kit) => {
-            console.log("Passo 4")
             this.kit = kit
             this.antigos_equipamentos_ids = []
             kit.equipamentos.forEach(equipamento => 
                 this.antigos_equipamentos_ids.push(equipamento.id)
             );
 
-            console.log("Passo 5")
-
+        
             let idsToRemove = []
             this.antigos_equipamentos_ids.forEach(elem => {
                 if(!(elem in this.novos_equipamentos_ids)) {
                     idsToRemove.push(elem)
                 }
             });
-            console.log("Passo 6")
             this._removeEquipamentosFromKit(kit_id, idsToRemove).subscribe((kit:Kit) => {
-                console.log("Passo 8")
                let idsToAdd = []
                this.novos_equipamentos_ids.forEach(elem => {
                    if(!(elem in this.antigos_equipamentos_ids)) {
                         idsToAdd.push(elem)
                    }
                }) 
-               console.log("Passo 9")
-               this._addEquipamentosToKit(kit_id, idsToAdd)
-               console.log("Passo 10")
+               this._addEquipamentosToKit(kit_id, idsToAdd).subscribe(err => {})
             });
-            console.log("Passo 7")
         });
-        console.log("Passo 3")
-       
+        
     }
 
     _removeEquipamentosFromKit(kit_id: number, ids: number[]) {
-        console.log("_removeEquipamentosFromKit")
-        console.log("kit_id = "+ kit_id)
-        console.log("ids = " + ids)
         return this.httpClient.request('delete', "/api/kits/"+kit_id+"/remove-equipamentos", 
             {
                 body: {ids: ids}, 
@@ -104,18 +87,16 @@ export class KitDataService {
     }
 
     _addEquipamentosToKit(kit_id: number, ids: number[]) {
-        console.log("_addEquipamentosToKit")
-        console.log("kit_id = "+ kit_id)
-        console.log("ids = " + ids)
-        let result = this.httpClient.post<number[]>("/api/kits/"+kit_id+"/add-equipamentos", ids, {
-            headers: new HttpHeaders({
-                "Content-Type":
-                    "application/json; charset=UTF-8"
-            })
-        })
-        console.log("saida!")
-        console.log(result)
-        return result.pipe( map(data => data), catchError(this.handleError));
+
+        return this.httpClient.request('post', "/api/kits/"+kit_id+"/add-equipamentos", 
+            {
+                body: {ids: ids}, 
+                headers: new HttpHeaders({
+                    "Content-Type":
+                        "application/json; charset=UTF-8"
+                })
+            }
+        )
     }
 
     updateKit(id:number, kit:Kit){

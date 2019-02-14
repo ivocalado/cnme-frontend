@@ -86,9 +86,6 @@ export class KitEditComponent implements OnInit {
             .subscribe(
                 (kit:Kit) =>{
                     
-                    // this.snackBarService.openSnackBar("Kit cadastrado com sucesso");
-                    // this.router.navigate(["/kits"], { relativeTo: this.route });
-                    console.log(kit)
                     this.kitDataService.updateEquipamentosToKit(kit.id, this.equipamentos_ids)
                         this.snackBarService.openSnackBar("Kit cadastrado com sucesso");
                         this.router.navigate(["/kits"], { relativeTo: this.route });
