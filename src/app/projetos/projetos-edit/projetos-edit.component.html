@@ -33,7 +33,8 @@
                 <div class="row">
                     <div class="col-lg-3 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="data_inicio_previsto" id="data_inicio_previsto" [matDatepicker]="pickerInicio" placeholder="Data de início">
+                            <input matInput formControlName="data_inicio_previsto" id="data_inicio_previsto"
+                                [matDatepicker]="pickerInicio" placeholder="Data de início">
                             <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
                             <mat-datepicker #pickerInicio></mat-datepicker>
                             <mat-hint>(Previsão)</mat-hint>
@@ -52,7 +53,7 @@
                 <div class="row mt-3">
                     <div class="col-lg-10 mt-1 pull-right">
                         <button mat-raised-button class="mr-1" color="primary" [disabled]="!projetoForm.valid">
-                            {{ editmode ? "Atualizar" : "Salvar" }}
+                            {{ editMode ? "Atualizar" : "Salvar" }}
                         </button>
                         <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
                             Cancelar
@@ -60,6 +61,26 @@
                     </div>
                 </div>
             </form>
+        </mat-card>
+        <hr>
+        <mat-card *ngIf="editMode">
+            <mat-card-title>Equipamentos</mat-card-title>
+            <div class="row">
+                <div class="col-lg-12 mt-2">
+                    <mat-chip-list>
+                        <mat-chip color="primary" *ngFor='let equipamento of projeto.equipamentos_projeto'>
+                            {{equipamento.equipamento.nome}}
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 mt-3">
+                    <button mat-raised-button class="mr-1" color="primary" (click)="onAddKits()">
+                        {{ projeto.equipamentos_projeto.length ? "Alterar" : "Adicionar" }}
+                    </button>
+                </div>
+            </div>
         </mat-card>
     </div>
 </div>

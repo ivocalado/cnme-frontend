@@ -34,6 +34,19 @@ export class ProjetoDataService{
         .pipe(catchError(this.handleError));
     }
 
+    storeEquipamentos(projetoId:number,equipamentosIds:number[]){
+        return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/add-equipamentos", equipamentosIds)
+        .pipe(catchError(this.handleError));
+    }
+
+    storeKit(projetoId:number, kitId:number){
+        return this.httpClient.post("/api/projeto-cnme/"+projetoId+"/add-kit/"+kitId, null)
+        .pipe(catchError(this.handleError));
+    }
+    deleteKit(projetoId:number, kitId:number){
+        return this.httpClient.delete("api/projeto-cnme/"+projetoId+"/remove-kit/"+kitId);
+    }
+
     getProjetos(){
         return this.httpClient.get<Projeto[]>("/api/projeto-cnme")
         .pipe(map(res =>{

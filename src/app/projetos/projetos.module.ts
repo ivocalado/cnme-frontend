@@ -5,7 +5,7 @@ import { ProjetosRoutingModule } from './projetos-routing.module';
 import { ProjetosComponent } from './projetos.component';
 import { ProjetosEditComponent } from './projetos-edit/projetos-edit.component';
 import { SharedModule } from '../_shared/shared.module';
-import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule } from '@angular/material';
+import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule, MatChipsModule, MatRippleModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjetoListComponent } from './projeto-list/projeto-list.component';
 import { UnidadeDataService } from '../_shared/services/unidade-data.service';
@@ -31,7 +31,9 @@ import { KitDataService } from '../_shared/services/kit-data.service';
         MatFormFieldModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatRadioModule
+        MatRadioModule,
+        MatChipsModule,
+        MatRippleModule
     ],
     providers: [UnidadeDataService, ProjetoDataService, SnackBarService, KitDataService]
 })

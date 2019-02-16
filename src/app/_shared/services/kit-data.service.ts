@@ -48,11 +48,11 @@ export class KitDataService {
         this.getKit(kit_id).subscribe((kit:Kit) => {
             this.kit = kit
             this.antigos_equipamentos_ids = []
-            kit.equipamentos.forEach(equipamento => 
+            kit.equipamentos.forEach(equipamento =>
                 this.antigos_equipamentos_ids.push(equipamento.id)
             );
 
-        
+
             let idsToRemove = []
             this.antigos_equipamentos_ids.forEach(elem => {
                 if(!(elem in this.novos_equipamentos_ids)) {
@@ -65,17 +65,17 @@ export class KitDataService {
                    if(!(elem in this.antigos_equipamentos_ids)) {
                         idsToAdd.push(elem)
                    }
-               }) 
+               })
                this._addEquipamentosToKit(kit_id, idsToAdd).subscribe(err => {})
             });
         });
-        
+
     }
 
     _removeEquipamentosFromKit(kit_id: number, ids: number[]) {
-        return this.httpClient.request('delete', "/api/kits/"+kit_id+"/remove-equipamentos", 
+        return this.httpClient.request('delete', "/api/kits/"+kit_id+"/remove-equipamentos",
             {
-                body: {ids: ids}, 
+                body: {ids: ids},
                 headers: new HttpHeaders({
                     "Content-Type":
                         "application/json; charset=UTF-8"
@@ -86,9 +86,9 @@ export class KitDataService {
 
     _addEquipamentosToKit(kit_id: number, ids: number[]) {
 
-        return this.httpClient.request('post', "/api/kits/"+kit_id+"/add-equipamentos", 
+        return this.httpClient.request('post', "/api/kits/"+kit_id+"/add-equipamentos",
             {
-                body: {ids: ids}, 
+                body: {ids: ids},
                 headers: new HttpHeaders({
                     "Content-Type":
                         "application/json; charset=UTF-8"

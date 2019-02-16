@@ -4,19 +4,31 @@
             <mat-card-title>
                 Seleção de kit
             </mat-card-title>
-            <form #f="ngForm">
+            <form (ngSubmit)="onSubmit(f)" #f="ngForm">
                 <div class="row">
                     <div class="col-lg-12 mt-1">
-                        <mat-radio-group class="kit-radio-group" [(ngModel)]="kit" name="kit" id="kit">
-                            <mat-radio-button class="kit-radio-button" *ngFor="let kit of kits" [value]="kit">
-                                <mat-card>
-                                    <h2>{{kit.nome}}</h2>
-                                    {{kit.equipamentos}}
-
-                                </mat-card>
+                        <mat-radio-group class="kit-radio-group" [(ngModel)]="kit_id" name="kit_id" id="kit_id" required>
+                            <mat-radio-button class="kit-radio-button" *ngFor="let kit of kits" [value]="kit.id">
+                                <div class="radio-wrapper">
+                                    <h2 class="mb-1">{{kit.nome}}</h2>
+                                    <mat-chip-list>
+                                        <mat-chip color="primary" *ngFor='let equipamento of kit.equipamentos'>
+                                            {{equipamento.nome}}
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </div>
                             </mat-radio-button>
                         </mat-radio-group>
-                        <div class="kit-selected-value">Kit escolhido: {{kit}}</div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-10 mt-1 pull-right">
+                        <button mat-raised-button class="mr-1" color="primary" type="submit" [disabled]="!f.valid">
+                            Salvar
+                        </button>
+                        <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+                            Cancelar
+                        </button>
                     </div>
                 </div>
             </form>

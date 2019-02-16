@@ -7,7 +7,7 @@ import { Unidade } from 'src/app/_shared/models/unidade.model';
 import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
 import { DateAdapter } from '@angular/material';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
-import { DatePipe } from '@angular/common';
+import { Equipamento } from 'src/app/_shared/models/equipamento.model';
 
 
 @Component({
@@ -43,7 +43,7 @@ export class ProjetosEditComponent implements OnInit {
                 this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
                     this.projeto = projeto;
                     this.initForm(this.projeto);
-                    console.log(projeto);
+                    console.log(this.projeto.equipamentos_projeto.length);
                 })
             }else{
                 this.initForm(this.projeto);
@@ -69,16 +69,22 @@ export class ProjetosEditComponent implements OnInit {
                 this.router.navigate(["../../"+this.projetoId+"/adicionar-kits"], { relativeTo: this.route });
             });
         }else{
+            this.projeto.kit_id = 3;
             this.projetoDataService.storeProjeto(this.projetoForm.value)
-            .subscribe((projeto:Projeto) =>{
+            .subscribe(res =>{
+                console.log(res["data"].id);
                 this.snackBarService.openSnackBar("Projeto incluído com sucesso.");
-                this.router.navigate(["/adicionar-kits"], {relativeTo:this.route});
+                this.router.navigate(["../" + res["data"].id + "/adicionar-kits"], { relativeTo: this.route });
             });
         }
     }
 
     onCancel() {
         this.router.navigate(["/projetos"], { relativeTo: this.route });
+    }
+
+    onAddKits(){
+        this.router.navigate(["../../" + this.projetoId + "/adicionar-kits"], { relativeTo: this.route });
     }
 
 
