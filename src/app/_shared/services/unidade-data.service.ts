@@ -6,6 +6,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Localidade } from '../models/localidade.model';
 import { Estado } from '../models/estado.model';
+import { Usuario } from "../models/usuario.model";
 
 @Injectable()
 export class UnidadeDataService {
@@ -59,6 +60,22 @@ export class UnidadeDataService {
                     unidades.push(unidade);
                 }
                 return unidades;
+            })
+        );
+    }
+
+    getUsuariosByUnidade(id_unidade:number) {
+        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios")
+        .pipe(
+            map(res =>{
+                let usuarios:Usuario[] = [];
+                for(var key in res["data"]){
+                    let usuario:Usuario;
+                    usuario = <Usuario>res["data"][key];
+                    usuario.unidade_id = usuario.unidade.id
+                    usuarios.push(usuario);
+                }
+                return usuarios;
             })
         );
     }

@@ -1,17 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
-import { Usuario } from 'src/app/_shared/models/usuario.model';
-
-const lstUsers: Usuario[] =[
-    { id: 1, nome: "Raynner", email: "r@m.com", password: "123", cpf: "000.000.000-00", unidade_id: 1, tipo: "Admin" },
-    { id: 2, nome: "Ivo", email: "r@m.com", password: "123", cpf: "000.000.000-00", unidade_id: 1, tipo: "Admin" },
-    { id: 3, nome: "Thiago", email: "r@m.com", password: "123", cpf: "000.000.000-00", unidade_id: 1, tipo: "Admin" },
-    { id: 4, nome: "DM", email: "r@m.com", password: "123", cpf: "000.000.000-00", unidade_id: 1, tipo: "Admin" },
-    { id: 5, nome: "Wilmax", email: "r@m.com", password: "123", cpf: "000.000.000-00", unidade_id: 1, tipo: "Admin" },
-    { id: 6, nome: "Davi", email: "r@m.com", password: "123", cpf: "000.000.000-00", unidade_id: 1, tipo: "Admin" }
-]
+import { SnackBarService } from '../../_shared/helpers/snackbar.service';
+import { AuthenticationDataService } from '../../_shared/services/authentication-data.service';
+import { Usuario } from '../../_shared/models/usuario.model';
+import { UnidadeDataService } from '../../_shared/services/unidade-data.service';
 
 
 @Component({
@@ -21,16 +14,29 @@ const lstUsers: Usuario[] =[
 })
 export class UsuarioListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
-    displayedColumns: string[] = ["nome", "email", "actions"];
-    dataSource = lstUsers;
+
+    //Estrutura de dados para exibição dos usuarios da unidade
+    displayedColumns: string[] = ["nome", "email", "tipo", "actions"];
+    dataSource;
+
+
+    usuarioAutenticado: Usuario; 
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private authenticationDataService: AuthenticationDataService,
+        private unidadeDataService: UnidadeDataService
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.authenticationDataService.getSessionUser().subscribe(user => {
+            this.usuarioAutenticado = user
+            this.fetchUsuarios()
+        })
+        
+    }
 
     onEdit(id: number) {
         this.router.navigate(["editar", id], { relativeTo: this.route });
@@ -40,5 +46,12 @@ export class UsuarioListComponent implements OnInit {
         this.snackBarService.openSnackBar("implantar método para deletar");
     }
 
-    fetchUnidades() {}
+    fetchUsuarios() {
+        this.unidadeDataService.getUnidade(this.usuarioAutenticado.unidade_id).subscribe(unidade => {
+            this.unidadeDataService.getUsuariosByUnidade(this.usuarioAutenticado.id).subscribe((usuarios:Usuario[])  => {
+                this.dataSource = new MatTableDataSource(usuarios);
+                this.dataSource.sort = this.sort;
+            })
+        })
+    }
 }
