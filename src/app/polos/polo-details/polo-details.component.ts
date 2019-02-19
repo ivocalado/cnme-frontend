@@ -51,4 +51,8 @@ export class PoloDetailsComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
+    onInvitation(unidade_id: number) {
+        console.log("ID = " + unidade_id)
+        this.router.navigate(['convidar', unidade_id], { relativeTo: this.route });
+    }
 }

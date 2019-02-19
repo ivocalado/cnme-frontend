@@ -16,10 +16,11 @@ import { PoloListComponent } from './polo-list/polo-list.component';
 import { PoloEditComponent } from './polo-edit/polo-edit.component';
 import { PoloDetailsComponent } from './polo-details/polo-details.component';
 import { PolosRoutingModule } from './polos-routing.module';
+import { PoloInvitationComponent } from './polo-invitation/polo-invitation.component';
 
 
 @NgModule({
-    declarations: [PolosComponent, PoloListComponent, PoloEditComponent, PoloDetailsComponent],
+    declarations: [PolosComponent, PoloListComponent, PoloEditComponent, PoloDetailsComponent, PoloInvitationComponent],
     imports: [
         SharedModule,
         FormsModule,

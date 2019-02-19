@@ -28,7 +28,7 @@ export class PoloListComponent implements OnInit {
         this.router.navigate(["editar", id], { relativeTo: this.route });
     }
 
-    onDetails(id: Number) {
+    onDetails(id: number) {
         this.router.navigate(['detalhes', id], { relativeTo: this.route });
     }
 
