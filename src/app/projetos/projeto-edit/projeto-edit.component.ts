@@ -7,20 +7,24 @@ import { Unidade } from 'src/app/_shared/models/unidade.model';
 import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
 import { DateAdapter } from '@angular/material';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
-import { Equipamento } from 'src/app/_shared/models/equipamento.model';
+import { Tarefa } from 'src/app/_shared/models/tarefa.model';
+import { Etapa } from 'src/app/_shared/models/etapa.model';
 
 
 @Component({
-    selector: "app-projetos-edit",
-    templateUrl: "./projetos-edit.component.html",
-    styleUrls: ["./projetos-edit.component.scss"]
+    selector: "app-projeto-edit",
+    templateUrl: "./projeto-edit.component.html",
+    styleUrls: ["./projeto-edit.component.scss"]
 })
-export class ProjetosEditComponent implements OnInit {
+export class ProjetoEditComponent implements OnInit {
+    step = 0;
     projetoForm: FormGroup;
     unidades: Unidade[];
     editMode=false;
     projetoId:number;
     projeto:Projeto = Projeto.EMPTY_MODEL;
+    tarefas:Tarefa[];
+    etapas: Etapa[];
 
 
     constructor(
@@ -43,12 +47,19 @@ export class ProjetosEditComponent implements OnInit {
                 this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
                     this.projeto = projeto;
                     this.initForm(this.projeto);
-                    console.log(this.projeto.equipamentos_projeto.length);
                 })
             }else{
                 this.initForm(this.projeto);
             }
+
+            this.projetoDataService.getEtapasProjeto(this.projetoId).subscribe((etapas:Etapa[])=>{
+                console.log(etapas);
+            })
+
+
         });
+
+
     }
 
     initForm(projeto:Projeto){
@@ -72,7 +83,6 @@ export class ProjetosEditComponent implements OnInit {
             this.projeto.kit_id = 3;
             this.projetoDataService.storeProjeto(this.projetoForm.value)
             .subscribe(res =>{
-                console.log(res["data"].id);
                 this.snackBarService.openSnackBar("Projeto incluído com sucesso.");
                 this.router.navigate(["../" + res["data"].id + "/adicionar-kits"], { relativeTo: this.route });
             });
@@ -86,11 +96,26 @@ export class ProjetosEditComponent implements OnInit {
     onAddKits(){
         this.router.navigate(["../../" + this.projetoId + "/adicionar-kits"], { relativeTo: this.route });
     }
+    onAddEnvio(){
+        this.router.navigate(["../../" + this.projetoId + "/planejar-envio"], { relativeTo: this.route });
+    }
 
 
     fetchPolos(){
         this.unidadeDataService.getPolos().subscribe((unidades: Unidade[]) => {
             this.unidades = unidades;
         });
+    }
+
+    setStep(index: number) {
+        this.step = index;
+    }
+
+    nextStep() {
+        this.step++;
+    }
+
+    prevStep() {
+        this.step--;
     }
 }
