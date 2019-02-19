@@ -34,4 +34,6 @@ export class EmpresaDetailsComponent implements OnInit {
     onCancel() {
         this.router.navigate(['/empresas'], { relativeTo: this.route });
     }
+
+    
 }
