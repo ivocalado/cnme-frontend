@@ -3,7 +3,8 @@ import { Unidade } from "./unidade.model";
 export class Usuario{
     constructor(
         public id:number,
-        public nome: string,
+        public nome: string, //necessario por conta do modelo no backend
+        public name: string,
         public email: string,
         public ativo: boolean,
         public telefone: string,
@@ -17,6 +18,7 @@ export class Usuario{
     static readonly EMPTY_MODEL = {
         id: null,
         nome: '',
+        name: '',
         email: '',
         ativo: null,
         telefone: '',

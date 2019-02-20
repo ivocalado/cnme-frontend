@@ -47,4 +47,11 @@ export class PoloDetailsComponent implements OnInit {
         })
     }
 
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    onInvitation(unidade_id: number) {
+        this.router.navigate(['/polos/convidar', unidade_id], { relativeTo: this.route });
+    }
 }

@@ -11,6 +11,10 @@
         <mat-card>
             <mat-card-title>Lista de Empresas</mat-card-title>
             <hr class="m-2">
+            <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+            </mat-form-field>
+        
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                 <!-- Position Column -->
                 <ng-container matColumnDef="nome">
