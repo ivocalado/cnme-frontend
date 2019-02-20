@@ -20,6 +20,7 @@ export class UsuarioDataService {
     }
 
     storeUsuario(usuario: Usuario): Observable<Usuario> {
+        usuario.name = usuario.nome
         return this.httpClient
             .post<Usuario>(
                 "/api/usuarios",
@@ -34,6 +35,7 @@ export class UsuarioDataService {
     }
 
     updateUsuario(id:number, usuario:Usuario){
+        usuario.name = usuario.nome
         return this.httpClient.put("/api/usuarios/"+id, usuario)
         .pipe(
             catchError(this.handleError)
@@ -70,6 +72,21 @@ export class UsuarioDataService {
 
     deleteUsuario(id:number){
         return this.httpClient.delete("/api/usuarios/"+id);
+    }
+
+    getTiposUsuarios() {
+        return this.httpClient.get("/api/usuarios/u/tipos")
+        .pipe(
+            map(res =>{
+                let tipos:string[] = [];
+                for(var key in res){
+                    let tipo:string;
+                    tipo = <string>res[key];
+                    tipos.push(tipo);
+                }
+                return tipos;
+            })
+        );
     }
 }
 

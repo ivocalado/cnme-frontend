@@ -49,7 +49,7 @@
                             <input matInput formControlName="url" id="url"placeholder="Url"/>
                             <mat-error *ngIf="!unidadeForm.get('url').valid">{{unidadeForm.get('url').errors['serverside']}}</mat-error>
                             <mat-error *ngIf="!unidadeForm.hasError('pattern')">
-                                Digite uma <strong>url</strong> válida exemplo: http://google.com
+                                Digite uma <strong>url</strong> válida. Exemplo: http://google.com
                             </mat-error>
                         </mat-form-field>
                     </div>

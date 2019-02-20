@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Unidade } from '../../_shared/models/unidade.model';
-import { Localidade } from 'src/app/_shared/models/localidade.model';
+import { Localidade } from '../../_shared/models/localidade.model';
 import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
-import { EstadoDataService } from 'src/app/_shared/services/estado-data.service';
-import { UnidadeDataService } from "src/app/_shared/services/unidade-data.service";
-import { Estado } from 'src/app/_shared/models/estado.model';
-import { Municipio } from 'src/app/_shared/models/municipio.model';
-import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { EstadoDataService } from '../../_shared/services/estado-data.service';
+import { UnidadeDataService } from "../../_shared/services/unidade-data.service";
+import { Estado } from '../../_shared/models/estado.model';
+import { Municipio } from '../../_shared/models/municipio.model';
+import { SnackBarService } from '../../_shared/helpers/snackbar.service';
 
 @Component({
     selector: "app-unidade-edit",
