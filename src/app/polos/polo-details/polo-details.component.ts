@@ -52,7 +52,6 @@ export class PoloDetailsComponent implements OnInit {
     }
 
     onInvitation(unidade_id: number) {
-        console.log("ID = " + unidade_id)
-        this.router.navigate(['convidar', unidade_id], { relativeTo: this.route });
+        this.router.navigate(['/polos/convidar', unidade_id], { relativeTo: this.route });
     }
 }
