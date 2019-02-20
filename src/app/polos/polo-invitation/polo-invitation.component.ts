@@ -5,6 +5,7 @@ import { UnidadeDataService } from '../../_shared/services/unidade-data.service'
 import { SnackBarService } from '../../_shared/helpers/snackbar.service';
 import { Unidade } from '../../_shared/models/unidade.model';
 import { UsuarioDataService } from '../../_shared/services/usuario-data.service';
+import { Usuario } from '../../_shared/models/usuario.model';
 
 @Component({
   selector: 'app-polo-invitation',
@@ -45,7 +46,18 @@ export class PoloInvitationComponent implements OnInit {
   }
 
   onInvitation() {
-    console.log(this.invitationForm.value)
+    let usuario: Usuario
+    usuario = <Usuario>this.invitationForm.value;
+    usuario.unidade_id = this.unidade.id
+    console.log("onInvitation")
+    console.log(usuario)
+    this.usuarioDataService.sendInvitation(this.invitationForm.value).subscribe(usuario => {
+      this.snackBarService.openSnackBar("Convite enviado com sucesso!");
+      this.router.navigate(["/polos"], { relativeTo: this.route });
+      this.router.navigate(["/polos/detalhes", this.unidade.id], { relativeTo: this.route });
+    }) 
+    
+    
   }
   
   onCancel() {

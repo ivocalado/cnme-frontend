@@ -88,5 +88,22 @@ export class UsuarioDataService {
             })
         );
     }
+
+    sendInvitation(usuario: Usuario) {
+        console.log("send invitation")
+        console.log(usuario)
+        return this.httpClient
+            .post<Usuario>(
+                "/api/usuarios/convidar",
+                usuario,
+                {
+                    headers: new HttpHeaders({
+                        "Content-Type":"application/json; charset=UTF-8"
+                    })
+                }
+            )
+            .pipe( map(data => data), catchError(this.handleError));
+    }
+    
 }
 
