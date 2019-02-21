@@ -5,12 +5,12 @@
         <mat-nav-list>
             <a mat-list-item routerLink="">DashBoard</a>
             <a mat-list-item routerLink="projetos">Projetos</a>
-            <a mat-list-item routerLink="unidades">Unidades</a>
-            <a mat-list-item routerLink="polos">Polos</a>
-            <a mat-list-item routerLink="empresas">Empresas</a>
-            <a mat-list-item routerLink="equipamentos">Equipamentos</a>
-            <a mat-list-item routerLink="kits">Kits</a>
-            <a mat-list-item routerLink="tipoEquipamentos">Tipos de Equipamentos</a>
+            <a mat-list-item routerLink="unidades" *ngIf="usuarioPrivilegiado">Unidades</a>
+            <a mat-list-item routerLink="polos" *ngIf="usuarioPrivilegiado">Polos</a>
+            <a mat-list-item routerLink="empresas" *ngIf="usuarioPrivilegiado">Empresas</a>
+            <a mat-list-item routerLink="equipamentos" *ngIf="usuarioPrivilegiado">Equipamentos</a>
+            <a mat-list-item routerLink="kits" *ngIf="usuarioPrivilegiado">Kits</a>
+            <a mat-list-item routerLink="tipoEquipamentos" *ngIf="usuarioPrivilegiado">Tipos de Equipamentos</a>
             <a mat-list-item routerLink="usuarios">Usuários</a>
             <!--
             menu com submenu

@@ -5,6 +5,7 @@ import { Unidade } from '../../_shared/models/unidade.model';
 import { Municipio } from '../../_shared/models/municipio.model';
 import { UnidadeDataService } from '../../_shared/services/unidade-data.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { AuthenticationDataService } from '../../_shared/services/authentication-data.service';
 
 @Component({
     selector: 'app-empresa-details',
@@ -19,10 +20,15 @@ export class EmpresaDetailsComponent implements OnInit {
     constructor(
         private unidadeDataService: UnidadeDataService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private authenticationDataService: AuthenticationDataService
     ) { }
 
     ngOnInit() {
+        if(!this.canProcess()) {
+            this.router.navigate(['/'], { relativeTo: this.route });
+            return
+        }
         this.route.params.subscribe((params: Params) => {
             const unidadeId = +params["id"];
             this.unidadeDataService.getUnidade(unidadeId).subscribe((unidade: Unidade) => {
@@ -35,5 +41,8 @@ export class EmpresaDetailsComponent implements OnInit {
         this.router.navigate(['/empresas'], { relativeTo: this.route });
     }
 
+    private canProcess() {
+        return false
+    }
     
 }

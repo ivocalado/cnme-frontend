@@ -21,7 +21,7 @@ export class AuthenticationDataService {
     }
 
     getSessionUser(): Observable<Usuario> {
-        return this.httpClient.get<Usuario>("/api/usuarios/2")
+        return this.httpClient.get<Usuario>("/api/usuarios/3")
         .pipe(
             map(res =>{
                 let usuario:Usuario;
