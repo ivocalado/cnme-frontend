@@ -9,6 +9,7 @@ import { DateAdapter } from '@angular/material';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
+import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.model';
 
 
 @Component({
@@ -23,8 +24,9 @@ export class ProjetoEditComponent implements OnInit {
     editMode=false;
     projetoId:number;
     projeto:Projeto = Projeto.EMPTY_MODEL;
+    etapaEnvio: Etapa;
     tarefas:Tarefa[];
-    etapas: Etapa[];
+    equipDisponiveis:EquipamentoProjeto[];
 
 
     constructor(
@@ -47,16 +49,13 @@ export class ProjetoEditComponent implements OnInit {
                 this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
                     this.projeto = projeto;
                     this.initForm(this.projeto);
+                    this.fetchEtapaEnvio(this.projetoId);
+                    if(projeto.equipamentos_projeto)
+                        this.fetchEquipPendentes();
                 })
             }else{
                 this.initForm(this.projeto);
             }
-
-            this.projetoDataService.getEtapasProjeto(this.projetoId).subscribe((etapas:Etapa[])=>{
-                console.log(etapas);
-            })
-
-
         });
 
 
@@ -97,7 +96,12 @@ export class ProjetoEditComponent implements OnInit {
         this.router.navigate(["../../" + this.projetoId + "/adicionar-kits"], { relativeTo: this.route });
     }
     onAddEnvio(){
-        this.router.navigate(["../../" + this.projetoId + "/planejar-envio"], { relativeTo: this.route });
+        this.router.navigate(["../../" + this.projetoId + "/etapa-envio"], { relativeTo: this.route });
+        /*if(this.etapaEnvio){
+            this.router.navigate(["../../" + this.projetoId + "/etapa-envio/"+this.etapaEnvio.id], { relativeTo: this.route });
+        }else{
+            this.router.navigate(["../../" + this.projetoId + "/etapa-envio"], { relativeTo: this.route });
+        }*/
     }
 
 
@@ -105,6 +109,19 @@ export class ProjetoEditComponent implements OnInit {
         this.unidadeDataService.getPolos().subscribe((unidades: Unidade[]) => {
             this.unidades = unidades;
         });
+    }
+
+    fetchEtapaEnvio(projetoId:number){
+        this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
+            this.etapaEnvio = etapa
+        })
+    }
+
+    fetchEquipPendentes() {
+        this.projetoDataService.getEquipDisponiveisEnvio(this.projetoId)
+            .subscribe((equipamentos: EquipamentoProjeto[]) => {
+                this.equipDisponiveis = equipamentos;
+            });
     }
 
     setStep(index: number) {

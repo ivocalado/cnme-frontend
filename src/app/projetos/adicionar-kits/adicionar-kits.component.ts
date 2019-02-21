@@ -44,12 +44,12 @@ export class AdicionarKitsComponent implements OnInit {
         if(this.projeto.kit_id){
             this.projetoDataService.deleteKit(this.projetoId, this.projeto.kit_id).subscribe(res=>{
                 this.projetoDataService.storeKit(this.projetoId, kitIdSelecionado).subscribe(res => {
-                    this.router.navigate(["/projetos"], { relativeTo: this.route });
+                    this.router.navigate(["../etapa-envio"], { relativeTo: this.route });
                 });
             });
         }else{
             this.projetoDataService.storeKit(this.projetoId, kitIdSelecionado).subscribe(res=>{
-                this.router.navigate(["/projetos"], { relativeTo: this.route });
+                this.router.navigate(["../etapa-envio"], { relativeTo: this.route });
             });
         }
     }

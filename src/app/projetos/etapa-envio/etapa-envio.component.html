@@ -77,14 +77,15 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-lg-10 mt-1 pull-right">
-                        <button mat-raised-button class="mr-1" color="primary" >
+                        <button mat-raised-button class="mr-1" color="primary"
+                            [disabled]="!envioForm.valid || !selection.selected.length">
                             {{ editMode ? "Atualizar" : "Salvar" }}
                         </button>
                         <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
                             Cancelar
                         </button>
                         <button mat-raised-button type="button" class="m-1" color="primary" disabled>
-                            Iniciar o plano
+                            Iniciar
                         </button>
                     </div>
                 </div>
@@ -93,3 +94,5 @@
         </mat-card>
     </div>
 </div>
+<hr>
+<app-envio-list *ngIf="etapaEnvio"></app-envio-list>

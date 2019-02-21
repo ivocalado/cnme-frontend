@@ -2,8 +2,8 @@
 
 @include mat-core();
 
-$cnme-app-primary: mat-palette($mat-indigo);
-$cnme-app-accent: mat-palette($mat-cyan);
+$cnme-app-primary: mat-palette($mat-cyan);
+$cnme-app-accent: mat-palette($mat-blue-gray);
 $cnme-app-warn: mat-palette($mat-red, A200, A100, A400);
 
 $cnme-app-theme: mat-light-theme(

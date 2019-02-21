@@ -10,23 +10,25 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.model';
+import { Etapa } from 'src/app/_shared/models/etapa.model';
 
 @Component({
-    selector: 'app-planejamento-envio',
-    templateUrl: './planejamento-envio.component.html',
-    styleUrls: ['./planejamento-envio.component.scss']
+    selector: 'app-etapa-envio',
+    templateUrl: './etapa-envio.component.html',
+    styleUrls: ['./etapa-envio.component.scss']
 })
-export class PlanejamentoEnvioComponent implements OnInit {
+export class EtapaEnvioComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     displayedColumns: string[] = ["select","nome", "tipoEquipamento"];
     dataSource;
     unidades:Unidade[];
     projetoId:number;
-    projeto: Projeto = Projeto.EMPTY_MODEL;
+    //etapaEnvioId:number;
+    etapaEnvio = Etapa.EMPTY_MODEL;
+    //projeto: Projeto = Projeto.EMPTY_MODEL;
     equipPendentes:Equipamento[];
     selection = new SelectionModel<Equipamento>(true, []);
     envioForm:FormGroup;
-    tarefaEnvio=Tarefa.EMPTY_MODEL;
 
     constructor(
         private route:ActivatedRoute,
@@ -38,34 +40,33 @@ export class PlanejamentoEnvioComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
             this.projetoId = +params["id"];
-            this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto: Projeto) => {
-                this.projeto = projeto;
-
-                this.projetoDataService.getEquipDisponiveisEnvio(this.projetoId)
-                .subscribe((equipamentos:EquipamentoProjeto[]) =>{
-                    this.dataSource = new MatTableDataSource(equipamentos);
-                    this.dataSource.sort = this.sort;
-                    this.initForm(this.tarefaEnvio);
-                    console.log(equipamentos);
-                });
+            //console.log(this.etapaEnvioId);
+            this.initForm();
+            this.fetchEquipPendentes();
+            this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
+                this.etapaEnvio = etapa;
             })
         });
         this.fetchEmpersas();
     }
 
     onAddEnvio(){
-        this.tarefaEnvio.equipamentos_projeto_ids = [];
+        let tarefaEnvio = Tarefa.EMPTY_MODEL;
+        tarefaEnvio.equipamentos_projeto_ids = [];
         this.selection.selected.forEach(row =>
-            this.tarefaEnvio.equipamentos_projeto_ids.push(row.id)
+            tarefaEnvio.equipamentos_projeto_ids.push(row.id)
         );
-        this.tarefaEnvio.numero = this.envioForm.value.numero;
-        this.tarefaEnvio.usuario_id = 1;
-        this.tarefaEnvio.unidade_responsavel_id = this.envioForm.value.unidade_responsavel_id;
-        this.tarefaEnvio.data_inicio_prevista = this.envioForm.value.data_inicio_prevista;
-        this.tarefaEnvio.data_fim_prevista = this.envioForm.value.data_fim_prevista;
-        //console.log(this.tarefaEnvio);
-        this.projetoDataService.storeTarefa(this.projetoId,this.tarefaEnvio).subscribe(res =>{
-            this.router.navigate(["/projetos"], { relativeTo: this.route });
+        tarefaEnvio.numero = this.envioForm.value.numero;
+        tarefaEnvio.usuario_id = 1;
+        tarefaEnvio.unidade_responsavel_id = this.envioForm.value.unidade_responsavel_id;
+        tarefaEnvio.data_inicio_prevista = this.envioForm.value.data_inicio_prevista;
+        tarefaEnvio.data_fim_prevista = this.envioForm.value.data_fim_prevista;
+        if (this.etapaEnvio.id)
+            tarefaEnvio.etapa_id = this.etapaEnvio.id;
+        tarefaEnvio.etapa_id = null;
+        this.projetoDataService.storeTarefa(this.projetoId,tarefaEnvio).subscribe(res =>{
+            //window.location.reload();
+            this.router.navigate(["/projetos/editar/"+this.projetoId], { relativeTo: this.route });
         })
     }
 
@@ -79,17 +80,22 @@ export class PlanejamentoEnvioComponent implements OnInit {
         })
     }
 
-    private initForm(tarefaEnvio:Tarefa) {
+    private initForm() {
         this.envioForm = new FormGroup({
-            unidade_responsavel_id: new FormControl(tarefaEnvio.unidade_responsavel_id, Validators.required),
-            numero: new FormControl(tarefaEnvio.numero, Validators.required),
-            data_inicio_prevista: new FormControl(tarefaEnvio.data_inicio_prevista, Validators.required),
-            data_fim_prevista: new FormControl(tarefaEnvio.data_fim_prevista, Validators.required)
+            unidade_responsavel_id: new FormControl('', Validators.required),
+            numero: new FormControl('', Validators.required),
+            data_inicio_prevista: new FormControl('', Validators.required),
+            data_fim_prevista: new FormControl('', Validators.required)
         });
     }
 
     fetchEquipPendentes(){
-        //this.projeto.equipamentos_projeto
+        this.projetoDataService.getEquipDisponiveisEnvio(this.projetoId)
+            .subscribe((equipamentos: EquipamentoProjeto[]) => {
+                this.dataSource = new MatTableDataSource(equipamentos);
+                this.dataSource.sort = this.sort;
+                console.log(this.selection.selected);
+            });
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
