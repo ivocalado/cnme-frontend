@@ -57,7 +57,7 @@ export class Permissions {
 
 	canActivate(url: string) {
 		if(this.usuarioLogado == null)
-			return false
+			return true
 		let tipoUnidade = this.usuarioLogado.unidade.classe
 		let permissao = (this.permissions[tipoUnidade].includes(url))
 		return permissao
