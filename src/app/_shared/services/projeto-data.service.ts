@@ -76,13 +76,8 @@ export class ProjetoDataService{
         return this.httpClient.delete("api/projeto-cnme/" + projetoId + "/remove-kit/" + kitId);
     }
 
-    storeTarefa(projetoId:number, tarefaEnvio:Tarefa){
-        return this.httpClient.post("api/etapas/projeto-cnme/"+projetoId+"/add-tarefa-envio", tarefaEnvio)
-        .pipe(catchError(this.handleError));
-    }
-
-    getEtapasProjeto(projetoId:number){
-        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/"+projetoId+"/etapas")
+    getEtapasProjeto(projetoId: number) {
+        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapas")
             .pipe(map(res => {
                 let etapas: Etapa[] = [];
                 for (var key in res["data"]) {
@@ -92,6 +87,38 @@ export class ProjetoDataService{
                 }
                 return etapas;
             }));
+    }
+
+    getEtapaEnvio(projetiId: number) {
+        return this.httpClient.get<Etapa>("/api/projeto-cnme/" + projetiId + "/etapa-envio")
+            .pipe(map(res => {
+                let etapa: Etapa;
+                etapa = res["data"];
+                return etapa;
+            }))
+    }
+
+    storeTarefa(projetoId:number, tarefaEnvio:Tarefa){
+        return this.httpClient.post("api/etapas/projeto-cnme/"+projetoId+"/add-tarefa-envio", tarefaEnvio)
+        .pipe(catchError(this.handleError));
+    }
+
+    getTarefas(etapaId:number){
+        return this.httpClient.get<Tarefa[]>("/api/etapas/" + etapaId + "/tarefas")
+            .pipe(map(res => {
+                let tarefas: Tarefa[] = [];
+                for (var key in res["data"]) {
+                    let tarefa: Tarefa;
+                    tarefa = <Tarefa>res["data"][key];
+                    tarefas.push(tarefa);
+                }
+                return tarefas;
+            }));
+    }
+
+    deleteTarefa(etapaId: number, tarefaId:number){
+        return this.httpClient.delete("/api/etapas/"+etapaId+"/remove-tarefa/"+tarefaId)
+        .pipe(catchError(this.handleError));
     }
 
     getEquipDisponiveisEnvio(projetoId:number){

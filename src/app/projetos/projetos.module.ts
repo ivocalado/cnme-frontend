@@ -13,10 +13,11 @@ import { SnackBarService } from '../_shared/helpers/snackbar.service';
 import { ProjetoDataService } from '../_shared/services/projeto-data.service';
 import { AdicionarKitsComponent } from './adicionar-kits/adicionar-kits.component';
 import { KitDataService } from '../_shared/services/kit-data.service';
-import { PlanejamentoEnvioComponent } from './planejamento-envio/planejamento-envio.component';
+import { EtapaEnvioComponent } from './etapa-envio/etapa-envio.component';
+import { EnvioListComponent } from './etapa-envio/envio-list/envio-list.component';
 
 @NgModule({
-    declarations: [ProjetosComponent, ProjetoEditComponent, ProjetoListComponent, AdicionarKitsComponent, PlanejamentoEnvioComponent],
+    declarations: [ProjetosComponent, ProjetoEditComponent, ProjetoListComponent, AdicionarKitsComponent, EtapaEnvioComponent, EnvioListComponent],
     imports: [
         SharedModule,
         ProjetosRoutingModule,

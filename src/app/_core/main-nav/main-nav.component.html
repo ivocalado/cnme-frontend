@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-        <mat-toolbar color="primary">CNME</mat-toolbar>
+        <img class="img-logo" src="assets/images/logo-cnme.png" srcset="assets/images/logo-cnme@2x.png 2x" alt="CNME">
         <mat-nav-list>
             <a mat-list-item routerLink="">DashBoard</a>
             <a mat-list-item routerLink="projetos">Projetos</a>
