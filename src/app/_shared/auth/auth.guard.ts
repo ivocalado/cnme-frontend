@@ -65,7 +65,7 @@ export class Permissions {
 
 	canActivateChild(url: string) {
 		if(this.usuarioLogado == null)
-			return false
+			return true
 		let tipoUnidade = this.usuarioLogado.unidade.classe
 		let permissao = false
 		for (let u of this.permissions[tipoUnidade]) {
