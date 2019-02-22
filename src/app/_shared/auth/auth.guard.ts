@@ -2,23 +2,79 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationDataService } from '../services/authentication-data.service';
+import { Usuario } from '../models/usuario.model';
 
 
 @Injectable()
 export class Permissions {
-	permissions: {}
-	constructor(private authenticationDataService : AuthenticationDataService) {
+	permissions
+	usuarioLogado : Usuario
 
+
+	constructor(private authenticationDataService : AuthenticationDataService) {
+		this.authenticationDataService.getSessionUser().subscribe(usuario => {
+			this.usuarioLogado =  usuario
+		})
+
+		this.permissions = {
+			admin: [
+				"/projetos", 
+				"/unidades",
+				"/polos",
+				"/empresas",
+				"/equipamentos",
+				"/kits",
+				"/tipoEquipamentos",
+				"/usuarios"
+			],
+			mec: [
+				"/projetos", 
+				"/unidades",
+				"/polos",
+				"/empresas",
+				"/equipamentos",
+				"/kits",
+				"/tipoEquipamentos",
+				"/usuarios"
+			],
+			tvescola: [
+				"/projetos", 
+				"/unidades",
+				"/polos",
+				"/empresas",
+				"/equipamentos",
+				"/kits",
+				"/tipoEquipamentos",
+				"/usuarios"
+			],
+			polo: [
+				"/projetos", 
+				"/polos",
+				"/usuarios"
+			],
+		}
 	}	
 
-	canActivate() {
-		console.log("Permissions => canActivate")
-		return true
+	canActivate(url: string) {
+		if(this.usuarioLogado == null)
+			return false
+		let tipoUnidade = this.usuarioLogado.unidade.classe
+		let permissao = (this.permissions[tipoUnidade].includes(url))
+		return permissao
 	}
 
-	canActivateChild() {
-		console.log("Permissions => canActivateChild")
-		return true
+	canActivateChild(url: string) {
+		if(this.usuarioLogado == null)
+			return false
+		let tipoUnidade = this.usuarioLogado.unidade.classe
+		let permissao = false
+		for (let u of this.permissions[tipoUnidade]) {
+			if(url.startsWith(u)) {
+				permissao = true
+				break
+			}
+		}
+		return permissao
 	}
 }
 
@@ -36,8 +92,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		let url: string = state.url
 		console.log("URL acessada: " + url)
-		return this.permissions.canActivate();
-		// return this.checkLogin(url, next.data.roles);
+		return this.permissions.canActivate(url);
 	}
 
 	canActivateChild(
@@ -47,10 +102,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		let url: string = state.url
 		console.log("URL acessada: " + url)
-		return this.permissions.canActivateChild()
-		// return this.checkLogin(url, next.data.roles);
+		return this.permissions.canActivateChild(url)
 	}
-    
-
 }
 
