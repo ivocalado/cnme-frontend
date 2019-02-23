@@ -20,16 +20,12 @@ export class UsuarioListComponent implements OnInit {
     displayedColumnsUnidade: string[] = ["nome", "email", "tipo", "actions"];
     dataSourceUnidade;
 
-    @ViewChild(MatSort) sortGeral: MatSort;
-
-    //Estrutura de dados para exibição dos usuarios da unidade
-    displayedColumnsGeral: string[] = ["nome", "email", "tipo", "actions"];
-    dataSourceGeral;
-
+ 
 
     usuarioAutenticado: Usuario; 
     usuariosUnidade: Usuario[]
-    todosUsuarios: Usuario[]
+
+
 
     constructor(
         private route: ActivatedRoute,
@@ -63,30 +59,7 @@ export class UsuarioListComponent implements OnInit {
                 this.usuariosUnidade= usuarios
                 this.dataSourceUnidade = new MatTableDataSource(usuarios);
                 this.dataSourceUnidade.sort = this.sortUnidade;
-
-                let usuariosGeralExibir = []
-                if(this.usuarioAutenticado.unidade.classe == "admin") {
-                    this.usuarioDataService.getUsuarios().subscribe(todosUsuarios => {
-                        this.todosUsuarios = todosUsuarios
-
-                        
-                        for (let elem of this.todosUsuarios) {
-                            if(!this.usuariosUnidade.includes(elem)) {
-                                usuariosGeralExibir.push(elem)
-                            }
-                        }
-                    })
-
-                }
-                this.dataSourceGeral = new MatTableDataSource(usuariosGeralExibir)
-                this.dataSourceGeral = this.sortGeral
-        
-
             })
         })
-        // this.usuarioDataService.getUsuarios().subscribe(usuarios => {
-        //     this.dataSourceUnidade = new MatTableDataSource(usuarios)
-        //     this.dataSourceUnidade.sort = this.sortUnidade
-        // })
     }
 }
