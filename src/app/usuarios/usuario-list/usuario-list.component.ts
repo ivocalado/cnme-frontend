@@ -62,4 +62,8 @@ export class UsuarioListComponent implements OnInit {
             })
         })
     }
+
+    applyFilter(filterValue: string) {
+        this.dataSourceUnidade.filter = filterValue.trim().toLowerCase();
+    }
 }

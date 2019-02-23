@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TipoEquipamento } from 'src/app/_shared/models/tipoEquipamento.model';
-import { TipoEquipamentoDataService } from 'src/app/_shared/services/tipoEquipamento-data.service';
+import { TipoEquipamento } from '../../_shared/models/tipoEquipamento.model';
+import { TipoEquipamentoDataService } from '../../_shared/services/tipoEquipamento-data.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -48,5 +48,8 @@ export class TipoEquipamentoListComponent implements OnInit {
                 this.dataSource = new MatTableDataSource(tipoEquipamentos);
                 this.dataSource.sort = this.sort;
             });
+    }
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 }
