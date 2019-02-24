@@ -5,6 +5,7 @@ import { ProjetoListComponent } from './projeto-list/projeto-list.component';
 import { ProjetoEditComponent } from './projeto-edit/projeto-edit.component';
 import { AdicionarKitsComponent } from './adicionar-kits/adicionar-kits.component';
 import { EtapaEnvioComponent } from './etapa-envio/etapa-envio.component';
+import { EnvioListComponent } from './etapa-envio/envio-list/envio-list.component';
 
 const routes: Routes = [
     {
@@ -13,9 +14,11 @@ const routes: Routes = [
             { path: '', component: ProjetoListComponent },
             { path: 'novo', component: ProjetoEditComponent },
             { path: 'editar/:id', component: ProjetoEditComponent},
+            { path: 'editar/:id/step/:stepId', component: ProjetoEditComponent },
             { path: ':id/adicionar-kits', component: AdicionarKitsComponent },
             { path: ':id/etapa-envio', component: EtapaEnvioComponent },
-            { path: ':id/etapa-envio/:etapaId', component: EtapaEnvioComponent }
+            { path: ':id/tarefas-envio', component: EnvioListComponent }
+            //{ path: ':id/etapa-envio/:etapaId', component: EtapaEnvioComponent }
         ]
     }
 ];

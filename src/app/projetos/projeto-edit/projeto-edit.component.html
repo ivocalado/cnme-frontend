@@ -8,7 +8,7 @@
                 <strong>Projeto de implantação</strong>
             </mat-panel-title>
             <mat-panel-description>
-                &nbsp;
+                Dados do projeto
                 <mat-icon>description</mat-icon>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -80,7 +80,7 @@
                 <strong>Equipamentos</strong>
             </mat-panel-title>
             <mat-panel-description>
-                &nbsp;
+                Seleção dos equipamento para envio
                 <mat-icon>devices</mat-icon>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -113,13 +113,13 @@
     <mat-expansion-panel *ngIf="projeto.equipamentos_projeto && projeto.equipamentos_projeto.length" [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <strong>Plano de envio</strong>
+                <strong>Envio de equipamentos</strong>
             </mat-panel-title>
             <mat-panel-description>
+                Criação de tarefas de envio
                 <span *ngIf="etapaEnvio">
-                Status da etapa: {{etapaEnvio.status}}
+                <!--Status da etapa: {{etapaEnvio.status}}-->
                 </span>
-                &nbsp;
                 <mat-icon>send</mat-icon>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -137,9 +137,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 mt-3">
+            <div class="col-lg-12 mt-3">
                 <button mat-raised-button class="mr-1" color="primary" (click)="onAddEnvio()">
-                    Planejar
+                    Adicionar uma tarefa
+                </button>
+                <button mat-raised-button class="mr-1" color="primary" (click)="onListEnvios()">
+                    Listar tarefas adicionadas
                 </button>
                 <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
                     Voltar

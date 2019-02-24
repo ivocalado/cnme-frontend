@@ -1,7 +1,40 @@
 @import "~@angular/material/theming";
 
 @include mat-core();
-
+/*
+$mat-teste: (
+  50: #A2DFDB,
+  100: #8BD7D2,
+  200: #73D0C9,
+  300: #5CC8C0,
+  400: #45C0B7,
+  500: #00a99d,
+  600: #009A8F,
+  700: #008B81,
+  800: #007B73,
+  900: #006C64,
+  A100: #84ffff,
+  A200: #18ffff,
+  A400: #00e5ff,
+  A700: #00b8d4,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  )
+);
+*/
 $cnme-app-primary: mat-palette($mat-cyan);
 $cnme-app-accent: mat-palette($mat-blue-gray);
 $cnme-app-warn: mat-palette($mat-red, A200, A100, A400);

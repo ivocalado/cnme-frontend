@@ -11,7 +11,6 @@ import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 })
 export class EnvioListComponent implements OnInit {
     projetoId: number;
-    //etapaId: number;
     etapaEnvio = Etapa.EMPTY_MODEL;
     tarefas: Tarefa[];
 
@@ -24,7 +23,6 @@ export class EnvioListComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
             this.projetoId = +params["id"];
-            //this.etapaId = +params["etapaId"];
             this.fetchTarefas();
         });
     }
@@ -40,9 +38,12 @@ export class EnvioListComponent implements OnInit {
         if (confirm("Tem certeza que deseja deletar estea tarefa?")) {
             this.projetoDataService.deleteTarefa(this.etapaEnvio.id, tarefaId).subscribe(res =>{
                 this.fetchTarefas();
-                window.location.reload();
             });
         }
+    }
+
+    onCancel(){
+        this.router.navigate(["/projetos/editar/" + this.projetoId + "/step/2"], { relativeTo: this.route });
     }
 
 }

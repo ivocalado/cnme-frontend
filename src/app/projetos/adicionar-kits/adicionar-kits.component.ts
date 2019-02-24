@@ -6,6 +6,7 @@ import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.servic
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import { Equipamento } from 'src/app/_shared/models/equipamento.model';
+import { Etapa } from 'src/app/_shared/models/etapa.model';
 
 @Component({
     selector: 'app-adicionar-kits',
@@ -17,6 +18,8 @@ export class AdicionarKitsComponent implements OnInit {
     kits: Kit[]=[];
     projetoId:number;
     projeto = Projeto.EMPTY_MODEL;
+    canEdit = false;
+    errorMessage = '';
 
     constructor(
         private kitDataService:KitDataService,
@@ -31,7 +34,20 @@ export class AdicionarKitsComponent implements OnInit {
             this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
                 this.projeto = projeto;
                 this.kit_id = this.projeto.kit_id;
-            })
+            });
+            this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe(
+                (etapa:Etapa)=>{
+                    if(etapa && etapa.tarefas.length){
+                        console.log('não pode');
+                        this.errorMessage = "Não é possível fazer alterações nesta página. Já existe um plano de envio para este projeto.";
+                    }else{
+                        this.canEdit = true;
+                    }
+                }, error => {
+                    this.canEdit = true;
+                    console.log(error);
+                }
+            );
         });
 
         this.kitDataService.getKits().subscribe((kits:Kit[])=>{
@@ -55,7 +71,7 @@ export class AdicionarKitsComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/projetos"], { relativeTo: this.route });
+        this.router.navigate(["/projetos/editar/"+this.projetoId+"/step/1"], { relativeTo: this.route });
     }
 
 

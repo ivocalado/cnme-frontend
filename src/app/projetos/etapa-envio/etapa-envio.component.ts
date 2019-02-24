@@ -11,6 +11,7 @@ import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.model';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
+import { ProjetoEditComponent } from '../projeto-edit/projeto-edit.component';
 
 @Component({
     selector: 'app-etapa-envio',
@@ -71,7 +72,7 @@ export class EtapaEnvioComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/projetos"], { relativeTo: this.route });
+        this.router.navigate(["/projetos/editar/"+this.projetoId+"/step/2"], { relativeTo: this.route });
     }
 
     fetchEmpersas(){

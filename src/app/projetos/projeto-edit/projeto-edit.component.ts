@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
@@ -45,6 +45,8 @@ export class ProjetoEditComponent implements OnInit {
         this.route.params.subscribe((params:Params)=>{
             this.projetoId = +params["id"];
             this.editMode = params["id"] != null;
+            this.step = params["stepId"] != null ? +params["stepId"] : 0;
+            this.setStep(this.step);
             if(this.editMode){
                 this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
                     this.projeto = projeto;
@@ -76,7 +78,7 @@ export class ProjetoEditComponent implements OnInit {
             this.projetoDataService.updateProjeto(this.projetoId,this.projetoForm.value)
             .subscribe(res =>{
                 this.snackBarService.openSnackBar("Projeto atualizado com sucesso.");
-                this.router.navigate(["../../"+this.projetoId+"/adicionar-kits"], { relativeTo: this.route });
+                this.router.navigate(["/projetos"], { relativeTo: this.route });
             });
         }else{
             this.projeto.kit_id = 3;
@@ -93,15 +95,13 @@ export class ProjetoEditComponent implements OnInit {
     }
 
     onAddKits(){
-        this.router.navigate(["../../" + this.projetoId + "/adicionar-kits"], { relativeTo: this.route });
+        this.router.navigate(["/projetos/" + this.projetoId + "/adicionar-kits"], { relativeTo: this.route });
     }
     onAddEnvio(){
-        this.router.navigate(["../../" + this.projetoId + "/etapa-envio"], { relativeTo: this.route });
-        /*if(this.etapaEnvio){
-            this.router.navigate(["../../" + this.projetoId + "/etapa-envio/"+this.etapaEnvio.id], { relativeTo: this.route });
-        }else{
-            this.router.navigate(["../../" + this.projetoId + "/etapa-envio"], { relativeTo: this.route });
-        }*/
+        this.router.navigate(["/projetos/" + this.projetoId + "/etapa-envio"], { relativeTo: this.route });
+    }
+    onListEnvios(){
+        this.router.navigate(["/projetos/" + this.projetoId + "/tarefas-envio"], { relativeTo: this.route });
     }
 
 

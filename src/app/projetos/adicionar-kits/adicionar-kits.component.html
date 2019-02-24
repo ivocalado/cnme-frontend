@@ -23,12 +23,15 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-lg-10 mt-1 pull-right">
-                        <button mat-raised-button class="mr-1" color="primary" type="submit" [disabled]="!f.valid">
+                        <button mat-raised-button class="mr-1" color="primary" type="submit" [disabled]="!f.valid || !canEdit">
                             Salvar
                         </button>
                         <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
-                            Cancelar
+                            Voltar
                         </button>
+                        <p>
+                            <mat-error>{{errorMessage}}</mat-error>
+                        </p>
                     </div>
                 </div>
             </form>
