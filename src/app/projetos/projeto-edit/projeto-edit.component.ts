@@ -121,7 +121,7 @@ export class ProjetoEditComponent implements OnInit {
         this.projetoDataService.getEquipDisponiveisEnvio(this.projetoId)
             .subscribe((equipamentos: EquipamentoProjeto[]) => {
                 this.equipDisponiveis = equipamentos;
-            });
+        });
     }
 
     setStep(index: number) {

@@ -56,7 +56,7 @@
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" (closed)="setStep(-1)" hideToggle>
+  <mat-expansion-panel *ngIf="etapaEnvio && etapaEnvio.tarefas && etapaEnvio.tarefas.length" [expanded]="step === 2" (opened)="setStep(2)" (closed)="setStep(-1)" hideToggle>
     <mat-expansion-panel-header>
         <mat-panel-title>
             <strong>Entregas</strong>
@@ -68,35 +68,59 @@
     </mat-expansion-panel-header>
     <div class="row">
       <div class="col-lg-12">
-          <mat-card *ngFor="let tarefa of etapaEnvio.tarefas" class="mt-2">
-              <div class="row">
-                  <div class="col-lg-6">
-                      <p><strong>Código de rastreio: </strong>{{tarefa.numero}}</p>
-                      <p><strong>Empresa responsável: </strong>{{tarefa.unidade_responsavel.nome}}</p>
-                  </div>
-                  <div class="col-lg-6">
-                      <p><strong>Previsão de início: </strong>{{tarefa.data_inicio_prevista | date:'dd/MM/yyyy'}}</p>
-                      <p><strong>Previsão de conclusão: </strong>{{tarefa.data_fim_prevista | date:'dd/MM/yyyy'}}</p>
-                  </div>
-              </div>
-              <p><strong>Equipamentos selecionados</strong></p>
-              <mat-chip-list >
-                  <mat-chip color="primary" *ngFor='let equipamento_p of tarefa.equipamentos_projeto'>
-                      {{equipamento_p.equipamento.nome}}
-                  </mat-chip>
-              </mat-chip-list>
-          </mat-card>
+        <mat-card *ngFor="let tarefa of etapaEnvio.tarefas" class="mt-2">
+          <div class="row">
+            <div class="col-lg-6">
+                <p><strong>Código de rastreio: </strong>{{tarefa.numero}}</p>
+                <p><strong>Empresa responsável: </strong>{{tarefa.unidade_responsavel.nome}}</p>
+            </div>
+            <div class="col-lg-6">
+                <p><strong>Previsão de início: </strong>{{tarefa.data_inicio_prevista | date:'dd/MM/yyyy'}}</p>
+                <p><strong>Previsão de conclusão: </strong>{{tarefa.data_fim_prevista | date:'dd/MM/yyyy'}}</p>
+            </div>
+          </div>
+          <p><strong>Equipamentos selecionados</strong></p>
+          <mat-chip-list >
+            <mat-chip color="primary" *ngFor='let equipamento_p of tarefa.equipamentos_projeto'>
+                {{equipamento_p.equipamento.nome}}
+            </mat-chip>
+          </mat-chip-list>
+      </mat-card>
+    </div>
+  </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="equipDisponiveis && equipDisponiveis.length && equipDisponiveis.length > 0" [expanded]="step === 3" (opened)="setStep(3)" (closed)="setStep(-1)" hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <strong>Equipamentos pendentes</strong>
+        </mat-panel-title>
+        <mat-panel-description>
+            <span *ngIf="step !== 3">Lista de equipamentos que ainda não foram atribuídos a nenhuma entrega</span>&nbsp;
+            <mat-icon>build</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="col-lg-12 mt-2">
+          <p><strong>
+                  Equipamentos aguardando envio: {{equipDisponiveis.length}}
+              </strong></p>
+          <mat-chip-list>
+              <mat-chip color="primary" *ngFor='let equipamento of equipDisponiveis'>
+                  {{equipamento.equipamento.nome}}
+              </mat-chip>
+          </mat-chip-list>
       </div>
   </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" (closed)="setStep(-1)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" (closed)="setStep(-1)" hideToggle>
     <mat-expansion-panel-header>
         <mat-panel-title>
             <strong>Cronograma de Instalação</strong>
         </mat-panel-title>
         <mat-panel-description>
-            <span *ngIf="step !== 3">Cronograma previsto para instalação</span>&nbsp;
+            <span *ngIf="step !== 4">Cronograma previsto para instalação</span>&nbsp;
             <mat-icon>build</mat-icon>
         </mat-panel-description>
     </mat-expansion-panel-header>
@@ -111,13 +135,13 @@
     </div> 
   </mat-expansion-panel>  
 
-  <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" (closed)="setStep(-1)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" (closed)="setStep(-1)" hideToggle>
     <mat-expansion-panel-header>
         <mat-panel-title>
             <strong>Cronograma de Ativação</strong>
         </mat-panel-title>
         <mat-panel-description>
-            <span *ngIf="step !== 4">Cronograma previsto para ativação</span>&nbsp;
+            <span *ngIf="step !== 5">Cronograma previsto para ativação</span>&nbsp;
             <mat-icon>language</mat-icon>
         </mat-panel-description>
     </mat-expansion-panel-header>
