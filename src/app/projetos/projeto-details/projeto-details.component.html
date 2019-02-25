@@ -1,0 +1,122 @@
+<h1>Detalhes do projeto</h1>
+<mat-accordion class="example-headers-align" *ngIf="projeto">
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" (closed)="setStep(-1)" hideToggle>
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+              <strong>Dados do Projeto</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            <span *ngIf="step !== 0">Dados básicos do projeto</span>&nbsp;
+              <mat-icon>description</mat-icon>
+          </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <p>
+          <strong>Status do projeto: </strong>{{projeto.status}}<br />
+          <strong>Unidade: </strong>{{projeto.unidade.nome}} (Cod. INEP: {{projeto.unidade.codigo_inep}})<br />
+          <strong>Número de projeto: </strong>{{projeto.numero}}<br />
+          <strong>Descrição: </strong>{{projeto.descricao}}<br />
+          <strong>Data Prevista para Início: </strong>{{projeto.data_inicio_previsto | date : 'dd/MM/yyyy'}}<br />
+          <strong>Data Prevista de Fim: </strong>{{projeto.data_fim_previsto | date : 'dd/MM/yyyy'}}<br />
+        </p>
+      </div>
+      
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" (closed)="setStep(-1)" hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <strong>Equipamentos</strong>
+        </mat-panel-title>
+        <mat-panel-description>
+            <span *ngIf="step !== 1">Equipamentos a serem enviados</span>&nbsp;
+            <mat-icon>assignment</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+        <div class="col-lg-12">
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="nome">
+              <mat-header-cell *matHeaderCellDef> Equipamento </mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.equipamento.nome}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="descricao">
+                  <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.equipamento.descricao}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="tipo_equipamento">
+                  <mat-header-cell *matHeaderCellDef> Categoria do Equipamento </mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.equipamento.tipo_equipamento.nome}}</mat-cell>
+              </ng-container>
+              <!-- actions -->
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" (closed)="setStep(-1)" hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <strong>Entregas</strong>
+        </mat-panel-title>
+        <mat-panel-description>
+            <span *ngIf="step !== 2">Entregas a serem realizadas</span>&nbsp;
+            <mat-icon>card_travel</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <p>
+        <strong>Unidade: </strong><br />
+        <strong>Número de Projeto: </strong><br />
+        <strong>Descrição: </strong><br />
+        <strong>Data Prevista para Início: </strong><br />
+        <strong>Data Prevista de Fim: </strong><br />
+      </p>
+    </div> 
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" (closed)="setStep(-1)" hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <strong>Cronograma de Instalação</strong>
+        </mat-panel-title>
+        <mat-panel-description>
+            <span *ngIf="step !== 3">Cronograma previsto para instalação</span>&nbsp;
+            <mat-icon>build</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <p>
+        <strong>Unidade: </strong><br />
+        <strong>Número de Projeto: </strong><br />
+        <strong>Descrição: </strong><br />
+        <strong>Data Prevista para Início: </strong><br />
+        <strong>Data Prevista de Fim: </strong><br />
+      </p>
+    </div> 
+  </mat-expansion-panel>  
+
+  <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" (closed)="setStep(-1)" hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <strong>Cronograma de Ativação</strong>
+        </mat-panel-title>
+        <mat-panel-description>
+            <span *ngIf="step !== 4">Cronograma previsto para ativação</span>&nbsp;
+            <mat-icon>language</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <p>
+        <strong>Unidade: </strong><br />
+        <strong>Número de Projeto: </strong><br />
+        <strong>Descrição: </strong><br />
+        <strong>Data Prevista para Início: </strong><br />
+        <strong>Data Prevista de Fim: </strong><br />
+      </p>
+    </div> 
+  </mat-expansion-panel>  
+
+</mat-accordion>

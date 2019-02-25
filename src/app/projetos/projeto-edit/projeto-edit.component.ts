@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
-import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
-import { Unidade } from 'src/app/_shared/models/unidade.model';
-import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
+import { UnidadeDataService } from '../../_shared/services/unidade-data.service';
+import { SnackBarService } from '../../_shared/helpers/snackbar.service';
+import { Unidade } from '../../_shared/models/unidade.model';
+import { ProjetoDataService } from '../../_shared/services/projeto-data.service';
 import { DateAdapter } from '@angular/material';
-import { Projeto } from 'src/app/_shared/models/projeto.model';
-import { Tarefa } from 'src/app/_shared/models/tarefa.model';
-import { Etapa } from 'src/app/_shared/models/etapa.model';
-import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.model';
+import { Projeto } from '../../_shared/models/projeto.model';
+import { Tarefa } from '../../_shared/models/tarefa.model';
+import { Etapa } from '../../_shared/models/etapa.model';
+import { EquipamentoProjeto } from '../../_shared/models/equipamentoProjeto.model';
 
 
 @Component({

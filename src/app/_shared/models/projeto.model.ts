@@ -1,6 +1,6 @@
 import { Unidade } from './unidade.model';
 import { Usuario } from './usuario.model';
-import { Equipamento } from './equipamento.model';
+import { EquipamentoProjeto } from './equipamentoProjeto.model';
 
 export class Projeto{
     constructor(
@@ -9,7 +9,7 @@ export class Projeto{
         public status: string,
         public descricao: string,
         public kit_id: number,
-        public equipamentos_projeto: Equipamento[],
+        public equipamentos_projeto: EquipamentoProjeto[],
         public data_inicio_previsto: Date,
         public data_fim_previsto: Date,
         public data_inicio: Date,

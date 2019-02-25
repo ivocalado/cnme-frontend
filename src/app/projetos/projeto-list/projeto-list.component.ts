@@ -24,6 +24,10 @@ export class ProjetoListComponent implements OnInit {
         this.fetchProjetos();
     }
 
+    onDetails(id: number) {
+        this.router.navigate(["detalhes", id], { relativeTo: this.route });
+    }
+
     onEdit(id: number) {
         this.router.navigate(["editar", id], { relativeTo: this.route });
     }

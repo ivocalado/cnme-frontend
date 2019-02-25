@@ -15,9 +15,10 @@ import { AdicionarKitsComponent } from './adicionar-kits/adicionar-kits.componen
 import { KitDataService } from '../_shared/services/kit-data.service';
 import { EtapaEnvioComponent } from './etapa-envio/etapa-envio.component';
 import { EnvioListComponent } from './etapa-envio/envio-list/envio-list.component';
+import { ProjetoDetailsComponent } from './projeto-details/projeto-details.component';
 
 @NgModule({
-    declarations: [ProjetosComponent, ProjetoEditComponent, ProjetoListComponent, AdicionarKitsComponent, EtapaEnvioComponent, EnvioListComponent],
+    declarations: [ProjetosComponent, ProjetoEditComponent, ProjetoListComponent, AdicionarKitsComponent, EtapaEnvioComponent, EnvioListComponent, ProjetoDetailsComponent],
     imports: [
         SharedModule,
         ProjetosRoutingModule,
