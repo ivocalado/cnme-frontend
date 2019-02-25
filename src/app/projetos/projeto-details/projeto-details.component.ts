@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ProjetoDataService } from '../../_shared/services/projeto-data.service';
 import { Projeto } from '../../_shared/models/projeto.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { Etapa } from 'src/app/_shared/models/etapa.model';
 
 @Component({
   selector: 'app-projeto-details',
@@ -18,6 +19,8 @@ export class ProjetoDetailsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ['nome', 'descricao', 'tipo_equipamento'];
   dataSource;
+  etapaEnvio = Etapa.EMPTY_MODEL;
+
   constructor( private route: ActivatedRoute,
                private router: Router,
                private projetoDataService: ProjetoDataService) 
@@ -35,6 +38,10 @@ export class ProjetoDetailsComponent implements OnInit {
       this.projeto = projeto
       this.dataSource = new MatTableDataSource(this.projeto.equipamentos_projeto);
       this.dataSource.sort = this.sort;
+    })
+
+    this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
+      this.etapaEnvio = etapa;
     })
   }
 
