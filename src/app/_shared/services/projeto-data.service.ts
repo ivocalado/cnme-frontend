@@ -89,13 +89,35 @@ export class ProjetoDataService{
             }));
     }
 
-    getEtapaEnvio(projetiId: number) {
-        return this.httpClient.get<Etapa>("/api/projeto-cnme/" + projetiId + "/etapa-envio")
+    getEtapaEnvio(projetoId: number) {
+        return this.httpClient.get<Etapa>("/api/projeto-cnme/" + projetoId + "/etapa-envio")
             .pipe(map(res => {
                 let etapa: Etapa;
                 etapa = res["data"];
                 return etapa;
             }))
+    }
+
+    getEtapaInstalacao(projetoId: number) {
+        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapas")
+            .pipe(map(res => {
+                for (var key in res["data"]) {
+                    let etapa = <Etapa>res["data"][key];
+                    if(etapa.tipo == "INSTALACAO")
+                        return etapa
+                }
+        }));
+    }
+
+    getEtapaAtivacao(projetoId: number) {
+        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapas")
+            .pipe(map(res => {
+                for (var key in res["data"]) {
+                    let etapa = <Etapa>res["data"][key];
+                    if(etapa.tipo == "ATIVACAO")
+                        return etapa
+                }
+        }));
     }
 
     storeTarefa(projetoId:number, tarefaEnvio:Tarefa){
