@@ -20,6 +20,8 @@ export class ProjetoDetailsComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'descricao', 'tipo_equipamento'];
   dataSource;
   etapaEnvio = Etapa.EMPTY_MODEL;
+  etapaInstalacao : Etapa
+  etapaAtivacao : Etapa
 
   constructor( private route: ActivatedRoute,
                private router: Router,
@@ -42,6 +44,20 @@ export class ProjetoDetailsComponent implements OnInit {
 
     this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
       this.etapaEnvio = etapa;
+    })
+
+    this.projetoDataService.getEtapaInstalacao(this.projetoId).subscribe(etapa => {
+      this.etapaInstalacao = etapa
+      console.log("Recuperando etapa Instalacao")
+      console.log(this.etapaInstalacao.tarefas[0].unidade_responsavel.nome)
+      console.log(this.etapaInstalacao.tarefas[0].data_inicio_prevista)      
+    })
+    
+    this.projetoDataService.getEtapaAtivacao(this.projetoId).subscribe(etapa => {
+      this.etapaAtivacao = etapa
+      console.log("Recuperando etapa Ativacao")
+      console.log(this.etapaInstalacao.tarefas[0].unidade_responsavel.nome)
+      console.log(this.etapaInstalacao.tarefas[0].data_inicio_prevista)
     })
   }
 

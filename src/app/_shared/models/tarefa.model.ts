@@ -1,4 +1,5 @@
 import { EquipamentoProjeto } from './equipamentoProjeto.model';
+import { Unidade } from './unidade.model';
 
 export class Tarefa{
     constructor(
@@ -7,7 +8,7 @@ export class Tarefa{
         public numero:string,
         public usuario_id:number,
         public unidade_responsavel_id:number,
-        public unidade_responsavel:number,
+        public unidade_responsavel:Unidade,
         public data_inicio_prevista:Date,
         public data_fim_prevista:Date,
         public equipamentos_projeto_ids:number[],
@@ -20,7 +21,7 @@ export class Tarefa{
         numero: '',
         usuario_id: null,
         unidade_responsavel_id: null,
-        unidade_responsavel: null,
+        unidade_responsavel: Unidade.EMPTY_MODEL,
         data_inicio_prevista: null,
         data_fim_prevista: null,
         equipamentos_projeto_ids: null,
