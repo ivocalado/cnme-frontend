@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-lg-6 mt-1">
                     <mat-form-field>
-                        <mat-select formControlName="unidade_id" id="unidade_id" placeholder="Escolha uma unidade"
+                        <mat-select formControlName="unidade_id" id="unidade_id" placeholder="Escolha uma empresa"
                             [required]="true">
                             <mat-option *ngFor="let unidade of unidades" [value]="unidade.id">
                                 {{ unidade.nome }}
@@ -150,5 +150,70 @@
             </div>
         </div>
     </mat-expansion-panel>
+    <!-- fim etapa envio -->
+    <!-- etapa instalação -->
+    <mat-expansion-panel *ngIf="equipDisponiveis && !equipDisponiveis.length" [expanded]="step === 3"
+        (opened)="setStep(3)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <strong>Cronograma de instalação</strong>
+            </mat-panel-title>
+            <mat-panel-description>
+                Dados da instalação
+                <mat-icon>build</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row" *ngIf="etapaInstalacao && etapaInstalacao.tarefas.length">
+            <div class="col-lg-12 mt-2">
+                <p><strong>Empresa responsável: </strong> {{etapaInstalacao.tarefas[0].unidade_responsavel.nome}}</p>
+                <p><strong>Nº de indentificação: </strong> {{etapaInstalacao.tarefas[0].numero}}</p>
+                <p><strong>Data prevista para início: </strong> {{etapaInstalacao.tarefas[0].data_inicio_prevista | date : 'dd/MM/yyyy'}}</p>
+                <p><strong>Data prevista para fim: </strong> {{etapaInstalacao.tarefas[0].data_fim_prevista | date : 'dd/MM/yyyy'}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt-3">
+                <button mat-raised-button class="mr-1" color="primary" (click)="onAddInstalacao()">
+                    {{!etapaInstalacao?"Adicionar":"Editar"}}
+                </button>
+                <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <!-- fim etapa instalação-->
+    <!-- etapa ativação -->
+    <mat-expansion-panel *ngIf="equipDisponiveis && !equipDisponiveis.length" [expanded]="step === 4" (opened)="setStep(4)"
+        hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <strong>Cronograma de ativação</strong>
+            </mat-panel-title>
+            <mat-panel-description>
+                Dados da ativação
+                <mat-icon>cast_for_education</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row" *ngIf="etapaAtivacao && etapaAtivacao.tarefas.length">
+            <div class="col-lg-12 mt-2">
+                <p><strong>Empresa responsável: </strong> {{etapaAtivacao.tarefas[0].unidade_responsavel.nome}}</p>
+                <p><strong>Nº de indentificação: </strong> {{etapaAtivacao.tarefas[0].numero}}</p>
+                <p><strong>Data prevista para início: </strong> {{etapaAtivacao.tarefas[0].data_inicio_prevista | date : 'dd/MM/yyyy'}}</p>
+                <p><strong>Data prevista para fim: </strong> {{etapaAtivacao.tarefas[0].data_fim_prevista | date : 'dd/MM/yyyy'}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt-3">
+                <button mat-raised-button class="mr-1" color="primary" (click)="onAddAtivacao()">
+                    {{!etapaAtivacao?"Adicionar":"Editar"}}
+                </button>
+                <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <!-- fim etapa ativação-->
 
 </mat-accordion>

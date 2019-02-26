@@ -65,9 +65,9 @@ export class EtapaEnvioComponent implements OnInit {
         if (this.etapaEnvio.id)
             tarefaEnvio.etapa_id = this.etapaEnvio.id;
         tarefaEnvio.etapa_id = null;
-        this.projetoDataService.storeTarefa(this.projetoId,tarefaEnvio).subscribe(res =>{
-            //window.location.reload();
-            this.router.navigate(["/projetos/editar/"+this.projetoId], { relativeTo: this.route });
+        this.projetoDataService.storeTarefaEnvio(this.projetoId,tarefaEnvio).subscribe(res =>{
+            //this.router.navigate(["/projetos/editar/"+this.projetoId], { relativeTo: this.route });
+            this.router.navigate(["../etapa-instalacao"], { relativeTo: this.route });
         })
     }
 

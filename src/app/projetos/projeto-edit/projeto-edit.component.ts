@@ -25,6 +25,8 @@ export class ProjetoEditComponent implements OnInit {
     projetoId:number;
     projeto:Projeto = Projeto.EMPTY_MODEL;
     etapaEnvio: Etapa;
+    etapaInstalacao: Etapa;
+    etapaAtivacao: Etapa;
     tarefas:Tarefa[];
     equipDisponiveis:EquipamentoProjeto[];
 
@@ -52,8 +54,12 @@ export class ProjetoEditComponent implements OnInit {
                     this.projeto = projeto;
                     this.initForm(this.projeto);
                     this.fetchEtapaEnvio(this.projetoId);
-                    if(projeto.equipamentos_projeto)
+                    //se existir a etapa envio tenta carregar as etapas
+                    if(projeto.equipamentos_projeto){
                         this.fetchEquipPendentes();
+                        this.fetchEtapaInstalacao(this.projetoId);
+                        this.fetchEtapaAtivacao(this.projetoId);
+                    }
                 })
             }else{
                 this.initForm(this.projeto);
@@ -103,6 +109,12 @@ export class ProjetoEditComponent implements OnInit {
     onListEnvios(){
         this.router.navigate(["/projetos/" + this.projetoId + "/tarefas-envio"], { relativeTo: this.route });
     }
+    onAddInstalacao(){
+        this.router.navigate(["/projetos/" + this.projetoId + "/etapa-instalacao"], { relativeTo: this.route });
+    }
+    onAddAtivacao() {
+        this.router.navigate(["/projetos/" + this.projetoId + "/etapa-ativacao"], { relativeTo: this.route });
+    }
 
 
     fetchPolos(){
@@ -114,6 +126,17 @@ export class ProjetoEditComponent implements OnInit {
     fetchEtapaEnvio(projetoId:number){
         this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
             this.etapaEnvio = etapa
+        })
+    }
+
+    fetchEtapaInstalacao(projetoId: number) {
+        this.projetoDataService.getEtapaInstalacao(this.projetoId).subscribe((etapa: Etapa) => {
+            this.etapaInstalacao = etapa
+        })
+    }
+    fetchEtapaAtivacao(projetoId: number) {
+        this.projetoDataService.getEtapaAtivacao(this.projetoId).subscribe((etapa: Etapa) => {
+            this.etapaAtivacao = etapa
         })
     }
 

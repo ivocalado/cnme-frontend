@@ -99,32 +99,40 @@ export class ProjetoDataService{
     }
 
     getEtapaInstalacao(projetoId: number) {
-        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapas")
+        return this.httpClient.get<Etapa[]>("api/projeto-cnme/"+projetoId+"/etapa-instalacao")
             .pipe(map(res => {
-                for (var key in res["data"]) {
-                    let etapa = <Etapa>res["data"][key];
-                    if(etapa.tipo == "INSTALACAO")
-                        return etapa
-                }
+                let etapa: Etapa;
+                etapa = res["data"];
+                return etapa;
         }));
     }
 
     getEtapaAtivacao(projetoId: number) {
-        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapas")
+        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapa-ativacao")
             .pipe(map(res => {
-                for (var key in res["data"]) {
-                    let etapa = <Etapa>res["data"][key];
-                    if(etapa.tipo == "ATIVACAO")
-                        return etapa
-                }
+                let etapa: Etapa;
+                etapa = res["data"];
+                return etapa;
         }));
     }
 
-    storeTarefa(projetoId:number, tarefaEnvio:Tarefa){
-        return this.httpClient.post("api/etapas/projeto-cnme/"+projetoId+"/add-tarefa-envio", tarefaEnvio)
+    storeTarefaEnvio(projetoId:number, tarefa:Tarefa){
+        return this.httpClient.post("api/etapas/projeto-cnme/"+projetoId+"/add-tarefa-envio", tarefa)
         .pipe(catchError(this.handleError));
     }
 
+    storeTarefaInstalacao(projetoId: number, tarefa: Tarefa) {
+        return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-instalacao", tarefa)
+            .pipe(catchError(this.handleError));
+    }
+
+    storeTarefaAtivacao(projetoId: number, tarefa: Tarefa) {
+        return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-ativacao", tarefa)
+            .pipe(catchError(this.handleError));
+    }
+
+    /*
+    deprecated
     getTarefas(etapaId:number){
         return this.httpClient.get<Tarefa[]>("/api/etapas/" + etapaId + "/tarefas")
             .pipe(map(res => {
@@ -136,7 +144,7 @@ export class ProjetoDataService{
                 }
                 return tarefas;
             }));
-    }
+    }*/
 
     deleteTarefa(etapaId: number, tarefaId:number){
         return this.httpClient.delete("/api/etapas/"+etapaId+"/remove-tarefa/"+tarefaId)
