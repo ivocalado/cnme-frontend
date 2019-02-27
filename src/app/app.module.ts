@@ -10,7 +10,7 @@ import { HomeComponent } from "./home/home.component";
 
 import { CoreModule } from "./_core/core.module";
 import { HttpClientModule } from '@angular/common/http';
-import { AuthGuard, Permissions } from "./_shared/auth/auth.guard";
+import { AuthGuard, Permissions } from "./auth/auth.guard";
 import { AuthenticationDataService } from "./_shared/services/authentication-data.service";
 
 @NgModule({

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationDataService } from '../services/authentication-data.service';
-import { Usuario } from '../models/usuario.model';
+import { AuthenticationDataService } from '../_shared/services/authentication-data.service';
+import { Usuario } from '../_shared/models/usuario.model';
+import { AuthService } from '../_shared/services/auth.service';
 
 
 @Injectable()
@@ -81,8 +82,8 @@ export class Permissions {
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild  {
 	permissions: Permissions
-    constructor(private router: Router, private authenticationDataService: AuthenticationDataService) {
-        this.permissions = new Permissions(this.authenticationDataService)
+    constructor(private router: Router, private authService: AuthService) {
+        // this.permissions = new Permissions(this.authenticationDataService)
      }
 
 	canActivate(
@@ -92,7 +93,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		let url: string = state.url
 		console.log("URL acessada: " + url)
-		return this.permissions.canActivate(url);
+		return this.checkLogin(url, next.data.roles)// && this.permissions.canActivate(url);
 	}
 
 	canActivateChild(
@@ -102,7 +103,23 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		let url: string = state.url
 		console.log("URL acessada: " + url)
-		return this.permissions.canActivateChild(url)
+		return this.checkLogin(url, next.data.roles)// && this.permissions.canActivateChild(url)
+	}
+
+	checkLogin(url: string, allowedRoles: string[]): boolean {
+		console.log("checking Login");
+
+		//return true;
+		if (this.authService.isAuthenticated()) {
+			console.log(this.authService.getCurrentUser().roles);
+			return true;
+		}
+		console.log("credirect");
+
+		this.authService.redirectUrl = url;
+		this.router.navigate(['/login']);
+		return false;
+
 	}
 }
 
