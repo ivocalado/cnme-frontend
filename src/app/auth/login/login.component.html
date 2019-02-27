@@ -1,0 +1,43 @@
+<div class="login">
+	<mat-card>
+		<mat-card-title class="mt-4">Login</mat-card-title>
+
+		<mat-card-content class="mb-4 mt-4">
+			<form (ngSubmit)="onLogin(f)" #f="ngForm">
+				<div class="container">
+					<div class="row">
+						<div class="col-10 offset-1 mt-1">
+							<mat-form-field>
+								<input matInput ngModel id="email" name="email" placeholder="Email" required>
+							</mat-form-field>
+						</div>
+						<div class="col-10 offset-1 mt-1">
+							<mat-form-field>
+								<input matInput ngModel [type]="hidePassword ? 'password' : 'text'" id="password" name="password" placeholder="Senha"
+								 required>
+								<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-10 offset-1 mt-3">
+							<button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">
+								Login
+							</button>
+							<!--<button mat-raised-button type="button" class="m-1" color="accent" >
+										Registrar
+									</button>-->
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-10 offset-1 mt-5">
+							<div class="message">
+								{{message}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+</div>
