@@ -11,7 +11,7 @@ import { HomeComponent } from "./home/home.component";
 import { CoreModule } from "./_core/core.module";
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard, Permissions } from "./auth/auth.guard";
-import { AuthenticationDataService } from "./_shared/services/authentication-data.service";
+import { AuthService } from './_shared/services/auth.service';
 
 @NgModule({
     declarations: [AppComponent, HomeComponent],
@@ -23,7 +23,7 @@ import { AuthenticationDataService } from "./_shared/services/authentication-dat
         LayoutModule,
         CoreModule,
     ],
-    providers: [AuthGuard, AuthenticationDataService],
+    providers: [AuthGuard, AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

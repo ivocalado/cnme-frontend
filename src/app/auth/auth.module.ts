@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatIconModule } from '@angular/material';
 import { AuthComponent } from './auth.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
-  declarations: [AuthComponent, LoginComponent],
+  declarations: [AuthComponent, LoginComponent, LogoutComponent],
 	imports: [
 		FormsModule,
 		AuthRoutingModule,

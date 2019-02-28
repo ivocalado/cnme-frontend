@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class UsuarioDataService {
@@ -19,7 +20,7 @@ export class UsuarioDataService {
 
     }
 
-    storeUsuario(usuario: Usuario): Observable<Usuario> {
+    storeUsuario(usuario: Usuario, authToken: string): Observable<Usuario> {
         usuario.name = usuario.nome
         return this.httpClient
             .post<Usuario>(
@@ -27,23 +28,32 @@ export class UsuarioDataService {
                 usuario,
                 {
                     headers: new HttpHeaders({
-                        "Content-Type":"application/json; charset=UTF-8"
+                        "Content-Type":"application/json; charset=UTF-8",
+                        "Authorization": 'Bearer '+authToken
                     })
                 }
             )
             .pipe( map(data => data), catchError(this.handleError));
     }
 
-    updateUsuario(id:number, usuario:Usuario){
+    updateUsuario(id:number, usuario:Usuario, authToken: string){
         usuario.name = usuario.nome
-        return this.httpClient.put("/api/usuarios/"+id, usuario)
+        return this.httpClient.put("/api/usuarios/"+id, usuario, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        })
         .pipe(
             catchError(this.handleError)
         )
     }
 
-    getUsuarios(){
-        return this.httpClient.get<Usuario[]>("/api/usuarios")
+    getUsuarios(authToken: string){
+        return this.httpClient.get<Usuario[]>("/api/usuarios", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        })
         .pipe(
             map(res =>{
                 let usuarios:Usuario[] = [];
@@ -58,8 +68,12 @@ export class UsuarioDataService {
         );
     }
 
-    getUsuario(id:number){
-        return this.httpClient.get<Usuario>("/api/usuarios/"+id)
+    getUsuario(id:number, authToken: string){
+        return this.httpClient.get<Usuario>("/api/usuarios/"+id, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        })
         .pipe(
             map(res =>{
                 let usuario:Usuario;
@@ -70,12 +84,37 @@ export class UsuarioDataService {
         );
     }
 
-    deleteUsuario(id:number){
-        return this.httpClient.delete("/api/usuarios/"+id);
+    getUsuarioByEmail(email:string, authToken: string){
+        const body = { email: email};
+        return this.httpClient.post<Usuario>("/api/usuarios/login/email", body, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        })
+        .pipe(
+            map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            })
+        );
     }
 
-    getTiposUsuarios() {
-        return this.httpClient.get("/api/usuarios/u/tipos")
+    deleteUsuario(id:number, authToken: string){
+        return this.httpClient.delete("/api/usuarios/"+id, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        });
+    }
+
+    getTiposUsuarios(authToken: string) {
+        return this.httpClient.get("/api/usuarios/u/tipos", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        })
         .pipe(
             map(res =>{
                 let tipos:string[] = [];
@@ -88,8 +127,8 @@ export class UsuarioDataService {
             })
         );
     }
-
-    sendInvitation(usuario: Usuario) {
+    
+    sendInvitation(usuario: Usuario, authToken: string) {
         console.log("send invitation")
         console.log(usuario)
         return this.httpClient
@@ -98,7 +137,8 @@ export class UsuarioDataService {
                 usuario,
                 {
                     headers: new HttpHeaders({
-                        "Content-Type":"application/json; charset=UTF-8"
+                        "Content-Type":"application/json; charset=UTF-8",
+                        "Authorization": 'Bearer '+authToken
                     })
                 }
             )

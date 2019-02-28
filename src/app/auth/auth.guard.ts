@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationDataService } from '../_shared/services/authentication-data.service';
 import { Usuario } from '../_shared/models/usuario.model';
 import { AuthService } from '../_shared/services/auth.service';
 
@@ -12,10 +11,8 @@ export class Permissions {
 	usuarioLogado : Usuario
 
 
-	constructor(private authenticationDataService : AuthenticationDataService) {
-		this.authenticationDataService.getSessionUser().subscribe(usuario => {
-			this.usuarioLogado =  usuario
-		})
+	constructor(private authService : AuthService) {
+		this.usuarioLogado  = this.authService.getCurrentUser()
 
 		this.permissions = {
 			admin: [
@@ -117,7 +114,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 		console.log("credirect");
 
 		this.authService.redirectUrl = url;
-		this.router.navigate(['/login']);
+		this.router.navigate(['/auth/login']);
 		return false;
 
 	}

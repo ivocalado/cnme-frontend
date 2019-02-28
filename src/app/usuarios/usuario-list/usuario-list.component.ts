@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from '../../_shared/helpers/snackbar.service';
-import { AuthenticationDataService } from '../../_shared/services/authentication-data.service';
 import { Usuario } from '../../_shared/models/usuario.model';
 import { UnidadeDataService } from '../../_shared/services/unidade-data.service';
 import { UsuarioDataService } from '../../_shared/services/usuario-data.service';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 
 @Component({
@@ -31,17 +31,14 @@ export class UsuarioListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private snackBarService: SnackBarService,
-        private authenticationDataService: AuthenticationDataService,
+        private authService: AuthService,
         private unidadeDataService: UnidadeDataService,
         private usuarioDataService: UsuarioDataService
     ) {}
 
     ngOnInit() {
-        this.authenticationDataService.getSessionUser().subscribe(user => {
-            this.usuarioAutenticado = user
-            this.fetchUsuarios()
-        })
-        
+        this.usuarioAutenticado = this.authService.getCurrentUser()
+        this.fetchUsuarios()
     }
 
     onEdit(id: number) {

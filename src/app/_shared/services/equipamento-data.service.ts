@@ -5,11 +5,12 @@ import { Injectable } from "@angular/core";
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TipoEquipamento } from '../models/tipoEquipamento.model';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class EquipamentoDataService {
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient, private authService: AuthService) {}
 
     private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
@@ -28,8 +29,8 @@ export class EquipamentoDataService {
                 equipamento,
                 {
                     headers: new HttpHeaders({
-                        "Content-Type":
-                            "application/json; charset=UTF-8"
+                        "Content-Type": "application/json; charset=UTF-8",
+                        "Authorization": 'Bearer '+this.authService.getToken()
                     })
                 }
             )
@@ -37,14 +38,24 @@ export class EquipamentoDataService {
     }
 
     updateEquipamento(id:number, equipamento:Equipamento){
-        return this.httpClient.put("/api/equipamentos/"+id, equipamento)
+        return this.httpClient.put("/api/equipamentos/"+id, equipamento, {
+            headers: new HttpHeaders({
+                "Content-Type": "application/json; charset=UTF-8",
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        } 
+        )
         .pipe(
             catchError(this.handleError)
         )
     }
 
     getEquipamentos(){
-        return this.httpClient.get<Equipamento[]>("/api/equipamentos")
+        return this.httpClient.get<Equipamento[]>("/api/equipamentos", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            }) 
+        })
         .pipe(
             map(res =>{
                 let equipamentos:Equipamento[] = [];
@@ -67,7 +78,11 @@ export class EquipamentoDataService {
     }
 
     getEquipamento(id:number){
-        return this.httpClient.get<Equipamento>("/api/equipamentos/"+id)
+        return this.httpClient.get<Equipamento>("/api/equipamentos/"+id, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
         .pipe(
             map(res =>{
                 let equipamento:Equipamento;
@@ -81,7 +96,11 @@ export class EquipamentoDataService {
     }
 
     deleteEquipamento(id:number){
-        return this.httpClient.delete("/api/equipamentos/"+id);
+        return this.httpClient.delete("/api/equipamentos/"+id, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        });
     }
 }
 

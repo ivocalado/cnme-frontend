@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Estado } from '../../_shared/models/estado.model';
-import { Localidade } from '../../_shared/models/localidade.model';
 import { Unidade } from '../../_shared/models/unidade.model';
-import { Municipio } from '../../_shared/models/municipio.model';
 import { UnidadeDataService } from '../../_shared/services/unidade-data.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { AuthenticationDataService } from '../../_shared/services/authentication-data.service';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
     selector: 'app-empresa-details',
@@ -21,7 +19,7 @@ export class EmpresaDetailsComponent implements OnInit {
         private unidadeDataService: UnidadeDataService,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationDataService: AuthenticationDataService
+        private authService: AuthService
     ) { }
 
     ngOnInit() {

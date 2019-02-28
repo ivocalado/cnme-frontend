@@ -1,17 +1,22 @@
 
 import { Estado } from '../models/estado.model';
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from 'rxjs/operators';
 import { Localidade } from '../models/localidade.model';
 import { Municipio } from '../models/municipio.model';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class EstadoDataService{
-    constructor(private httpClient:HttpClient){}
+    constructor(private httpClient:HttpClient, private authService: AuthService){}
 
     getEstados() {
-        return this.httpClient.get<Estado[]>("/api/localidades/estados")
+        return this.httpClient.get<Estado[]>("/api/localidades/estados", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
         .pipe(
             map(res => {
                 let estados:Estado[]=[];
@@ -31,8 +36,11 @@ export class EstadoDataService{
 
     getMunicipios(sigla:string){
         return this.httpClient.get<Municipio[]>(
-            "/api/localidades/estados/" +sigla+"/municipios"
-        )
+            "/api/localidades/estados/" +sigla+"/municipios", {
+                headers: new HttpHeaders({
+                    "Authorization": 'Bearer '+this.authService.getToken()
+                })
+            })
         .pipe(
             map(res =>{
                 let municipios: Municipio[] = [];

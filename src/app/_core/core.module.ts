@@ -15,6 +15,7 @@ import { SharedModule } from "../_shared/shared.module";
 import { CommonModule } from "@angular/common";
 import { IsOnlineComponent } from './is-online/is-online.component';
 import { SnackBarService } from '../_shared/helpers/snackbar.service';
+import { AuthService } from '../_shared/services/auth.service';
 
 @NgModule({
     declarations: [MainNavComponent, IsOnlineComponent],
@@ -30,6 +31,6 @@ import { SnackBarService } from '../_shared/helpers/snackbar.service';
         MatSnackBarModule
     ],
     exports: [AppRoutingModule, MainNavComponent],
-    providers: [EstadoService, SnackBarService]
+    providers: [EstadoService, SnackBarService, AuthService]
 })
 export class CoreModule {}

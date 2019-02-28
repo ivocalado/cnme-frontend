@@ -6,6 +6,7 @@ import { SnackBarService } from '../../_shared/helpers/snackbar.service';
 import { Unidade } from '../../_shared/models/unidade.model';
 import { UsuarioDataService } from '../../_shared/services/usuario-data.service';
 import { Usuario } from '../../_shared/models/usuario.model';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
   selector: 'app-polo-invitation',
@@ -22,7 +23,8 @@ export class PoloInvitationComponent implements OnInit {
     private router: Router,
     private unidadeDataService: UnidadeDataService,
     private usuarioDataService: UsuarioDataService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -32,7 +34,7 @@ export class PoloInvitationComponent implements OnInit {
       if(unidadeId != null) {
         this.unidadeDataService.getUnidade(unidadeId).subscribe(unidade => {
           this.unidade = unidade
-          this.usuarioDataService.getTiposUsuarios().subscribe((tipos: string[]) => {
+          this.usuarioDataService.getTiposUsuarios(this.authService.getToken()).subscribe((tipos: string[]) => {
             this.tiposUsuarios = tipos
             this.initForm();
           })          
@@ -51,7 +53,7 @@ export class PoloInvitationComponent implements OnInit {
     usuario.unidade_id = this.unidade.id
     console.log("onInvitation")
     console.log(usuario)
-    this.usuarioDataService.sendInvitation(this.invitationForm.value).subscribe(usuario => {
+    this.usuarioDataService.sendInvitation(this.invitationForm.value, this.authService.getToken()).subscribe(usuario => {
       this.snackBarService.openSnackBar("Convite enviado com sucesso!");
       this.router.navigate(["/polos"], { relativeTo: this.route });
       this.router.navigate(["/polos/detalhes", this.unidade.id], { relativeTo: this.route });

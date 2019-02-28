@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable , of} from 'rxjs';
 import { map, catchError } from "rxjs/operators";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { UsuarioDataService } from './usuario-data.service';
 
 export const jwtTokenName: string = 'jwtToken';
 export const currentUser: string = 'currentUser';
 
-@Injectable({
-	providedIn: "root"
-})
+@Injectable()
 export class AuthService {
 	//isLoggedIn = false;
 	//baseUrl: string = "https://localhost:5001";
 	redirectUrl: string; // store the URL so we can redirect after logging in
 	//token: string;
 
-	constructor(private httpClient: HttpClient) {}
+	constructor(private httpClient: HttpClient, private usuarioDataService: UsuarioDataService) {}
 
 	login(email: string, password: string) {
 		const body = { email: email, password: password };
@@ -28,7 +27,7 @@ export class AuthService {
 					console.log(user.token);
 					if (user && user.token) {
 						this.setToken(user.token);
-						this.setCurrentUser(user.token);
+						this.setCurrentUser(email);
 					}
 					return user;
 				}),
@@ -36,27 +35,47 @@ export class AuthService {
 			);
 	}
 
+	_remoteLogout(){
+        return this.httpClient.get("/api/logout", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.getToken()
+            })
+        } 
+        )
+        .pipe(
+            catchError(this.handleError("logout", []))
+        )
+    }
+
+
+
 	logout(): void {
-		localStorage.removeItem(jwtTokenName);
-		localStorage.removeItem(currentUser);
+		this._remoteLogout().subscribe(msg => {
+			localStorage.removeItem(jwtTokenName);
+			localStorage.removeItem(currentUser);
+		})
 	}
 
-	setCurrentUser(token:string){
-		let decodedToken = new JwtHelperService().decodeToken(token);
-		let userName = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-		let userRoles = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-
-
-		localStorage.setItem(
-			'currentUser', JSON.stringify({
-				name: userName,
-				roles: userRoles
-			})
-		)
+	setCurrentUser(email:string){
+		
+		this.usuarioDataService.getUsuarioByEmail(email, this.getToken()).subscribe(usuario => {
+			
+			
+			localStorage.setItem(
+				'currentUser', JSON.stringify(usuario)
+			)
+		})
 	}
 
 	getCurrentUser() {
-		return  JSON.parse(localStorage.getItem(currentUser));
+		console.log("getCurrentUser")
+		let item = localStorage.getItem(currentUser);
+
+		console.log(item)
+		if(item === null)
+			return null
+		else 
+			return JSON.parse(item);
 	}
 
 	setToken(token:string){
@@ -73,7 +92,6 @@ export class AuthService {
 		if (token != null && helper.isTokenExpired(token)){
 			this.logout();
 		}
-		//console.log(helper.decodeToken(token)["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
 		return token != null;
 	}
 

@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/_shared/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  hidePassword = true;
+  	hidePassword = true;
 	message:string;
 
 	constructor(public authService:AuthService, public router:Router) {
@@ -18,13 +18,13 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		if(this.authService.isAuthenticated()){
-			this.router.navigate(["/admin"]);
+		if(this.authService.isAuthenticated){
+			this.router.navigate(["/"]);
 		}
 	}
 
 	setMessage(){
-		this.message = 'Logged ' +(this.authService.isAuthenticated()?'in':'out');
+		this.message = 'Logged ' +(this.authService.isAuthenticated?'in':'out');
 	}
 
 	onLogin(form:NgForm){
@@ -32,9 +32,11 @@ export class LoginComponent implements OnInit {
 		this.authService.login(form.value.email, form.value.password)
 		.subscribe(()=>{
 			this.setMessage();
-			if(this.authService.isAuthenticated()){
+			if(this.authService.isAuthenticated){
+				console.log("usuario logadoo!")
 				let redirect = this.authService.redirectUrl ? this.authService.redirectUrl:'/';
-				this.router.navigate([redirect]);
+				console.log("Pagina: " + redirect)
+				this.router.navigate(["/"]);
 			}
 		});
 	}
