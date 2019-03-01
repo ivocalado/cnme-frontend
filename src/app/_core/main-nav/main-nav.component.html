@@ -2,16 +2,16 @@
     <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
         <img class="img-logo" src="assets/images/logo-cnme.png" srcset="assets/images/logo-cnme@2x.png 2x" alt="CNME">
-        <mat-nav-list *ngIf="this.authService.isAuthenticated()">
-            <a mat-list-item routerLink="" *ngIf="usuarioPrivilegiado">DashBoard</a>
+        <mat-nav-list *ngIf="isUsuarioAutenticado">
+            <a mat-list-item routerLink="" *ngIf="isUsuarioPrivilegiado">DashBoard</a>
             <a mat-list-item routerLink="projetos">Projetos</a>
-            <a mat-list-item routerLink="unidades" *ngIf="usuarioPrivilegiado">Unidades</a>
-            <a mat-list-item routerLink="polos" *ngIf="usuarioPrivilegiado">Polos</a>
-            <a mat-list-item routerLink="empresas" *ngIf="usuarioPrivilegiado">Empresas</a>
-            <a mat-list-item routerLink="equipamentos" *ngIf="usuarioPrivilegiado">Equipamentos</a>
-            <a mat-list-item routerLink="kits" *ngIf="usuarioPrivilegiado">Kits</a>
-            <a mat-list-item routerLink="tipoEquipamentos" *ngIf="usuarioPrivilegiado">Tipos de Equipamentos</a>
-            <a mat-list-item routerLink="usuarios">Usuários</a>
+            <a mat-list-item routerLink="unidades" *ngIf="isUsuarioPrivilegiado">Unidades</a>
+            <a mat-list-item routerLink="polos" *ngIf="isUsuarioPrivilegiado">Polos</a>
+            <a mat-list-item routerLink="empresas" *ngIf="isUsuarioPrivilegiado">Empresas</a>
+            <a mat-list-item routerLink="equipamentos" *ngIf="isUsuarioPrivilegiado">Equipamentos</a>
+            <a mat-list-item routerLink="kits" *ngIf="isUsuarioPrivilegiado">Kits</a>
+            <a mat-list-item routerLink="tipoEquipamentos" *ngIf="isUsuarioPrivilegiado">Tipos de Equipamentos</a>
+            <a mat-list-item routerLink="usuarios" >Usuários</a>
             <!--
             menu com submenu
             <a mat-list-item routerLink="polos" (click)="showSubmenu = !showSubmenu">Parent Menu</a>
@@ -30,7 +30,7 @@
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
             <span></span> <span class="nav-spacer"></span>
-            <a class="topnav-icon" *ngIf="usuarioAutenticado" mat-list-item routerLink="auth/logout">
+            <a class="topnav-icon" *ngIf="isUsuarioAutenticado" mat-list-item routerLink="auth/logout">
                 <mat-icon>exit_to_app</mat-icon>
             </a>
         </mat-toolbar>

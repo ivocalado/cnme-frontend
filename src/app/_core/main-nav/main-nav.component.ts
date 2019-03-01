@@ -25,9 +25,14 @@ export class MainNavComponent implements OnInit {
   
   
   ngOnInit() {
-    console.log("Executando ngOnInit MainNacCompnent")
-    this.usuarioAutenticado = this.authService.getCurrentUser()
-    console.log(this.usuarioAutenticado)
-    this.usuarioPrivilegiado = this.usuarioAutenticado && this.usuarioAutenticado.unidade && (this.usuarioAutenticado.unidade.classe != "polo")
+  }
+
+  get isUsuarioPrivilegiado() {
+    let usuarioAutenticado = this.authService.getCurrentUser("MainNavComponent -> ngOinit")
+    return (usuarioAutenticado!==null) && usuarioAutenticado.unidade && (usuarioAutenticado.unidade.classe != "polo")
+  }
+
+  get isUsuarioAutenticado() {
+    return this.authService.getCurrentUser("MainNavComponent -> ngOinit")
   }
 }

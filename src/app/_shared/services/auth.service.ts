@@ -4,6 +4,7 @@ import { map, catchError } from "rxjs/operators";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { UsuarioDataService } from './usuario-data.service';
+import { Usuario } from '../models/usuario.model';
 
 export const jwtTokenName: string = 'jwtToken';
 export const currentUser: string = 'currentUser';
@@ -49,11 +50,12 @@ export class AuthService {
 
 
 
-	logout(): void {
+	logout() {
 		this._remoteLogout().subscribe(msg => {
-			localStorage.removeItem(jwtTokenName);
-			localStorage.removeItem(currentUser);
+			console.log("REALIZAR impressão de mensagem de erro")	
 		})
+		localStorage.removeItem(jwtTokenName);
+		localStorage.removeItem(currentUser);
 	}
 
 	setCurrentUser(email:string){
@@ -67,13 +69,15 @@ export class AuthService {
 		})
 	}
 
-	getCurrentUser() {
-		console.log("getCurrentUser")
+	getCurrentUser(caller: string) {
+		console.log(caller + "-> getCurrentUser")
 		let item = localStorage.getItem(currentUser);
 
 		console.log(item)
-		if(item === null)
+		if(item === null) {
+			console.log("Entrou em nullllllll")
 			return null
+		}			
 		else 
 			return JSON.parse(item);
 	}

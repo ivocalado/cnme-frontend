@@ -12,7 +12,7 @@ export class Permissions {
 
 
 	constructor(private authService : AuthService) {
-		this.usuarioLogado  = this.authService.getCurrentUser()
+		this.usuarioLogado  = this.authService.getCurrentUser("Permissions -> constructor")
 
 		this.permissions = {
 			admin: [
@@ -108,7 +108,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		//return true;
 		if (this.authService.isAuthenticated()) {
-			console.log(this.authService.getCurrentUser().roles);
+			console.log(this.authService.getCurrentUser("AuthGuard -> checkLogin"));
 			return true;
 		}
 		console.log("credirect");

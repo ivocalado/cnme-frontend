@@ -37,7 +37,7 @@ export class UsuarioListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.usuarioAutenticado = this.authService.getCurrentUser()
+        this.usuarioAutenticado = this.authService.getCurrentUser("UsuarioListComponent -> ngOnInit")
         this.fetchUsuarios()
     }
 
