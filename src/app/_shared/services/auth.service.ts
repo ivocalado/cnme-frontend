@@ -79,7 +79,7 @@ export class AuthService {
 			return null
 		}			
 		else 
-			return JSON.parse(item);
+			return <Usuario>JSON.parse(item);
 	}
 
 	setToken(token:string){

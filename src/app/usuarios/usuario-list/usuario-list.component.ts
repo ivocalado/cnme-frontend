@@ -41,6 +41,10 @@ export class UsuarioListComponent implements OnInit {
         this.fetchUsuarios()
     }
 
+    onDetails(id:number){
+        this.router.navigate(['detalhes', id], { relativeTo: this.route });
+    }
+
     onEdit(id: number) {
         this.router.navigate(["editar", id], { relativeTo: this.route });
     }

@@ -7,9 +7,10 @@ import { UsuarioEditComponent } from './usuario-edit/usuario-edit.component';
 import { SharedModule } from '../_shared/shared.module';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatCardModule, MatTableModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { UsuarioDetailsComponent } from './usuario-details/usuario-details.component';
 
 @NgModule({
-    declarations: [UsuariosComponent, UsuarioListComponent, UsuarioEditComponent],
+    declarations: [UsuariosComponent, UsuarioListComponent, UsuarioEditComponent, UsuarioDetailsComponent],
     imports: [
         SharedModule,
         FormsModule,
