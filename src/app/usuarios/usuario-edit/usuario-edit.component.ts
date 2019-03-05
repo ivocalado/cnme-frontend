@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
+import { UsuarioDataService } from 'src/app/_shared/services/usuario-data.service';
+import { AuthService } from 'src/app/_shared/services/auth.service';
+import { Usuario } from 'src/app/_shared/models/usuario.model';
+import { Permissions } from 'src/app/auth/auth.guard';
 
 @Component({
     selector: "app-usuario-edit",
@@ -12,23 +17,79 @@ export class UsuarioEditComponent implements OnInit {
     editmode = false;
     hidePassword = true;
     newPassword = "";
+    editForm: FormGroup;
+    usuario: Usuario = Usuario.EMPTY_MODEL
+    usuarioLogado: Usuario = Usuario.EMPTY_MODEL
+    tiposUsuarios: string[]
 
     constructor(
         private router:Router,
         private route:ActivatedRoute,
-        private snackBarService:SnackBarService
+        private unidadeDataService: UnidadeDataService,
+        private usuarioDataService: UsuarioDataService,
+        private snackBarService: SnackBarService,
+        private authService: AuthService,
+        private permissions: Permissions
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+
+        this.route.params.subscribe((params:Params) =>{
+            this.usuarioLogado = this.authService.getCurrentUser()
+            const usuarioId = +params["id"];
+            this.editmode = params["id"] != null;
+            console.log("editMode: "+this.editmode);    
+            this.usuarioDataService.getUsuario(usuarioId, this.authService.getToken()).subscribe((usuario:Usuario) =>{
+                this.usuario = usuario;
+                this.usuarioDataService.getTiposUsuarios(this.authService.getToken()).subscribe((tipos: string[]) => {
+                    this.tiposUsuarios = tipos
+                    this.initForm();
+                })
+            })
+        })
+     }
 
     onCancel(){
         this.router.navigate(['/usuarios'], {relativeTo:this.route})
     }
-    onSubmit(form:NgForm){
-        console.log(form.value);
-        this.snackBarService.openSnackBar("Implementar o método de envio.");
-        this.router.navigate(['/usuarios'], { relativeTo: this.route });
+    onSubmit(){
+        if(this.editForm.value.password === null || this.editForm.value.password == "") {
+            this.editForm.removeControl('password')
+        } 
 
+        console.log("Antes")
+        let us : Usuario = <Usuario>this.editForm.value
+        us.nome = us.name
+        console.log("Depois")
+        this.usuarioDataService.updateUsuario(this.usuario.id, us, this.authService.getToken())
+            .subscribe(
+                res => {
+                    console.log("RESULTADO:")
+                    console.log(res)
+                    this.snackBarService.openSnackBar("Usuário atualizado com sucesso");
+                    this.router.navigate(["/usuarios/detalhes", this.usuario.id], { relativeTo: this.route });
+                }, 
+                error => {
+                    console.log("Tratamento de erro")
+                    console.log(error)
+                }
+        )
+    }
+
+    get isOwner() {
+        return this.usuario.id == this.usuarioLogado.id
+    }
+
+    get isUsuarioPrivilegiado() {
+
+        let usuarioPrivilegiado = false
+        if(this.usuario.unidade.id == this.usuarioLogado.unidade.id) {//O usuario logado eh da mesma unidade que o usuario a ser editado?
+            usuarioPrivilegiado = (this.usuarioLogado.tipo == "gestor");
+        } else {
+            usuarioPrivilegiado = this.permissions[this.usuarioLogado.unidade.classe].includes(this.usuario.unidade.classe)
+        } 
+
+        return usuarioPrivilegiado
     }
 
     generatePassword() {
@@ -60,4 +121,22 @@ export class UsuarioEditComponent implements OnInit {
             this.newPassword = passwordArray.join("");
         }
     }
+
+    private initForm() {
+
+        this.editForm = new FormGroup({
+          name: new FormControl(this.usuario.name, Validators.required),
+          email: new FormControl(this.usuario.email, [Validators.required, Validators.email]),
+          password: new FormControl(this.usuario.password),
+          cpf: new FormControl(this.usuario.cpf, Validators.required),
+          tipo: new FormControl({value: this.usuario.tipo, disabled: this.isOwner}, Validators.required),
+          funcao: new FormControl({value: this.usuario.funcao, disabled: this.isOwner}, Validators.required),
+          telefone: new FormControl(this.usuario.telefone)
+        });
+      }
+    
+      titleCaseWord(word: string) {
+        if (!word) return word;
+        return word[0].toUpperCase() + word.substr(1).toLowerCase();
+      }
 }

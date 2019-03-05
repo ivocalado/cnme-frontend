@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable , of} from 'rxjs';
+import { Observable , of, throwError} from 'rxjs';
 import { map, catchError } from "rxjs/operators";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { UsuarioDataService } from './usuario-data.service';
 import { Usuario } from '../models/usuario.model';
@@ -25,14 +25,13 @@ export class AuthService {
 			.post<any>("/api/login", body)
 			.pipe(
 				map(user => {
-					console.log(user.token);
 					if (user && user.token) {
 						this.setToken(user.token);
 						this.setCurrentUser(email);
 					}
 					return user;
 				}),
-				catchError(this.handleError("login", []))
+				catchError(this.handleError)
 			);
 	}
 
@@ -44,7 +43,7 @@ export class AuthService {
         } 
         )
         .pipe(
-            catchError(this.handleError("logout", []))
+            catchError(this.handleError)
         )
     }
 
@@ -52,7 +51,10 @@ export class AuthService {
 
 	logout() {
 		this._remoteLogout().subscribe(msg => {
-			console.log("REALIZAR impressão de mensagem de erro")	
+			console.log("Usuário deslogado com sucesso.")	
+		},
+		error => {
+			console.log("Ocorreu um erro ao deslogar o usuário no backend.")
 		})
 		localStorage.removeItem(jwtTokenName);
 		localStorage.removeItem(currentUser);
@@ -69,17 +71,14 @@ export class AuthService {
 		})
 	}
 
-	getCurrentUser(caller: string) {
-		console.log(caller + "-> getCurrentUser")
+	getCurrentUser() {
 		let item = localStorage.getItem(currentUser);
 
-		console.log(item)
 		if(item === null) {
-			console.log("Entrou em nullllllll")
 			return null
 		}			
 		else 
-			return <Usuario>JSON.parse(item);
+			return JSON.parse(item);
 	}
 
 	setToken(token:string){
@@ -90,7 +89,7 @@ export class AuthService {
 		return localStorage.getItem(jwtTokenName);
 	}
 
-	isAuthenticated() {
+	get isAuthenticated() {
 		const helper = new JwtHelperService();
 		let token = this.getToken();
 		if (token != null && helper.isTokenExpired(token)){
@@ -99,18 +98,11 @@ export class AuthService {
 		return token != null;
 	}
 
-	private handleError<T>(operation = "operation", result?: T) {
-		return (error: any): Observable<T> => {
-			// TODO: send the error to remote logging infrastructure
-			console.error(error); // log to console instead
-
-			// TODO: better job of transforming error for user consumption
-			console.log(`${operation} failed: ${error.message}`);
-
-			console.log(error.error);
-
-			// Let the app keep running by returning an empty result.
-			return of(result as T);
-		};
-	}
+	private handleError(errorResponse: HttpErrorResponse) {
+        if (errorResponse.error instanceof Error) {
+            return throwError("client-side error");
+        } else {
+            return throwError(errorResponse.error.error);
+        }
+    }
 }

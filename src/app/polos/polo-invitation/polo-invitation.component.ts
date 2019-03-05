@@ -55,7 +55,6 @@ export class PoloInvitationComponent implements OnInit {
     console.log(usuario)
     this.usuarioDataService.sendInvitation(this.invitationForm.value, this.authService.getToken()).subscribe(usuario => {
       this.snackBarService.openSnackBar("Convite enviado com sucesso!");
-      this.router.navigate(["/polos"], { relativeTo: this.route });
       this.router.navigate(["/polos/detalhes", this.unidade.id], { relativeTo: this.route });
     }) 
     

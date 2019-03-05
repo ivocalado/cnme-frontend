@@ -6,11 +6,12 @@ import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioEditComponent } from './usuario-edit/usuario-edit.component';
 import { SharedModule } from '../_shared/shared.module';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatCardModule, MatTableModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioDetailsComponent } from './usuario-details/usuario-details.component';
 import { UsuarioDataService } from '../_shared/services/usuario-data.service';
 import { AuthService } from '../_shared/services/auth.service';
 import { NgxMaskModule } from "ngx-mask";
+import { Permissions } from '../auth/auth.guard';
 
 @NgModule({
     declarations: [UsuariosComponent, UsuarioListComponent, UsuarioEditComponent, UsuarioDetailsComponent],
@@ -18,6 +19,7 @@ import { NgxMaskModule } from "ngx-mask";
         SharedModule,
         FormsModule,
         MatFormFieldModule,
+        ReactiveFormsModule,
         MatInputModule,
         MatSelectModule,
         MatButtonModule,
@@ -26,6 +28,6 @@ import { NgxMaskModule } from "ngx-mask";
         UsuariosRoutingModule,
         NgxMaskModule.forRoot()
     ],
-    providers: [UsuarioDataService, AuthService]
+    providers: [UsuarioDataService, AuthService, Permissions]
 })
 export class UsuariosModule { }

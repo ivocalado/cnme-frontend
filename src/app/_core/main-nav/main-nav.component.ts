@@ -30,16 +30,16 @@ export class MainNavComponent implements OnInit {
   }
 
   get isUsuarioPrivilegiado() {
-    let usuarioAutenticado = this.authService.getCurrentUser("MainNavComponent -> ngOinit")
+    let usuarioAutenticado = this.authService.getCurrentUser()
     return (usuarioAutenticado!==null) && usuarioAutenticado.unidade && (usuarioAutenticado.unidade.classe != "polo")
   }
 
   get isUsuarioAutenticado() {
-    return this.authService.getCurrentUser("MainNavComponent -> ngOinit")
+    return this.authService.getCurrentUser()
   }
 
   get homepage() {
-     let usuario = this.authService.getCurrentUser("MainNavComponent -> ngOinit")
+     let usuario = this.authService.getCurrentUser()
      if(usuario) {
         return "/usuarios/detalhes/" + usuario.id
      } else {

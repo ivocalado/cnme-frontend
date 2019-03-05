@@ -33,4 +33,13 @@ export class UsuarioDetailsComponent implements OnInit {
     this.location.back()
   }
 
+  onEdit(id: number) {
+    console.log("onEdit => " +id)
+    this.router.navigate(["/usuarios/editar", id]);
+}
+
+  get isOwner() {
+    return this.usuario.id == this.authService.getCurrentUser().id
+  }
+
 }
