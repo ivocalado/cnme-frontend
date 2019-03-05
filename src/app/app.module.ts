@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { LayoutModule } from "@angular/cdk/layout";
 import { AppRoutingModule } from "./app-routing.module";
-import { HomeComponent } from "./home/home.component";
 
 import { CoreModule } from "./_core/core.module";
 import { HttpClientModule } from '@angular/common/http';
@@ -14,14 +13,14 @@ import { AuthGuard, Permissions } from "./auth/auth.guard";
 import { AuthService } from './_shared/services/auth.service';
 
 @NgModule({
-    declarations: [AppComponent, HomeComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
         LayoutModule,
-        CoreModule,
+        CoreModule
     ],
     providers: [AuthGuard, AuthService],
     bootstrap: [AppComponent]

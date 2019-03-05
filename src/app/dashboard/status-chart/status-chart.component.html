@@ -1,0 +1,9 @@
+<mat-card>
+    <mat-icon>bar_chart</mat-icon>
+    <mat-card-title class="mt-2 mb-4">
+        Status atuais dos projetos
+    </mat-card-title>
+    <canvas baseChart height="100vh" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+        [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)" [colors]="colors"></canvas>
+</mat-card>

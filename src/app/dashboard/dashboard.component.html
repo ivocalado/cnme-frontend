@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Dashboard</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <mat-card class="gray">
+            <mat-card-title>
+                <mat-icon>cast_connected</mat-icon>
+                <span>&nbsp;</span>
+                <span>23</span>
+            </mat-card-title>
+            <p>
+                <sub>Total de projetos</sub>
+            </p>
+        </mat-card>
+    </div>
+    <div class="col-lg-3">
+        <mat-card class="concluidos">
+            <mat-card-title>
+                <mat-icon>cast_for_education</mat-icon>
+                <span>&nbsp;</span>
+                <span>10</span>
+            </mat-card-title>
+            <p>
+                <sub>Projetos concluídos</sub>
+            </p>
+        </mat-card>
+    </div>
+    <div class="col-lg-3">
+        <mat-card class="andamento">
+            <mat-card-title>
+                <mat-icon>cast_for_education</mat-icon>
+                <span>&nbsp;</span>
+                <span>9</span>
+            </mat-card-title>
+            <p>
+                <sub>Projetos em andamento</sub>
+            </p>
+        </mat-card>
+    </div>
+    <div class="col-lg-3">
+        <mat-card class="atrasados">
+            <mat-card-title>
+                <mat-icon>cast_for_education</mat-icon>
+                <span>&nbsp;</span>
+                <span>4</span>
+            </mat-card-title>
+            <p>
+                <sub>Projetos atrasados</sub>
+            </p>
+        </mat-card>
+    </div>
+</div>
+
+<hr class="m-2">
+
+<div class="row">
+    <div class="col-lg-12">
+        <app-status-chart></app-status-chart>
+    </div>
+</div>
+
+<hr class="m-2">
+<!-- gestor e etapas -->
+<div class="row h-100">
+    <div class="col-lg-4">
+        <mat-card class="gray">
+            <mat-card-title>
+                <mat-icon>person</mat-icon>
+                <span>&nbsp;</span>
+                <span>10</span>
+            </mat-card-title>
+            <p>
+                <sub>Gestores não confirmados</sub>
+            </p>
+
+            <div class="col-lg-12">
+                <circle-progress [percent]="9" [radius]="100" title="9%" [outerStrokeColor]="'#80DEEA'"
+                    [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
+                    [animation]="true" [animationDuration]="300">
+                </circle-progress>
+            </div>
+
+        </mat-card>
+    </div>
+    <div class="col-lg-8">
+        <mat-card>
+            <mat-card-title>
+                <mat-icon>notification_important</mat-icon>
+                <span>&nbsp;</span>
+                <span>22</span>
+            </mat-card-title>
+            <p>
+                <sub>Etapas atrasadas</sub>
+            </p>
+            <div class="row h-100">
+                <div class="col-lg-4 text-center">
+                    <div class="wrap-circle-progress">
+                        <circle-progress [percent]="15" [radius]="100" title="15%" [outerStrokeColor]="'#80DEEA'"
+                            [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'"
+                            [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
+                        </circle-progress>
+                        <p>Envio</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="wrap-circle-progress">
+                        <circle-progress [percent]="15" [radius]="100" title="25%" [outerStrokeColor]="'#80DEEA'"
+                            [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'"
+                            [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
+                        </circle-progress>
+                        <p>Instalação</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="wrap-circle-progress">
+                        <circle-progress [percent]="1" [radius]="100" title="1%" [outerStrokeColor]="'#80DEEA'"
+                            [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'"
+                            [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
+                        </circle-progress>
+                        <p>Ativação</p>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+<!-- fim gestor e etapas -->
+
+<hr class="m-2">
+
+<div class="row">
+    <div class="col-lg-12">
+        <app-estados-status-chart></app-estados-status-chart>
+    </div>
+</div>
+
+

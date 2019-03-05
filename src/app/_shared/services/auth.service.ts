@@ -25,7 +25,7 @@ export class AuthService {
 			.post<any>("/api/login", body)
 			.pipe(
 				map(user => {
-					console.log(user.token);
+					//console.log(user.token);
 					if (user && user.token) {
 						this.setToken(user.token);
 						this.setCurrentUser(email);
@@ -41,7 +41,7 @@ export class AuthService {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.getToken()
             })
-        } 
+        }
         )
         .pipe(
             catchError(this.handleError("logout", []))
@@ -52,17 +52,17 @@ export class AuthService {
 
 	logout() {
 		this._remoteLogout().subscribe(msg => {
-			console.log("REALIZAR impressão de mensagem de erro")	
+			//console.log("REALIZAR impressão de mensagem de erro")
 		})
 		localStorage.removeItem(jwtTokenName);
 		localStorage.removeItem(currentUser);
 	}
 
 	setCurrentUser(email:string){
-		
+
 		this.usuarioDataService.getUsuarioByEmail(email, this.getToken()).subscribe(usuario => {
-			
-			
+
+
 			localStorage.setItem(
 				'currentUser', JSON.stringify(usuario)
 			)
@@ -70,15 +70,15 @@ export class AuthService {
 	}
 
 	getCurrentUser(caller: string) {
-		console.log(caller + "-> getCurrentUser")
+		//console.log(caller + "-> getCurrentUser")
 		let item = localStorage.getItem(currentUser);
 
-		console.log(item)
+		//console.log(item)
 		if(item === null) {
-			console.log("Entrou em nullllllll")
+			//console.log("Entrou em nullllllll")
 			return null
-		}			
-		else 
+		}
+		else
 			return JSON.parse(item);
 	}
 
@@ -105,9 +105,9 @@ export class AuthService {
 			console.error(error); // log to console instead
 
 			// TODO: better job of transforming error for user consumption
-			console.log(`${operation} failed: ${error.message}`);
+			//console.log(`${operation} failed: ${error.message}`);
 
-			console.log(error.error);
+			//console.log(error.error);
 
 			// Let the app keep running by returning an empty result.
 			return of(result as T);

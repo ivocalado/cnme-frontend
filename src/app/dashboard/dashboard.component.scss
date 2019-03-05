@@ -1,0 +1,77 @@
+@import "~@angular/material/theming";
+@include mat-core();
+@import "../../assets/styles/_variables.scss";
+
+h1{
+    //text-transform: uppercase;
+    color:mat-color($mat-blue-gray,900);
+}
+mat-card{
+    mat-card-title{
+        justify-content: space-between;
+        align-items: center;
+        display: flex
+    }
+    p{
+        sub{
+            border-top:solid 1px mat-color($mat-blue-gray,100);
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+
+        }
+    }
+    &.gray{
+        background-color: mat-color($mat-blue-gray,500);
+        color:mat-contrast($mat-blue-gray,500);
+        p{
+            sub{
+                border-top:solid 1px  mat-contrast($mat-blue-gray,500);
+                color:mat-contrast($mat-blue-gray,500);
+
+            }
+        }
+    }
+    &.concluidos{
+        background-color: mat-color($mat-cyan,500);
+        color:mat-contrast($mat-cyan,500);
+        p{
+            sub{
+                border-top:solid 1px  mat-contrast($mat-cyan,500);
+                color:mat-contrast($mat-cyan,500);
+            }
+        }
+    }
+    &.andamento{
+        background-color: mat-color($mat-cnme,500);
+        color:mat-contrast($mat-cnme,500);
+        p{
+            sub{
+                border-top:solid 1px  mat-contrast($mat-cnme,500);
+                color:mat-contrast($mat-cnme,500);
+            }
+        }
+    }
+    &.atrasados{
+        background-color: mat-color($mat-red,700);
+        color:mat-contrast($mat-red,700);
+        p{
+            sub{
+                border-top:solid 1px  mat-contrast($mat-red,700);
+                color:mat-contrast($mat-red,700);
+            }
+        }
+    }
+}
+
+.wrap-circle-progress{
+    p{
+        margin-top:-6px;
+    }
+}
+
+.h-100{
+    mat-card{
+        height: 100%;
+    }
+}
