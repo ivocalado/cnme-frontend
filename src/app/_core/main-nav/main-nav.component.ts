@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../../_shared/models/usuario.model';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-nav',
@@ -19,7 +20,8 @@ export class MainNavComponent implements OnInit {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, private route: ActivatedRoute,
+    private router: Router) {
     this.loggedIn = this.authService.isAuthenticated;
   }
   
@@ -28,11 +30,20 @@ export class MainNavComponent implements OnInit {
   }
 
   get isUsuarioPrivilegiado() {
-    let usuarioAutenticado = this.authService.getCurrentUser("MainNavComponent -> ngOinit")
+    let usuarioAutenticado = this.authService.getCurrentUser()
     return (usuarioAutenticado!==null) && usuarioAutenticado.unidade && (usuarioAutenticado.unidade.classe != "polo")
   }
 
   get isUsuarioAutenticado() {
-    return this.authService.getCurrentUser("MainNavComponent -> ngOinit")
+    return this.authService.getCurrentUser()
+  }
+
+  get homepage() {
+     let usuario = this.authService.getCurrentUser()
+     if(usuario) {
+        return "/usuarios/detalhes/" + usuario.id
+     } else {
+       return ""
+     }
   }
 }

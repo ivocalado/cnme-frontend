@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,7 @@ export class LoginComponent implements OnInit {
   	hidePassword = true;
 	message:string;
 
-	constructor(public authService:AuthService, public router:Router) {
-		this.setMessage();
+	constructor(public authService:AuthService, public router:Router, private snackBarService: SnackBarService) {
 	}
 
 	ngOnInit() {
@@ -24,26 +24,24 @@ export class LoginComponent implements OnInit {
 	}
 
 	setMessage(){
-		this.message = 'Logged ' +(this.authService.isAuthenticated?'in':'out');
+		this.message = 'Usuário ' +(this.authService.isAuthenticated?'logado':'deslogado');
 	}
 
 	onLogin(form:NgForm){
-		this.message = "Trying to log in...";
 		this.authService.login(form.value.email, form.value.password)
-		.subscribe(()=>{
+		.subscribe(res =>{
+			console.log(res)
 			this.setMessage();
 			if(this.authService.isAuthenticated){
-				console.log("usuario logadoo!")
+				this.snackBarService.openSnackBar("Usuário logado com sucesso!")
 				let redirect = this.authService.redirectUrl ? this.authService.redirectUrl:'/';
-				console.log("Pagina: " + redirect)
 				this.router.navigate(["/"]);
 			}
+		}, 
+		error => {
+			this.snackBarService.openSnackBar("Problema no acesso. Tente novamente!")
+			this.message = error
+			console.log(error)
 		});
 	}
-
-	onLogOut(){
-		this.authService.logout();
-		this.setMessage();
-	}
-
 }

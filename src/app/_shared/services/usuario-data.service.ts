@@ -15,9 +15,8 @@ export class UsuarioDataService {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
-            return throwError(errorResponse.error.messages);
+            return throwError(errorResponse.error.message);
         }
-
     }
 
     storeUsuario(usuario: Usuario, authToken: string): Observable<Usuario> {
@@ -37,8 +36,9 @@ export class UsuarioDataService {
     }
 
     updateUsuario(id:number, usuario:Usuario, authToken: string){
-        usuario.name = usuario.nome
-        return this.httpClient.put("/api/usuarios/"+id, usuario, {
+        console.log("updateUsuario")
+        console.log(usuario)
+        let result = this.httpClient.put("/api/usuarios/"+id, usuario, {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+authToken
             })
@@ -46,6 +46,8 @@ export class UsuarioDataService {
         .pipe(
             catchError(this.handleError)
         )
+        console.log("Saida do metodo")
+        return result
     }
 
     getUsuarios(authToken: string){

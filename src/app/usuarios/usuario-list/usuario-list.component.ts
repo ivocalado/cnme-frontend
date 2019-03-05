@@ -37,8 +37,12 @@ export class UsuarioListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.usuarioAutenticado = this.authService.getCurrentUser("UsuarioListComponent -> ngOnInit")
+        this.usuarioAutenticado = this.authService.getCurrentUser()
         this.fetchUsuarios()
+    }
+
+    onDetails(id:number){
+        this.router.navigate(['detalhes', id], { relativeTo: this.route });
     }
 
     onEdit(id: number) {
