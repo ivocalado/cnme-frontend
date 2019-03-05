@@ -57,15 +57,11 @@ export class UsuarioEditComponent implements OnInit {
             this.editForm.removeControl('password')
         } 
 
-        console.log("Antes")
         let us : Usuario = <Usuario>this.editForm.value
         us.nome = us.name
-        console.log("Depois")
         this.usuarioDataService.updateUsuario(this.usuario.id, us, this.authService.getToken())
             .subscribe(
                 res => {
-                    console.log("RESULTADO:")
-                    console.log(res)
                     this.snackBarService.openSnackBar("Usuário atualizado com sucesso");
                     this.router.navigate(["/usuarios/detalhes", this.usuario.id], { relativeTo: this.route });
                 }, 
