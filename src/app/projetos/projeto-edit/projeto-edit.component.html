@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-lg-6 mt-1">
                     <mat-form-field>
-                        <mat-select formControlName="unidade_id" id="unidade_id" placeholder="Escolha uma empresa"
+                        <mat-select formControlName="unidade_id" id="unidade_id" placeholder="Escolha o polo de instalação"
                             [required]="true">
                             <mat-option *ngFor="let unidade of unidades" [value]="unidade.id">
                                 {{ unidade.nome }}
