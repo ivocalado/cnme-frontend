@@ -7,6 +7,7 @@ import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.servic
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
   selector: 'app-etapa-ativacao',
@@ -27,7 +28,8 @@ export class EtapaAtivacaoComponent implements OnInit {
         private router: Router,
         private projetoDataService: ProjetoDataService,
         private unidadeDataService: UnidadeDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -48,7 +50,7 @@ export class EtapaAtivacaoComponent implements OnInit {
 
     onAddAtivacao() {
         let tarefa: Tarefa = this.ativacaoForm.value;
-        tarefa.usuario_id = 1;
+        tarefa.usuario_id = this.authService.getCurrentUser().id;
         console.log(this.ativacaoForm.value);
         this.projetoDataService.storeTarefaAtivacao(this.projetoId, this.ativacaoForm.value)
             .subscribe(res => {

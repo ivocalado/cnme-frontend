@@ -13,6 +13,7 @@ import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.mo
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { ProjetoEditComponent } from '../projeto-edit/projeto-edit.component';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
     selector: 'app-etapa-envio',
@@ -38,7 +39,8 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
         private router:Router,
         private projetoDataService:ProjetoDataService,
         private unidadeDataService:UnidadeDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private authService: AuthService
     ) {
         this.navigationSubscription = this.router.events.subscribe((e: any) => {
             // If it is a NavigationEnd event re-initalise the component
@@ -105,7 +107,7 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
             tarefaEnvio.equipamentos_projeto_ids.push(row.id)
         );
         tarefaEnvio.numero = this.envioForm.value.numero;
-        tarefaEnvio.usuario_id = 1;
+        tarefaEnvio.usuario_id = this.authService.getCurrentUser().id;
         tarefaEnvio.unidade_responsavel_id = this.envioForm.value.unidade_responsavel_id;
         tarefaEnvio.data_inicio_prevista = this.envioForm.value.data_inicio_prevista;
         tarefaEnvio.data_fim_prevista = this.envioForm.value.data_fim_prevista;
