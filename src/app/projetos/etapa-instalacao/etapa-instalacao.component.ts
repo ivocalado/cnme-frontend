@@ -7,6 +7,7 @@ import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.servic
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
     selector: 'app-etapa-instalacao',
@@ -26,7 +27,8 @@ export class EtapaInstalacaoComponent implements OnInit {
         private router: Router,
         private projetoDataService: ProjetoDataService,
         private unidadeDataService:UnidadeDataService,
-        private snackBarService:SnackBarService
+        private snackBarService:SnackBarService,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -46,7 +48,7 @@ export class EtapaInstalacaoComponent implements OnInit {
 
     onAddInstalacao(){
         let tarefa:Tarefa = this.instalacaoForm.value;
-        tarefa.usuario_id = 1;
+        tarefa.usuario_id = this.authService.getCurrentUser().id;
         this.projetoDataService.storeTarefaInstalacao(this.projetoId,this.instalacaoForm.value)
         .subscribe(res =>{
             this.snackBarService.openSnackBar("Etapa salva com sucesso.");
