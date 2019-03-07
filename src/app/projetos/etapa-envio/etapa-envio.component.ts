@@ -33,6 +33,8 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
     selection = new SelectionModel<Equipamento>(true, []);
     envioForm:FormGroup;
     navigationSubscription;
+    minDate: Date
+    maxDate: Date
 
     constructor(
         private route:ActivatedRoute,
@@ -69,6 +71,12 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
             this.projetoId = +params["id"];
             this.initForm();
             this.fetchEquipPendentes();
+            this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto: Projeto) => {
+                this.minDate = new Date(projeto.data_inicio_previsto)
+                this.minDate.setDate(this.minDate.getDate() + 1)
+                this.maxDate = new Date(projeto.data_fim_previsto)
+                this.maxDate.setDate(this.maxDate.getDate() + 1)
+            })
             this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
                 this.etapaEnvio = etapa;
             })
@@ -137,7 +145,7 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
     private initForm() {
         this.envioForm = new FormGroup({
             unidade_responsavel_id: new FormControl('', Validators.required),
-            numero: new FormControl('', Validators.required),
+            numero: new FormControl(''),
             data_inicio_prevista: new FormControl('', Validators.required),
             data_fim_prevista: new FormControl('', Validators.required)
         });

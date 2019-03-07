@@ -8,6 +8,7 @@ import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import { Projeto } from 'src/app/_shared/models/projeto.model';
 
 @Component({
     selector: 'app-etapa-instalacao',
@@ -21,6 +22,8 @@ export class EtapaInstalacaoComponent implements OnInit {
     unidades:Unidade[];
     editMode=false;
     etapaInstalacao:Etapa = Etapa.EMPTY_MODEL;
+    minDate: Date
+    maxDate: Date
 
     constructor(
         private route: ActivatedRoute,
@@ -41,9 +44,26 @@ export class EtapaInstalacaoComponent implements OnInit {
             },error => {
                 this.initForm(this.etapaInstalacao)
             })
+
+            this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto: Projeto) => {
+                this.maxDate = new Date(projeto.data_fim_previsto)
+                this.maxDate.setDate(this.maxDate.getDate() + 1)
+                console.log(this.maxDate)
+            })
+
+            this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
+                let dates = []
+                for (let tarefa of etapa.tarefas) {
+                    dates.push(new Date(tarefa.data_fim_prevista))
+                }
+                this.minDate = new Date(Math.max.apply(null, dates)) //a data de inicio eh igual a maior data de entrega
+                this.minDate.setDate(this.minDate.getDate() + 1)
+            })
             this.fetchEmpresas();
 
         });
+
+
     }
 
     onAddInstalacao(){

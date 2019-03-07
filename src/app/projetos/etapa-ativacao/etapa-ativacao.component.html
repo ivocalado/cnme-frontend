@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col-lg-3 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="data_inicio_prevista" id="data_inicio_prevista"
+                            <input matInput [min]="minDate" [max]="maxDate" formControlName="data_inicio_prevista" id="data_inicio_prevista"
                                 [matDatepicker]="pickerInicio" placeholder="Data de início">
                             <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
                             <mat-datepicker #pickerInicio></mat-datepicker>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-lg-3 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="data_fim_prevista" id="data_fim_prevista"
+                            <input matInput [min]="minDate" [max]="maxDate" formControlName="data_fim_prevista" id="data_fim_prevista"
                                 [matDatepicker]="pickerFim" placeholder="Data de conclusão">
                             <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
                             <mat-datepicker #pickerFim></mat-datepicker>
