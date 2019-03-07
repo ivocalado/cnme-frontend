@@ -88,6 +88,44 @@
                 </div>
 
             </form>
+            
+            <mat-accordion class="example-headers-align" *ngIf="etapaEnvio && etapaEnvio.tarefas && etapaEnvio.tarefas.length">
+    
+                <mat-expansion-panel [expanded]="true" hideToggle>
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          <strong>Entregas</strong>
+                      </mat-panel-title>
+                      <mat-panel-description>
+                          <span>Entregas a serem realizadas</span>&nbsp;
+                          <mat-icon>card_travel</mat-icon>
+                      </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <mat-card *ngFor="let tarefa of etapaEnvio.tarefas" class="mt-2">
+                        <div class="row">
+                          <div class="col-lg-6">
+                              <p><strong>Código de rastreio: </strong>{{tarefa.numero}}</p>
+                              <p><strong>Empresa responsável: </strong>{{tarefa.unidade_responsavel.nome}}</p>
+                          </div>
+                          <div class="col-lg-6">
+                              <p><strong>Previsão de início: </strong>{{tarefa.data_inicio_prevista | date:'dd/MM/yyyy'}}</p>
+                              <p><strong>Previsão de conclusão: </strong>{{tarefa.data_fim_prevista | date:'dd/MM/yyyy'}}</p>
+                          </div>
+                        </div>
+                        <p><strong>Equipamentos selecionados</strong></p>
+                        <mat-chip-list >
+                          <mat-chip color="primary" *ngFor='let equipamento_p of tarefa.equipamentos_projeto'>
+                              {{equipamento_p.equipamento.nome}}
+                          </mat-chip>
+                        </mat-chip-list>
+                    </mat-card>
+                  </div>
+                </div>
+                </mat-expansion-panel>
+                 
+            </mat-accordion>
         </mat-card>
     </div>
 </div>

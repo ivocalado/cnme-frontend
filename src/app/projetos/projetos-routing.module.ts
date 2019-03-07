@@ -20,7 +20,7 @@ const routes: Routes = [
             { path: 'detalhes/:id', component: ProjetoDetailsComponent},
             { path: 'editar/:id/step/:stepId', component: ProjetoEditComponent },
             { path: ':id/adicionar-kits', component: AdicionarKitsComponent },
-            { path: ':id/etapa-envio', component: EtapaEnvioComponent },
+            { path: ':id/etapa-envio', component: EtapaEnvioComponent, runGuardsAndResolvers: 'always' },
             { path: ':id/tarefas-envio', component: EnvioListComponent },
             { path: ':id/etapa-instalacao', component: EtapaInstalacaoComponent },
             { path: ':id/etapa-ativacao', component: EtapaAtivacaoComponent },

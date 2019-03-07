@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, Params, NavigationEnd } from '@angular/router';
 import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
 import { Unidade } from 'src/app/_shared/models/unidade.model';
@@ -12,13 +12,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.model';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { ProjetoEditComponent } from '../projeto-edit/projeto-edit.component';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
     selector: 'app-etapa-envio',
     templateUrl: './etapa-envio.component.html',
     styleUrls: ['./etapa-envio.component.scss']
 })
-export class EtapaEnvioComponent implements OnInit {
+export class EtapaEnvioComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort) sort: MatSort;
     displayedColumns: string[] = ["select","nome", "tipoEquipamento"];
     dataSource;
@@ -30,25 +31,71 @@ export class EtapaEnvioComponent implements OnInit {
     equipPendentes:Equipamento[];
     selection = new SelectionModel<Equipamento>(true, []);
     envioForm:FormGroup;
+    navigationSubscription;
 
     constructor(
         private route:ActivatedRoute,
         private router:Router,
         private projetoDataService:ProjetoDataService,
-        private unidadeDataService:UnidadeDataService
-    ) { }
+        private unidadeDataService:UnidadeDataService,
+        private snackBarService: SnackBarService
+    ) {
+        this.navigationSubscription = this.router.events.subscribe((e: any) => {
+            // If it is a NavigationEnd event re-initalise the component
+            if (e instanceof NavigationEnd) {
+              this.initialize();
+            }
+          });
+     }
 
     ngOnInit() {
+        this.initialize()
+    }
+
+    ngOnDestroy() {
+        // avoid memory leaks here by cleaning up after ourselves. If we  
+        // don't then we will continue to run our initialiseInvites()   
+        // method on every navigationEnd event.
+        if (this.navigationSubscription) {  
+           this.navigationSubscription.unsubscribe();
+        }
+    }
+
+    initialize() {
+        
         this.route.params.subscribe((params: Params) => {
             this.projetoId = +params["id"];
-            //console.log(this.etapaEnvioId);
             this.initForm();
             this.fetchEquipPendentes();
             this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
                 this.etapaEnvio = etapa;
             })
         });
-        this.fetchEmpersas();
+        this.fetchEmpresas();
+    }
+
+    /**
+     * Atualiza a janela apos o envio de uma tarefa. Caso não existem mais equipamentos disponíveis para 
+     * envio, altera o fluxo para a tela de instalação. 
+     */
+    updateTarefaEnvio() {
+        this.projetoDataService.getEquipDisponiveisEnvio(this.projetoId)
+        .subscribe((equipamentos: EquipamentoProjeto[]) => {
+            this.dataSource = new MatTableDataSource(equipamentos);
+            this.dataSource.sort = this.sort;
+            if(equipamentos && equipamentos.length) {
+                this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
+                    this.etapaEnvio = etapa;
+                    this.router.navigate(["/projetos/"+this.projetoId+"/etapa-envio"], { relativeTo: this.route });
+                    this.snackBarService.openSnackBar("Entrega cadastrada com sucesso.")
+                }, erro => {
+                    console.log(erro)
+                })
+            } else {
+                this.router.navigate(["../etapa-instalacao"], { relativeTo: this.route });
+                this.snackBarService.openSnackBar("Entregas cadastradas.")
+            }
+        });
     }
 
     onAddEnvio(){
@@ -62,12 +109,16 @@ export class EtapaEnvioComponent implements OnInit {
         tarefaEnvio.unidade_responsavel_id = this.envioForm.value.unidade_responsavel_id;
         tarefaEnvio.data_inicio_prevista = this.envioForm.value.data_inicio_prevista;
         tarefaEnvio.data_fim_prevista = this.envioForm.value.data_fim_prevista;
-        if (this.etapaEnvio.id)
+        if (this.etapaEnvio.id) {
             tarefaEnvio.etapa_id = this.etapaEnvio.id;
+        }
+            
         tarefaEnvio.etapa_id = null;
         this.projetoDataService.storeTarefaEnvio(this.projetoId,tarefaEnvio).subscribe(res =>{
-            //this.router.navigate(["/projetos/editar/"+this.projetoId], { relativeTo: this.route });
-            this.router.navigate(["../etapa-instalacao"], { relativeTo: this.route });
+            this.updateTarefaEnvio()
+        },
+        erro => {
+            console.log(erro)
         })
     }
 
@@ -75,7 +126,7 @@ export class EtapaEnvioComponent implements OnInit {
         this.router.navigate(["/projetos/editar/"+this.projetoId+"/step/2"], { relativeTo: this.route });
     }
 
-    fetchEmpersas(){
+    fetchEmpresas(){
         this.unidadeDataService.getEmpresas().subscribe((unidades:Unidade[])=>{
             this.unidades = unidades;
         })
@@ -91,12 +142,12 @@ export class EtapaEnvioComponent implements OnInit {
     }
 
     fetchEquipPendentes(){
+        this.selection.clear()    
         this.projetoDataService.getEquipDisponiveisEnvio(this.projetoId)
             .subscribe((equipamentos: EquipamentoProjeto[]) => {
                 this.dataSource = new MatTableDataSource(equipamentos);
                 this.dataSource.sort = this.sort;
-                console.log(this.selection.selected);
-            });
+        });
     }
 
     /** Whether the number of selected elements matches the total number of rows. */

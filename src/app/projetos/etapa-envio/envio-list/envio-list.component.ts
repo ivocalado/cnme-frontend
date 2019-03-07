@@ -35,7 +35,7 @@ export class EnvioListComponent implements OnInit {
     }
 
     onDeleteTarefa(tarefaId:number){
-        if (confirm("Tem certeza que deseja deletar estea tarefa?")) {
+        if (confirm("Tem certeza que deseja deletar esta tarefa?")) {
             this.projetoDataService.deleteTarefa(this.etapaEnvio.id, tarefaId).subscribe(res =>{
                 this.fetchTarefas();
             });
