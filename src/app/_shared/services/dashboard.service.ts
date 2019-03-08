@@ -4,11 +4,24 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class DashboardDataService{
+
     constructor(private httpClient:HttpClient, private authService:AuthService){}
 
     getProjetosStatus(){
         return this.httpClient.get("api/dashboard/projetos/status", {
             headers: new HttpHeaders({"Authorization": 'Bearer ' + this.authService.getToken()})
+        })
+    }
+
+    getEstadosStatus(){
+        return this.httpClient.get("api/dashboard/projetos/estado/status",{
+            headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
+        })
+    }
+
+    getGestoresNaoConfirmados(){
+        return this.httpClient.get("api/dashboard/usuarios/gestores/nao-confirmados/total",{
+            headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
         })
     }
 }

@@ -70,14 +70,14 @@
             <mat-card-title>
                 <mat-icon>person</mat-icon>
                 <span>&nbsp;</span>
-                <span>10</span>
+                <span>Gestores</span>
             </mat-card-title>
             <p>
                 <sub>Gestores não confirmados</sub>
             </p>
 
             <div class="col-lg-12">
-                <circle-progress [percent]="9" [radius]="100" title="9%" [outerStrokeColor]="'#80DEEA'"
+                <circle-progress [percent]="0" [radius]="100" [title]="gestNaoConfirmados" [outerStrokeColor]="'#80DEEA'"
                     [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
                     [animation]="true" [animationDuration]="300">
                 </circle-progress>
@@ -98,29 +98,29 @@
             <div class="row h-100">
                 <div class="col-lg-4 text-center">
                     <div class="wrap-circle-progress">
-                        <circle-progress [percent]="15" [radius]="100" title="15%" [outerStrokeColor]="'#80DEEA'"
-                            [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'"
+                        <circle-progress [percent]="45.45" [radius]="100" title="45%" [outerStrokeColor]="'#EF5350'"
+                            [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'"
                             [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
                         </circle-progress>
-                        <p>Envio</p>
+                        <p>Envio (10)</p>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="wrap-circle-progress">
-                        <circle-progress [percent]="15" [radius]="100" title="25%" [outerStrokeColor]="'#80DEEA'"
-                            [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'"
+                        <circle-progress [percent]="36.35" [radius]="100" title="36%" [outerStrokeColor]="'#EF5350'"
+                            [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'"
                             [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
                         </circle-progress>
-                        <p>Instalação</p>
+                        <p>Instalação (8)</p>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
                     <div class="wrap-circle-progress">
-                        <circle-progress [percent]="1" [radius]="100" title="1%" [outerStrokeColor]="'#80DEEA'"
-                            [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'"
+                        <circle-progress [percent]="18.18" [radius]="100" title="18%" [outerStrokeColor]="'#EF5350'"
+                            [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'"
                             [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
                         </circle-progress>
-                        <p>Ativação</p>
+                        <p>Ativação (4)</p>
                     </div>
                 </div>
             </div>
@@ -131,10 +131,12 @@
 
 <hr class="m-2">
 
+<!-- estados -->
 <div class="row">
     <div class="col-lg-12">
-        <app-estados-status-chart></app-estados-status-chart>
+        <app-estados-status></app-estados-status>
     </div>
 </div>
+<!-- fim estados -->
 
 

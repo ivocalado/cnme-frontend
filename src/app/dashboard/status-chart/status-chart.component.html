@@ -1,8 +1,12 @@
 <mat-card>
-    <mat-icon>bar_chart</mat-icon>
-    <mat-card-title class="mt-2 mb-4">
-        Status atuais dos projetos
+    <mat-card-title>
+        <mat-icon (click)="loadTempData()">bar_chart</mat-icon>
+        <span>&nbsp;</span>
+        <span>Projetos por etapas</span>
     </mat-card-title>
+    <p>
+        <sub>Total de projetos em cada etapa</sub>
+    </p>
     <canvas baseChart height="100vh" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
         [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)" [colors]="colors"></canvas>

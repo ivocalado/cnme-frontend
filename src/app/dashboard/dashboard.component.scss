@@ -6,8 +6,8 @@ h1{
     //text-transform: uppercase;
     color:mat-color($mat-blue-gray,900);
 }
-mat-card{
-    mat-card-title{
+.mat-card{
+    .mat-card-title{
         justify-content: space-between;
         align-items: center;
         display: flex

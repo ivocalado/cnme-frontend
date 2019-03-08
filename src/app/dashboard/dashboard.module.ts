@@ -9,12 +9,21 @@ import { ChartsModule } from 'ng2-charts';
 import { DashboardDataService } from '../_shared/services/dashboard.service';
 import { EstadosStatusChartComponent } from './estados-status-chart/estados-status-chart.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { EstadosStatusComponent } from './estados-status/estados-status.component';
+import { MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatSortModule } from '@angular/material';
 
 @NgModule({
-    declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent],
+    declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent, EstadosStatusComponent],
     imports: [
         SharedModule,
         DashboardRoutingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatCardModule,
+        MatTableModule,
+        MatSortModule,
         ChartsModule,
         NgCircleProgressModule.forRoot({
             radius: 60,

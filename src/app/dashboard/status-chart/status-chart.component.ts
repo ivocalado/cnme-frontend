@@ -7,7 +7,7 @@ import { DashboardDataService } from 'src/app/_shared/services/dashboard.service
   templateUrl: './status-chart.component.html',
   styleUrls: ['./status-chart.component.scss']
 })
-export class StatusChartComponent {
+export class StatusChartComponent implements OnInit {
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
         responsive: true,
@@ -16,13 +16,35 @@ export class StatusChartComponent {
         }
     };
     public barChartLabels: string[] =
-        ['PLANEJAMENTO', 'CRIADO', 'ENVIADO', 'ENTREGUE', 'INSTALADO', 'FINALIZADO', 'CANCELADO'];
+        ['Criado', 'Planejado', 'Enviado', 'Entregue', 'Instalado', 'Finalizado', 'Cancelado'];
     public barChartType: string = 'bar';
     public barChartLegend: boolean = true;
 
-    public barChartData: any[] = [
-        { data: [28, 48, 40, 19, 50, 27, 20], label: 'Status' }
-    ];
+    public barChartData: any[] = [{}];
+
+    constructor(
+        private dashboardDataService: DashboardDataService
+    ){}
+
+    ngOnInit(){
+        this.fetchStatus();
+    }
+
+    fetchStatus(){
+        this.dashboardDataService.getProjetosStatus().subscribe((res:any[])=>{
+            this.barChartData = [];
+            let data:number[] =[];
+            res.forEach(element => {
+                data.push(element.status_count);
+            });
+            this.barChartData = [{data:data}];
+        })
+    }
+
+    loadTempData(){
+        this.barChartData = [{ data: [Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1)] }];
+        console.log("teste");
+    }
 
     // events
     public chartClicked(e: any): void {
