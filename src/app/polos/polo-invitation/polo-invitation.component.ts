@@ -51,12 +51,21 @@ export class PoloInvitationComponent implements OnInit {
     let usuario: Usuario
     usuario = <Usuario>this.invitationForm.value;
     usuario.unidade_id = this.unidade.id
-    console.log("onInvitation")
-    console.log(usuario)
-    this.usuarioDataService.sendInvitation(this.invitationForm.value, this.authService.getToken()).subscribe(usuario => {
-      this.snackBarService.openSnackBar("Convite enviado com sucesso!");
-      this.router.navigate(["/polos/detalhes", this.unidade.id], { relativeTo: this.route });
-    }) 
+    usuario.nome = usuario.name
+    this.usuarioDataService.storeUsuario(usuario, this.authService.getToken()).subscribe(newUser => {
+        console.log("newUser: ")
+        console.log(newUser)
+        this.usuarioDataService.sendInvitation(newUser.id, this.authService.getToken()).subscribe(msg => {
+          this.snackBarService.openSnackBar("Convite enviado com sucesso!");
+        }, error2 => {
+          this.snackBarService.openSnackBar("Falha no envio do convite!");
+        })
+        this.router.navigate(["/polos/detalhes", this.unidade.id], { relativeTo: this.route });
+    }, error => {
+        this.snackBarService.openSnackBar("Erro na criação do usuário.");
+        console.log(error)
+    })
+     
     
     
   }

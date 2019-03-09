@@ -15,12 +15,13 @@ export class UsuarioDataService {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
-            return throwError(errorResponse.error.message);
+            return throwError(errorResponse.error.error);
         }
     }
 
     storeUsuario(usuario: Usuario, authToken: string): Observable<Usuario> {
-        usuario.name = usuario.nome
+        console.log("Salvandoo...")
+        console.log(usuario)
         return this.httpClient
             .post<Usuario>(
                 "/api/usuarios",
@@ -32,7 +33,12 @@ export class UsuarioDataService {
                     })
                 }
             )
-            .pipe( map(data => data), catchError(this.handleError));
+            .pipe(  map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError));
     }
 
     updateUsuario(id:number, usuario:Usuario, authToken: string){
@@ -130,13 +136,11 @@ export class UsuarioDataService {
         );
     }
     
-    sendInvitation(usuario: Usuario, authToken: string) {
+    sendInvitation(usuarioId: number, authToken: string) {
         console.log("send invitation")
-        console.log(usuario)
         return this.httpClient
-            .post<Usuario>(
-                "/api/usuarios/convidar",
-                usuario,
+            .post<any>(
+                "/api/usuarios/"+usuarioId+"/enviar-convite", null, 
                 {
                     headers: new HttpHeaders({
                         "Content-Type":"application/json; charset=UTF-8",
