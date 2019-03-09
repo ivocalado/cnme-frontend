@@ -12,10 +12,10 @@ import { UsuarioDataService } from '../_shared/services/usuario-data.service';
 import { AuthService } from '../_shared/services/auth.service';
 import { NgxMaskModule } from "ngx-mask";
 import { Permissions } from '../auth/auth.guard';
-import { ConfirmInvitationComponent } from './confirm-invitation/confirm-invitation.component';
+import { UsuarioConfirmInvitationComponent } from './usuario-confirm-invitation/usuario-confirm-invitation.component';
 
 @NgModule({
-    declarations: [UsuariosComponent, UsuarioListComponent, UsuarioEditComponent, UsuarioDetailsComponent, ConfirmInvitationComponent],
+    declarations: [UsuariosComponent, UsuarioListComponent, UsuarioEditComponent, UsuarioDetailsComponent, UsuarioConfirmInvitationComponent],
     imports: [
         SharedModule,
         FormsModule,
