@@ -14,7 +14,7 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
     this.authService.logout()
-    this.snackBar.openSnackBar("Usuário deslogado com sucesso!")
+    // this.snackBar.openSnackBar("Usuário deslogado com sucesso!")
     this.router.navigate(['/auth/login']);
     
   }

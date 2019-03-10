@@ -46,4 +46,13 @@ export class MainNavComponent implements OnInit {
        return ""
      }
   }
+
+  get unidade() {
+    let usuario = this.authService.getCurrentUser()
+     if(usuario) {
+        return "/unidades/detalhes/" + usuario.unidade.id
+     } else {
+       return ""
+     }
+  }
 }

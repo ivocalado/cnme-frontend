@@ -30,6 +30,9 @@
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
             <span></span> <span class="nav-spacer"></span>
+            <a class="topnav-icon" *ngIf="isUsuarioAutenticado" mat-list-item routerLink="{{unidade}}">
+                <mat-icon>account_balance</mat-icon>
+            </a>
             <a class="topnav-icon" *ngIf="isUsuarioAutenticado" mat-list-item routerLink="{{homepage}}">
                 <mat-icon>account_box</mat-icon>
             </a>
