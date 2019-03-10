@@ -15,7 +15,7 @@
 			text-align: center;
 		}
     }
-    
+
     .mat-form-field {
         font-size: 14px;
         width: 100%;
@@ -31,4 +31,8 @@ button{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.mat-card .mat-card-title {
+    justify-content: center;
 }

@@ -37,7 +37,8 @@ export class MainNavComponent implements OnInit {
 
     get isUsuarioAutenticado() {
         let user = this.authService.getCurrentUser();
-        this.emailUser = user.email;
+        if(user)
+            this.emailUser = user.email;
         return user;
 
     }
