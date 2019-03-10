@@ -72,7 +72,7 @@ export class PoloInvitationComponent implements OnInit {
   
   onCancel() {
     this.router.navigate(["/polos/detalhes", this.unidade.id], { relativeTo: this.route });
-}
+  }
 
   private initForm() {
 

@@ -15,7 +15,7 @@ export class UsuarioDataService {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
-            return throwError(errorResponse.error.error);
+            return throwError(errorResponse.error.message);
         }
     }
 
@@ -88,7 +88,31 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            })
+            }), catchError(this.handleError)
+        );
+    }
+    
+    getUsuarioByInvitationToken(token:string){
+        return this.httpClient.get<Usuario>("/api/usuarios/get?token1="+token)
+        .pipe(
+            map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError)
+        );
+    }
+
+    confirmInvitationToken(token:string, usuario: Usuario){
+        return this.httpClient.post<Usuario>("/api/usuarios/confirmar?token1="+token, usuario)
+        .pipe(
+            map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError)
         );
     }
 
