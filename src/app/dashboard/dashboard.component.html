@@ -7,9 +7,9 @@
     <div class="col-lg-3">
         <mat-card class="gray">
             <mat-card-title>
-                <mat-icon>cast_connected</mat-icon>
+                <mat-icon (click)="loadTempData()">cast_connected</mat-icon>
                 <span>&nbsp;</span>
-                <span>23</span>
+                <span>{{projetosTotal}}</span>
             </mat-card-title>
             <p>
                 <sub>Total de projetos</sub>
@@ -21,7 +21,7 @@
             <mat-card-title>
                 <mat-icon>cast_for_education</mat-icon>
                 <span>&nbsp;</span>
-                <span>10</span>
+                <span>{{projetosConcluidos}}</span>
             </mat-card-title>
             <p>
                 <sub>Projetos concluídos</sub>
@@ -33,7 +33,7 @@
             <mat-card-title>
                 <mat-icon>cast_for_education</mat-icon>
                 <span>&nbsp;</span>
-                <span>9</span>
+                <span>{{projetosAndamento}}</span>
             </mat-card-title>
             <p>
                 <sub>Projetos em andamento</sub>
@@ -45,7 +45,7 @@
             <mat-card-title>
                 <mat-icon>cast_for_education</mat-icon>
                 <span>&nbsp;</span>
-                <span>4</span>
+                <span>{{projetosAtrasados}}</span>
             </mat-card-title>
             <p>
                 <sub>Projetos atrasados</sub>

@@ -8,7 +8,8 @@ import {
     MatIconModule,
     MatListModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule
 } from "@angular/material";
 import { EstadoService } from "../_shared/services/estado.service";
 import { SharedModule } from "../_shared/shared.module";
@@ -28,7 +29,8 @@ import { AuthService } from '../_shared/services/auth.service';
         MatSidenavModule,
         MatIconModule,
         MatListModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatMenuModule
     ],
     exports: [AppRoutingModule, MainNavComponent],
     providers: [EstadoService, SnackBarService, AuthService]
