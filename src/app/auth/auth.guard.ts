@@ -11,6 +11,7 @@ export class Permissions {
 	unidadesPermissions = {}//Define a hierarquia entre as diferentes unidades para controle de modificação
 
 	usuarioLogado : Usuario
+	excludedPages = [] //Define as urls que não serão inclusas na validação.
 
 
 	constructor(private authService : AuthService) {
@@ -59,6 +60,10 @@ export class Permissions {
 				"/usuarios"
 			],
 		}
+
+		this.excludedPages = [
+			"/usuarios/confirmar"
+		]
 	}	
 
 	canActivate(url: string) {
@@ -70,6 +75,7 @@ export class Permissions {
 	}
 
 	canActivateChild(url: string) {
+		
 		if(this.usuarioLogado == null)
 			return true
 		let tipoUnidade = this.usuarioLogado.unidade.classe
@@ -82,13 +88,21 @@ export class Permissions {
 		}
 		return permissao
 	}
+
+	isAnExcludedPage(url: string) {
+		for(let u of this.excludedPages) {
+			if(url.includes(u))
+				return true
+		}
+		return false
+	}
 }
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild  {
 	permissions: Permissions
     constructor(private router: Router, private authService: AuthService) {
-        // this.permissions = new Permissions(this.authenticationDataService)
+         this.permissions = new Permissions(this.authService)
      }
 
 	canActivate(
@@ -98,7 +112,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		let url: string = state.url
 		console.log("URL acessada: " + url)
-		return this.checkLogin(url, next.data.roles)// && this.permissions.canActivate(url);
+		return this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)// && this.permissions.canActivate(url));
 	}
 
 	canActivateChild(
@@ -108,7 +122,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		let url: string = state.url
 		console.log("URL acessada: " + url)
-		return this.checkLogin(url, next.data.roles)// && this.permissions.canActivateChild(url)
+		return this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles) //&& this.permissions.canActivateChild(url))
 	}
 
 	checkLogin(url: string, allowedRoles: string[]): boolean {

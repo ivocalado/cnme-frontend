@@ -20,7 +20,8 @@ export class UsuarioDataService {
     }
 
     storeUsuario(usuario: Usuario, authToken: string): Observable<Usuario> {
-        usuario.name = usuario.nome
+        console.log("Salvandoo...")
+        console.log(usuario)
         return this.httpClient
             .post<Usuario>(
                 "/api/usuarios",
@@ -32,7 +33,12 @@ export class UsuarioDataService {
                     })
                 }
             )
-            .pipe( map(data => data), catchError(this.handleError));
+            .pipe(  map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError));
     }
 
     updateUsuario(id:number, usuario:Usuario, authToken: string){
@@ -82,7 +88,31 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            })
+            }), catchError(this.handleError)
+        );
+    }
+    
+    getUsuarioByInvitationToken(token:string){
+        return this.httpClient.get<Usuario>("/api/usuarios/get?token1="+token)
+        .pipe(
+            map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError)
+        );
+    }
+
+    confirmInvitationToken(token:string, usuario: Usuario){
+        return this.httpClient.post<Usuario>("/api/usuarios/confirmar?token1="+token, usuario)
+        .pipe(
+            map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError)
         );
     }
 
@@ -130,13 +160,11 @@ export class UsuarioDataService {
         );
     }
     
-    sendInvitation(usuario: Usuario, authToken: string) {
+    sendInvitation(usuarioId: number, authToken: string) {
         console.log("send invitation")
-        console.log(usuario)
         return this.httpClient
-            .post<Usuario>(
-                "/api/usuarios/convidar",
-                usuario,
+            .post<any>(
+                "/api/usuarios/"+usuarioId+"/enviar-convite", null, 
                 {
                     headers: new HttpHeaders({
                         "Content-Type":"application/json; charset=UTF-8",
