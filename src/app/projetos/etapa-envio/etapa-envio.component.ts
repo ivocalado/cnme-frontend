@@ -14,6 +14,7 @@ import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { ProjetoEditComponent } from '../projeto-edit/projeto-edit.component';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-etapa-envio',
@@ -42,7 +43,8 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
         private projetoDataService:ProjetoDataService,
         private unidadeDataService:UnidadeDataService,
         private snackBarService: SnackBarService,
-        private authService: AuthService
+        private authService: AuthService,
+        private location: Location
     ) {
         this.navigationSubscription = this.router.events.subscribe((e: any) => {
             // If it is a NavigationEnd event re-initalise the component
@@ -133,7 +135,7 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
     }
 
     onCancel() {
-        this.router.navigate(["/projetos/editar/"+this.projetoId+"/step/2"], { relativeTo: this.route });
+        this.location.back()
     }
 
     fetchEmpresas(){

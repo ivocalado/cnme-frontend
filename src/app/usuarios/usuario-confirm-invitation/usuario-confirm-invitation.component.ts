@@ -4,6 +4,7 @@ import { UsuarioDataService } from 'src/app/_shared/services/usuario-data.servic
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { Usuario } from 'src/app/_shared/models/usuario.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-usuario-confirm-invitation',
@@ -20,7 +21,8 @@ export class UsuarioConfirmInvitationComponent implements OnInit {
     private router:Router,
     private route:ActivatedRoute,
     private usuarioDataService: UsuarioDataService,
-    private snackBarService: SnackBarService) { }
+    private snackBarService: SnackBarService,
+    private location: Location) { }
 
   ngOnInit() {
     console.log("Iniciou o modulo")
@@ -46,7 +48,7 @@ export class UsuarioConfirmInvitationComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(["/"], { relativeTo: this.route });
+    this.location.back()
   }
 
   onConfirm() {

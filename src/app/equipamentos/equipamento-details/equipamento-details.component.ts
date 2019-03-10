@@ -3,6 +3,7 @@ import { EquipamentoDataService } from '../../_shared/services/equipamento-data.
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Equipamento } from '../../_shared/models/equipamento.model';
 import { TipoEquipamento } from '../../_shared/models/tipoEquipamento.model';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-equipamento-details',
@@ -16,7 +17,8 @@ export class EquipamentoDetailsComponent implements OnInit {
     constructor(
         private equipamentoDataService: EquipamentoDataService,
         private route:ActivatedRoute,
-        private router:Router
+        private router:Router,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -28,7 +30,7 @@ export class EquipamentoDetailsComponent implements OnInit {
         })
     }
     onCancel(){
-        this.router.navigate(['/equipamentos'], {relativeTo:this.route});
+        this.location.back()
     }
 
 }

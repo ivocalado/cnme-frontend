@@ -9,6 +9,7 @@ import { EquipamentoDataService } from '../../_shared/services/equipamento-data.
 import { MatSort, MatTableDataSource} from '@angular/material';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class KitEditComponent implements OnInit {
         private router: Router,
         private kitDataService: KitDataService,
         private equipamentoDataService: EquipamentoDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private location: Location
     ) {}
 
 
@@ -103,7 +105,7 @@ export class KitEditComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/kits"], { relativeTo: this.route });
+        this.location.back()
     }
 
     private initForm(kit:Kit){

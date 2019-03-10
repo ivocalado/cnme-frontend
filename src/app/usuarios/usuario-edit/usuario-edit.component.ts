@@ -7,6 +7,7 @@ import { UsuarioDataService } from 'src/app/_shared/services/usuario-data.servic
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import { Usuario } from 'src/app/_shared/models/usuario.model';
 import { Permissions } from 'src/app/auth/auth.guard';
+import {Location} from '@angular/common';
 
 @Component({
     selector: "app-usuario-edit",
@@ -29,7 +30,8 @@ export class UsuarioEditComponent implements OnInit {
         private usuarioDataService: UsuarioDataService,
         private snackBarService: SnackBarService,
         private authService: AuthService,
-        private permissions: Permissions
+        private permissions: Permissions,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -50,7 +52,7 @@ export class UsuarioEditComponent implements OnInit {
      }
 
     onCancel(){
-        this.router.navigate(['/usuarios'], {relativeTo:this.route})
+        this.location.back()
     }
     onSubmit(){
         if(this.editForm.value.password === null || this.editForm.value.password == "") {

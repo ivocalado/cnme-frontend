@@ -4,6 +4,7 @@ import { TipoEquipamento } from '../../_shared/models/tipoEquipamento.model';
 import { FormGroup, FormControl, Validators, PatternValidator } from '@angular/forms';
 import { TipoEquipamentoDataService } from "src/app/_shared/services/tipoEquipamento-data.service";
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: "app-tipoEquipamento-edit",
@@ -22,7 +23,8 @@ export class TipoEquipamentoEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private tipoEquipamentoDataService: TipoEquipamentoDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private location: Location
     ) {}
 
 
@@ -74,7 +76,7 @@ export class TipoEquipamentoEditComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/tipoEquipamentos"], { relativeTo: this.route });
+        this.location.back()
     }
 
     private initForm(tipoEquipamento:TipoEquipamento){

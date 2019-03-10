@@ -10,6 +10,7 @@ import { Projeto } from '../../_shared/models/projeto.model';
 import { Tarefa } from '../../_shared/models/tarefa.model';
 import { Etapa } from '../../_shared/models/etapa.model';
 import { EquipamentoProjeto } from '../../_shared/models/equipamentoProjeto.model';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class ProjetoEditComponent implements OnInit {
         private unidadeDataService:UnidadeDataService,
         private projetoDataService:ProjetoDataService,
         private snackBarService:SnackBarService,
-        private dateAdapter: DateAdapter<any>
+        private dateAdapter: DateAdapter<any>,
+        private location: Location
     ) {
         this.dateAdapter.setLocale('pt-BR');
     }
@@ -97,7 +99,7 @@ export class ProjetoEditComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/projetos"], { relativeTo: this.route });
+        this.location.back()
     }
 
     onAddKits(){

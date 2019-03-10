@@ -8,6 +8,7 @@ import { UnidadeDataService } from "../../_shared/services/unidade-data.service"
 import { Estado } from '../../_shared/models/estado.model';
 import { Municipio } from '../../_shared/models/municipio.model';
 import { SnackBarService } from '../../_shared/helpers/snackbar.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: "app-unidade-edit",
@@ -29,7 +30,8 @@ export class UnidadeEditComponent implements OnInit {
         private router: Router,
         private estadoDataService: EstadoDataService,
         private unidadeDataService: UnidadeDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private location: Location
     ) {}
 
 
@@ -106,7 +108,7 @@ export class UnidadeEditComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/unidades"], { relativeTo: this.route });
+        this.location.back()
     }
 
     private initForm(unidade:Unidade){

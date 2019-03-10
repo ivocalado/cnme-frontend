@@ -7,6 +7,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import { Equipamento } from 'src/app/_shared/models/equipamento.model';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-adicionar-kits',
@@ -25,7 +26,8 @@ export class AdicionarKitsComponent implements OnInit {
         private kitDataService:KitDataService,
         private projetoDataService:ProjetoDataService,
         private route:ActivatedRoute,
-        private router:Router
+        private router:Router,
+        private location: Location
         ) { }
 
     ngOnInit() {
@@ -71,7 +73,7 @@ export class AdicionarKitsComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/projetos/editar/"+this.projetoId+"/step/1"], { relativeTo: this.route });
+        this.location.back()
     }
 
 

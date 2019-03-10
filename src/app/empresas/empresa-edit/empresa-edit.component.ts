@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { EstadoDataService } from 'src/app/_shared/services/estado-data.service';
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-empresa-edit',
@@ -27,7 +28,8 @@ export class EmpresaEditComponent implements OnInit {
         private router: Router,
         private estadoDataService: EstadoDataService,
         private unidadeDataService: UnidadeDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -102,7 +104,7 @@ export class EmpresaEditComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/empresas"], { relativeTo: this.route });
+        this.location.back()
     }
 
     private initForm(unidade: Unidade) {

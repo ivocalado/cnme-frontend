@@ -7,6 +7,7 @@ import { Unidade } from '../../_shared/models/unidade.model';
 import { UsuarioDataService } from '../../_shared/services/usuario-data.service';
 import { Usuario } from '../../_shared/models/usuario.model';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-polo-invitation',
@@ -24,7 +25,8 @@ export class PoloInvitationComponent implements OnInit {
     private unidadeDataService: UnidadeDataService,
     private usuarioDataService: UsuarioDataService,
     private snackBarService: SnackBarService,
-    private authService: AuthService
+    private authService: AuthService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -71,7 +73,7 @@ export class PoloInvitationComponent implements OnInit {
   }
   
   onCancel() {
-    this.router.navigate(["/polos/detalhes", this.unidade.id], { relativeTo: this.route });
+    this.location.back()
   }
 
   private initForm() {

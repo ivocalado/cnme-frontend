@@ -9,6 +9,7 @@ import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-etapa-instalacao',
@@ -31,7 +32,8 @@ export class EtapaInstalacaoComponent implements OnInit {
         private projetoDataService: ProjetoDataService,
         private unidadeDataService:UnidadeDataService,
         private snackBarService:SnackBarService,
-        private authService: AuthService
+        private authService: AuthService,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -80,7 +82,7 @@ export class EtapaInstalacaoComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/projetos/editar/" + this.projetoId + "/step/3"], { relativeTo: this.route });
+        this.location.back()
     }
 
     initForm(etapa:Etapa){

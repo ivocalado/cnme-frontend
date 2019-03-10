@@ -5,6 +5,7 @@ import { Kit } from '../../_shared/models/kit.model';
 import { EquipamentoDataService } from '../../_shared/services/equipamento-data.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Equipamento } from '../../_shared/models/equipamento.model';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-kit-details',
@@ -22,7 +23,8 @@ export class KitDetailsComponent implements OnInit {
         private kitDataService: KitDataService,
         private route:ActivatedRoute,
         private equipamentoDataService: EquipamentoDataService,
-        private router:Router
+        private router:Router,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -36,7 +38,7 @@ export class KitDetailsComponent implements OnInit {
         })
     }
     onCancel(){
-        this.router.navigate(['/kits'], {relativeTo:this.route});
+        this.location.back()
     }
 
 }

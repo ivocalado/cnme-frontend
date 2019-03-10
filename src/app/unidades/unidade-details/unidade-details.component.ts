@@ -7,6 +7,7 @@ import { Municipio } from '../../_shared/models/municipio.model';
 import { Localidade } from '../../_shared/models/localidade.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Usuario } from '../../_shared/models/usuario.model';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-unidade-details',
@@ -25,7 +26,8 @@ export class UnidadeDetailsComponent implements OnInit {
     constructor(
         private unidadeDataService: UnidadeDataService,
         private route:ActivatedRoute,
-        private router:Router
+        private router:Router,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -38,7 +40,7 @@ export class UnidadeDetailsComponent implements OnInit {
         })
     }
     onCancel(){
-        this.router.navigate(['/unidades'], {relativeTo:this.route});
+        this.location.back()
     }
 
     fetchUsuarios() {

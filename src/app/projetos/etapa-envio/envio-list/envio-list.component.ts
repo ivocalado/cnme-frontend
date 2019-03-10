@@ -3,6 +3,7 @@ import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.servic
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-envio-list',
@@ -18,6 +19,7 @@ export class EnvioListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private projetoDataService: ProjetoDataService,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -43,7 +45,7 @@ export class EnvioListComponent implements OnInit {
     }
 
     onCancel(){
-        this.router.navigate(["/projetos/editar/" + this.projetoId + "/step/2"], { relativeTo: this.route });
+        this.location.back()
     }
 
 }

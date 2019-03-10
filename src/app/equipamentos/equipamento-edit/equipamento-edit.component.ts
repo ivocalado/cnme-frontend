@@ -8,6 +8,7 @@ import { EquipamentoDataService } from "../../_shared/services/equipamento-data.
 import { TipoEquipamento } from '../../_shared/models/tipoEquipamento.model';
 
 import { SnackBarService } from '../../_shared/helpers/snackbar.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: "app-equipamento-edit",
@@ -29,7 +30,8 @@ export class EquipamentoEditComponent implements OnInit {
         private router: Router,
         private tipoEquipamentoDataService: TipoEquipamentoDataService,
         private equipamentoDataService: EquipamentoDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private location: Location
     ) {}
 
 
@@ -86,7 +88,7 @@ export class EquipamentoEditComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(["/equipamentos"], { relativeTo: this.route });
+        this.location.back()
     }
 
     private initForm(equipamento:Equipamento){

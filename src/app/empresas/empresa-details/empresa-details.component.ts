@@ -4,6 +4,7 @@ import { Unidade } from '../../_shared/models/unidade.model';
 import { UnidadeDataService } from '../../_shared/services/unidade-data.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-empresa-details',
@@ -19,7 +20,8 @@ export class EmpresaDetailsComponent implements OnInit {
         private unidadeDataService: UnidadeDataService,
         private route: ActivatedRoute,
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -36,7 +38,7 @@ export class EmpresaDetailsComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(['/empresas'], { relativeTo: this.route });
+        this.location.back()
     }
 
     private canProcess() {

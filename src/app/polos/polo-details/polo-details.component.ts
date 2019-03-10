@@ -7,6 +7,7 @@ import { Municipio } from '../../_shared/models/municipio.model';
 import { Localidade } from '../../_shared/models/localidade.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Usuario } from '../../_shared/models/usuario.model';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -25,7 +26,9 @@ export class PoloDetailsComponent implements OnInit {
     constructor(
         private unidadeDataService: UnidadeDataService,
         private route: ActivatedRoute,
-        private router: Router) { }
+        private router: Router,
+        private location: Location
+        ) { }
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
@@ -38,7 +41,7 @@ export class PoloDetailsComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(['/polos'], { relativeTo: this.route });
+        this.location.back()
     }
     fetchUsuarios() {
         this.unidadeDataService.getUsuariosByUnidade(this.unidade.id).subscribe((usuarios:Usuario[])  => {
