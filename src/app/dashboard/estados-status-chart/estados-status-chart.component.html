@@ -4,7 +4,7 @@
     <p>Clique nas siglas para habilitar ou desabilitar a visualização dos estados</p>
     <hr class="mb-2">
     <div style="display: block;">
-        <canvas id="myChart" baseChart height="100vh" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+        <canvas id="myChart" baseChart height="100vh" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
              [legend]="lineChartLegend" [chartType]="lineChartType"
             (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>

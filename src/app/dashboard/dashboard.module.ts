@@ -11,9 +11,11 @@ import { EstadosStatusChartComponent } from './estados-status-chart/estados-stat
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { EstadosStatusComponent } from './estados-status/estados-status.component';
 import { MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatSortModule } from '@angular/material';
+import {TimelineChartComponent } from './timeline-chart/timeline-chart.component';
+import { EtapasAtrasadasComponent } from './etapas-atrasadas/etapas-atrasadas.component';
 
 @NgModule({
-    declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent, EstadosStatusComponent],
+    declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent, EstadosStatusComponent, TimelineChartComponent, EtapasAtrasadasComponent],
     imports: [
         SharedModule,
         DashboardRoutingModule,

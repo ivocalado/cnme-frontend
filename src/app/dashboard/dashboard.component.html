@@ -56,13 +56,16 @@
 
 <hr class="m-2">
 
+<!-- linha do tempo -->
 <div class="row">
     <div class="col-lg-12">
-        <app-status-chart></app-status-chart>
+        <app-timeline-chart></app-timeline-chart>
     </div>
 </div>
+<!-- fim linha do tempo -->
 
 <hr class="m-2">
+
 <!-- gestor e etapas -->
 <div class="row h-100">
     <div class="col-lg-4">
@@ -77,57 +80,30 @@
             </p>
 
             <div class="col-lg-12">
-                <circle-progress [percent]="0" [radius]="100" [title]="gestNaoConfirmados" [outerStrokeColor]="'#80DEEA'"
-                    [outerStrokeGradientStopColor]="'#80DEEA'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
-                    [animation]="true" [animationDuration]="300">
+                <circle-progress [percent]="0" [radius]="100" [title]="gestNaoConfirmados"
+                    [outerStrokeColor]="'#80DEEA'" [outerStrokeGradientStopColor]="'#80DEEA'"
+                    [innerStrokeColor]="'#263238'" [titleColor]="'#263238'" [animation]="true"
+                    [animationDuration]="300">
                 </circle-progress>
             </div>
 
         </mat-card>
     </div>
     <div class="col-lg-8">
-        <mat-card>
-            <mat-card-title>
-                <mat-icon>notification_important</mat-icon>
-                <span>&nbsp;</span>
-                <span>22</span>
-            </mat-card-title>
-            <p>
-                <sub>Etapas atrasadas</sub>
-            </p>
-            <div class="row h-100">
-                <div class="col-lg-4 text-center">
-                    <div class="wrap-circle-progress">
-                        <circle-progress [percent]="45.45" [radius]="100" title="45%" [outerStrokeColor]="'#EF5350'"
-                            [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'"
-                            [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
-                        </circle-progress>
-                        <p>Envio (10)</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <div class="wrap-circle-progress">
-                        <circle-progress [percent]="36.35" [radius]="100" title="36%" [outerStrokeColor]="'#EF5350'"
-                            [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'"
-                            [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
-                        </circle-progress>
-                        <p>Instalação (8)</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <div class="wrap-circle-progress">
-                        <circle-progress [percent]="18.18" [radius]="100" title="18%" [outerStrokeColor]="'#EF5350'"
-                            [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'"
-                            [titleColor]="'#263238'" [animation]="true" [animationDuration]="300">
-                        </circle-progress>
-                        <p>Ativação (4)</p>
-                    </div>
-                </div>
-            </div>
-        </mat-card>
+        <app-etapas-atrasadas></app-etapas-atrasadas>
     </div>
 </div>
 <!-- fim gestor e etapas -->
+
+<hr class="m-2">
+
+<!-- projetos por status -->
+<div class="row">
+    <div class="col-lg-12">
+        <app-status-chart></app-status-chart>
+    </div>
+</div>
+<!-- fim projetos por status -->
 
 <hr class="m-2">
 
@@ -138,5 +114,3 @@
     </div>
 </div>
 <!-- fim estados -->
-
-

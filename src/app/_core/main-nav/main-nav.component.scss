@@ -65,9 +65,13 @@
 
 .mat-list-option,
 .mat-nav-list .mat-list-item {
+    width: 90%;
+    float: right;
     &:hover,
     &:focus {
         background-color: map_get($mat-blue-grey, 700);
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
     }
 }
 

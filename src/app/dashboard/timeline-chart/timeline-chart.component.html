@@ -1,0 +1,16 @@
+<mat-card>
+    <mat-card-title>
+        <mat-icon (click)="loadTempData()">timeline</mat-icon>
+        <span>&nbsp;</span>
+        <span>Projetos por linha do tempo</span>
+    </mat-card-title>
+    <p>
+        <sub>Últimos 12 meses</sub>
+    </p>
+    <div style="display: block;">
+        <canvas id="myChart" baseChart height="100vh" [datasets]="lineChartData" [labels]="lineChartLabels"
+            [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+            [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+    </div>
+</mat-card>

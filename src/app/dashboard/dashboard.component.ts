@@ -12,7 +12,27 @@ export class DashboardComponent implements OnInit {
     projetosTotal:number;
     projetosConcluidos:number;
     projetosAndamento:number;
-    projetosAtrasados:number
+    projetosAtrasados:number;
+    projetosEtapas: Array<any> = [{
+        "instalacao_total": "1",
+        "instalacao_total_andamento": "0",
+        "instalacao_total_atrasada": "1",
+        "instalacao_total_concluida": "0",
+        "instalacao_total_concluida_atrasada": "0",
+        "instalacao_percent_andamento": 0,
+        "ativacao_total": "1",
+        "ativacao_total_andamento": "0",
+        "ativacao_total_atrasada": "1",
+        "ativacao_total_concluida": "0",
+        "ativacao_total_concluida_atrasada": "0",
+        "ativacao_percent_andamento": 0,
+        "envio_total": "1",
+        "envio_total_andamento": "1",
+        "envio_total_atrasada": "0",
+        "envio_total_concluida": "0",
+        "envio_total_concluida_atrasada": "0",
+        "envio_percent_andamento": 0
+    }]
 
     constructor(
         private dashboardDataService:DashboardDataService

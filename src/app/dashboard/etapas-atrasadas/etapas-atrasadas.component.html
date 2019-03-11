@@ -1,0 +1,39 @@
+<mat-card>
+    <mat-card-title>
+        <mat-icon (click)="loadTempData()">notification_important</mat-icon>
+        <span>&nbsp;</span>
+        <span>{{qtdEtapasAtrasadas}}</span>
+    </mat-card-title>
+    <p>
+        <sub>Etapas atrasadas</sub>
+    </p>
+    <div class="row h-100">
+        <div class="col-lg-4 text-center">
+            <div class="wrap-circle-progress">
+                <circle-progress [percent]="projetosEtapas.pctEnvio" [radius]="100" title="{{projetosEtapas.pctEnvio}}%" [outerStrokeColor]="'#EF5350'"
+                    [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
+                    [animation]="true" [animationDuration]="300">
+                </circle-progress>
+                <p>Envio ({{projetosEtapas.envio_total_atrasada}})</p>
+            </div>
+        </div>
+        <div class="col-lg-4 text-center">
+            <div class="wrap-circle-progress">
+                <circle-progress [percent]="projetosEtapas.pctInstalacao" [radius]="100" title="{{this.projetosEtapas.pctInstalacao}}%" [outerStrokeColor]="'#EF5350'"
+                    [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
+                    [animation]="true" [animationDuration]="300">
+                </circle-progress>
+                <p>Instalação ({{projetosEtapas.instalacao_total_atrasada}})</p>
+            </div>
+        </div>
+        <div class="col-lg-4 text-center">
+            <div class="wrap-circle-progress">
+                <circle-progress [percent]="projetosEtapas.pctAtivacao" [radius]="100" title="{{projetosEtapas.pctAtivacao}}%" [outerStrokeColor]="'#EF5350'"
+                    [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
+                    [animation]="true" [animationDuration]="300">
+                </circle-progress>
+                <p>Ativação ({{projetosEtapas.ativacao_total_atrasada}})</p>
+            </div>
+        </div>
+    </div>
+</mat-card>

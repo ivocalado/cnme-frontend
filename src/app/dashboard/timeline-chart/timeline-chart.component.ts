@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardDataService } from 'src/app/_shared/services/dashboard.service';
 
 @Component({
-    selector: "app-estados-status-chart",
-    templateUrl: "./estados-status-chart.component.html",
-    styleUrls: ["./estados-status-chart.component.scss"]
+  selector: 'app-timeline-chart',
+  templateUrl: './timeline-chart.component.html',
+  styleUrls: ['./timeline-chart.component.scss']
 })
-export class EstadosStatusChartComponent implements OnInit {
+export class TimelineChartComponent implements OnInit {
+
     public lineChartData: any = [
-        { data: [3, 8, 5, 1, 3], label: "Iniciados" },
-        { data: [1, 9, 3, 8, 2], label: "Concluidos" }
+        { data: [], label: "Iniciados" },
+        { data: [], label: "Concluídos" }
     ];
-    public lineChartLabels: Array<any> = ["04/2018", "05/2018", "06/2018", "07/2018", "08/2018"];
+    public lineChartLabels: Array<any> = [];
     public lineChartOptions: any = {
         responsive: true
     };
@@ -46,13 +48,28 @@ export class EstadosStatusChartComponent implements OnInit {
     public lineChartLegend: boolean = true;
     public lineChartType: string = "line";
 
-    constructor() {}
+    constructor(
+        private dashBoardDataService:DashboardDataService
+    ) { }
 
     ngOnInit() {
-        //this.randomize();
+        this.fetchTimeline();
     }
 
-    public randomize(): void {
+    fetchTimeline(){
+        this.dashBoardDataService.getProjetosTimeLine().subscribe((res: any[]) => {
+            this.lineChartLabels = [];
+            this.lineChartData[0].data = [];
+            this.lineChartData[1].data = [];
+            res.forEach(element => {
+                this.lineChartLabels.push(element.mes_ano);
+                this.lineChartData[0].data.push(element.iniciados);
+                this.lineChartData[1].data.push(element.concluidos);
+            });
+        })
+    }
+
+    public loadTempData(): void {
         let _lineChartData: Array<any> = new Array(this.lineChartData.length);
         for (let i = 0; i < this.lineChartData.length; i++) {
             _lineChartData[i] = {
@@ -76,4 +93,5 @@ export class EstadosStatusChartComponent implements OnInit {
     public chartHovered(e: any): void {
         console.log(e);
     }
+
 }

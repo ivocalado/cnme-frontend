@@ -30,4 +30,16 @@ export class DashboardDataService{
             headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
         })
     }
+
+    getProjetosTimeLine(){
+        return this.httpClient.get("/api/dashboard/projetos/meses", {
+            headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
+        })
+    }
+
+    getEtapasExtrato(){
+        return this.httpClient.get("api/dashboard/projetos/etapas/extrato", {
+            headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
+        })
+    }
 }

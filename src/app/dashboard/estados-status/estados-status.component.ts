@@ -9,7 +9,7 @@ import { DashboardDataService } from 'src/app/_shared/services/dashboard.service
 })
 export class EstadosStatusComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
-    displayedColumns: string[] = ["estado", "total_planejamento", "total_enviado", "total_entregue", "total_instalado", "total_finalizado", "total_cancelado","total"];
+    displayedColumns: string[] = ["estado", "total_planejamento", "total_enviado", "total_entregue", "total_instalado", "total_cancelado","total"];
     dataSource;
 
     constructor(
