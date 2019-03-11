@@ -109,6 +109,36 @@ export class UnidadeDataService {
         );
     }
 
+    getTvEscola(){
+        return this.httpClient.get<Unidade>("/api/unidades/u/tvescola", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(
+            map(res =>{
+                let unidade:Unidade;
+                unidade = res["data"];
+                return unidade;
+            })
+        );
+    }
+
+    getMec(){
+        return this.httpClient.get<Unidade>("/api/unidades/u/mec", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(
+            map(res =>{
+                let unidade:Unidade;
+                unidade = res["data"];
+                return unidade;
+            })
+        );
+    }
+
     deleteUnidade(id:number){
         return this.httpClient.delete("/api/unidades/"+id, {
             headers: new HttpHeaders({
@@ -118,7 +148,7 @@ export class UnidadeDataService {
     }
 
     getPolos(){
-        return this.httpClient.get<Unidade[]>("api/unidades/u/polos", {
+        return this.httpClient.get<Unidade[]>("/api/unidades/u/polos", {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.authService.getToken()
             })

@@ -5,8 +5,9 @@
         <mat-nav-list *ngIf="isUsuarioAutenticado">
             <a mat-list-item routerLink="" *ngIf="isUsuarioPrivilegiado">DashBoard</a>
             <a mat-list-item routerLink="projetos">Projetos</a>
-            <a mat-list-item routerLink="unidades" *ngIf="isUsuarioPrivilegiado">Unidades</a>
             <a mat-list-item routerLink="polos" *ngIf="isUsuarioPrivilegiado">Polos</a>
+            <a mat-list-item routerLink="tvescola" *ngIf="isUsuarioPrivilegiado">TV Escola</a>
+            <a mat-list-item routerLink="mec" *ngIf="isUsuarioPrivilegiado">MEC</a>
             <a mat-list-item routerLink="empresas" *ngIf="isUsuarioPrivilegiado">Empresas</a>
             <a mat-list-item routerLink="equipamentos" *ngIf="isUsuarioPrivilegiado">Equipamentos</a>
             <a mat-list-item routerLink="kits" *ngIf="isUsuarioPrivilegiado">Kits</a>

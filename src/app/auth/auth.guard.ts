@@ -26,8 +26,9 @@ export class Permissions {
 		this.pagePermissions = {
 			admin: [
 				"/projetos", 
-				"/unidades",
 				"/polos",
+				"/tvescola",
+				"/mec",
 				"/empresas",
 				"/equipamentos",
 				"/kits",
@@ -36,7 +37,6 @@ export class Permissions {
 			],
 			mec: [
 				"/projetos", 
-				"/unidades",
 				"/polos",
 				"/empresas",
 				"/equipamentos",
@@ -46,7 +46,6 @@ export class Permissions {
 			],
 			tvescola: [
 				"/projetos", 
-				"/unidades",
 				"/polos",
 				"/empresas",
 				"/equipamentos",

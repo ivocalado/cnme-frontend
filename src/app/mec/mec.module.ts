@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { UnidadesComponent } from "./unidades.component";
-import { FormsModule,ReactiveFormsModule } from "@angular/forms";
+import { MecComponent } from "./mec.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatCardModule } from "@angular/material/card";
 import {
     MatInputModule,
@@ -12,14 +12,14 @@ import {
 import { NgxMaskModule } from "ngx-mask";
 
 import { SharedModule } from "../_shared/shared.module";
-import { UnidadeListComponent } from './unidade-list/unidade-list.component';
-import { UnidadeEditComponent } from './unidade-edit/unidade-edit.component';
-import { UnidadeDetailsComponent } from './unidade-details/unidade-details.component';
-import { UnidadesRoutingModule } from './unidades-routing.module';
+import { MecEditComponent } from './mec-edit/mec-edit.component';
+import { MecDetailsComponent } from './mec-details/mec-details.component';
+import { MecRoutingModule } from './mec-routing.module';
+import { MecInvitationComponent } from './mec-invitation/mec-invitation.component';
 
 
 @NgModule({
-    declarations: [UnidadesComponent, UnidadeListComponent, UnidadeEditComponent, UnidadeDetailsComponent],
+    declarations: [MecComponent, MecEditComponent, MecDetailsComponent, MecInvitationComponent],
     imports: [
         SharedModule,
         FormsModule,
@@ -30,8 +30,8 @@ import { UnidadesRoutingModule } from './unidades-routing.module';
         MatButtonModule,
         MatCardModule,
         MatTableModule,
-        UnidadesRoutingModule,
+        MecRoutingModule,
         NgxMaskModule.forRoot()
     ]
 })
-export class UnidadesModule {}
+export class MecModule { }

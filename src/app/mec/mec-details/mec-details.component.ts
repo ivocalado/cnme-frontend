@@ -9,12 +9,13 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 import { Usuario } from '../../_shared/models/usuario.model';
 import {Location} from '@angular/common';
 
+
 @Component({
-    selector: 'app-unidade-details',
-    templateUrl: './unidade-details.component.html',
-    styleUrls: ['./unidade-details.component.scss']
+    selector: 'app-mec-details',
+    templateUrl: './mec-details.component.html',
+    styleUrls: ['./mec-details.component.scss']
 })
-export class UnidadeDetailsComponent implements OnInit {
+export class MecDetailsComponent implements OnInit {
     unidade: Unidade = Unidade.EMPTY_MODEL;
     @ViewChild(MatSort) sort: MatSort;
 
@@ -22,27 +23,23 @@ export class UnidadeDetailsComponent implements OnInit {
     displayedColumns: string[] = ["nome", "email", "tipo", "actions"];
     dataSource;
 
-
     constructor(
         private unidadeDataService: UnidadeDataService,
-        private route:ActivatedRoute,
-        private router:Router,
+        private route: ActivatedRoute,
+        private router: Router,
         private location: Location
-    ) { }
+        ) { }
 
     ngOnInit() {
-        this.route.params.subscribe((params:Params) =>{
-            const unidadeId = +params["id"];
-            this.unidadeDataService.getUnidade(unidadeId).subscribe((unidade:Unidade) =>{
-                this.unidade = unidade;
-                this.fetchUsuarios()
-            })
+        this.unidadeDataService.getMec().subscribe((unidade: Unidade) => {
+            this.unidade = unidade;
+            this.fetchUsuarios()
         })
     }
-    onCancel(){
+
+    onCancel() {
         this.location.back()
     }
-
     fetchUsuarios() {
         this.unidadeDataService.getUsuariosByUnidade(this.unidade.id).subscribe((usuarios:Usuario[])  => {
             this.dataSource = new MatTableDataSource(usuarios);
@@ -50,4 +47,11 @@ export class UnidadeDetailsComponent implements OnInit {
         })
     }
 
+    applyFilter(filterValue: string) {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    onInvitation(unidade_id: number) {
+        this.router.navigate(['/mec/convidar'], { relativeTo: this.route });
+    }
 }

@@ -5,9 +5,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoutes: Routes = [
     { path: "", loadChildren: "./dashboard/dashboard.module#DashboardModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
-    { path: "unidades",loadChildren: "./unidades/unidades.module#UnidadesModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "polos", loadChildren: "./polos/polos.module#PolosModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "empresas", loadChildren: "./empresas/empresas.module#EmpresasModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
+    { path: "tvescola", loadChildren: "./tvescola/tvescola.module#TvEscolaModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
+    { path: "mec", loadChildren: "./mec/mec.module#MecModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "usuarios", loadChildren: "./usuarios/usuarios.module#UsuariosModule" , canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "equipamentos",loadChildren: "./equipamentos/equipamentos.module#EquipamentosModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "kits",loadChildren: "./kits/kits.module#KitsModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},

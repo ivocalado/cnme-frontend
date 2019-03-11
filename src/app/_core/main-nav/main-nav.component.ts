@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Usuario } from '../../_shared/models/usuario.model';
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Unidade } from 'src/app/_shared/models/unidade.model';
 
 @Component({
     selector: 'app-main-nav',
@@ -45,6 +46,7 @@ export class MainNavComponent implements OnInit {
 
     get homepage() {
         let usuario = this.authService.getCurrentUser()
+        let classes = usuario.unidade.class
         if (usuario) {
             return "/usuarios/detalhes/" + usuario.id
         } else {
@@ -53,9 +55,15 @@ export class MainNavComponent implements OnInit {
     }
 
     get unidade() {
-        let usuario = this.authService.getCurrentUser()
+        let usuario = <Usuario>this.authService.getCurrentUser()
+        let classe = usuario.unidade.classe
+        let unidade_basica = (classe == "polo" || classe == "empresa")
+        classe += unidade_basica?"s":""
         if (usuario) {
-            return "/unidades/detalhes/" + usuario.unidade.id
+            if(unidade_basica)
+                return "/"+classe+"/detalhes/" + usuario.unidade.id
+            else
+                return "/"+classe+"/detalhes"
         } else {
             return ""
         }
