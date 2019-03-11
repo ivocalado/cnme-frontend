@@ -8,6 +8,7 @@ import { Localidade } from '../../_shared/models/localidade.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Usuario } from '../../_shared/models/usuario.model';
 import {Location} from '@angular/common';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class MecDetailsComponent implements OnInit {
         private unidadeDataService: UnidadeDataService,
         private route: ActivatedRoute,
         private router: Router,
+        private authService: AuthService,
         private location: Location
         ) { }
 
@@ -51,7 +53,17 @@ export class MecDetailsComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    onInvitation(unidade_id: number) {
+    onInvitation() {
         this.router.navigate(['/mec/convidar'], { relativeTo: this.route });
+    }
+
+    onEdit() {
+        this.router.navigate(['/mec/editar'], { relativeTo: this.route });
+    }
+
+    get temPermissao() {
+        let usuario = <Usuario>this.authService.getCurrentUser()
+
+        return usuario.unidade.classe == "admin" || usuario.tipo == "gestor"
     }
 }

@@ -35,14 +35,14 @@ export class MecEditComponent implements OnInit {
     ngOnInit() {
         this.estadoDataService.getEstados().subscribe((estados: Estado[]) => {
             this.estados = estados;
-        });
-        this.unidadeDataService
+            this.unidadeDataService
             .getMec()
             .subscribe((unidade: Unidade) => {
                 this.unidade = unidade;
                 this.initForm(this.unidade);
                 this.fetchMunicipio(this.unidade.localidade.estado.id);
             });
+        });
     }
 
     onChange(e) {

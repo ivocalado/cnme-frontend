@@ -3,16 +3,16 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
         <img class="img-logo" src="assets/images/logo-cnme.png" srcset="assets/images/logo-cnme@2x.png 2x" alt="CNME">
         <mat-nav-list *ngIf="isUsuarioAutenticado">
-            <a mat-list-item routerLink="" *ngIf="isUsuarioPrivilegiado">DashBoard</a>
-            <a mat-list-item routerLink="projetos">Projetos</a>
-            <a mat-list-item routerLink="polos" *ngIf="isUsuarioPrivilegiado">Polos</a>
-            <a mat-list-item routerLink="tvescola" *ngIf="isUsuarioPrivilegiado">TV Escola</a>
-            <a mat-list-item routerLink="mec" *ngIf="isUsuarioPrivilegiado">MEC</a>
-            <a mat-list-item routerLink="empresas" *ngIf="isUsuarioPrivilegiado">Empresas</a>
-            <a mat-list-item routerLink="equipamentos" *ngIf="isUsuarioPrivilegiado">Equipamentos</a>
-            <a mat-list-item routerLink="kits" *ngIf="isUsuarioPrivilegiado">Kits</a>
-            <a mat-list-item routerLink="tipoEquipamentos" *ngIf="isUsuarioPrivilegiado">Tipos de Equipamentos</a>
-            <a mat-list-item routerLink="usuarios" >Usuários</a>
+            <a mat-list-item routerLink="" *ngIf="exibeDashboard">DashBoard</a>
+            <a mat-list-item routerLink="projetos" *ngIf="exibeProjetos">Projetos</a>
+            <a mat-list-item routerLink="polos" *ngIf="exibePolos">Polos</a>
+            <a mat-list-item routerLink="tvescola" *ngIf="exibeTvEscola">TV Escola</a>
+            <a mat-list-item routerLink="mec" *ngIf="exibeMec">MEC</a>
+            <a mat-list-item routerLink="empresas" *ngIf="exibeEmpresas">Empresas</a>
+            <a mat-list-item routerLink="equipamentos" *ngIf="exibeEquipamentos">Equipamentos</a>
+            <a mat-list-item routerLink="kits" *ngIf="exibeKits">Kits</a>
+            <a mat-list-item routerLink="tipoEquipamentos" *ngIf="exibeTipoEquipamentos">Tipos de Equipamentos</a>
+            <!-- <a mat-list-item routerLink="usuarios" >Usuários</a> -->
             <!--
             menu com submenu
             <a mat-list-item routerLink="polos" (click)="showSubmenu = !showSubmenu">Parent Menu</a>

@@ -22,13 +22,17 @@
                     {{unidade.localidade.estado.sigla}}
                 </p>
                 <p>
-                    <button mat-raised-button type="button" class="mt-1" color="warn" (click)="onCancel()">
-                        Voltar
-                    </button>
-&nbsp;&nbsp;&nbsp;
-                    <button mat-raised-button type="button" class="mt-1" color="primary" (click)="onInvitation()">
-                            Convidar usuário
-                    </button>
+                        <span><button mat-raised-button type="button" class="mt-1" color="warn" (click)="onCancel()">
+                                Voltar
+                            </button>&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span *ngIf="temPermissao"><button mat-raised-button type="button" class="mt-1" color="primary" (click)="onEdit()">
+                                Editar dados da unidade
+                            </button>&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <button mat-raised-button type="button" class="mt-1" color="primary" (click)="onInvitation()">
+                                Convidar usuário
+                        </button>
                 </p>
 
             </div>

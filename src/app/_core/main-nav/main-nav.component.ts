@@ -32,8 +32,8 @@ export class MainNavComponent implements OnInit {
     }
 
     get isUsuarioPrivilegiado() {
-        let usuarioAutenticado = this.authService.getCurrentUser()
-        return (usuarioAutenticado !== null) && usuarioAutenticado.unidade && (usuarioAutenticado.unidade.classe != "polo")
+        this.usuarioAutenticado = this.authService.getCurrentUser()
+        return (this.usuarioAutenticado !== null) && this.usuarioAutenticado.unidade && (this.usuarioAutenticado.unidade.classe != "polo")
     }
 
     get isUsuarioAutenticado() {
@@ -67,5 +67,57 @@ export class MainNavComponent implements OnInit {
         } else {
             return ""
         }
+    }
+
+    get exibeDashboard() {
+        return true
+    }
+
+    get exibeProjetos() {
+        return true
+    }
+
+    get exibePolos() {
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        return classe != "polo" && classe != "empresa"
+    }
+
+    get exibeTvEscola() {
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        return classe == "admin" || classe == "tvescola"
+    }
+
+    get exibeMec() {
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        console.log("Classe de acesso: " + classe)
+        return classe == "admin" || classe == "mec"
+
+    }
+
+    get exibeEmpresas() {
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        return classe != "polo" && classe != "empresa"
+    }
+
+    get exibeEquipamentos() {
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        return classe != "polo" && classe != "empresa"
+    }
+
+    get exibeKits() {
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        return classe != "polo" && classe != "empresa"
+    }
+
+    get exibeTipoEquipamentos() {
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        return classe != "polo" && classe != "empresa"
     }
 }
