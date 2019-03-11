@@ -44,10 +44,10 @@ export class TvEscolaDetailsComponent implements OnInit {
         this.location.back()
     }
 
-    get temPermissao() {
+    get hasPermission() {
         let usuario = <Usuario>this.authService.getCurrentUser()
-
-        return usuario.unidade.classe == "admin" || usuario.tipo == "gestor"
+        let classe = usuario.unidade.classe 
+        return classe == "admin" || (classe == "tvescola" && usuario.tipo == "gestor")
     }
 
     fetchUsuarios() {

@@ -61,9 +61,9 @@ export class MecDetailsComponent implements OnInit {
         this.router.navigate(['/mec/editar'], { relativeTo: this.route });
     }
 
-    get temPermissao() {
+    get hasPermission() {
         let usuario = <Usuario>this.authService.getCurrentUser()
-
-        return usuario.unidade.classe == "admin" || usuario.tipo == "gestor"
+        let classe = usuario.unidade.classe 
+        return classe == "admin" || (classe == "mec" && usuario.tipo == "gestor")
     }
 }

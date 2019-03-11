@@ -9,6 +9,8 @@ import { EstadoDataService } from 'src/app/_shared/services/estado-data.service'
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import {Location} from '@angular/common';
+import { Usuario } from 'src/app/_shared/models/usuario.model';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
     selector: "app-polo-edit",
@@ -29,29 +31,30 @@ export class PoloEditComponent implements OnInit {
         private estadoDataService: EstadoDataService,
         private unidadeDataService: UnidadeDataService,
         private snackBarService: SnackBarService,
-        private location: Location
+        private location: Location,
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
         this.estadoDataService.getEstados().subscribe((estados: Estado[]) => {
             this.estados = estados;
-        });
-        this.route.params.subscribe((params: Params) => {
-            this.unidadeId = +params["id"];
-            this.editmode = params["id"] != null;
-            console.log("editMode: " + this.editmode);
-
-            if (this.editmode) {
-                this.unidadeDataService
-                    .getUnidade(this.unidadeId)
-                    .subscribe((unidade: Unidade) => {
-                        this.unidade = unidade;
-                        this.initForm(this.unidade);
-                        this.fetchMunicipio(this.unidade.localidade.estado.id);
-                    });
-            } else {
-                this.initForm(this.unidade);
-            }
+            this.route.params.subscribe((params: Params) => {
+                this.unidadeId = +params["id"];
+                this.editmode = params["id"] != null;
+                console.log("editMode: " + this.editmode);
+    
+                if (this.editmode) {
+                    this.unidadeDataService
+                        .getUnidade(this.unidadeId)
+                        .subscribe((unidade: Unidade) => {
+                            this.unidade = unidade;
+                            this.initForm(this.unidade);
+                            this.fetchMunicipio(this.unidade.localidade.estado.id);
+                        });
+                } else {
+                    this.initForm(this.unidade);
+                }
+            });            
         });
     }
 
