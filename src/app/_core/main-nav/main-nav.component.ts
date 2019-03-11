@@ -92,7 +92,6 @@ export class MainNavComponent implements OnInit {
     get exibeMec() {
         let usuarioAutenticado = this.authService.getCurrentUser()
         let classe = usuarioAutenticado.unidade.classe
-        console.log("Classe de acesso: " + classe)
         return classe == "admin" || classe == "mec"
 
     }
