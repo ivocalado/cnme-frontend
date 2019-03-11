@@ -37,7 +37,13 @@ export class UnidadeDataService {
                     })
                 }
             )
-            .pipe( map(data => data), catchError(this.handleError));
+            .pipe( 
+                map(res =>{
+                let unidade:Unidade;
+                unidade = res["data"];
+                return unidade;
+            }), 
+                catchError(this.handleError));
     }
 
     updateUnidade(id:number, unidade:Unidade){

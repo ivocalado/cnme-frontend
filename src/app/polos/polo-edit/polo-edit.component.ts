@@ -11,6 +11,7 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import {Location} from '@angular/common';
 import { Usuario } from 'src/app/_shared/models/usuario.model';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import { UsuarioDataService } from 'src/app/_shared/services/usuario-data.service';
 
 @Component({
     selector: "app-polo-edit",
@@ -32,7 +33,8 @@ export class PoloEditComponent implements OnInit {
         private unidadeDataService: UnidadeDataService,
         private snackBarService: SnackBarService,
         private location: Location,
-        private authService: AuthService
+        private authService: AuthService,
+        private usuarioDataService: UsuarioDataService
     ) {}
 
     ngOnInit() {
@@ -100,6 +102,17 @@ export class PoloEditComponent implements OnInit {
                         this.router.navigate(["/polos"], {
                             relativeTo: this.route
                         });
+
+                        this.unidadeDataService.getUsuariosByUnidade(unidade.id).subscribe((usuarios: Usuario[]) => {
+                            this.usuarioDataService.sendInvitation(usuarios[0].id, this.authService.getToken()).subscribe(msg => {
+                                this.snackBarService.openSnackBar("Convite enviado com sucesso!");
+                              }, error2 => {
+                                this.snackBarService.openSnackBar("Falha no envio do convite!");
+                              })
+                        }, error => {
+                            this.snackBarService.openSnackBar("Ocorreu um erro ao enviar o convite ao usuário.")
+                        })
+                        
                     },
                     error => {
                         this.poloForm.setErrors = error;
