@@ -63,10 +63,10 @@
     background-color: map_get($mat-blue-grey, 500);
 }
 
-.mat-list-option,
-.mat-nav-list .mat-list-item {
+.mat-menu-item{
     width: 90%;
     float: right;
+    color:#ffffff;
     &:hover,
     &:focus {
         background-color: map_get($mat-blue-grey, 700);

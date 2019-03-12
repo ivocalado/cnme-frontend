@@ -3,15 +3,15 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
         <img class="img-logo" src="assets/images/logo-cnme.png" srcset="assets/images/logo-cnme@2x.png 2x" alt="CNME">
         <mat-nav-list *ngIf="isUsuarioAutenticado">
-            <a mat-list-item routerLink="" *ngIf="exibeDashboard">DashBoard</a>
-            <a mat-list-item routerLink="projetos" *ngIf="exibeProjetos">Projetos</a>
-            <a mat-list-item routerLink="polos" *ngIf="exibePolos">Polos</a>
-            <a mat-list-item routerLink="tvescola" *ngIf="exibeTvEscola">TV Escola</a>
-            <a mat-list-item routerLink="mec" *ngIf="exibeMec">MEC</a>
-            <a mat-list-item routerLink="empresas" *ngIf="exibeEmpresas">Empresas</a>
-            <a mat-list-item routerLink="equipamentos" *ngIf="exibeEquipamentos">Equipamentos</a>
-            <a mat-list-item routerLink="kits" *ngIf="exibeKits">Kits</a>
-            <a mat-list-item routerLink="tipoEquipamentos" *ngIf="exibeTipoEquipamentos">Tipos de Equipamentos</a>
+            <button mat-menu-item routerLink="" *ngIf="exibeDashboard">DashBoard</button>
+            <button mat-menu-item routerLink="projetos" *ngIf="exibeProjetos">Projetos</button>
+            <button mat-menu-item routerLink="polos" *ngIf="exibePolos">Polos</button>
+            <button mat-menu-item routerLink="tvescola" *ngIf="exibeTvEscola">TV Escola</button>
+            <button mat-menu-item routerLink="mec" *ngIf="exibeMec">MEC</button>
+            <button mat-menu-item routerLink="empresas" *ngIf="exibeEmpresas">Empresas</button>
+            <button mat-menu-item routerLink="equipamentos" *ngIf="exibeEquipamentos">Equipamentos</button>
+            <button mat-menu-item routerLink="kits" *ngIf="exibeKits">Kits</button>
+            <button mat-menu-item routerLink="tipoEquipamentos" *ngIf="exibeTipoEquipamentos">Tipos de Equipamentos</button>
             <!-- <a mat-list-item routerLink="usuarios" >Usuários</a> -->
             <!--
             menu com submenu

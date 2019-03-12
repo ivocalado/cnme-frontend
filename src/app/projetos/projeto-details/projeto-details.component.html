@@ -11,6 +11,7 @@
           </mat-panel-description>
       </mat-expansion-panel-header>
       <div class="row">
+          <div class="col-lg-12">
         <p>
           <strong>Status do projeto: </strong>{{projeto.status}}<br />
           <strong>Unidade: </strong>{{projeto.unidade.nome}} (Cod. INEP: {{projeto.unidade.codigo_inep}})<br />
@@ -19,8 +20,9 @@
           <strong>Data Prevista para Início: </strong>{{projeto.data_inicio_previsto | date : 'dd/MM/yyyy'}}<br />
           <strong>Data Prevista de Fim: </strong>{{projeto.data_fim_previsto | date : 'dd/MM/yyyy'}}<br />
         </p>
+        </div>
       </div>
-      
+
   </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" (closed)="setStep(-1)" hideToggle>
@@ -30,7 +32,7 @@
         </mat-panel-title>
         <mat-panel-description>
             <span *ngIf="step !== 1">Equipamentos a serem enviados</span>&nbsp;
-            <mat-icon>assignment</mat-icon>
+            <mat-icon>devices</mat-icon>
         </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="row">
@@ -63,7 +65,7 @@
         </mat-panel-title>
         <mat-panel-description>
             <span *ngIf="step !== 2">Entregas a serem realizadas</span>&nbsp;
-            <mat-icon>card_travel</mat-icon>
+            <mat-icon>send</mat-icon>
         </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="row">
@@ -132,16 +134,16 @@
           <p><strong>Previsão de início: </strong>{{etapaInstalacao.tarefas[0].data_inicio_prevista | date:'dd/MM/yyyy'}}</p>
           <p><strong>Previsão de conclusão: </strong>{{etapaInstalacao.tarefas[0].data_fim_prevista | date:'dd/MM/yyyy'}}</p>
       </div>
-    </div>    
+    </div>
     <ng-template #seminstalacao>
       <div class="row" >
         <p>
           <i>O projeto não possui cronograma de instalação definido.</i>
         </p>
-      </div> 
+      </div>
     </ng-template>
 
-  </mat-expansion-panel>  
+  </mat-expansion-panel>
 
   <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" (closed)="setStep(-1)" hideToggle>
     <mat-expansion-panel-header>
@@ -150,7 +152,7 @@
         </mat-panel-title>
         <mat-panel-description>
             <span *ngIf="step !== 5">Cronograma previsto para ativação</span>&nbsp;
-            <mat-icon>language</mat-icon>
+            <mat-icon>cast_for_education</mat-icon>
         </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="row" *ngIf="etapaAtivacao; else semativacao">
@@ -161,15 +163,15 @@
           <p><strong>Previsão de início: </strong>{{etapaAtivacao.tarefas[0].data_inicio_prevista | date:'dd/MM/yyyy'}}</p>
           <p><strong>Previsão de conclusão: </strong>{{etapaAtivacao.tarefas[0].data_fim_prevista | date:'dd/MM/yyyy'}}</p>
       </div>
-    </div> 
+    </div>
 
     <ng-template #semativacao>
       <div class="row" >
         <p>
           <i>O projeto não possui cronograma de ativação definido.</i>
         </p>
-      </div> 
+      </div>
     </ng-template>
-  </mat-expansion-panel>  
+  </mat-expansion-panel>
 
 </mat-accordion>
