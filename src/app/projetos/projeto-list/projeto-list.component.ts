@@ -32,18 +32,22 @@ export class ProjetoListComponent implements OnInit {
         this.router.navigate(["editar", id], { relativeTo: this.route });
     }
     onDelete(id:number){
-    if(confirm("Tem certeza que deseja deletar este polo")) {
-        this.projetoDataService.deleteProjeto(id).subscribe(res => {
-            this.fetchProjetos();
-        });
+        if(confirm("Tem certeza que deseja deletar este polo")) {
+            this.projetoDataService.deleteProjeto(id).subscribe(res => {
+                this.fetchProjetos();
+            });
+        }
     }
-}
 
     fetchProjetos(){
         this.projetoDataService.getProjetos().subscribe((projetos:Projeto[])=>{
             this.dataSource = new MatTableDataSource(projetos);
             this.dataSource.sort = this.sort;
         });
+    }
+
+    isProjectInPlanning(status: string) {
+        return status == "PLANEJAMENTO"
     }
 
 }

@@ -217,3 +217,10 @@
     <!-- fim etapa ativação-->
 
 </mat-accordion>
+<div class="row" *ngIf="canProjectExecute">
+    <div class="col-lg-12 mt-3">
+        <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+            Iniciar execução do projeto
+        </button>
+    </div>
+</div>

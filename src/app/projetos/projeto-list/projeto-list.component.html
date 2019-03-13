@@ -36,7 +36,7 @@
                         <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                             <mat-icon aria-label="Details">description</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent" (click)="onEdit(row.id)">
+                        <button *ngIf="isProjectInPlanning(row.status)" mat-icon-button color="accent" (click)="onEdit(row.id)">
                             <mat-icon aria-label="Edit">edit</mat-icon>
                         </button>
                         <button mat-icon-button color="accent">

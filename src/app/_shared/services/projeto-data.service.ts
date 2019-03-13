@@ -18,7 +18,7 @@ export class ProjetoDataService{
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
-            return throwError(errorResponse.error.error);
+            return throwError(errorResponse.error.messages);
         }
 
     }

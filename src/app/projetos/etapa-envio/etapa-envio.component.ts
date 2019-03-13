@@ -78,6 +78,9 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
                 this.minDate.setDate(this.minDate.getDate() + 1)
                 this.maxDate = new Date(projeto.data_fim_previsto)
                 this.maxDate.setDate(this.maxDate.getDate() + 1)
+                console.log("DATAS DE ENTREGA: ")
+                console.log(this.minDate)
+                console.log(this.maxDate)
             })
             this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
                 this.etapaEnvio = etapa;
@@ -131,6 +134,7 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
         },
         erro => {
             console.log(erro)
+            this.snackBarService.openSnackBar(erro)
         })
     }
 

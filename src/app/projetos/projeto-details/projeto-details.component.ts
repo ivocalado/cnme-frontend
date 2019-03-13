@@ -5,6 +5,7 @@ import { Projeto } from '../../_shared/models/projeto.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-projeto-details',
@@ -27,7 +28,8 @@ export class ProjetoDetailsComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
                private router: Router,
-               private projetoDataService: ProjetoDataService) 
+               private projetoDataService: ProjetoDataService,
+               private location: Location) 
                { }
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class ProjetoDetailsComponent implements OnInit {
   fetchProjeto(){
     this.projetoDataService.getProjeto(this.projetoId).subscribe(projeto => {
       this.projeto = projeto
+      console.log("STATUS: " + this.projeto.status)
       this.dataSource = new MatTableDataSource(this.projeto.equipamentos_projeto);
       this.dataSource.sort = this.sort;
     })
@@ -69,5 +72,15 @@ export class ProjetoDetailsComponent implements OnInit {
 
   setStep(index: number) {
     this.step = index;
+  }
+
+  onEdit(id: number) {
+    console.log("OnEdit")
+    console.log(id)
+    this.router.navigate(["/projetos/editar", id], { relativeTo: this.route });
+  }
+
+  onCancel() {
+    this.location.back()
   }
 }

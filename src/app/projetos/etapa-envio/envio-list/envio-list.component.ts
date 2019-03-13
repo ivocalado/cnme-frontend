@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import {Location} from '@angular/common';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
     selector: 'app-envio-list',
@@ -19,7 +20,8 @@ export class EnvioListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private projetoDataService: ProjetoDataService,
-        private location: Location
+        private location: Location,
+        private snackBarService: SnackBarService
     ) { }
 
     ngOnInit() {
@@ -40,6 +42,10 @@ export class EnvioListComponent implements OnInit {
         if (confirm("Tem certeza que deseja deletar esta tarefa?")) {
             this.projetoDataService.deleteTarefa(this.etapaEnvio.id, tarefaId).subscribe(res =>{
                 this.fetchTarefas();
+                // this.projetoDataService.
+            }, error => {
+                this.snackBarService.openSnackBar("Ocorreu um erro ao processar a requisição. Tente novamente.")
+                this.router.navigate(["/projetos"])
             });
         }
     }

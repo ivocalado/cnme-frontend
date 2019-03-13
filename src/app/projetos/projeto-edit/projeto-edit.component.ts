@@ -5,7 +5,7 @@ import { UnidadeDataService } from '../../_shared/services/unidade-data.service'
 import { SnackBarService } from '../../_shared/helpers/snackbar.service';
 import { Unidade } from '../../_shared/models/unidade.model';
 import { ProjetoDataService } from '../../_shared/services/projeto-data.service';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material';
 import { Projeto } from '../../_shared/models/projeto.model';
 import { Tarefa } from '../../_shared/models/tarefa.model';
 import { Etapa } from '../../_shared/models/etapa.model';
@@ -16,7 +16,8 @@ import {Location} from '@angular/common';
 @Component({
     selector: "app-projeto-edit",
     templateUrl: "./projeto-edit.component.html",
-    styleUrls: ["./projeto-edit.component.scss"]
+    styleUrls: ["./projeto-edit.component.scss"],
+    providers: [{provide: MAT_DATE_LOCALE, useValue: "pt-BR"}]
 })
 export class ProjetoEditComponent implements OnInit {
     step = 0;
@@ -159,5 +160,9 @@ export class ProjetoEditComponent implements OnInit {
 
     prevStep() {
         this.step--;
+    }
+
+    get canProjectExecute() {
+        return false
     }
 }
