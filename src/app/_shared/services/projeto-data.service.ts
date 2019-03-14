@@ -269,6 +269,15 @@ export class ProjetoDataService{
             })
     }
 
+    storeAtivacao(projetoId: number, values: any) {
+        return this.httpClient.post(
+            "/api/etapas/projeto-cnme/" + projetoId + "/ativar",
+            values,
+            {
+                headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
+            })
+    }
+
     enviarTodasEntregas(projetoId: number) {
         return this.httpClient.post("/api/etapas/projeto-cnme/"+ projetoId+"/enviar-all", null,
         {

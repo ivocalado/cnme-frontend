@@ -219,7 +219,7 @@
 </mat-accordion>
 <div class="row" *ngIf="editMode">
     <div class="col-lg-12 mt-3">
-        <button mat-raised-button type="button" class="m-1" color="accent" (click)="onStartProject(projetoId)">
+        <button *ngIf="canExecute" mat-raised-button type="button" class="m-1" color="accent" (click)="onStartProject(projetoId)">
             Iniciar projeto
         </button>
         <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancelProject(projetoId)">

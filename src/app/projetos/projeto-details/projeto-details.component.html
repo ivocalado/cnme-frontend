@@ -93,21 +93,21 @@
                         </mat-chip>
                     </mat-chip-list>
                     <hr class="mb-3">
-                    <form (ngSubmit)="onSubmitRecebimento(fr, tarefa)" #fr="ngForm">
+                    <form (ngSubmit)="onSubmitRecebimento(fi, tarefa)" #fi="ngForm">
 
                         <div class="row">
                             <div class="col-lg-4">
                                 <mat-form-field>
-                                    <input matInput [min]="tarefa.data_inicio_prevista" [max]="tarefa.data_fim_prevista"
+                                    <input matInput [min]="tarefa.data_inicio"
                                         [(ngModel)]="tarefa.data_fim" id="data_fim" name="data_fim"
                                         [matDatepicker]="pickerData" placeholder="Data do recebimento"
-                                        [disabled]="tarefa.status=='CONCLUIDA'" required>
+                                        [disabled]="tarefa.status!='ANDAMENTO'" required>
                                     <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerData></mat-datepicker>
                                 </mat-form-field>
 
                                 <button mat-raised-button color="primary" type="submit"
-                                    [disabled]="!fr.valid && tarefa.status=='CONCLUIDA'">
+                                    [disabled]="(tarefa.status!='ANDAMENTO') || !fi.valid ">
                                     {{tarefa.status == 'CONCLUIDA'?"Recebimento confirmado":"Confirmar recebimento"}}
                                 </button>
                             </div>
@@ -171,14 +171,14 @@
                             <mat-form-field>
                                 <input matInput [(ngModel)]="etapaInstalacao.tarefas[0].data_fim" id="data_fim"
                                     name="data_fim" [matDatepicker]="pickerData" placeholder="Data da instalação"
-                                    [disabled]="etapaInstalacao.tarefas[0].status=='CONCLUIDA'" required>
+                                    [disabled]="!emInstalacao" required>
                                 <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerData></mat-datepicker>
                             </mat-form-field>
 
 
                             <button mat-raised-button color="primary" type="submit"
-                                [disabled]="!fi.valid && etapaInstalacao.tarefas[0].status=='CONCLUIDA'">
+                                [disabled]="!emInstalacao || !fi.valid">
                                 {{etapaInstalacao.tarefas[0].status == 'CONCLUIDA'?"Instalação confirmada":"Confirmar instalação"}}
                             </button>
                         </div>
@@ -215,6 +215,27 @@
                     </strong>{{etapaAtivacao.tarefas[0].data_inicio_prevista | date:'dd/MM/yyyy'}}</p>
                 <p><strong>Previsão de conclusão:
                     </strong>{{etapaAtivacao.tarefas[0].data_fim_prevista | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <div class="col-lg-12">
+                <form (ngSubmit)="onSubmitAtivacao(fi, tarefa)" #fi="ngForm">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="etapaAtivacao.tarefas[0].data_fim" id="data_fim"
+                                    name="data_fim" [matDatepicker]="pickerData" placeholder="Data da ativação"
+                                    [disabled]="!emAtivacao" required>
+                                <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerData></mat-datepicker>
+                            </mat-form-field>
+
+
+                            <button mat-raised-button color="primary" type="submit"
+                                [disabled]="!emAtivacao || !fi.valid">
+                                {{etapaAtivacao.tarefas[0].status == 'CONCLUIDA'?"Ativação confirmada":"Confirmar ativação"}}
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
 

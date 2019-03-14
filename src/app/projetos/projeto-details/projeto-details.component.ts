@@ -93,6 +93,7 @@ export class ProjetoDetailsComponent implements OnInit {
     //Confirma recebimento
     onSubmitRecebimento(form: NgForm, tarefa: Tarefa) {
         if (confirm("Ter certeza que deseja confirmar esta entrega?")) {
+
             this.projetoDataService
                 .storeEntrega(this.projetoId, tarefa.id, form.value)
                 .subscribe(res => {
@@ -120,5 +121,33 @@ export class ProjetoDetailsComponent implements OnInit {
                     );
                 });
         }
+    }
+
+    //Confirma instalação
+    onSubmitAtivacao(form: NgForm, tarefa: Tarefa) {
+        if (confirm("Ter certeza que deseja confirmar a ativação?")) {
+            this.projetoDataService
+                .storeAtivacao(this.projetoId, form.value)
+                .subscribe(res => {
+                    console.log(res);
+                    this.fetchProjeto();
+                    this.snackBarService.openSnackBar(
+                        "Ativação realizada com sucesso."
+                    );
+                });
+        }
+    }
+
+    get emEntrega() {
+        return this.projeto && this.projeto.status == "ENVIADO"
+    }
+
+
+    get emInstalacao() {
+        return this.projeto && this.projeto.status == "ENTREGUE"
+    }
+
+    get emAtivacao() {
+        return this.projeto && this.projeto.status == "INSTALADO"
     }
 }
