@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-lg-12">
+      <mat-card>
+          <mat-card-title>Cancelamento de projeto</mat-card-title>
+          <hr>
+          <div>
+            <div class="row" *ngIf="projeto"> 
+              <div class="col-lg-12">
+                <p>
+                  <strong>Status do projeto: </strong>{{projeto.status}}<br />
+                  <strong>Unidade: </strong>{{projeto.unidade.nome}} (Cod. INEP: {{projeto.unidade.codigo_inep}})<br />
+                  <strong>Número de projeto: </strong>{{projeto.numero}}<br />
+                  <strong>Descrição: </strong>{{projeto.descricao}}<br />
+                  <strong>Data Prevista para Início: </strong>{{projeto.data_inicio_previsto | date : 'dd/MM/yyyy'}}<br />
+                  <strong>Data Prevista de Fim: </strong>{{projeto.data_fim_previsto | date : 'dd/MM/yyyy'}}<br />
+                </p>
+              </div>
+          </div>
+
+          </div>
+
+          <div class="row" *ngIf="projetoForm">
+            <div class="col-lg-12">
+              <form [formGroup]="projetoForm" (ngSubmit)="onCancelProject()">
+                  <div class="row">
+                      <div class="col-lg-8 mt-1">
+                          <mat-form-field>
+                              <textarea matInput formControlName="descricao" id="descricao" placeholder="Justificativa para o cancelamento"></textarea>
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-10 mt-1 pull-right">
+                          <button mat-raised-button class="m-1" color="warn" [disabled]="!projetoForm.valid">
+                              Cancelar projeto
+                          </button>
+                          <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+                              Voltar
+                          </button>
+                      </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+      </mat-card>
+  </div>
+</div>
+<!--Justificativa para cancelamento-->
+
+

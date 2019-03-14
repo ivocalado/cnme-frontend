@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-lg-3 mt-1">
                         <mat-form-field>
-                            <input matInput formControlName="data_fim_prevista" id="data_fim_prevista" [matDatepicker]="pickerFim"
+                            <input matInput [min]="minDate" [max]="maxDate" formControlName="data_fim_prevista" id="data_fim_prevista" [matDatepicker]="pickerFim"
                                 placeholder="Data de conclusão">
                             <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
                             <mat-datepicker #pickerFim></mat-datepicker>

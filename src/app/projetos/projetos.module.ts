@@ -18,9 +18,10 @@ import { EnvioListComponent } from './etapa-envio/envio-list/envio-list.componen
 import { ProjetoDetailsComponent } from './projeto-details/projeto-details.component';
 import { EtapaInstalacaoComponent } from './etapa-instalacao/etapa-instalacao.component';
 import { EtapaAtivacaoComponent } from './etapa-ativacao/etapa-ativacao.component';
+import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.component';
 
 @NgModule({
-    declarations: [ProjetosComponent, ProjetoEditComponent, ProjetoListComponent, AdicionarKitsComponent, EtapaEnvioComponent, EnvioListComponent, ProjetoDetailsComponent, EtapaInstalacaoComponent, EtapaAtivacaoComponent],
+    declarations: [ProjetosComponent, ProjetoEditComponent, ProjetoListComponent, AdicionarKitsComponent, EtapaEnvioComponent, EnvioListComponent, ProjetoDetailsComponent, EtapaInstalacaoComponent, EtapaAtivacaoComponent, ProjetoCancelComponent],
     imports: [
         SharedModule,
         ProjetosRoutingModule,

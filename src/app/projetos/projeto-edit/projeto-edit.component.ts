@@ -51,9 +51,15 @@ export class ProjetoEditComponent implements OnInit {
             this.editMode = params["id"] != null;
             this.step = params["stepId"] != null ? +params["stepId"] : 0;
             this.setStep(this.step);
+            console.log("MODO DO PROJETO: " + this.editMode)
             if(this.editMode){
                 this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
                     this.projeto = projeto;
+                    if(this.projeto.status != "PLANEJAMENTO") {
+                        this.router.navigate(["/projetos/detalhes", this.projeto.id], { relativeTo: this.route });
+                        return
+                    }
+
                     this.initForm(this.projeto);
                     this.fetchEtapaEnvio(this.projetoId);
                     //se existir a etapa envio tenta carregar as etapas
@@ -64,6 +70,8 @@ export class ProjetoEditComponent implements OnInit {
                     }
                 })
             }else{
+                console.log("INICIALIZAÇÃO DE PROJETO")
+                console.log(this.projeto)
                 this.initForm(this.projeto);
             }
         });
@@ -89,7 +97,6 @@ export class ProjetoEditComponent implements OnInit {
                 this.router.navigate(["/projetos"], { relativeTo: this.route });
             });
         }else{
-            this.projeto.kit_id = 3;
             this.projetoDataService.storeProjeto(this.projetoForm.value)
             .subscribe(res =>{
                 this.snackBarService.openSnackBar("Projeto incluído com sucesso.");
@@ -159,5 +166,9 @@ export class ProjetoEditComponent implements OnInit {
 
     prevStep() {
         this.step--;
+    }
+
+    onCancelProject(id: number) {
+        this.router.navigate(["/projetos/cancelar", id], { relativeTo: this.route });
     }
 }

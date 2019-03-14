@@ -36,10 +36,10 @@
                         <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                             <mat-icon aria-label="Details">description</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent" (click)="onEdit(row.id)">
+                        <button *ngIf="canEdit(row)" mat-icon-button color="accent" (click)="onEdit(row.id)">
                             <mat-icon aria-label="Edit">edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent">
+                        <button *ngIf="canCancelProject(row)" mat-icon-button color="accent">
                             <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                         </button>
                     </mat-cell>

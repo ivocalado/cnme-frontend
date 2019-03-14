@@ -9,6 +9,7 @@ import { EnvioListComponent } from './etapa-envio/envio-list/envio-list.componen
 import { ProjetoDetailsComponent } from './projeto-details/projeto-details.component';
 import { EtapaInstalacaoComponent } from './etapa-instalacao/etapa-instalacao.component';
 import { EtapaAtivacaoComponent } from './etapa-ativacao/etapa-ativacao.component';
+import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,7 @@ const routes: Routes = [
             { path: 'novo', component: ProjetoEditComponent },
             { path: 'editar/:id', component: ProjetoEditComponent},
             { path: 'detalhes/:id', component: ProjetoDetailsComponent},
+            { path: 'cancelar/:id', component: ProjetoCancelComponent},
             { path: 'editar/:id/step/:stepId', component: ProjetoEditComponent },
             { path: ':id/adicionar-kits', component: AdicionarKitsComponent },
             { path: ':id/etapa-envio', component: EtapaEnvioComponent, runGuardsAndResolvers: 'always' },

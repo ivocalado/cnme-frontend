@@ -227,8 +227,19 @@ export class ProjetoDataService{
                     equipamentos.push(equipamento);
                 }
                 return equipamentos;
-            }));
+        }));
     }
 
+    cancelProject(projetoId: number, descricao: string) {
+        return this.httpClient.post("api/projeto-cnme/" + projetoId + "/cancelar", {
+            descricao: descricao
+        }, 
+        {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+            .pipe(catchError(this.handleError));
+    }
 
 }
