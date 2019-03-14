@@ -223,7 +223,7 @@ export class ProjetoDataService{
     }
 
     getEquipDisponiveisEnvio(projetoId:number){
-        return this.httpClient.get<EquipamentoProjeto>("api/tarefas/projeto-cnme/" +projetoId+"/equipamentos-disponiveis-envio", {
+        return this.httpClient.get<EquipamentoProjeto>("/api/tarefas/projeto-cnme/" +projetoId+"/equipamentos-disponiveis-envio", {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.authService.getToken()
             })
@@ -240,7 +240,7 @@ export class ProjetoDataService{
     }
 
     cancelProject(projetoId: number, descricao: string) {
-        return this.httpClient.post("api/projeto-cnme/" + projetoId + "/cancelar", {
+        return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/cancelar", {
             descricao: descricao
         },
         {
@@ -257,7 +257,17 @@ export class ProjetoDataService{
             values,
             {
                 headers: new HttpHeaders({"Authorization": 'Bearer ' + this.authService.getToken()})
+        })
+    }
+
+    enviarTodasEntregas(projetoId: number) {
+        return this.httpClient.post("/api/etapas/projeto-cnme/"+ projetoId+"/enviar-all", null,
+        {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
             })
+        })
+            .pipe(catchError(this.handleError));
     }
 
 }
