@@ -171,4 +171,12 @@ export class ProjetoEditComponent implements OnInit {
     onCancelProject(id: number) {
         this.router.navigate(["/projetos/cancelar", id], { relativeTo: this.route });
     }
+
+    get canExecute() {
+        return this.etapaAtivacao != null
+    }
+
+    onStartProject(id: number) {
+        this.snackBarService.openSnackBar("Projeto iniciado com sucesso!")
+    }
 }
