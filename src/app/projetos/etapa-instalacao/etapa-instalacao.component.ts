@@ -25,6 +25,7 @@ export class EtapaInstalacaoComponent implements OnInit {
     etapaInstalacao:Etapa = Etapa.EMPTY_MODEL;
     minDate: Date
     maxDate: Date
+    isFormModified: boolean = false
 
     constructor(
         private route: ActivatedRoute,
@@ -74,10 +75,18 @@ export class EtapaInstalacaoComponent implements OnInit {
         this.projetoDataService.storeTarefaInstalacao(this.projetoId,this.instalacaoForm.value)
         .subscribe(res =>{
             this.snackBarService.openSnackBar("Etapa salva com sucesso.");
-            if(this.editMode)
-                this.router.navigate(["/projetos/editar/" + this.projetoId + "/step/4"], { relativeTo: this.route });
-            else
+            if(this.editMode) {
+                this.projetoDataService.getEtapaAtivacao(this.projetoId).subscribe((etapa: Etapa) => {
+                    this.projetoDataService.deleteEtapa(etapa.id).subscribe(msg => {
+                        console.log("ETAPA ATIVAÇÂO removida com sucesso")
+                    })
+                })
+                this.router.navigate(["/projetos/editar/" + this.projetoId + "  /step/4"], { relativeTo: this.route });
+            }
+            else {
+                console.log("passou no else")
                 this.router.navigate(["../etapa-ativacao"], { relativeTo: this.route });
+            }
         })
     }
 
@@ -100,6 +109,10 @@ export class EtapaInstalacaoComponent implements OnInit {
         if (!etapa.tarefas){
             this.instalacaoForm.reset();
         }
+
+        this.instalacaoForm.valueChanges.subscribe(val => {
+            this.isFormModified = true
+        })
     }
 
 

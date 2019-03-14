@@ -204,8 +204,17 @@ export class ProjetoDataService{
             }));
     }*/
 
-    deleteTarefa(etapaId: number, tarefaId:number){
-        return this.httpClient.delete("/api/etapas/"+etapaId+"/remove-tarefa/"+tarefaId, {
+    deleteTarefa(tarefaId:number){
+        return this.httpClient.delete("/api/tarefas/"+tarefaId, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(catchError(this.handleError));
+    }
+
+    deleteEtapa(etapaId:number){
+        return this.httpClient.delete("/api/etapas/"+etapaId, {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.authService.getToken()
             })
