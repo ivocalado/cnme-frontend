@@ -10,64 +10,80 @@ import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
-    selector: 'app-projeto-details',
-    templateUrl: './projeto-details.component.html',
-    styleUrls: ['./projeto-details.component.scss']
+    selector: "app-projeto-details",
+    templateUrl: "./projeto-details.component.html",
+    styleUrls: ["./projeto-details.component.scss"]
 })
 export class ProjetoDetailsComponent implements OnInit {
-
-    projetoId: number
-    projeto: Projeto
+    projetoId: number;
+    projeto: Projeto;
     step = 0;
 
     @ViewChild(MatSort) sort: MatSort;
-    displayedColumns: string[] = ['nome', 'descricao', 'tipo_equipamento'];
+    displayedColumns: string[] = ["nome", "descricao", "tipo_equipamento"];
     dataSource;
     etapaEnvio = Etapa.EMPTY_MODEL;
     equipDisponiveis: EquipamentoProjeto[];
-    etapaInstalacao: Etapa
-    etapaAtivacao: Etapa
+    etapaInstalacao: Etapa;
+    etapaAtivacao: Etapa;
 
-    constructor(private route: ActivatedRoute,
+    constructor(
+        private route: ActivatedRoute,
         private router: Router,
         private projetoDataService: ProjetoDataService,
-        private snackBarService: SnackBarService) { }
+        private snackBarService: SnackBarService
+    ) {}
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
             this.projetoId = +params["id"];
-            this.fetchProjeto()
-        })
+            this.fetchProjeto();
+        });
     }
 
     fetchProjeto() {
-        this.projetoDataService.getProjeto(this.projetoId).subscribe(projeto => {
-            this.projeto = projeto
-            this.dataSource = new MatTableDataSource(this.projeto.equipamentos_projeto);
-            this.dataSource.sort = this.sort;
-        })
+        this.projetoDataService
+            .getProjeto(this.projetoId)
+            .subscribe(projeto => {
+                this.projeto = projeto;
+                this.dataSource = new MatTableDataSource(
+                    this.projeto.equipamentos_projeto
+                );
+                this.dataSource.sort = this.sort;
+            });
 
-        this.projetoDataService.getEtapaEnvio(this.projetoId).subscribe((etapa: Etapa) => {
-            this.etapaEnvio = etapa;
-        })
+        this.projetoDataService
+            .getEtapaEnvio(this.projetoId)
+            .subscribe((etapa: Etapa) => {
+                this.etapaEnvio = etapa;
+            });
 
-        this.projetoDataService.getEquipDisponiveisEnvio(this.projetoId)
+        this.projetoDataService
+            .getEquipDisponiveisEnvio(this.projetoId)
             .subscribe((equipamentos: EquipamentoProjeto[]) => {
                 this.equipDisponiveis = equipamentos;
             });
-        this.projetoDataService.getEtapaInstalacao(this.projetoId).subscribe(etapa => {
-            this.etapaInstalacao = etapa
-            console.log("Recuperando etapa Instalacao")
-            console.log(this.etapaInstalacao.tarefas[0].unidade_responsavel.nome)
-            console.log(this.etapaInstalacao.tarefas[0].data_inicio_prevista)
-        })
+        this.projetoDataService
+            .getEtapaInstalacao(this.projetoId)
+            .subscribe(etapa => {
+                this.etapaInstalacao = etapa;
+                console.log("Recuperando etapa Instalacao");
+                console.log(
+                    this.etapaInstalacao.tarefas[0].unidade_responsavel.nome
+                );
+                console.log(
+                    this.etapaInstalacao.tarefas[0].data_inicio_prevista
+                );
+            });
 
-        this.projetoDataService.getEtapaAtivacao(this.projetoId).subscribe(etapa => {
-            this.etapaAtivacao = etapa
-            console.log("Recuperando etapa Ativacao")
-            //console.log(this.etapaInstalacao.tarefas[0].unidade_responsavel.nome)
-            //console.log(this.etapaInstalacao.tarefas[0].data_inicio_prevista)
-        })
+        this.projetoDataService
+            .getEtapaAtivacao(this.projetoId)
+            .subscribe(etapa => {
+                this.etapaAtivacao = etapa;
+                console.log("Recuperando etapa Ativacao");
+                //console.log(this.etapaInstalacao.tarefas[0].unidade_responsavel.nome)
+                //console.log(this.etapaInstalacao.tarefas[0].data_inicio_prevista)
+            });
     }
 
     setStep(index: number) {
@@ -75,17 +91,34 @@ export class ProjetoDetailsComponent implements OnInit {
     }
 
     //Confirma recebimento
-    onSubmitRecebimento(form: NgForm, tarefa:Tarefa){
+    onSubmitRecebimento(form: NgForm, tarefa: Tarefa) {
         if (confirm("Ter certeza que deseja confirmar esta entrega?")) {
-            this.projetoDataService.storeEntrega(this.projetoId, tarefa.id, form.value).subscribe(
-                res => {
+            this.projetoDataService
+                .storeEntrega(this.projetoId, tarefa.id, form.value)
+                .subscribe(res => {
                     console.log(res);
                     //form.setValue()
                     //form.controls["data_fim"].disable();
                     this.fetchProjeto();
-                    this.snackBarService.openSnackBar("Entrega realizada com sucesso.");
-                }
-            );
+                    this.snackBarService.openSnackBar(
+                        "Entrega realizada com sucesso."
+                    );
+                });
+        }
+    }
+
+    //Confirma instalação
+    onSubmitInstalacao(form: NgForm, tarefa: Tarefa) {
+        if (confirm("Ter certeza que deseja confirmar esta instalação?")) {
+            this.projetoDataService
+                .storeInstalacao(this.projetoId, form.value)
+                .subscribe(res => {
+                    console.log(res);
+                    this.fetchProjeto();
+                    this.snackBarService.openSnackBar(
+                        "Instalação realizada com sucesso."
+                    );
+                });
         }
     }
 }
