@@ -86,7 +86,27 @@
             <mat-chip color="primary" *ngFor='let equipamento_p of tarefa.equipamentos_projeto'>
                 {{equipamento_p.equipamento.nome}}
             </mat-chip>
-          </mat-chip-list>
+            </mat-chip-list>
+            <hr class="mb-3">
+            <form (ngSubmit)="onSubmitRecebimento(fr, tarefa)" #fr="ngForm" >
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <mat-form-field>
+                            <input matInput [min]="tarefa.data_inicio_prevista" [max]="tarefa.data_fim_prevista"
+                                [(ngModel)]="tarefa.data_fim"
+                                id="data_fim" name="data_fim" [matDatepicker]="pickerData"
+                                placeholder="Data do recebimento" [disabled]="tarefa.status=='CONCLUIDA'" required>
+                            <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerData></mat-datepicker>
+                        </mat-form-field>
+
+                        <button mat-raised-button color="primary" type="submit" [disabled]="!fr.valid && tarefa.status=='CONCLUIDA'">
+                            {{tarefa.status == 'CONCLUIDA'?"Recebimento confirmado":"Confirmar recebimento"}}
+                        </button>
+                    </div>
+                </div>
+            </form>
       </mat-card>
     </div>
   </div>

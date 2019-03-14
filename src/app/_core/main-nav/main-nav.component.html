@@ -2,7 +2,7 @@
     <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
         <img class="img-logo" src="assets/images/logo-cnme.png" srcset="assets/images/logo-cnme@2x.png 2x" alt="CNME">
-        <mat-nav-list *ngIf="isUsuarioAutenticado">
+        <mat-nav-list class="mat-custom-menu-item" *ngIf="isUsuarioAutenticado">
             <button mat-menu-item routerLink="" *ngIf="exibeDashboard">DashBoard</button>
             <button mat-menu-item routerLink="projetos" *ngIf="exibeProjetos">Projetos</button>
             <button mat-menu-item routerLink="polos" *ngIf="exibePolos">Polos</button>

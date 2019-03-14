@@ -63,15 +63,17 @@
     background-color: map_get($mat-blue-grey, 500);
 }
 
-.mat-menu-item{
-    width: 90%;
-    float: right;
-    color:#ffffff;
-    &:hover,
-    &:focus {
-        background-color: map_get($mat-blue-grey, 700);
-        border-top-left-radius: 30px;
-        border-bottom-left-radius: 30px;
+.mat-custom-menu-item{
+    button{
+        width: 90%;
+        float: right;
+        color:#ffffff;
+        &:hover,
+        &:focus {
+            background-color: map_get($mat-blue-grey, 700);
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+        }
     }
 }
 

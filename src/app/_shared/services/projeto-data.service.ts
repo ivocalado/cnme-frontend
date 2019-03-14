@@ -22,7 +22,7 @@ export class ProjetoDataService{
         }
 
     }
-    
+
     storeProjeto(projeto:Projeto):Observable<Projeto>{
         projeto.usuario_id = this.authService.getCurrentUser().id; //TODO: substituir para id do usuário logado
         projeto.status = StatusProjeto.CRIADO;
@@ -233,13 +233,22 @@ export class ProjetoDataService{
     cancelProject(projetoId: number, descricao: string) {
         return this.httpClient.post("api/projeto-cnme/" + projetoId + "/cancelar", {
             descricao: descricao
-        }, 
+        },
         {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.authService.getToken()
             })
         })
             .pipe(catchError(this.handleError));
+    }
+
+    storeEntrega(projetoId:number, tarefaId:number, values:any){
+        return this.httpClient.post(
+            "/api/etapas/projeto-cnme/" + projetoId + "/tarefa/" + tarefaId + "/entregar",
+            values,
+            {
+                headers: new HttpHeaders({"Authorization": 'Bearer ' + this.authService.getToken()})
+            })
     }
 
 }
