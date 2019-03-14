@@ -213,6 +213,15 @@ export class ProjetoDataService{
         .pipe(catchError(this.handleError));
     }
 
+    deleteEtapa(etapaId:number){
+        return this.httpClient.delete("/api/etapas/"+etapaId, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(catchError(this.handleError));
+    }
+
     getEquipDisponiveisEnvio(projetoId:number){
         return this.httpClient.get<EquipamentoProjeto>("api/tarefas/projeto-cnme/" +projetoId+"/equipamentos-disponiveis-envio", {
             headers: new HttpHeaders({
