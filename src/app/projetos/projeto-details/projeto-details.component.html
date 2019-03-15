@@ -169,7 +169,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <mat-form-field>
-                                <input matInput [(ngModel)]="etapaInstalacao.tarefas[0].data_fim" id="data_fim"
+                                <input matInput [(ngModel)]="etapaInstalacao.tarefas[0].data_fim" [min]="etapaInstalacao.tarefas[0].data_inicio" id="data_fim"
                                     name="data_fim" [matDatepicker]="pickerData" placeholder="Data da instalação"
                                     [disabled]="!emInstalacao" required>
                                 <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
@@ -221,7 +221,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <mat-form-field>
-                                <input matInput [(ngModel)]="etapaAtivacao.tarefas[0].data_fim" id="data_fim"
+                                <input matInput [(ngModel)]="etapaAtivacao.tarefas[0].data_fim" [min]="etapaAtivacao.tarefas[0].data_inicio" id="data_fim"
                                     name="data_fim" [matDatepicker]="pickerData" placeholder="Data da ativação"
                                     [disabled]="!emAtivacao" required>
                                 <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
