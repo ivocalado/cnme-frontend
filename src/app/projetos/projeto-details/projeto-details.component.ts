@@ -92,7 +92,7 @@ export class ProjetoDetailsComponent implements OnInit {
 
     //Confirma recebimento
     onSubmitRecebimento(form: NgForm, tarefa: Tarefa) {
-        if (confirm("Ter certeza que deseja confirmar esta entrega?")) {
+        if (confirm("Tem certeza que deseja confirmar esta entrega?")) {
 
             this.projetoDataService
                 .storeEntrega(this.projetoId, tarefa.id, form.value)
@@ -110,7 +110,7 @@ export class ProjetoDetailsComponent implements OnInit {
 
     //Confirma instalação
     onSubmitInstalacao(form: NgForm, tarefa: Tarefa) {
-        if (confirm("Ter certeza que deseja confirmar esta instalação?")) {
+        if (confirm("Tem certeza que deseja confirmar esta instalação?")) {
             this.projetoDataService
                 .storeInstalacao(this.projetoId, form.value)
                 .subscribe(res => {
@@ -125,7 +125,7 @@ export class ProjetoDetailsComponent implements OnInit {
 
     //Confirma instalação
     onSubmitAtivacao(form: NgForm, tarefa: Tarefa) {
-        if (confirm("Ter certeza que deseja confirmar a ativação?")) {
+        if (confirm("Tem certeza que deseja confirmar a ativação?")) {
             this.projetoDataService
                 .storeAtivacao(this.projetoId, form.value)
                 .subscribe(res => {
