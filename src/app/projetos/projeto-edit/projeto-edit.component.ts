@@ -182,6 +182,6 @@ export class ProjetoEditComponent implements OnInit {
                 this.snackBarService.openSnackBar("Projeto iniciado com sucesso!")
                 this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
             },
-            )        
+            )
     }
 }

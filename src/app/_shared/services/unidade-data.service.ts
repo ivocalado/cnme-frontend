@@ -22,7 +22,7 @@ export class UnidadeDataService {
         }
 
     }
-    
+
     storeUnidade(unidade: Unidade, tipoUnidadeId: number, classe:string): Observable<Unidade> {
         unidade.tipo_unidade_id = tipoUnidadeId;
         unidade.classe = classe;
@@ -37,12 +37,12 @@ export class UnidadeDataService {
                     })
                 }
             )
-            .pipe( 
+            .pipe(
                 map(res =>{
                 let unidade:Unidade;
                 unidade = res["data"];
                 return unidade;
-            }), 
+            }),
                 catchError(this.handleError));
     }
 
@@ -171,6 +171,19 @@ export class UnidadeDataService {
                     }
                     unidades.push(unidade);
                 }
+
+                // verifica se o usuario logado é polo e retorna somente seu polo
+                // verificar a possibilidade e adicionar uma query na chamada da api para melhorar performance
+                    let q = "";
+                    let usuarioAutenticado = this.authService.getCurrentUser();
+                    let classe = usuarioAutenticado.unidade.classe
+                    if (classe == "polo") {
+                        let polo:Unidade;
+                        polo = unidades.find(obj => obj.nome == usuarioAutenticado.unidade.nome);
+                        unidades = [];
+                        unidades.push(polo);
+                    }
+                //
                 return unidades;
             })
         );

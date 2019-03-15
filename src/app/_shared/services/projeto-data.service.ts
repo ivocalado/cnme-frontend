@@ -44,7 +44,16 @@ export class ProjetoDataService{
     }
 
     getProjetos(){
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme", {
+        // verifica se o usuario logado é polo e retorna somente seus projetos
+        let q = "";
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe
+        if(classe=="polo"){
+            q = "/p/pesquisar?q=" + usuarioAutenticado.unidade.nome;
+        }
+        //
+
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme"+q, {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.authService.getToken()
             })
@@ -58,6 +67,10 @@ export class ProjetoDataService{
             }
             return projetos;
         }));
+    }
+
+    private getProjetosFromPolo(){
+
     }
 
     getProjeto(id:number){

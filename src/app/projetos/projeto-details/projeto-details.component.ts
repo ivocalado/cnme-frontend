@@ -8,6 +8,7 @@ import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.mo
 import { NgForm } from '@angular/forms';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
     selector: "app-projeto-details",
@@ -31,7 +32,8 @@ export class ProjetoDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private projetoDataService: ProjetoDataService,
-        private snackBarService: SnackBarService
+        private snackBarService: SnackBarService,
+        private authService:AuthService
     ) {}
 
     ngOnInit() {
@@ -93,7 +95,6 @@ export class ProjetoDetailsComponent implements OnInit {
     //Confirma recebimento
     onSubmitRecebimento(form: NgForm, tarefa: Tarefa) {
         if (confirm("Tem certeza que deseja confirmar esta entrega?")) {
-
             this.projetoDataService
                 .storeEntrega(this.projetoId, tarefa.id, form.value)
                 .subscribe(res => {
@@ -139,15 +140,20 @@ export class ProjetoDetailsComponent implements OnInit {
     }
 
     get emEntrega() {
-        return this.projeto && this.projeto.status == "ENVIADO"
+        return this.projeto && this.projeto.status == "ENVIADO";
     }
 
-
     get emInstalacao() {
-        return this.projeto && this.projeto.status == "ENTREGUE"
+        return this.projeto && this.projeto.status == "ENTREGUE";
     }
 
     get emAtivacao() {
-        return this.projeto && this.projeto.status == "INSTALADO"
+        return this.projeto && this.projeto.status == "INSTALADO";
+    }
+
+    get exibeTvEscola() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola";
     }
 }
