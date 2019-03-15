@@ -24,6 +24,7 @@ export class ProjetoDataService{
     }
 
     storeProjeto(projeto:Projeto):Observable<Projeto>{
+        console.log(projeto);
         projeto.usuario_id = this.authService.getCurrentUser().id; //TODO: substituir para id do usuário logado
         projeto.status = StatusProjeto.CRIADO;
         return this.httpClient.post<Projeto>("/api/projeto-cnme", projeto, {

@@ -30,7 +30,6 @@ export class ProjetoListComponent implements OnInit {
 
     ngOnInit() {
         this.fetchProjetos();
-        this.exibeTvEscola();
     }
 
     onDetails(id: number) {
@@ -61,7 +60,7 @@ export class ProjetoListComponent implements OnInit {
         return projeto.status != "CANCELADO";
     }
 
-    exibeTvEscola() {
+    get exibeTvEscola() {
         let usuarioAutenticado = this.authService.getCurrentUser();
         console.log(usuarioAutenticado);
         let classe = usuarioAutenticado.unidade.classe;

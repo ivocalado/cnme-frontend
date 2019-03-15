@@ -11,6 +11,7 @@ export class Tarefa{
         public unidade_responsavel:Unidade,
         public data_inicio_prevista:Date,
         public data_fim_prevista:Date,
+        public data_fim: Date,
         public equipamentos_projeto_ids:number[],
         public equipamentos_projeto:EquipamentoProjeto,
         public etapa_id:number
@@ -24,6 +25,7 @@ export class Tarefa{
         unidade_responsavel: Unidade.EMPTY_MODEL,
         data_inicio_prevista: null,
         data_fim_prevista: null,
+        data_fim:null,
         equipamentos_projeto_ids: null,
         equipamentos_projeto: EquipamentoProjeto.EMPTY_MODEL,
         etapa_id: null

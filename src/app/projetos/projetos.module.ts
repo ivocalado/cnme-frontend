@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { ProjetosRoutingModule } from './projetos-routing.module';
 import { ProjetosComponent } from './projetos.component';
 import { ProjetoEditComponent } from './projeto-edit/projeto-edit.component';
 import { SharedModule } from '../_shared/shared.module';
-import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule, MatChipsModule, MatRippleModule, MatCheckboxModule, MatExpansionModule } from '@angular/material';
+import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule, MatChipsModule, MatRippleModule, MatCheckboxModule, MatExpansionModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjetoListComponent } from './projeto-list/projeto-list.component';
 import { UnidadeDataService } from '../_shared/services/unidade-data.service';
@@ -19,9 +17,22 @@ import { ProjetoDetailsComponent } from './projeto-details/projeto-details.compo
 import { EtapaInstalacaoComponent } from './etapa-instalacao/etapa-instalacao.component';
 import { EtapaAtivacaoComponent } from './etapa-ativacao/etapa-ativacao.component';
 import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.component';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from "@angular/material-moment-adapter";
+import { MomentUtcDateAdapter } from '../_shared/helpers/moment-utc-date-adapter';
 
 @NgModule({
-    declarations: [ProjetosComponent, ProjetoEditComponent, ProjetoListComponent, AdicionarKitsComponent, EtapaEnvioComponent, EnvioListComponent, ProjetoDetailsComponent, EtapaInstalacaoComponent, EtapaAtivacaoComponent, ProjetoCancelComponent],
+    declarations: [
+        ProjetosComponent,
+        ProjetoEditComponent,
+        ProjetoListComponent,
+        AdicionarKitsComponent,
+        EtapaEnvioComponent,
+        EnvioListComponent,
+        ProjetoDetailsComponent,
+        EtapaInstalacaoComponent,
+        EtapaAtivacaoComponent,
+        ProjetoCancelComponent
+    ],
     imports: [
         SharedModule,
         ProjetosRoutingModule,
@@ -36,6 +47,7 @@ import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.componen
         MatSortModule,
         MatFormFieldModule,
         MatDatepickerModule,
+        MatMomentDateModule,
         MatNativeDateModule,
         MatRadioModule,
         MatChipsModule,
@@ -43,6 +55,14 @@ import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.componen
         MatCheckboxModule,
         MatExpansionModule
     ],
-    providers: [UnidadeDataService, ProjetoDataService, SnackBarService, KitDataService]
+    providers: [
+        UnidadeDataService,
+        ProjetoDataService,
+        SnackBarService,
+        KitDataService,
+        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+        { provide: DateAdapter, useClass: MomentUtcDateAdapter },
+    ]
 })
-export class ProjetosModule { }
+export class ProjetosModule {}

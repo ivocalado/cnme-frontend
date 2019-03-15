@@ -2,13 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ProjetoDataService } from '../../_shared/services/projeto-data.service';
 import { Projeto } from '../../_shared/models/projeto.model';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, DateAdapter } from '@angular/material';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import { EquipamentoProjeto } from 'src/app/_shared/models/equipamentoProjeto.model';
 import { NgForm } from '@angular/forms';
 import { Tarefa } from 'src/app/_shared/models/tarefa.model';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+
+import { Moment } from "moment";
+import * as moment from "moment";
 
 @Component({
     selector: "app-projeto-details",
@@ -33,8 +36,11 @@ export class ProjetoDetailsComponent implements OnInit {
         private router: Router,
         private projetoDataService: ProjetoDataService,
         private snackBarService: SnackBarService,
-        private authService:AuthService
-    ) {}
+        private authService: AuthService,
+        private dateAdapter: DateAdapter<any>
+    ) {
+        //this.dateAdapter.setLocale("pt-BR");
+    }
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
@@ -69,13 +75,6 @@ export class ProjetoDetailsComponent implements OnInit {
             .getEtapaInstalacao(this.projetoId)
             .subscribe(etapa => {
                 this.etapaInstalacao = etapa;
-                console.log("Recuperando etapa Instalacao");
-                console.log(
-                    this.etapaInstalacao.tarefas[0].unidade_responsavel.nome
-                );
-                console.log(
-                    this.etapaInstalacao.tarefas[0].data_inicio_prevista
-                );
             });
 
         this.projetoDataService
