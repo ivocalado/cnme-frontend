@@ -8,6 +8,7 @@ import { Localidade } from '../../_shared/models/localidade.model';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Usuario } from '../../_shared/models/usuario.model';
 import {Location} from '@angular/common';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class PoloDetailsComponent implements OnInit {
         private unidadeDataService: UnidadeDataService,
         private route: ActivatedRoute,
         private router: Router,
+        private authService: AuthService,
         private location: Location
         ) { }
 
@@ -56,5 +58,11 @@ export class PoloDetailsComponent implements OnInit {
 
     onInvitation(unidade_id: number) {
         this.router.navigate(['/polos/convidar', unidade_id], { relativeTo: this.route });
+    }
+
+    get hasPermission() {
+        let usuario = <Usuario>this.authService.getCurrentUser()
+        let classe = usuario.unidade.classe 
+        return classe == "admin" || classe == "mec" || classe ==  "tvescola" || (classe == "polo" && usuario.tipo == "gestor")
     }
 }
