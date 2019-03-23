@@ -23,6 +23,8 @@ export class TvEscolaDetailsComponent implements OnInit {
     //Estrutura de dados para exibição dos usuarios da unidade
     displayedColumns: string[] = ["nome", "email", "tipo", "actions"];
     dataSource;
+    dataSourceInativos
+    usuariosAtivos: boolean = true
 
     constructor(
         private unidadeDataService: UnidadeDataService,
@@ -67,5 +69,9 @@ export class TvEscolaDetailsComponent implements OnInit {
 
     onEdit() {
         this.router.navigate(['/tvescola/editar'], { relativeTo: this.route });
+    }
+
+    toogleUsuarios() {
+        this.usuariosAtivos = !this.usuariosAtivos
     }
 }

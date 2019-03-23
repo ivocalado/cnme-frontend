@@ -23,6 +23,8 @@ export class MecDetailsComponent implements OnInit {
     //Estrutura de dados para exibição dos usuarios da unidade
     displayedColumns: string[] = ["nome", "email", "tipo", "actions"];
     dataSource;
+    usuariosAtivos: boolean = true
+
 
     constructor(
         private unidadeDataService: UnidadeDataService,
