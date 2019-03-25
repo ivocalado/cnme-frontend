@@ -55,7 +55,7 @@
             <mat-card-title>Lista de Usuários Ativos da Tv Escola</mat-card-title>
             <hr class="m-2">
             <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+            <input matInput (keyup)="applyFilter(dataSource, $event.target.value)" placeholder="Filtro">
             </mat-form-field>
 
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -98,7 +98,7 @@
                 <mat-card-title>Lista de Usuários Inativos da Tv Escola</mat-card-title>
                 <hr class="m-2">
                 <mat-form-field>
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+                <input matInput (keyup)="applyFilter(dataSourceInativos, $event.target.value)" placeholder="Filtro">
                 </mat-form-field>
     
                 <mat-table [dataSource]="dataSourceInativos" class="mat-elevation-z8">
