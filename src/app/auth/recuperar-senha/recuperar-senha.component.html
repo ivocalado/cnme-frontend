@@ -1,0 +1,38 @@
+<div class="login">
+	<mat-card>
+		<mat-card-title class="mt-4">Recuperação de senha</mat-card-title>
+
+		<mat-card-content class="mb-4 mt-4">
+			<form [formGroup]="recoverForm" (ngSubmit)="onPasswordRecover()">
+				<div class="container">
+					<div class="row">
+						<div class="col-10 offset-1 mt-1">
+							<mat-form-field>
+								<input matInput formControlName="email" id="email"  name="email" placeholder="Email" [required]="true">
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-10 offset-1 mt-3">
+							<button mat-raised-button color="primary" type="submit" [disabled]="!recoverForm.valid">
+								Recuperar senha
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-10 offset-1 mt-3">
+							<button mat-raised-button color="warn" type="button" (click)="onCancel()">
+								Voltar a tela de login
+							</button>
+						</div>
+					</div>					
+					<div class="row">
+						<div class="col-lg-10 offset-1 mt-5">
+							Informe o email cadastrado. Você receberá um email com as instruções para atualização da senha.
+						</div>
+					</div>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+</div>

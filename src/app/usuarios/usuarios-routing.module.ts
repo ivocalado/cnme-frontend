@@ -5,6 +5,7 @@ import { UsuarioEditComponent } from './usuario-edit/usuario-edit.component';
 import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioDetailsComponent } from './usuario-details/usuario-details.component';
 import { UsuarioConfirmInvitationComponent } from './usuario-confirm-invitation/usuario-confirm-invitation.component';
+import { UsuarioNovaSenhaComponent } from './usuario-nova-senha/usuario-nova-senha.component';
 
 const routes: Routes = [
     {
@@ -14,7 +15,8 @@ const routes: Routes = [
             {path:'novo',component:UsuarioEditComponent},
             {path:'editar/:id', component:UsuarioEditComponent},
             {path: "detalhes/:id", component: UsuarioDetailsComponent },
-            {path:"confirmar",component:UsuarioConfirmInvitationComponent},
+            {path:"confirmar", component:UsuarioConfirmInvitationComponent},
+            {path:"novasenha/validar/:email/:token", component:UsuarioNovaSenhaComponent},
         ]
     }
 ];

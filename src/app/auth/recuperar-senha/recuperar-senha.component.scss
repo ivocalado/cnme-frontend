@@ -1,0 +1,38 @@
+@import "~@angular/material/theming";
+
+
+
+
+.login{
+	mat-card{
+		    width: 35%;
+    	min-width: 350px;
+		padding:50px 0 30px 0;
+		mat-card-title{
+			text-align: center;
+		}
+		.message{
+			text-align: center;
+		}
+    }
+
+    .mat-form-field {
+        font-size: 14px;
+        width: 100%;
+    }
+}
+button{
+	width: 100%;
+}
+
+
+.login{
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-card .mat-card-title {
+    justify-content: center;
+}

@@ -20,8 +20,6 @@ export class UsuarioDataService {
     }
 
     storeUsuario(usuario: Usuario, authToken: string): Observable<Usuario> {
-        console.log("Salvandoo...")
-        console.log(usuario)
         return this.httpClient
             .post<Usuario>(
                 "/api/usuarios",
@@ -42,9 +40,7 @@ export class UsuarioDataService {
     }
 
     updateUsuario(id:number, usuario:Usuario, authToken: string){
-        console.log("updateUsuario")
-        console.log(usuario)
-        let result = this.httpClient.put("/api/usuarios/"+id, usuario, {
+        return this.httpClient.put("/api/usuarios/"+id, usuario, {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+authToken
             })
@@ -52,8 +48,6 @@ export class UsuarioDataService {
         .pipe(
             catchError(this.handleError)
         )
-        console.log("Saida do metodo")
-        return result
     }
 
     getUsuarios(authToken: string){
@@ -161,7 +155,6 @@ export class UsuarioDataService {
     }
     
     sendInvitation(usuarioId: number, authToken: string) {
-        console.log("send invitation")
         return this.httpClient
             .post<any>(
                 "/api/usuarios/"+usuarioId+"/enviar-convite", null, 
@@ -173,6 +166,41 @@ export class UsuarioDataService {
                 }
             )
             .pipe( map(data => data), catchError(this.handleError));
+    }
+
+    sendPasswordRecover(email: string) {
+        return this.httpClient
+            .get<any>("/api/novasenha/"+email)
+            .pipe( map(
+                res =>{
+                    return res.message;
+                }
+            ), catchError(this.handleError));
+    }
+
+    validatePassword(email: string, token: string) {
+        return this.httpClient
+            .get<any>("/api/novasenha/validar/"+email+"/"+token)
+            .pipe( map(
+                res =>{
+                    let usuario:Usuario;
+                    usuario = res["data"];
+                    usuario.unidade_id = usuario.unidade.id
+                    return usuario;
+                }
+            ), catchError(this.handleError));
+    }
+
+    updateUserPasswordAfterRecover(id: number, newPassword: string) {
+        return this.httpClient.post<Usuario>("/api/novasenha/usuario/"+id+"/atualizar", {password: newPassword})
+        .pipe(
+            map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError)
+        );
     }
     
 }

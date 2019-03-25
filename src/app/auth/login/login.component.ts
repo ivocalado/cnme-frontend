@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 			}
 		}, 
 		error => {
-			this.snackBarService.openSnackBar("Problema no acesso. Tente novamente!")
+			this.snackBarService.openSnackBar(error)
 			this.message = error
 			console.log(error)
 		});

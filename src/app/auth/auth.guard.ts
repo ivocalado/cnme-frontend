@@ -61,7 +61,8 @@ export class Permissions {
 		}
 
 		this.excludedPages = [
-			"/usuarios/confirmar"
+			"/usuarios/confirmar",
+			"/usuarios/novasenha/validar",
 		]
 	}	
 
