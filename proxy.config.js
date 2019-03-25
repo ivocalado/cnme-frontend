@@ -1,7 +1,7 @@
 const proxy = [
   {
     context: '/api',
-    target: 'http://cnme-dev.nees.com.br:8080',
+    target: 'https://cnme-dev.nees.com.br',
     changeOrigin: true
   }
 ];

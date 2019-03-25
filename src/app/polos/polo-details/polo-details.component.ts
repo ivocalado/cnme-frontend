@@ -46,7 +46,7 @@ export class PoloDetailsComponent implements OnInit {
         this.location.back()
     }
     fetchUsuarios() {
-        this.unidadeDataService.getUsuariosByUnidade(this.unidade.id).subscribe((usuarios:Usuario[])  => {
+        this.unidadeDataService.getUsuariosAtivosByUnidade(this.unidade.id).subscribe((usuarios:Usuario[])  => {
             this.dataSource = new MatTableDataSource(usuarios);
             this.dataSource.sort = this.sort;
         })

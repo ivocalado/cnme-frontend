@@ -129,16 +129,31 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            })
+            }), catchError(this.handleError)
         );
     }
 
-    deleteUsuario(id:number, authToken: string){
+    deactivateUsuario(id:number, authToken: string){
         return this.httpClient.delete("/api/usuarios/"+id, {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+authToken
             })
         });
+    }
+
+    reactivateUsuario(id:number, authToken: string){
+        return this.httpClient.get("/api/usuarios/"+id+"/restaurar", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        }).pipe(
+            map(res =>{
+                let usuario:Usuario;
+                usuario = res["data"];
+                usuario.unidade_id = usuario.unidade.id
+                return usuario;
+            }), catchError(this.handleError)
+        );
     }
 
     getTiposUsuarios(authToken: string) {

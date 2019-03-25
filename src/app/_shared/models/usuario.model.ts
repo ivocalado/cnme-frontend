@@ -13,7 +13,8 @@ export class Usuario{
         public unidade_id: number,
         public tipo: string,
         public unidade: Unidade,
-        public password: string
+        public password: string,
+        public removido: boolean,
     ){}
     static readonly EMPTY_MODEL = {
         id: null,
@@ -27,6 +28,7 @@ export class Usuario{
         unidade_id: null,
         tipo: '',
         unidade: Unidade.EMPTY_MODEL,
-        password: ''
+        password: '',
+        removido: false
     }
 }
