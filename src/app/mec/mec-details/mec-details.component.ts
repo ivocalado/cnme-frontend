@@ -43,6 +43,7 @@ export class MecDetailsComponent implements OnInit {
     ngOnInit() {
         this.unidadeDataService.getMec().subscribe((unidade: Unidade) => {
             this.unidade = unidade;
+            this.currentUser = this.authService.getCurrentUser()
             this.fetchUsuarios()
         })
     }

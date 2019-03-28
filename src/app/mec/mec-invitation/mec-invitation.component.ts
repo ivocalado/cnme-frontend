@@ -30,22 +30,12 @@ export class MecInvitationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params:Params) =>{
-      let unidadeId =  +params["id"]
-      
-      if(unidadeId != null) {
-        this.unidadeDataService.getUnidade(unidadeId).subscribe(unidade => {
-          this.unidade = unidade
-          this.usuarioDataService.getTiposUsuarios(this.authService.getToken()).subscribe((tipos: string[]) => {
-            this.tiposUsuarios = tipos
-            this.initForm();
-          })          
-        })
-        
-      } else {
-        this.snackBarService.openSnackBar("Requisição inválida!");
-        this.router.navigate(["/mec"], { relativeTo: this.route });
-      }
+    this.unidadeDataService.getMec().subscribe(unidade => {
+      this.unidade = unidade
+      this.usuarioDataService.getTiposUsuarios(this.authService.getToken()).subscribe((tipos: string[]) => {
+        this.tiposUsuarios = tipos
+        this.initForm();
+      })          
     })
   }
 
@@ -62,9 +52,9 @@ export class MecInvitationComponent implements OnInit {
         }, error2 => {
           this.snackBarService.openSnackBar("Falha no envio do convite!");
         })
-        this.router.navigate(["/mec/detalhes", this.unidade.id], { relativeTo: this.route });
+        this.router.navigate(["/mec/detalhes"], { relativeTo: this.route });
     }, error => {
-        this.snackBarService.openSnackBar("Erro na criação do usuário.");
+        this.snackBarService.openSnackBar("Falha na criação do usuário!");
         console.log(error)
     })
      

@@ -55,7 +55,7 @@ export class TvEscolaInvitationComponent implements OnInit {
         })
         this.router.navigate(["/tvescola/detalhes"], { relativeTo: this.route });
     }, error => {
-        this.snackBarService.openSnackBar("Erro na criação do usuário.");
+        this.snackBarService.openSnackBar(error);
         console.log(error)
     })
      
