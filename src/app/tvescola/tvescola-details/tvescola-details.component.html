@@ -35,6 +35,11 @@
                         <button mat-raised-button type="button" class="mt-1" color="primary" (click)="onInvitation()">
                                 Convidar usuário
                         </button>
+                    </span>&nbsp;&nbsp;&nbsp;
+                    <span *ngIf="hasPermission">
+                        <button mat-raised-button type="button" class="mt-1" color="{{usuariosAtivos? 'warn' : 'primary'}}" (click)="toogleUsuarios()">
+                                {{usuariosAtivos? "Exibir usuários desativados" : "Exibir usuários ativos"}}
+                        </button>
                     </span>
                 </p>
 
@@ -43,13 +48,14 @@
     </div>
 </div>
 
-<div class="row">
+
+<div class="row" *ngIf="usuariosAtivos; else showInativos">
     <div class="col-lg-12">
         <mat-card>
-            <mat-card-title>Lista de Usuários da Tv Escola</mat-card-title>
+            <mat-card-title>Lista de Usuários Ativos da Tv Escola</mat-card-title>
             <hr class="m-2">
             <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+            <input matInput (keyup)="applyFilter(dataSource, $event.target.value)" placeholder="Filtro">
             </mat-form-field>
 
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -67,14 +73,14 @@
                     <mat-cell *matCellDef="let row" class="capitalize">{{row.tipo}}</mat-cell>
                 </ng-container>
                 <!-- actions -->
-                <ng-container matColumnDef="actions">
+                <ng-container matColumnDef="actions" >
                     <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
                     <mat-cell *matCellDef="let row; let i=index;">
-                        <button mat-icon-button color="accent" (click)="onEdit(row.id)">
+                        <button mat-icon-button color="accent" (click)="onEdit(row.id)" *ngIf="hasPermission">
                             <mat-icon aria-label="Edit">edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent">
-                            <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
+                        <button mat-icon-button color="accent" (click)="onDelete(row.id)" *ngIf="hasPermission && (currentUser.id != row.id)">
+                            <mat-icon aria-label="Delete">delete</mat-icon>
                         </button>
                     </mat-cell>
                 </ng-container>
@@ -85,3 +91,45 @@
         </mat-card>
     </div>
 </div>
+<ng-template #showInativos>
+    <div class="row">
+        <div class="col-lg-12">
+            <mat-card>
+                <mat-card-title>Lista de Usuários Inativos da Tv Escola</mat-card-title>
+                <hr class="m-2">
+                <mat-form-field>
+                <input matInput (keyup)="applyFilter(dataSourceInativos, $event.target.value)" placeholder="Filtro">
+                </mat-form-field>
+    
+                <mat-table [dataSource]="dataSourceInativos" class="mat-elevation-z8">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="nome">
+                        <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.email}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="tipo">
+                        <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+                        <mat-cell *matCellDef="let row" class="capitalize">{{row.tipo}}</mat-cell>
+                    </ng-container>
+                    <!-- actions -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                        <mat-cell *matCellDef="let row; let i=index;">
+                            <button mat-icon-button color="accent" (click)="onReactivate(row.id)">
+                                <mat-icon aria-label="Delete" >delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </mat-card>
+        </div>
+    </div>
+
+</ng-template>

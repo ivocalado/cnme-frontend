@@ -55,7 +55,7 @@ export class UsuarioListComponent implements OnInit {
 
     fetchUsuarios() {
         this.unidadeDataService.getUnidade(this.usuarioAutenticado.unidade_id).subscribe(unidade => {
-            this.unidadeDataService.getUsuariosByUnidade(this.usuarioAutenticado.id).subscribe((usuarios:Usuario[])  => {
+            this.unidadeDataService.getUsuariosAtivosByUnidade(this.usuarioAutenticado.id).subscribe((usuarios:Usuario[])  => {
                 console.log(usuarios)
                 this.usuariosUnidade= usuarios
                 this.dataSourceUnidade = new MatTableDataSource(usuarios);

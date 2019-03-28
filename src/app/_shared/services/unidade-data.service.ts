@@ -80,7 +80,7 @@ export class UnidadeDataService {
         );
     }
 
-    getUsuariosByUnidade(id_unidade:number) {
+    getUsuariosAtivosByUnidade(id_unidade:number) {
         return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios", {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.authService.getToken()
@@ -92,8 +92,32 @@ export class UnidadeDataService {
                 for(var key in res["data"]){
                     let usuario:Usuario;
                     usuario = <Usuario>res["data"][key];
-                    usuario.unidade_id = usuario.unidade.id
-                    usuarios.push(usuario);
+                    if(!usuario.removido) {
+                        usuario.unidade_id = usuario.unidade.id
+                        usuarios.push(usuario);
+                    }
+                }
+                return usuarios;
+            })
+        );
+    }
+
+    getUsuariosInativosByUnidade(id_unidade:number) {
+        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(
+            map(res =>{
+                let usuarios:Usuario[] = [];
+                for(var key in res["data"]){
+                    let usuario:Usuario;
+                    usuario = <Usuario>res["data"][key];
+                    if(usuario.removido) {
+                        usuario.unidade_id = usuario.unidade.id
+                        usuarios.push(usuario);
+                    }
                 }
                 return usuarios;
             })
