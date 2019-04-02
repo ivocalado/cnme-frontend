@@ -10,6 +10,8 @@ import { ProjetoDetailsComponent } from './projeto-details/projeto-details.compo
 import { EtapaInstalacaoComponent } from './etapa-instalacao/etapa-instalacao.component';
 import { EtapaAtivacaoComponent } from './etapa-ativacao/etapa-ativacao.component';
 import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.component';
+import { ProjetosAtrasadosListComponent } from './projetos-atrasados-list/projetos-atrasados-list.component';
+import { ProjetosConcluidosComponent } from './projetos-concluidos/projetos-concluidos.component';
 
 const routes: Routes = [
     {
@@ -26,6 +28,8 @@ const routes: Routes = [
             { path: ':id/tarefas-envio', component: EnvioListComponent },
             { path: ':id/etapa-instalacao', component: EtapaInstalacaoComponent },
             { path: ':id/etapa-ativacao', component: EtapaAtivacaoComponent },
+            { path: 'atrasados', component: ProjetosAtrasadosListComponent},
+            { path: 'concluidos', component: ProjetosConcluidosComponent},
             //{ path: ':id/etapa-envio/:etapaId', component: EtapaEnvioComponent }
         ]
     }

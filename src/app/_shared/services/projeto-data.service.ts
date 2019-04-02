@@ -302,4 +302,38 @@ export class ProjetoDataService{
             .pipe(catchError(this.handleError));
     }
 
+    getProjetosAtrasados() {
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(map(res =>{
+            let projetos:Projeto[] = [];
+            for (var key in res["data"]) {
+                let projeto: Projeto;
+                projeto = <Projeto>res["data"][key];
+                projetos.push(projeto);
+            }
+            return projetos;
+        }));
+    }
+
+    getProjetosConcluidos() {
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?status=ATIVADO", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(map(res =>{
+            let projetos:Projeto[] = [];
+            for (var key in res["data"]) {
+                let projeto: Projeto;
+                projeto = <Projeto>res["data"][key];
+                projetos.push(projeto);
+            }
+            return projetos;
+        }));
+    }
+
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DashboardDataService } from '../_shared/services/dashboard.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-dashboard',
@@ -35,7 +36,9 @@ export class DashboardComponent implements OnInit {
     }]
 
     constructor(
-        private dashboardDataService:DashboardDataService
+        private dashboardDataService:DashboardDataService,
+        private route: ActivatedRoute,
+        private router: Router,
     ) { }
 
     ngOnInit() {
@@ -66,4 +69,15 @@ export class DashboardComponent implements OnInit {
         this.projetosAtrasados = Math.floor((Math.random() * 100) + 1);
     }
 
+    showProjetosAtrasados() {
+        this.router.navigate(["/projetos/atrasados"], { relativeTo: this.route });
+    }
+
+    showProjetosConcluidos() {
+        this.router.navigate(["/projetos/concluidos"], { relativeTo: this.route });
+    }
+
+    showProjetos() {
+        this.router.navigate(["/projetos"], { relativeTo: this.route });
+    }
 }

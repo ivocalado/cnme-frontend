@@ -20,6 +20,7 @@ import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.componen
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from "@angular/material-moment-adapter";
 import { MomentUtcDateAdapter } from '../_shared/helpers/moment-utc-date-adapter';
 import { ProjetosAtrasadosListComponent } from './projetos-atrasados-list/projetos-atrasados-list.component';
+import { ProjetosConcluidosComponent } from './projetos-concluidos/projetos-concluidos.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { ProjetosAtrasadosListComponent } from './projetos-atrasados-list/projet
         EtapaInstalacaoComponent,
         EtapaAtivacaoComponent,
         ProjetoCancelComponent,
-        ProjetosAtrasadosListComponent
+        ProjetosAtrasadosListComponent,
+        ProjetosConcluidosComponent
     ],
     imports: [
         SharedModule,

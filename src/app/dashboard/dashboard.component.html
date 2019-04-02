@@ -5,9 +5,9 @@
 </div>
 <div class="row">
     <div class="col-lg-3">
-        <mat-card class="gray">
+        <mat-card class="gray" (click)="showProjetos()">
             <mat-card-title>
-                <mat-icon (click)="loadTempData()">cast_connected</mat-icon>
+                <mat-icon>cast_connected</mat-icon>
                 <span>&nbsp;</span>
                 <span>{{projetosTotal}}</span>
             </mat-card-title>
@@ -17,7 +17,7 @@
         </mat-card>
     </div>
     <div class="col-lg-3">
-        <mat-card class="concluidos">
+        <mat-card class="concluidos" (click)="showProjetosConcluidos()">
             <mat-card-title>
                 <mat-icon>cast</mat-icon>
                 <span>&nbsp;</span>
@@ -41,7 +41,7 @@
         </mat-card>
     </div>
     <div class="col-lg-3">
-        <mat-card class="atrasados">
+        <mat-card class="atrasados" (click)="showProjetosAtrasados()">
             <mat-card-title>
                 <mat-icon>cast_connected</mat-icon>
                 <span>&nbsp;</span>
