@@ -319,8 +319,8 @@ export class ProjetoDataService{
         }));
     }
 
-    getProjetosConcluidos() {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?status=ATIVADO", {
+    getProjetosPorStatus(status: string) {
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?status="+status, {
             headers: new HttpHeaders({
                 "Authorization": 'Bearer '+this.authService.getToken()
             })
@@ -336,4 +336,27 @@ export class ProjetoDataService{
         }));
     }
 
+    getProjetosEmPlanejamento() {
+        return this.getProjetosPorStatus("PLANEJAMENTO")
+    }
+
+    getProjetosEnviados() {
+        return this.getProjetosPorStatus("ENVIADO")
+    }
+
+    getProjetosEntregues() {
+        return this.getProjetosPorStatus("ENTREGUE")
+    }
+
+    getProjetosInstalados() {
+        return this.getProjetosPorStatus("INSTALADO")
+    }
+
+    getProjetosConcluidos() {
+        return this.getProjetosPorStatus("ATIVADO")
+    }
+
+    getProjetosCancelados() {
+        return this.getProjetosPorStatus("CANCELADO")
+    }
 }

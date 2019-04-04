@@ -77,6 +77,10 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(["/projetos/concluidos"], { relativeTo: this.route });
     }
 
+    showProjetosEmAndamento() {
+        this.router.navigate(["/projetos/andamento"], { relativeTo: this.route });
+    }
+
     showProjetos() {
         this.router.navigate(["/projetos"], { relativeTo: this.route });
     }

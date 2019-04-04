@@ -12,6 +12,7 @@ import { EtapaAtivacaoComponent } from './etapa-ativacao/etapa-ativacao.componen
 import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.component';
 import { ProjetosAtrasadosListComponent } from './projetos-atrasados-list/projetos-atrasados-list.component';
 import { ProjetosConcluidosComponent } from './projetos-concluidos/projetos-concluidos.component';
+import { ProjetosAndamentoComponent } from './projetos-andamento/projetos-andamento.component';
 
 const routes: Routes = [
     {
@@ -30,6 +31,7 @@ const routes: Routes = [
             { path: ':id/etapa-ativacao', component: EtapaAtivacaoComponent },
             { path: 'atrasados', component: ProjetosAtrasadosListComponent},
             { path: 'concluidos', component: ProjetosConcluidosComponent},
+            { path: 'andamento', component: ProjetosAndamentoComponent}
             //{ path: ':id/etapa-envio/:etapaId', component: EtapaEnvioComponent }
         ]
     }
