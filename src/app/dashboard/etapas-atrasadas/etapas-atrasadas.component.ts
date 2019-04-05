@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardDataService } from 'src/app/_shared/services/dashboard.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: "app-etapas-atrasadas",
@@ -14,7 +15,11 @@ export class EtapasAtrasadasComponent implements OnInit {
     projetosEtapas: any;
     qtdEtapasAtrasadas: number;
 
-    constructor(private dashboardDataService: DashboardDataService) {}
+    constructor(
+        private dashboardDataService: DashboardDataService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {}
 
     ngOnInit() {
         this.loadTempData();
@@ -81,5 +86,20 @@ export class EtapasAtrasadasComponent implements OnInit {
         }
         this.calcEtapas();
 
+    }
+
+    showProjetosAtrasadosEmEnvio() {
+        console.log("showProjetosAtrasadosEmEnvio")
+        this.router.navigate(["/projetos/atrasados/envio"], { relativeTo: this.route });
+    }
+
+    showProjetosAtrasadosEmInstalacao() {
+        console.log("showProjetosAtrasadosEmInstalacao")
+        this.router.navigate(["/projetos/atrasados/instalacao"], { relativeTo: this.route });
+    }
+
+    showProjetosAtrasadosEmAtivacao() {
+        console.log("showProjetosAtrasadosEmAtivacao")
+        this.router.navigate(["/projetos/atrasados/ativacao"], { relativeTo: this.route });
     }
 }

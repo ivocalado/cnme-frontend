@@ -6,7 +6,7 @@ import { Projeto } from 'src/app/_shared/models/projeto.model';
 
 
 @Component({
-  selector: 'app-projetos-atrasados-list',
+  selector: 'app-projetos-concluidos',
   templateUrl: '../_shared/projetos-list.dashboard.html',
   styleUrls: ['../_shared/projetos-list.dashboard.scss']
 })

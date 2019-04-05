@@ -6,11 +6,11 @@ import { Projeto } from 'src/app/_shared/models/projeto.model';
 
 
 @Component({
-  selector: 'app-projetos-andamento',
+  selector: 'app-projetos-atrasados-envio',
   templateUrl: '../_shared/projetos-list.dashboard.html',
   styleUrls: ['../_shared/projetos-list.dashboard.scss']
 })
-export class ProjetosAndamentoComponent implements OnInit {
+export class ProjetosAtrasadosEnvioComponent implements OnInit {
 
   displayedColumns: string[] = [
     "numero",
@@ -18,19 +18,19 @@ export class ProjetosAndamentoComponent implements OnInit {
     "previsao",
     "status",
     "actions"
-];
-projetosEmAndamento : Projeto[] = []
-dataSource;
-@ViewChild(MatSort) sort: MatSort;
-titulo: string = "Projetos em Andamento"
+  ];
+  projetosEmAndamento : Projeto[] = []
+  dataSource;
+  @ViewChild(MatSort) sort: MatSort;
+  titulo: string = "Projetos com Atraso no Envio"
 
-constructor(
-  private projetoDataService: ProjetoDataService,
-  private snackBarService: SnackBarService
-  ) { }
+  constructor(
+    private projetoDataService: ProjetoDataService,
+    private snackBarService: SnackBarService
+    ) { }
 
   ngOnInit() {
-    this.projetoDataService.getProjetosEmAndamento().subscribe((projetos: Projeto[]) => {
+    this.projetoDataService.getProjetosAtrasadosEmEnvio().subscribe((projetos: Projeto[]) => {
       this.projetosEmAndamento = projetos
     })
   }

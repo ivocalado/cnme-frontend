@@ -13,6 +13,9 @@ import { ProjetoCancelComponent } from './projeto-cancel/projeto-cancel.componen
 import { ProjetosAtrasadosListComponent } from './projetos-atrasados-list/projetos-atrasados-list.component';
 import { ProjetosConcluidosComponent } from './projetos-concluidos/projetos-concluidos.component';
 import { ProjetosAndamentoComponent } from './projetos-andamento/projetos-andamento.component';
+import { ProjetosAtrasadosEnvioComponent } from './projetos-atrasados-envio/projetos-atrasados-envio.component';
+import { ProjetosAtrasadosInstalacaoComponent } from './projetos-atrasados-instalacao/projetos-atrasados-instalacao.component';
+import { ProjetosAtrasadosAtivacaoComponent } from './projetos-atrasados-ativacao/projetos-atrasados-ativacao.component';
 
 const routes: Routes = [
     {
@@ -31,7 +34,10 @@ const routes: Routes = [
             { path: ':id/etapa-ativacao', component: EtapaAtivacaoComponent },
             { path: 'atrasados', component: ProjetosAtrasadosListComponent},
             { path: 'concluidos', component: ProjetosConcluidosComponent},
-            { path: 'andamento', component: ProjetosAndamentoComponent}
+            { path: 'andamento', component: ProjetosAndamentoComponent},
+            { path: 'atrasados/envio', component: ProjetosAtrasadosEnvioComponent },
+            { path: 'atrasados/instalacao', component: ProjetosAtrasadosInstalacaoComponent },
+            { path: 'atrasados/ativacao', component: ProjetosAtrasadosAtivacaoComponent }
             //{ path: ':id/etapa-envio/:etapaId', component: EtapaEnvioComponent }
         ]
     }

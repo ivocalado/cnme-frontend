@@ -22,6 +22,9 @@ import { MomentUtcDateAdapter } from '../_shared/helpers/moment-utc-date-adapter
 import { ProjetosAtrasadosListComponent } from './projetos-atrasados-list/projetos-atrasados-list.component';
 import { ProjetosConcluidosComponent } from './projetos-concluidos/projetos-concluidos.component';
 import { ProjetosAndamentoComponent } from './projetos-andamento/projetos-andamento.component';
+import { ProjetosAtrasadosEnvioComponent } from './projetos-atrasados-envio/projetos-atrasados-envio.component';
+import { ProjetosAtrasadosInstalacaoComponent } from './projetos-atrasados-instalacao/projetos-atrasados-instalacao.component';
+import { ProjetosAtrasadosAtivacaoComponent } from './projetos-atrasados-ativacao/projetos-atrasados-ativacao.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +40,10 @@ import { ProjetosAndamentoComponent } from './projetos-andamento/projetos-andame
         ProjetoCancelComponent,
         ProjetosAtrasadosListComponent,
         ProjetosConcluidosComponent,
-        ProjetosAndamentoComponent
+        ProjetosAndamentoComponent,
+        ProjetosAtrasadosEnvioComponent,
+        ProjetosAtrasadosInstalacaoComponent,
+        ProjetosAtrasadosAtivacaoComponent
     ],
     imports: [
         SharedModule,

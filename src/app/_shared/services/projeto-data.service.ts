@@ -359,4 +359,51 @@ export class ProjetoDataService{
     getProjetosCancelados() {
         return this.getProjetosPorStatus("CANCELADO")
     }
+
+    getProjetosEmAndamento() {
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/andamento", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(map(res =>{
+            let projetos:Projeto[] = [];
+            for (var key in res["data"]) {
+                let projeto: Projeto;
+                projeto = <Projeto>res["data"][key];
+                projetos.push(projeto);
+            }
+            return projetos;
+        }));    
+    }
+
+    getProjetosAtrasadosPorEtapa(etapa: string) {
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados?etapa="+etapa, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(map(res =>{
+            let projetos:Projeto[] = [];
+            for (var key in res["data"]) {
+                let projeto: Projeto;
+                projeto = <Projeto>res["data"][key];
+                projetos.push(projeto);
+            }
+            return projetos;
+        }));
+    }
+
+    getProjetosAtrasadosEmEnvio() {
+        return this.getProjetosAtrasadosPorEtapa("ENVIO")
+    }
+
+
+    getProjetosAtrasadosEmInstalacao() {
+        return this.getProjetosAtrasadosPorEtapa("INSTALACAO")
+    }
+
+    getProjetosAtrasadosEmAtivacao() {
+        return this.getProjetosAtrasadosPorEtapa("ATIVACAO")
+    }
 }

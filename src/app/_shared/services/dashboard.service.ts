@@ -38,7 +38,7 @@ export class DashboardDataService{
     }
 
     getEtapasExtrato(){
-        return this.httpClient.get("api/dashboard/projetos/etapas/extrato", {
+        return this.httpClient.get("/api/dashboard/projetos/etapas/extrato", {
             headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
         })
     }
