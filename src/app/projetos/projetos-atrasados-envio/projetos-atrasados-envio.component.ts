@@ -3,7 +3,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
-
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-projetos-atrasados-envio',
@@ -26,7 +26,8 @@ export class ProjetosAtrasadosEnvioComponent implements OnInit {
 
   constructor(
     private projetoDataService: ProjetoDataService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private location: Location
     ) { }
 
   ngOnInit() {
@@ -35,4 +36,7 @@ export class ProjetosAtrasadosEnvioComponent implements OnInit {
     })
   }
 
+  onCancel() {
+    this.location.back()
+  }
 }

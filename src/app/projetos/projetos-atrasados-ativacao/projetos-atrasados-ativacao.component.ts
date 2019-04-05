@@ -3,6 +3,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -26,12 +27,17 @@ export class ProjetosAtrasadosAtivacaoComponent implements OnInit {
 
   constructor(
     private projetoDataService: ProjetoDataService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private location: Location
   ) { }
 
   ngOnInit() {
     this.projetoDataService.getProjetosAtrasadosEmAtivacao().subscribe((projetos: Projeto[]) => {
       this.projetosEmAndamento = projetos
     })
+  }
+
+  onCancel() {
+    this.location.back()
   }
 }
