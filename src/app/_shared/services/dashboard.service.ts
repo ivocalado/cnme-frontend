@@ -24,9 +24,9 @@ export class DashboardDataService{
             headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
         })
     }
-
-    getGestoresNaoConfirmados(){
-        return this.httpClient.get("api/dashboard/usuarios/gestores/nao-confirmados/total",{
+    
+    getGestoresExtrato() {
+        return this.httpClient.get("/api/dashboard/usuarios/gestores/extrato",{
             headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
         })
     }

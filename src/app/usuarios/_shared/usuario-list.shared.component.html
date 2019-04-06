@@ -1,15 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
-        <button mat-raised-button color="primary" routerLink="novo">
-            Novo Usuário
-        </button>
-    </div>
-</div>
-<hr class="m-2">
-<div class="row">
-    <div class="col-lg-12">
         <mat-card>
-            <mat-card-title>Lista de Usuários da Unidade</mat-card-title>
+            <mat-card-title>{{title}}</mat-card-title>
             <hr class="m-2">
             <mat-form-field>
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
@@ -35,10 +27,10 @@
                         <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                             <mat-icon aria-label="Details">description</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent" (click)="onEdit(row.id)">
+                        <button *ngIf="readOnly" mat-icon-button color="accent" (click)="onEdit(row.id)">
                             <mat-icon aria-label="Edit">edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent">
+                        <button *ngIf="readOnly" mat-icon-button color="accent">
                             <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                         </button>
                     </mat-cell>
@@ -48,6 +40,13 @@
                 <mat-row *matRowDef="let row; columns: displayedColumnsUnidade;"></mat-row>
             </mat-table>
         </mat-card>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10 mt-1 pull-right">
+        <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+            Voltar
+        </button>
     </div>
 </div>
 

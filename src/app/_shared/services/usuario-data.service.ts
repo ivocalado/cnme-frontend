@@ -217,6 +217,33 @@ export class UsuarioDataService {
             }), catchError(this.handleError)
         );
     }
+
+    
+
+    /**
+     * Retorna a lista de gestores responsáveis po unidade que ainda não confirmaram
+     * o acesso à plataforma
+     * @param authToken 
+     */
+    getGestoresNaoConfirmados(authToken: string) {
+        return this.httpClient.get<Usuario[]>("/api/usuarios/u/gestores-nao-confirmados", {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+authToken
+            })
+        })
+        .pipe(
+            map(res =>{
+                let usuarios:Usuario[] = [];
+                for(var key in res["data"]){
+                    let usuario:Usuario;
+                    usuario = <Usuario>res["data"][key];
+                    usuario.unidade_id = usuario.unidade.id
+                    usuarios.push(usuario);
+                }
+                return usuarios;
+            })
+        );
+    }
     
 }
 

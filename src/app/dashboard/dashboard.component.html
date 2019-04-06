@@ -80,11 +80,14 @@
             </p>
 
             <div class="col-lg-12">
-                <circle-progress [percent]="0" [radius]="100" [title]="gestNaoConfirmados"
-                    [outerStrokeColor]="'#80DEEA'" [outerStrokeGradientStopColor]="'#80DEEA'"
-                    [innerStrokeColor]="'#263238'" [titleColor]="'#263238'" [animation]="true"
-                    [animationDuration]="300">
-                </circle-progress>
+                <div class="wrap-circle-progress">
+                    <circle-progress [percent]="gestoresEmAtrasoPct" [radius]="100" title="{{gestoresEmAtrasoPct}}%"
+                        [outerStrokeColor]="'#80DEEA'" [outerStrokeGradientStopColor]="'#80DEEA'"
+                        [innerStrokeColor]="'#263238'" [titleColor]="'#263238'" [animation]="true"
+                        [animationDuration]="300" (click)="showGestoresNaoConfirmados()">
+                    </circle-progress>
+                    <p>Total: {{gestoresExtrato.nao_confirmados}}</p>
+                </div>
             </div>
 
         </mat-card>

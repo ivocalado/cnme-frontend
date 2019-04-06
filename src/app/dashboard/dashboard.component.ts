@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
     encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
-    gestNaoConfirmados:number;
     projetosTotal:number;
     projetosConcluidos:number;
     projetosAndamento:number;
@@ -35,6 +34,13 @@ export class DashboardComponent implements OnInit {
         "envio_percent_andamento": 0
     }]
 
+    gestoresExtrato: any = {
+        confirmados: 0,
+        nao_confirmados: 0
+    }
+
+    gestoresEmAtrasoPct: any = 0
+
     constructor(
         private dashboardDataService:DashboardDataService,
         private route: ActivatedRoute,
@@ -43,7 +49,7 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
         this.fetchProjetosExtrato();
-        this.fetchGestoresNaoConfirmados();
+        this.fetchGestoresExtrato()
     }
 
     fetchProjetosExtrato(){
@@ -55,14 +61,21 @@ export class DashboardComponent implements OnInit {
         })
     }
 
-    fetchGestoresNaoConfirmados(){
-        this.dashboardDataService.getGestoresNaoConfirmados().subscribe((res:number) =>{
-            this.gestNaoConfirmados = res;
-        })
+    fetchGestoresExtrato(){
+        this.dashboardDataService.getGestoresExtrato().subscribe(
+            extrato => {
+                this.gestoresExtrato = extrato
+                this.gestoresEmAtrasoPct = 
+                    this.getPercent((+this.gestoresExtrato.nao_confirmados), (+this.gestoresExtrato.nao_confirmados) + (+this.gestoresExtrato.confirmados))
+            }
+        )
+    }
+
+    showGestoresNaoConfirmados() {
+        this.router.navigate(["/usuarios/gestores-nao-confirmados"], { relativeTo: this.route });
     }
 
     loadTempData() {
-        this.gestNaoConfirmados = Math.floor((Math.random() * 100) + 1);
         this.projetosTotal = Math.floor((Math.random() * 100) + 1);
         this.projetosConcluidos = Math.floor((Math.random() * 100) + 1);
         this.projetosAndamento = Math.floor((Math.random() * 100) + 1);
@@ -83,5 +96,13 @@ export class DashboardComponent implements OnInit {
 
     showProjetos() {
         this.router.navigate(["/projetos"], { relativeTo: this.route });
+    }
+
+    getPercent(value, total) {
+        if (total > 0) {
+            let percent = (value * 100) / total;
+            return percent.toFixed(1);
+        }
+        return 0;
     }
 }

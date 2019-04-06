@@ -6,12 +6,12 @@ import { Usuario } from '../../_shared/models/usuario.model';
 import { UnidadeDataService } from '../../_shared/services/unidade-data.service';
 import { UsuarioDataService } from '../../_shared/services/usuario-data.service';
 import { AuthService } from 'src/app/_shared/services/auth.service';
-
+import {Location} from '@angular/common';
 
 @Component({
     selector: "app-usuario-list",
-    templateUrl: "./usuario-list.component.html",
-    styleUrls: ["./usuario-list.component.scss"]
+    templateUrl: "../_shared/usuario-list.shared.component.html",
+    styleUrls: ["../_shared/usuario-list.shared.component.scss"]
 })
 export class UsuarioListComponent implements OnInit {
     @ViewChild(MatSort) sortUnidade: MatSort;
@@ -20,11 +20,11 @@ export class UsuarioListComponent implements OnInit {
     displayedColumnsUnidade: string[] = ["nome", "email", "tipo", "actions"];
     dataSourceUnidade;
 
- 
+    readOnly: boolean = false
 
     usuarioAutenticado: Usuario; 
     usuariosUnidade: Usuario[]
-
+    title: string = "Lista de Usuários da Unidade"
 
 
     constructor(
@@ -33,7 +33,7 @@ export class UsuarioListComponent implements OnInit {
         private snackBarService: SnackBarService,
         private authService: AuthService,
         private unidadeDataService: UnidadeDataService,
-        private usuarioDataService: UsuarioDataService
+        private location: Location
     ) {}
 
     ngOnInit() {
@@ -56,7 +56,6 @@ export class UsuarioListComponent implements OnInit {
     fetchUsuarios() {
         this.unidadeDataService.getUnidade(this.usuarioAutenticado.unidade_id).subscribe(unidade => {
             this.unidadeDataService.getUsuariosAtivosByUnidade(this.usuarioAutenticado.id).subscribe((usuarios:Usuario[])  => {
-                console.log(usuarios)
                 this.usuariosUnidade= usuarios
                 this.dataSourceUnidade = new MatTableDataSource(usuarios);
                 this.dataSourceUnidade.sort = this.sortUnidade;
@@ -66,5 +65,9 @@ export class UsuarioListComponent implements OnInit {
 
     applyFilter(filterValue: string) {
         this.dataSourceUnidade.filter = filterValue.trim().toLowerCase();
+    }
+
+    onCancel() {
+        this.location.back()
     }
 }

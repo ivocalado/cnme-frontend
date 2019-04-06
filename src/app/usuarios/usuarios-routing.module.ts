@@ -6,6 +6,7 @@ import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioDetailsComponent } from './usuario-details/usuario-details.component';
 import { UsuarioConfirmInvitationComponent } from './usuario-confirm-invitation/usuario-confirm-invitation.component';
 import { UsuarioNovaSenhaComponent } from './usuario-nova-senha/usuario-nova-senha.component';
+import { GestoresNaoConfirmadosComponent } from './gestores-nao-confirmados/gestores-nao-confirmados.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,7 @@ const routes: Routes = [
             {path: 'detalhes/:id', component: UsuarioDetailsComponent },
             {path: 'confirmar', component:UsuarioConfirmInvitationComponent},
             {path: 'novasenha/validar/:email/:token', component:UsuarioNovaSenhaComponent},
+            {path: 'gestores-nao-confirmados', component: GestoresNaoConfirmadosComponent}
         ]
     }
 ];

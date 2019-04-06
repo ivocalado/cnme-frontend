@@ -14,10 +14,11 @@ import { NgxMaskModule } from "ngx-mask";
 import { Permissions } from '../auth/auth.guard';
 import { UsuarioConfirmInvitationComponent } from './usuario-confirm-invitation/usuario-confirm-invitation.component';
 import { UsuarioNovaSenhaComponent } from './usuario-nova-senha/usuario-nova-senha.component';
+import { GestoresNaoConfirmadosComponent } from './gestores-nao-confirmados/gestores-nao-confirmados.component';
 
 
 @NgModule({
-    declarations: [UsuariosComponent, UsuarioListComponent, UsuarioEditComponent, UsuarioDetailsComponent, UsuarioConfirmInvitationComponent, UsuarioNovaSenhaComponent],
+    declarations: [UsuariosComponent, UsuarioListComponent, UsuarioEditComponent, UsuarioDetailsComponent, UsuarioConfirmInvitationComponent, UsuarioNovaSenhaComponent, GestoresNaoConfirmadosComponent],
     imports: [
         SharedModule,
         FormsModule,
