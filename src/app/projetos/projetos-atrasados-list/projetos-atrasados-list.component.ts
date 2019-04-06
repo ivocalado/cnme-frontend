@@ -4,6 +4,7 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import {Location} from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-projetos-atrasados-list',
@@ -26,7 +27,9 @@ titulo: string = "Projetos em Atraso"
   constructor(
     private projetoDataService: ProjetoDataService,
     private snackBarService: SnackBarService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
     ) { }
 
   ngOnInit() {
@@ -41,5 +44,9 @@ titulo: string = "Projetos em Atraso"
   onCancel() {
     this.location.back()
   }
+
+  onDetails(id: number) {
+    this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
+  }  
 
 }

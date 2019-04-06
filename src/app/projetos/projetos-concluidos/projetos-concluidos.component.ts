@@ -4,6 +4,7 @@ import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.servic
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import {Location} from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-projetos-concluidos',
@@ -26,7 +27,9 @@ titulo: string = "Projetos Concluídos"
   constructor(
     private projetoDataService: ProjetoDataService,
     private snackBarService: SnackBarService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
     ) { }
 
   ngOnInit() {
@@ -41,6 +44,10 @@ titulo: string = "Projetos Concluídos"
   onCancel() {
     this.location.back()
   }
+
+  onDetails(id: number) {
+    this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
+  }  
 
 }
 

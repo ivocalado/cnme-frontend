@@ -390,6 +390,7 @@ export class ProjetoDataService{
                 projeto = <Projeto>res["data"][key];
                 projetos.push(projeto);
             }
+            console.log(projetos)
             return projetos;
         }));
     }
@@ -400,6 +401,7 @@ export class ProjetoDataService{
 
 
     getProjetosAtrasadosEmInstalacao() {
+        console.log("getProjetosAtrasadosEmInstalacao")
         return this.getProjetosAtrasadosPorEtapa("INSTALACAO")
     }
 

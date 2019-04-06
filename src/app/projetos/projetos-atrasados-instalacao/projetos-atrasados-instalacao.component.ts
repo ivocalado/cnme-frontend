@@ -4,6 +4,7 @@ import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.servic
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import {Location} from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ProjetosAtrasadosInstalacaoComponent implements OnInit {
     "status",
     "actions"
   ];
-  projetosEmAndamento : Projeto[] = []
+  
   dataSource;
   @ViewChild(MatSort) sort: MatSort;
   titulo: string = "Projetos com Atraso na Instalação"
@@ -27,17 +28,23 @@ export class ProjetosAtrasadosInstalacaoComponent implements OnInit {
   constructor(
     private projetoDataService: ProjetoDataService,
     private snackBarService: SnackBarService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
     ) { }
 
   ngOnInit() {
     this.projetoDataService.getProjetosAtrasadosEmInstalacao().subscribe((projetos: Projeto[]) => {
-      this.projetosEmAndamento = projetos
+      this.dataSource = new MatTableDataSource(projetos);
+      this.dataSource.sort = this.sort;
     })
   }
 
   onCancel() {
     this.location.back()
   }
+  onDetails(id: number) {
+    this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
+  } 
 
 }

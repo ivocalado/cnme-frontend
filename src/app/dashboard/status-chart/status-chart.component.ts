@@ -16,7 +16,7 @@ export class StatusChartComponent implements OnInit {
         }
     };
     public barChartLabels: string[] =
-        ['Criado', 'Planejado', 'Enviado', 'Entregue', 'Instalado', 'Finalizado', 'Cancelado'];
+        ['Planejamento', 'Enviado', 'Entregue', 'Instalado', 'Ativado', 'Cancelado'];
     public barChartType: string = 'bar';
     public barChartLegend: boolean = true;
 

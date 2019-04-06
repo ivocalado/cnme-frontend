@@ -8,12 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ["./etapas-atrasadas.component.scss"]
 })
 export class EtapasAtrasadasComponent implements OnInit {
-    projetosTotal: number;
-    projetosConcluidos: number;
-    projetosAndamento: number;
-    projetosAtrasados: number;
-    projetosEtapas: any;
-    qtdEtapasAtrasadas: number;
+    // projetosTotal: number = 0;
+    // projetosConcluidos: number = 0;
+    // projetosAndamento: number = 0;
+    // projetosAtrasados: number = 0;
+    projetosEtapas: any = {};
+    qtdEtapasAtrasadas: number = 0;
 
     constructor(
         private dashboardDataService: DashboardDataService,
@@ -24,7 +24,9 @@ export class EtapasAtrasadasComponent implements OnInit {
     ngOnInit() {
         this.loadTempData();
         this.fetchEtapas();
-
+        this.projetosEtapas.instalacao_total_atrasada = 0
+        this.projetosEtapas.ativacao_total_atrasada = 0
+        this.projetosEtapas.envio_total_atrasada = 0
     }
 
     fetchEtapas() {
@@ -35,9 +37,12 @@ export class EtapasAtrasadasComponent implements OnInit {
     }
 
     calcEtapas() {
-        this.qtdEtapasAtrasadas = (+this.projetosEtapas.instalacao_total_atrasada) +
+        if(!Array.isArray(this.projetosEtapas)) {
+            this.qtdEtapasAtrasadas = (+this.projetosEtapas.instalacao_total_atrasada) +
             (+this.projetosEtapas.ativacao_total_atrasada) +
-            (+this.projetosEtapas.envio_total_atrasada);
+            (+this.projetosEtapas.envio_total_atrasada)
+        } else 
+            this.qtdEtapasAtrasadas = 0
 
         this.projetosEtapas.pctInstalacao = this.getPercent(
             this.projetosEtapas.instalacao_total_atrasada,
@@ -53,6 +58,8 @@ export class EtapasAtrasadasComponent implements OnInit {
             this.projetosEtapas.envio_total_atrasada,
             this.qtdEtapasAtrasadas
         );
+        
+            
     }
 
     getPercent(value, total) {

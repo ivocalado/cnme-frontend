@@ -111,7 +111,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 	{
 
 		let url: string = state.url
-		console.log("URL acessada: " + url)
+		// console.log("URL acessada: " + url)
 		return this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)// && this.permissions.canActivate(url));
 	}
 
@@ -121,7 +121,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 	{
 
 		let url: string = state.url
-		console.log("URL acessada: " + url)
+		// console.log("URL acessada: " + url)
 		return this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles) //&& this.permissions.canActivateChild(url))
 	}
 
