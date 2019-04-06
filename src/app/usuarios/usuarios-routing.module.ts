@@ -11,12 +11,12 @@ const routes: Routes = [
     {
         path: '', component: UsuariosComponent,
         children:[
-            {path:'', component:UsuarioListComponent},
-            {path:'novo',component:UsuarioEditComponent},
-            {path:'editar/:id', component:UsuarioEditComponent},
-            {path: "detalhes/:id", component: UsuarioDetailsComponent },
-            {path:"confirmar", component:UsuarioConfirmInvitationComponent},
-            {path:"novasenha/validar/:email/:token", component:UsuarioNovaSenhaComponent},
+            {path: '', component:UsuarioListComponent},
+            {path: 'novo',component:UsuarioEditComponent},
+            {path: 'editar/:id', component:UsuarioEditComponent},
+            {path: 'detalhes/:id', component: UsuarioDetailsComponent },
+            {path: 'confirmar', component:UsuarioConfirmInvitationComponent},
+            {path: 'novasenha/validar/:email/:token', component:UsuarioNovaSenhaComponent},
         ]
     }
 ];

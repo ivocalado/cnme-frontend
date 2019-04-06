@@ -110,4 +110,8 @@ export class MecDetailsComponent implements OnInit {
     toogleUsuarios() {
         this.usuariosAtivos = !this.usuariosAtivos
     }
+
+    onDetails(id:number){
+        this.router.navigate(['/usuarios/detalhes', id], { relativeTo: this.route });
+    }
 }
