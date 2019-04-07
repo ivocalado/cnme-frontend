@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DashboardDataService } from 'src/app/_shared/services/dashboard.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-status-chart',
@@ -15,6 +16,9 @@ export class StatusChartComponent implements OnInit {
             display: false
         }
     };
+    requestFields: string[] = 
+        ['PLANEJAMENTO', 'ENVIADO', 'ENTREGUE', 'INSTALADO', 'ATIVADO', 'CANCELADO']
+
     public barChartLabels: string[] =
         ['Planejamento', 'Enviado', 'Entregue', 'Instalado', 'Ativado', 'Cancelado'];
     public barChartType: string = 'bar';
@@ -23,7 +27,9 @@ export class StatusChartComponent implements OnInit {
     public barChartData: any[] = [{}];
 
     constructor(
-        private dashboardDataService: DashboardDataService
+        private dashboardDataService: DashboardDataService,
+        private route:ActivatedRoute,
+        private router:Router
     ){}
 
     ngOnInit(){
@@ -34,9 +40,15 @@ export class StatusChartComponent implements OnInit {
         this.dashboardDataService.getProjetosStatus().subscribe((res:any[])=>{
             this.barChartData = [];
             let data:number[] =[];
+            
+            let result = {}
             res.forEach(element => {
-                data.push(element.status_count);
+                result[element.status] = element
             });
+
+            for(let v of this.requestFields) {
+                data.push(result[v].status_count)
+            }
             this.barChartData = [{data:data}];
         })
     }
@@ -48,7 +60,11 @@ export class StatusChartComponent implements OnInit {
 
     // events
     public chartClicked(e: any): void {
-        console.log(e);
+        if(e.active[0]) {
+            let urls: string[] = ["planejamento", "enviados", "entregues", "instalados", "ativados", "cancelados"]
+            let resource = urls[e.active[0]._index]
+            this.router.navigate(["/projetos/"+resource], { relativeTo: this.route });
+        }
     }
 
     public chartHovered(e: any): void {
