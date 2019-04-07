@@ -23,13 +23,7 @@ export class UsuarioDataService {
         return this.httpClient
             .post<Usuario>(
                 "/api/usuarios",
-                usuario,
-                {
-                    headers: new HttpHeaders({
-                        "Content-Type":"application/json; charset=UTF-8",
-                        "Authorization": 'Bearer '+authToken
-                    })
-                }
+                usuario
             )
             .pipe(  map(res =>{
                 let usuario:Usuario;
@@ -40,22 +34,14 @@ export class UsuarioDataService {
     }
 
     updateUsuario(id:number, usuario:Usuario, authToken: string){
-        return this.httpClient.put("/api/usuarios/"+id, usuario, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        })
+        return this.httpClient.put("/api/usuarios/"+id, usuario)
         .pipe(
             catchError(this.handleError)
         )
     }
 
     getUsuarios(authToken: string){
-        return this.httpClient.get<Usuario[]>("/api/usuarios", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        })
+        return this.httpClient.get<Usuario[]>("/api/usuarios")
         .pipe(
             map(res =>{
                 let usuarios:Usuario[] = [];
@@ -71,11 +57,7 @@ export class UsuarioDataService {
     }
 
     getUsuario(id:number, authToken: string){
-        return this.httpClient.get<Usuario>("/api/usuarios/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        })
+        return this.httpClient.get<Usuario>("/api/usuarios/"+id)
         .pipe(
             map(res =>{
                 let usuario:Usuario;
@@ -85,7 +67,7 @@ export class UsuarioDataService {
             }), catchError(this.handleError)
         );
     }
-    
+
     getUsuarioByInvitationToken(token:string){
         return this.httpClient.get<Usuario>("/api/usuarios/get?token1="+token)
         .pipe(
@@ -112,11 +94,7 @@ export class UsuarioDataService {
 
     getUsuarioByEmail(email:string, authToken: string){
         const body = { email: email};
-        return this.httpClient.post<Usuario>("/api/usuarios/login/email", body, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        })
+        return this.httpClient.post<Usuario>("/api/usuarios/login/email", body)
         .pipe(
             map(res =>{
                 let usuario:Usuario;
@@ -128,19 +106,11 @@ export class UsuarioDataService {
     }
 
     deactivateUsuario(id:number, authToken: string){
-        return this.httpClient.delete("/api/usuarios/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        });
+        return this.httpClient.delete("/api/usuarios/"+id);
     }
 
     reactivateUsuario(id:number, authToken: string){
-        return this.httpClient.get("/api/usuarios/"+id+"/restaurar", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        }).pipe(
+        return this.httpClient.get("/api/usuarios/"+id+"/restaurar").pipe(
             map(res =>{
                 let usuario:Usuario;
                 usuario = res["data"];
@@ -151,11 +121,7 @@ export class UsuarioDataService {
     }
 
     getTiposUsuarios(authToken: string) {
-        return this.httpClient.get("/api/usuarios/u/tipos", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        })
+        return this.httpClient.get("/api/usuarios/u/tipos")
         .pipe(
             map(res =>{
                 let tipos:string[] = [];
@@ -168,15 +134,14 @@ export class UsuarioDataService {
             })
         );
     }
-    
+
     sendInvitation(usuarioId: number, authToken: string) {
         return this.httpClient
             .post<any>(
-                "/api/usuarios/"+usuarioId+"/enviar-convite", null, 
+                "/api/usuarios/"+usuarioId+"/enviar-convite", null,
                 {
                     headers: new HttpHeaders({
-                        "Content-Type":"application/json; charset=UTF-8",
-                        "Authorization": 'Bearer '+authToken
+                        "Content-Type":"application/json; charset=UTF-8"
                     })
                 }
             )
@@ -218,19 +183,15 @@ export class UsuarioDataService {
         );
     }
 
-    
+
 
     /**
      * Retorna a lista de gestores responsáveis po unidade que ainda não confirmaram
      * o acesso à plataforma
-     * @param authToken 
+     * @param authToken
      */
     getGestoresNaoConfirmados(authToken: string) {
-        return this.httpClient.get<Usuario[]>("/api/usuarios/u/gestores-nao-confirmados", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+authToken
-            })
-        })
+        return this.httpClient.get<Usuario[]>("/api/usuarios/u/gestores-nao-confirmados")
         .pipe(
             map(res =>{
                 let usuarios:Usuario[] = [];
@@ -244,6 +205,6 @@ export class UsuarioDataService {
             })
         );
     }
-    
+
 }
 
