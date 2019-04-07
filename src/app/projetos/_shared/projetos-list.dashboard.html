@@ -14,7 +14,7 @@
                     <mat-cell *matCellDef="let row">{{row.unidade.nome}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="previsao">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Previsão </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Previsão de Conclusão </mat-header-cell>
                     <mat-cell *matCellDef="let row">{{row.data_fim_previsto | date:'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="status">

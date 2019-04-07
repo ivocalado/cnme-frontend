@@ -33,7 +33,7 @@ titulo: string = "Projetos Enviados"
 
   ngOnInit() {
     this.projetoDataService
-    .getProjetosPorStatus("PLANEJAMENTO")
+    .getProjetosPorStatus("ENVIADO")
     .subscribe((projetos: Projeto[]) => {
         this.dataSource = new MatTableDataSource(projetos);
         this.dataSource.sort = this.sort;
