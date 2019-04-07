@@ -12,14 +12,14 @@ export class EquipamentoDataService {
 
     constructor(private httpClient: HttpClient, private authService: AuthService) {}
 
-    private handleError(errorResponse: HttpErrorResponse) {
+    /*private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
             return throwError(errorResponse.error.messages);
         }
 
-    }
+    }*/
 
     storeEquipamento(equipamento: Equipamento, tipoEquipamentoId: number): Observable<Equipamento> {
         equipamento.tipo_equipamento_id = +tipoEquipamentoId;
@@ -33,7 +33,7 @@ export class EquipamentoDataService {
                     })
                 }
             )
-            .pipe( map(data => data), catchError(this.handleError));
+            //.pipe( map(data => data), catchError(this.handleError));
     }
 
     updateEquipamento(id:number, equipamento:Equipamento){
@@ -43,9 +43,7 @@ export class EquipamentoDataService {
             })
         }
         )
-        .pipe(
-            catchError(this.handleError)
-        )
+        //.pipe(catchError(this.handleError))
     }
 
     getEquipamentos(){

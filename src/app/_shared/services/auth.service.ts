@@ -31,7 +31,7 @@ export class AuthService {
 					}
 					return user;
 				}),
-				catchError(this.handleError)
+				//catchError(this.handleError)
 			);
 	}
 
@@ -43,7 +43,7 @@ export class AuthService {
         }
         )
         .pipe(
-            catchError(this.handleError)
+            //catchError(this.handleError)
         )
     }
 
@@ -51,7 +51,7 @@ export class AuthService {
 
 	logout() {
 		this._remoteLogout().subscribe(msg => {
-			console.log("Usuário deslogado com sucesso.")	
+			console.log("Usuário deslogado com sucesso.")
 		},
 		error => {
 			console.log("Ocorreu um erro ao deslogar o usuário no backend.")
@@ -98,11 +98,11 @@ export class AuthService {
 		return token != null;
 	}
 
-	private handleError(errorResponse: HttpErrorResponse) {
+	/*private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
             return throwError(errorResponse.error.error);
         }
-    }
+    }*/
 }

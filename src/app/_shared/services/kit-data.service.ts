@@ -14,14 +14,14 @@ export class KitDataService {
     kit: Kit;
     constructor(private httpClient: HttpClient, private authService: AuthService) {}
 
-    private handleError(errorResponse: HttpErrorResponse) {
+    /*private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
             return throwError(errorResponse.error.messages);
         }
 
-    }
+    }*/
 
     storeKit(kit: Kit, usuario_id: number): Observable<Kit> {
         kit.usuario_id = usuario_id
@@ -40,7 +40,7 @@ export class KitDataService {
                 let kit:Kit;
                 kit = res["data"];
                 return kit;
-            }), catchError(this.handleError));
+            }));
     }
 
     updateEquipamentosToKit(kit_id: number, novos_equipamentos_ids: number[]) {
@@ -100,9 +100,6 @@ export class KitDataService {
 
     updateKit(id:number, kit:Kit){
         return this.httpClient.put("/api/kits/"+id, kit)
-        .pipe(
-            catchError(this.handleError)
-        )
     }
 
     getKits(){

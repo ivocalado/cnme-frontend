@@ -10,14 +10,14 @@ import { AuthService } from './auth.service';
 export class TipoEquipamentoDataService{
     constructor(private httpClient:HttpClient, private authService: AuthService){}
 
-    private handleError(errorResponse: HttpErrorResponse) {
+    /*private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
             return throwError(errorResponse.error.messages);
         }
 
-    }
+    }*/
 
     getTipoEquipamentos() {
         return this.httpClient.get<TipoEquipamento[]>("/api/tipoequipamentos")
@@ -46,14 +46,12 @@ export class TipoEquipamentoDataService{
                     })
                 }
             )
-            .pipe( map(data => data), catchError(this.handleError));
+            //.pipe( map(data => data), catchError(this.handleError));
 	}
 
 	updateTipoEquipamento(id:number, tipoEquipamento:TipoEquipamento){
 	        return this.httpClient.put("/api/tipoequipamentos/"+id, tipoEquipamento)
-        .pipe(
-            catchError(this.handleError)
-        )
+        //.pipe(catchError(this.handleError))
     }
 
     getTipoEquipamento(id:number){

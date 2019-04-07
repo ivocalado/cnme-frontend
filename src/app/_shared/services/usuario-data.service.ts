@@ -11,13 +11,13 @@ export class UsuarioDataService {
 
     constructor(private httpClient: HttpClient) {}
 
-    private handleError(errorResponse: HttpErrorResponse) {
+    /*private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
             return throwError(errorResponse.error.message);
         }
-    }
+    }*/
 
     storeUsuario(usuario: Usuario, authToken: string): Observable<Usuario> {
         return this.httpClient
@@ -30,14 +30,12 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            }), catchError(this.handleError));
+            }));//, catchError(this.handleError));
     }
 
     updateUsuario(id:number, usuario:Usuario, authToken: string){
         return this.httpClient.put("/api/usuarios/"+id, usuario)
-        .pipe(
-            catchError(this.handleError)
-        )
+        //.pipe(catchError(this.handleError))
     }
 
     getUsuarios(authToken: string){
@@ -64,7 +62,7 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            }), catchError(this.handleError)
+            })
         );
     }
 
@@ -76,7 +74,7 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            }), catchError(this.handleError)
+            })
         );
     }
 
@@ -88,7 +86,7 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            }), catchError(this.handleError)
+            })
         );
     }
 
@@ -101,7 +99,7 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            }), catchError(this.handleError)
+            })
         );
     }
 
@@ -116,7 +114,7 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            }), catchError(this.handleError)
+            })
         );
     }
 
@@ -145,7 +143,7 @@ export class UsuarioDataService {
                     })
                 }
             )
-            .pipe( map(data => data), catchError(this.handleError));
+            //.pipe( map(data => data), catchError(this.handleError));
     }
 
     sendPasswordRecover(email: string) {
@@ -155,7 +153,7 @@ export class UsuarioDataService {
                 res =>{
                     return res.message;
                 }
-            ), catchError(this.handleError));
+            ));
     }
 
     validatePassword(email: string, token: string) {
@@ -168,7 +166,7 @@ export class UsuarioDataService {
                     usuario.unidade_id = usuario.unidade.id
                     return usuario;
                 }
-            ), catchError(this.handleError));
+            ));
     }
 
     updateUserPasswordAfterRecover(id: number, newPassword: string) {
@@ -179,7 +177,7 @@ export class UsuarioDataService {
                 usuario = res["data"];
                 usuario.unidade_id = usuario.unidade.id
                 return usuario;
-            }), catchError(this.handleError)
+            })
         );
     }
 

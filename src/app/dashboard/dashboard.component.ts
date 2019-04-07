@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
         this.dashboardDataService.getGestoresExtrato().subscribe(
             extrato => {
                 this.gestoresExtrato = extrato
-                this.gestoresEmAtrasoPct = 
+                this.gestoresEmAtrasoPct =
                     this.getPercent((+this.gestoresExtrato.nao_confirmados), (+this.gestoresExtrato.nao_confirmados) + (+this.gestoresExtrato.confirmados))
             }
         )

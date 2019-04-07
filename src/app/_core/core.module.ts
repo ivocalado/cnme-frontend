@@ -19,6 +19,7 @@ import { SnackBarService } from '../_shared/helpers/snackbar.service';
 import { AuthService } from '../_shared/services/auth.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../auth/auth.interceptor';
+import { ErrorInterceptor } from '../_shared/helpers/error.interceptor';
 
 @NgModule({
     declarations: [MainNavComponent, IsOnlineComponent],
@@ -39,7 +40,8 @@ import { AuthInterceptor } from '../auth/auth.interceptor';
         EstadoService,
         SnackBarService,
         AuthService,
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ]
 })
 export class CoreModule {}

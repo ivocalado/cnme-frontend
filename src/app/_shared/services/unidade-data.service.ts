@@ -14,14 +14,14 @@ export class UnidadeDataService {
 
     constructor(private httpClient: HttpClient, private authService: AuthService) {}
 
-    private handleError(errorResponse: HttpErrorResponse) {
+    /*private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
             return throwError(errorResponse.error.messages);
         }
 
-    }
+    }*/
 
     storeUnidade(unidade: Unidade, tipoUnidadeId: number, classe:string): Observable<Unidade> {
         unidade.tipo_unidade_id = tipoUnidadeId;
@@ -41,15 +41,12 @@ export class UnidadeDataService {
                 let unidade:Unidade;
                 unidade = res["data"];
                 return unidade;
-            }),
-                catchError(this.handleError));
+            }));
     }
 
     updateUnidade(id:number, unidade:Unidade){
         return this.httpClient.put("/api/unidades/"+id, unidade)
-        .pipe(
-            catchError(this.handleError)
-        )
+        //.pipe(catchError(this.handleError))
     }
 
     getUnidades(){

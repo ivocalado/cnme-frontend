@@ -14,14 +14,14 @@ export class ProjetoDataService{
 
     constructor(private httpClient:HttpClient, private authService: AuthService){}
 
-    private handleError(errorResponse: HttpErrorResponse) {
+    /*private handleError(errorResponse: HttpErrorResponse) {
         if (errorResponse.error instanceof Error) {
             return throwError("client-side error");
         } else {
             return throwError(errorResponse.error.error);
         }
 
-    }
+    }*/
 
     storeProjeto(projeto:Projeto):Observable<Projeto>{
         console.log(projeto);
@@ -31,12 +31,12 @@ export class ProjetoDataService{
             headers: new HttpHeaders({
                 "Content-Type": "application/json; charset=UTF-8"
             })
-        }).pipe(map(data => data), catchError(this.handleError));
+        })//.pipe(map(data => data), catchError(this.handleError));
     }
 
     updateProjeto(id:number, projeto:Projeto){
         return this.httpClient.put('/api/projeto-cnme/'+id, projeto)
-        .pipe(catchError(this.handleError));
+        //.pipe(catchError(this.handleError));
     }
 
     getProjetos(){
@@ -76,12 +76,12 @@ export class ProjetoDataService{
 
     storeEquipamentos(projetoId: number, equipamentosIds: number[]) {
         return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/add-equipamentos", equipamentosIds)
-            .pipe(catchError(this.handleError));
+            //.pipe(catchError(this.handleError));
     }
 
     storeKit(projetoId: number, kitId: number) {
         return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/add-kit/" + kitId, null)
-            .pipe(catchError(this.handleError));
+            //.pipe(catchError(this.handleError));
     }
     deleteKit(projetoId: number, kitId: number) {
         return this.httpClient.delete("api/projeto-cnme/" + projetoId + "/remove-kit/" + kitId);
@@ -129,17 +129,17 @@ export class ProjetoDataService{
 
     storeTarefaEnvio(projetoId:number, tarefa:Tarefa){
         return this.httpClient.post("api/etapas/projeto-cnme/"+projetoId+"/add-tarefa-envio", tarefa)
-        .pipe(catchError(this.handleError));
+        //.pipe(catchError(this.handleError));
     }
 
     storeTarefaInstalacao(projetoId: number, tarefa: Tarefa) {
         return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-instalacao", tarefa)
-            .pipe(catchError(this.handleError));
+            //.pipe(catchError(this.handleError));
     }
 
     storeTarefaAtivacao(projetoId: number, tarefa: Tarefa) {
         return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-ativacao", tarefa)
-            .pipe(catchError(this.handleError));
+            //.pipe(catchError(this.handleError));
     }
 
     /*
@@ -159,12 +159,12 @@ export class ProjetoDataService{
 
     deleteTarefa(tarefaId:number){
         return this.httpClient.delete("/api/tarefas/"+tarefaId)
-        .pipe(catchError(this.handleError));
+        //.pipe(catchError(this.handleError));
     }
 
     deleteEtapa(etapaId:number){
         return this.httpClient.delete("/api/etapas/"+etapaId)
-        .pipe(catchError(this.handleError));
+        //.pipe(catchError(this.handleError));
     }
 
     getEquipDisponiveisEnvio(projetoId:number){
@@ -184,7 +184,7 @@ export class ProjetoDataService{
         return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/cancelar", {
             descricao: descricao
         })
-            .pipe(catchError(this.handleError));
+            //.pipe(catchError(this.handleError));
     }
 
     storeEntrega(projetoId:number, tarefaId:number, values:any){
@@ -207,7 +207,7 @@ export class ProjetoDataService{
 
     enviarTodasEntregas(projetoId: number) {
         return this.httpClient.post("/api/etapas/projeto-cnme/"+ projetoId+"/enviar-all", null)
-            .pipe(catchError(this.handleError));
+            //.pipe(catchError(this.handleError));
     }
 
     getProjetosAtrasados() {
