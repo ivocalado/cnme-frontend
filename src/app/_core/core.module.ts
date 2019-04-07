@@ -17,6 +17,8 @@ import { CommonModule } from "@angular/common";
 import { IsOnlineComponent } from './is-online/is-online.component';
 import { SnackBarService } from '../_shared/helpers/snackbar.service';
 import { AuthService } from '../_shared/services/auth.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../auth/auth.interceptor';
 
 @NgModule({
     declarations: [MainNavComponent, IsOnlineComponent],
@@ -33,6 +35,11 @@ import { AuthService } from '../_shared/services/auth.service';
         MatMenuModule
     ],
     exports: [AppRoutingModule, MainNavComponent],
-    providers: [EstadoService, SnackBarService, AuthService]
+    providers: [
+        EstadoService,
+        SnackBarService,
+        AuthService,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ]
 })
 export class CoreModule {}

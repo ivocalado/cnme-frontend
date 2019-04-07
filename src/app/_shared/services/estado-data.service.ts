@@ -12,11 +12,7 @@ export class EstadoDataService{
     constructor(private httpClient:HttpClient, private authService: AuthService){}
 
     getEstados() {
-        return this.httpClient.get<Estado[]>("/api/localidades/estados", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Estado[]>("/api/localidades/estados")
         .pipe(
             map(res => {
                 let estados:Estado[]=[];
@@ -36,11 +32,7 @@ export class EstadoDataService{
 
     getMunicipios(sigla:string){
         return this.httpClient.get<Municipio[]>(
-            "/api/localidades/estados/" +sigla+"/municipios", {
-                headers: new HttpHeaders({
-                    "Authorization": 'Bearer '+this.authService.getToken()
-                })
-            })
+            "/api/localidades/estados/" +sigla+"/municipios")
         .pipe(
             map(res =>{
                 let municipios: Municipio[] = [];

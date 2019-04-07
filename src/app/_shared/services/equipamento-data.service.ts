@@ -29,8 +29,7 @@ export class EquipamentoDataService {
                 equipamento,
                 {
                     headers: new HttpHeaders({
-                        "Content-Type": "application/json; charset=UTF-8",
-                        "Authorization": 'Bearer '+this.authService.getToken()
+                        "Content-Type": "application/json; charset=UTF-8"
                     })
                 }
             )
@@ -40,10 +39,9 @@ export class EquipamentoDataService {
     updateEquipamento(id:number, equipamento:Equipamento){
         return this.httpClient.put("/api/equipamentos/"+id, equipamento, {
             headers: new HttpHeaders({
-                "Content-Type": "application/json; charset=UTF-8",
-                "Authorization": 'Bearer '+this.authService.getToken()
+                "Content-Type": "application/json; charset=UTF-8"
             })
-        } 
+        }
         )
         .pipe(
             catchError(this.handleError)
@@ -51,11 +49,7 @@ export class EquipamentoDataService {
     }
 
     getEquipamentos(){
-        return this.httpClient.get<Equipamento[]>("/api/equipamentos", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            }) 
-        })
+        return this.httpClient.get<Equipamento[]>("/api/equipamentos")
         .pipe(
             map(res =>{
                 let equipamentos:Equipamento[] = [];
@@ -78,11 +72,7 @@ export class EquipamentoDataService {
     }
 
     getEquipamento(id:number){
-        return this.httpClient.get<Equipamento>("/api/equipamentos/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Equipamento>("/api/equipamentos/"+id)
         .pipe(
             map(res =>{
                 let equipamento:Equipamento;
@@ -96,11 +86,7 @@ export class EquipamentoDataService {
     }
 
     deleteEquipamento(id:number){
-        return this.httpClient.delete("/api/equipamentos/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        });
+        return this.httpClient.delete("/api/equipamentos/"+id);
     }
 }
 

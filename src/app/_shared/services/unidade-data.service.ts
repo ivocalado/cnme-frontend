@@ -32,8 +32,7 @@ export class UnidadeDataService {
                 unidade,
                 {
                     headers: new HttpHeaders({
-                        "Content-Type":"application/json; charset=UTF-8",
-                        "Authorization": 'Bearer '+this.authService.getToken()
+                        "Content-Type":"application/json; charset=UTF-8"
                     })
                 }
             )
@@ -47,22 +46,14 @@ export class UnidadeDataService {
     }
 
     updateUnidade(id:number, unidade:Unidade){
-        return this.httpClient.put("/api/unidades/"+id, unidade, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.put("/api/unidades/"+id, unidade)
         .pipe(
             catchError(this.handleError)
         )
     }
 
     getUnidades(){
-        return this.httpClient.get<Unidade[]>("/api/unidades", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Unidade[]>("/api/unidades")
         .pipe(
             map(res =>{
                 let unidades:Unidade[] = [];
@@ -81,11 +72,7 @@ export class UnidadeDataService {
     }
 
     getUsuariosAtivosByUnidade(id_unidade:number) {
-        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios")
         .pipe(
             map(res =>{
                 let usuarios:Usuario[] = [];
@@ -103,11 +90,7 @@ export class UnidadeDataService {
     }
 
     getUsuariosInativosByUnidade(id_unidade:number) {
-        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios")
         .pipe(
             map(res =>{
                 let usuarios:Usuario[] = [];
@@ -125,11 +108,7 @@ export class UnidadeDataService {
     }
 
     getUnidade(id:number){
-        return this.httpClient.get<Unidade>("/api/unidades/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Unidade>("/api/unidades/"+id)
         .pipe(
             map(res =>{
                 let unidade:Unidade;
@@ -140,11 +119,7 @@ export class UnidadeDataService {
     }
 
     getTvEscola(){
-        return this.httpClient.get<Unidade>("/api/unidades/u/tvescola", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Unidade>("/api/unidades/u/tvescola")
         .pipe(
             map(res =>{
                 let unidade:Unidade;
@@ -155,11 +130,7 @@ export class UnidadeDataService {
     }
 
     getMec(){
-        return this.httpClient.get<Unidade>("/api/unidades/u/mec", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Unidade>("/api/unidades/u/mec")
         .pipe(
             map(res =>{
                 let unidade:Unidade;
@@ -170,19 +141,11 @@ export class UnidadeDataService {
     }
 
     deleteUnidade(id:number){
-        return this.httpClient.delete("/api/unidades/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        });
+        return this.httpClient.delete("/api/unidades/"+id);
     }
 
     getPolos(){
-        return this.httpClient.get<Unidade[]>("/api/unidades/u/polos", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Unidade[]>("/api/unidades/u/polos")
         .pipe(
             map(res => {
                 let unidades: Unidade[] = [];
@@ -214,11 +177,7 @@ export class UnidadeDataService {
     }
 
     getEmpresas() {
-        return this.httpClient.get<Unidade[]>("api/unidades/u/empresas", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Unidade[]>("api/unidades/u/empresas")
             .pipe(
                 map(res => {
                     let unidades: Unidade[] = [];

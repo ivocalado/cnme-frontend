@@ -32,8 +32,7 @@ export class KitDataService {
                 {
                     headers: new HttpHeaders({
                         "Content-Type":
-                            "application/json; charset=UTF-8",
-                        "Authorization": 'Bearer '+this.authService.getToken()
+                            "application/json; charset=UTF-8"
                     })
                 }
             )
@@ -73,15 +72,14 @@ export class KitDataService {
         });
 
     }
-    
+
     _removeEquipamentosFromKit(kit_id: number, ids: number[]) {
         return this.httpClient.request('delete', "/api/kits/"+kit_id+"/remove-equipamentos",
             {
                 body: {ids: ids},
                 headers: new HttpHeaders({
                     "Content-Type":
-                        "application/json; charset=UTF-8",
-                        "Authorization": 'Bearer '+this.authService.getToken()
+                        "application/json; charset=UTF-8"
                 })
             }
         )
@@ -94,30 +92,21 @@ export class KitDataService {
                 body: {ids: ids},
                 headers: new HttpHeaders({
                     "Content-Type":
-                        "application/json; charset=UTF-8",
-                        "Authorization": 'Bearer '+this.authService.getToken()
+                        "application/json; charset=UTF-8"
                 })
             }
         )
     }
 
     updateKit(id:number, kit:Kit){
-        return this.httpClient.put("/api/kits/"+id, kit, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.put("/api/kits/"+id, kit)
         .pipe(
             catchError(this.handleError)
         )
     }
 
     getKits(){
-        return this.httpClient.get<Kit[]>("/api/kits", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Kit[]>("/api/kits")
         .pipe(
             map(res =>{
                 let kits:Kit[] = [];
@@ -132,11 +121,7 @@ export class KitDataService {
     }
 
     getKit(id:number){
-        return this.httpClient.get<Kit>("/api/kits/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Kit>("/api/kits/"+id)
         .pipe(
             map(res =>{
                 let kit:Kit;
@@ -147,11 +132,7 @@ export class KitDataService {
     }
 
     deleteKit(id:number){
-        return this.httpClient.delete("/api/kits/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        });
+        return this.httpClient.delete("/api/kits/"+id);
     }
 }
 

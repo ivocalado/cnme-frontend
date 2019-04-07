@@ -29,18 +29,13 @@ export class ProjetoDataService{
         projeto.status = StatusProjeto.CRIADO;
         return this.httpClient.post<Projeto>("/api/projeto-cnme", projeto, {
             headers: new HttpHeaders({
-                "Content-Type": "application/json; charset=UTF-8",
-                "Authorization": 'Bearer '+this.authService.getToken()
+                "Content-Type": "application/json; charset=UTF-8"
             })
         }).pipe(map(data => data), catchError(this.handleError));
     }
 
     updateProjeto(id:number, projeto:Projeto){
-        return this.httpClient.put('/api/projeto-cnme/'+id, projeto, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.put('/api/projeto-cnme/'+id, projeto)
         .pipe(catchError(this.handleError));
     }
 
@@ -54,11 +49,7 @@ export class ProjetoDataService{
         }
         //
 
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme"+q, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme"+q)
         .pipe(map(res =>{
             let projetos:Projeto[] = [];
             for (var key in res["data"]) {
@@ -70,16 +61,8 @@ export class ProjetoDataService{
         }));
     }
 
-    private getProjetosFromPolo(){
-
-    }
-
     getProjeto(id:number){
-        return this.httpClient.get<Projeto>("/api/projeto-cnme/"+id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Projeto>("/api/projeto-cnme/"+id)
         .pipe(map(res=>{
             let projeto:Projeto;
             projeto = res["data"];
@@ -88,44 +71,24 @@ export class ProjetoDataService{
     }
 
     deleteProjeto(id: number) {
-        return this.httpClient.delete("/api/projeto-cnme/" + id, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        });
+        return this.httpClient.delete("/api/projeto-cnme/" + id);
     }
 
     storeEquipamentos(projetoId: number, equipamentosIds: number[]) {
-        return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/add-equipamentos", equipamentosIds, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/add-equipamentos", equipamentosIds)
             .pipe(catchError(this.handleError));
     }
 
     storeKit(projetoId: number, kitId: number) {
-        return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/add-kit/" + kitId, null, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/add-kit/" + kitId, null)
             .pipe(catchError(this.handleError));
     }
     deleteKit(projetoId: number, kitId: number) {
-        return this.httpClient.delete("api/projeto-cnme/" + projetoId + "/remove-kit/" + kitId, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        });
+        return this.httpClient.delete("api/projeto-cnme/" + projetoId + "/remove-kit/" + kitId);
     }
 
     getEtapasProjeto(projetoId: number) {
-        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapas", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapas")
             .pipe(map(res => {
                 let etapas: Etapa[] = [];
                 for (var key in res["data"]) {
@@ -138,11 +101,7 @@ export class ProjetoDataService{
     }
 
     getEtapaEnvio(projetoId: number) {
-        return this.httpClient.get<Etapa>("/api/projeto-cnme/" + projetoId + "/etapa-envio", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Etapa>("/api/projeto-cnme/" + projetoId + "/etapa-envio")
             .pipe(map(res => {
                 let etapa: Etapa;
                 etapa = res["data"];
@@ -151,11 +110,7 @@ export class ProjetoDataService{
     }
 
     getEtapaInstalacao(projetoId: number) {
-        return this.httpClient.get<Etapa[]>("api/projeto-cnme/"+projetoId+"/etapa-instalacao", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Etapa[]>("api/projeto-cnme/"+projetoId+"/etapa-instalacao")
             .pipe(map(res => {
                 let etapa: Etapa;
                 etapa = res["data"];
@@ -164,11 +119,7 @@ export class ProjetoDataService{
     }
 
     getEtapaAtivacao(projetoId: number) {
-        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapa-ativacao", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Etapa[]>("/api/projeto-cnme/" + projetoId + "/etapa-ativacao")
             .pipe(map(res => {
                 let etapa: Etapa;
                 etapa = res["data"];
@@ -177,29 +128,17 @@ export class ProjetoDataService{
     }
 
     storeTarefaEnvio(projetoId:number, tarefa:Tarefa){
-        return this.httpClient.post("api/etapas/projeto-cnme/"+projetoId+"/add-tarefa-envio", tarefa, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.post("api/etapas/projeto-cnme/"+projetoId+"/add-tarefa-envio", tarefa)
         .pipe(catchError(this.handleError));
     }
 
     storeTarefaInstalacao(projetoId: number, tarefa: Tarefa) {
-        return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-instalacao", tarefa, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-instalacao", tarefa)
             .pipe(catchError(this.handleError));
     }
 
     storeTarefaAtivacao(projetoId: number, tarefa: Tarefa) {
-        return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-ativacao", tarefa, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.post("api/etapas/projeto-cnme/" + projetoId + "/add-tarefa-ativacao", tarefa)
             .pipe(catchError(this.handleError));
     }
 
@@ -219,29 +158,17 @@ export class ProjetoDataService{
     }*/
 
     deleteTarefa(tarefaId:number){
-        return this.httpClient.delete("/api/tarefas/"+tarefaId, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.delete("/api/tarefas/"+tarefaId)
         .pipe(catchError(this.handleError));
     }
 
     deleteEtapa(etapaId:number){
-        return this.httpClient.delete("/api/etapas/"+etapaId, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.delete("/api/etapas/"+etapaId)
         .pipe(catchError(this.handleError));
     }
 
     getEquipDisponiveisEnvio(projetoId:number){
-        return this.httpClient.get<EquipamentoProjeto>("/api/tarefas/projeto-cnme/" +projetoId+"/equipamentos-disponiveis-envio", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<EquipamentoProjeto>("/api/tarefas/projeto-cnme/" +projetoId+"/equipamentos-disponiveis-envio")
             .pipe(map(res => {
                 let equipamentos: EquipamentoProjeto[] = [];
                 for (var key in res["data"]) {
@@ -256,11 +183,6 @@ export class ProjetoDataService{
     cancelProject(projetoId: number, descricao: string) {
         return this.httpClient.post("/api/projeto-cnme/" + projetoId + "/cancelar", {
             descricao: descricao
-        },
-        {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
         })
             .pipe(catchError(this.handleError));
     }
@@ -268,46 +190,28 @@ export class ProjetoDataService{
     storeEntrega(projetoId:number, tarefaId:number, values:any){
         return this.httpClient.post(
             "/api/etapas/projeto-cnme/" + projetoId + "/tarefa/" + tarefaId + "/entregar",
-            values,
-            {
-                headers: new HttpHeaders({"Authorization": 'Bearer ' + this.authService.getToken()})
-        })
+            values)
     }
 
     storeInstalacao(projetoId: number, values: any) {
         return this.httpClient.post(
             "/api/etapas/projeto-cnme/" + projetoId + "/instalar",
-            values,
-            {
-                headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
-            })
+            values)
     }
 
     storeAtivacao(projetoId: number, values: any) {
         return this.httpClient.post(
             "/api/etapas/projeto-cnme/" + projetoId + "/ativar",
-            values,
-            {
-                headers: new HttpHeaders({ "Authorization": 'Bearer ' + this.authService.getToken() })
-            })
+            values)
     }
 
     enviarTodasEntregas(projetoId: number) {
-        return this.httpClient.post("/api/etapas/projeto-cnme/"+ projetoId+"/enviar-all", null,
-        {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.post("/api/etapas/projeto-cnme/"+ projetoId+"/enviar-all", null)
             .pipe(catchError(this.handleError));
     }
 
     getProjetosAtrasados() {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados")
         .pipe(map(res =>{
             let projetos:Projeto[] = [];
             for (var key in res["data"]) {
@@ -320,11 +224,7 @@ export class ProjetoDataService{
     }
 
     getProjetosPorStatus(status: string) {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?status="+status, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?status="+status)
         .pipe(map(res =>{
             let projetos:Projeto[] = [];
             for (var key in res["data"]) {
@@ -361,11 +261,7 @@ export class ProjetoDataService{
     }
 
     getProjetosEmAndamento() {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/andamento", {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/andamento")
         .pipe(map(res =>{
             let projetos:Projeto[] = [];
             for (var key in res["data"]) {
@@ -374,15 +270,11 @@ export class ProjetoDataService{
                 projetos.push(projeto);
             }
             return projetos;
-        }));    
+        }));
     }
 
     getProjetosAtrasadosPorEtapa(etapa: string) {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados?etapa="+etapa, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados?etapa="+etapa)
         .pipe(map(res =>{
             let projetos:Projeto[] = [];
             for (var key in res["data"]) {
