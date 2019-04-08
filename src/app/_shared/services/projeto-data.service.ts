@@ -300,4 +300,21 @@ export class ProjetoDataService{
     getProjetosAtrasadosEmAtivacao() {
         return this.getProjetosAtrasadosPorEtapa("ATIVACAO")
     }
+
+    getProjetosPorEstado(uf: string) {
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?uf=" + uf, {
+            headers: new HttpHeaders({
+                "Authorization": 'Bearer '+this.authService.getToken()
+            })
+        })
+        .pipe(map(res =>{
+            let projetos:Projeto[] = [];
+            for (var key in res["data"]) {
+                let projeto: Projeto;
+                projeto = <Projeto>res["data"][key];
+                projetos.push(projeto);
+            }
+            return projetos;
+        }));
+    }
 }

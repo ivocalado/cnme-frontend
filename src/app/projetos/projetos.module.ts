@@ -25,6 +25,12 @@ import { ProjetosAndamentoComponent } from './projetos-andamento/projetos-andame
 import { ProjetosAtrasadosEnvioComponent } from './projetos-atrasados-envio/projetos-atrasados-envio.component';
 import { ProjetosAtrasadosInstalacaoComponent } from './projetos-atrasados-instalacao/projetos-atrasados-instalacao.component';
 import { ProjetosAtrasadosAtivacaoComponent } from './projetos-atrasados-ativacao/projetos-atrasados-ativacao.component';
+import { ProjetosEmPlanejamentoComponent } from './projetos-em-planejamento/projetos-em-planejamento.component';
+import { ProjetosEnviadosComponent } from './projetos-enviados/projetos-enviados.component';
+import { ProjetosEntreguesComponent } from './projetos-entregues/projetos-entregues.component';
+import { ProjetosInstaladosComponent } from './projetos-instalados/projetos-instalados.component';
+import { ProjetosCanceladosComponent } from './projetos-cancelados/projetos-cancelados.component';
+import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por-estados.component';
 
 @NgModule({
     declarations: [
@@ -43,7 +49,13 @@ import { ProjetosAtrasadosAtivacaoComponent } from './projetos-atrasados-ativaca
         ProjetosAndamentoComponent,
         ProjetosAtrasadosEnvioComponent,
         ProjetosAtrasadosInstalacaoComponent,
-        ProjetosAtrasadosAtivacaoComponent
+        ProjetosAtrasadosAtivacaoComponent,
+        ProjetosEmPlanejamentoComponent,
+        ProjetosEnviadosComponent,
+        ProjetosEntreguesComponent,
+        ProjetosInstaladosComponent,
+        ProjetosCanceladosComponent,
+        ProjetosPorEstadosComponent
     ],
     imports: [
         SharedModule,

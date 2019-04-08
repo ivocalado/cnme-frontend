@@ -1,17 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { ProjetoDataService } from 'src/app/_shared/services/projeto-data.service';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import {Location} from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+
+
 
 @Component({
-  selector: 'app-projetos-atrasados-list',
+  selector: 'app-projetos-por-estados',
   templateUrl: '../_shared/projetos-list.dashboard.html',
   styleUrls: ['../_shared/projetos-list.dashboard.scss']
 })
-export class ProjetosAtrasadosListComponent implements OnInit {
+export class ProjetosPorEstadosComponent implements OnInit {
 
   displayedColumns: string[] = [
     "numero",
@@ -19,10 +21,10 @@ export class ProjetosAtrasadosListComponent implements OnInit {
     "previsao",
     "status",
     "actions"
-];
-dataSource;
-@ViewChild(MatSort) sort: MatSort;
-titulo: string = "Projetos em Atraso"
+  ];
+  dataSource;
+  @ViewChild(MatSort) sort: MatSort;
+  titulo: string = "Projetos Implantados em "
 
   constructor(
     private projetoDataService: ProjetoDataService,
@@ -33,12 +35,23 @@ titulo: string = "Projetos em Atraso"
     ) { }
 
   ngOnInit() {
-    this.projetoDataService
-    .getProjetosAtrasados()
-    .subscribe((projetos: Projeto[]) => {
-        this.dataSource = new MatTableDataSource(projetos);
-        this.dataSource.sort = this.sort;
-    });
+    this.route.params.subscribe((params: Params) => {
+      let uf : string = params["uf"];
+      if(uf == null) {
+        this.router.navigate(["/"], { relativeTo: this.route });
+        this.snackBarService.openSnackBar("Requisição inválida. Tente novamente!")
+      } else {
+        this.titulo += uf
+        this.projetoDataService
+        .getProjetosPorEstado(uf)
+        .subscribe((projetos: Projeto[]) => {
+            this.dataSource = new MatTableDataSource(projetos);
+            this.dataSource.sort = this.sort;
+         });
+      }
+      
+  });
+    
   }
 
   onCancel() {
@@ -47,7 +60,7 @@ titulo: string = "Projetos em Atraso"
 
   onDetails(id: number) {
     this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
-  }  
+  }
 
   applyFilter(filterValue: string) {
     console.log(filterValue);

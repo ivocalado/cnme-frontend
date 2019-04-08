@@ -8,12 +8,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-projetos-andamento',
+  selector: 'app-projetos-cancelados',
   templateUrl: '../_shared/projetos-list.dashboard.html',
   styleUrls: ['../_shared/projetos-list.dashboard.scss']
 })
-export class ProjetosAndamentoComponent implements OnInit {
+export class ProjetosCanceladosComponent implements OnInit {
 
+  
   displayedColumns: string[] = [
     "numero",
     "unidade",
@@ -21,24 +22,25 @@ export class ProjetosAndamentoComponent implements OnInit {
     "status",
     "actions"
 ];
-projetosEmAndamento : Projeto[] = []
 dataSource;
 @ViewChild(MatSort) sort: MatSort;
-titulo: string = "Projetos em Andamento"
+titulo: string = "Projetos Cancelados"
 
-constructor(
-  private projetoDataService: ProjetoDataService,
-  private snackBarService: SnackBarService,
-  private location: Location,
-  private route: ActivatedRoute,
-  private router: Router,
-  ) { }
+  constructor(
+    private projetoDataService: ProjetoDataService,
+    private snackBarService: SnackBarService,
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
+    ) { }
 
   ngOnInit() {
-    this.projetoDataService.getProjetosEmAndamento().subscribe((projetos: Projeto[]) => {
-      this.dataSource = new MatTableDataSource(projetos);
-      this.dataSource.sort = this.sort;
-     })
+    this.projetoDataService
+    .getProjetosPorStatus("CANCELADO")
+    .subscribe((projetos: Projeto[]) => {
+        this.dataSource = new MatTableDataSource(projetos);
+        this.dataSource.sort = this.sort;
+    });
   }
 
   onCancel() {

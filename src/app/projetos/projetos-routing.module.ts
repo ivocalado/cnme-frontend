@@ -16,6 +16,12 @@ import { ProjetosAndamentoComponent } from './projetos-andamento/projetos-andame
 import { ProjetosAtrasadosEnvioComponent } from './projetos-atrasados-envio/projetos-atrasados-envio.component';
 import { ProjetosAtrasadosInstalacaoComponent } from './projetos-atrasados-instalacao/projetos-atrasados-instalacao.component';
 import { ProjetosAtrasadosAtivacaoComponent } from './projetos-atrasados-ativacao/projetos-atrasados-ativacao.component';
+import { ProjetosEmPlanejamentoComponent } from './projetos-em-planejamento/projetos-em-planejamento.component';
+import { ProjetosEnviadosComponent } from './projetos-enviados/projetos-enviados.component';
+import { ProjetosEntreguesComponent } from './projetos-entregues/projetos-entregues.component';
+import { ProjetosInstaladosComponent } from './projetos-instalados/projetos-instalados.component';
+import { ProjetosCanceladosComponent } from './projetos-cancelados/projetos-cancelados.component';
+import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por-estados.component';
 
 const routes: Routes = [
     {
@@ -33,11 +39,18 @@ const routes: Routes = [
             { path: ':id/etapa-instalacao', component: EtapaInstalacaoComponent },
             { path: ':id/etapa-ativacao', component: EtapaAtivacaoComponent },
             { path: 'atrasados', component: ProjetosAtrasadosListComponent},
-            { path: 'concluidos', component: ProjetosConcluidosComponent},
-            { path: 'andamento', component: ProjetosAndamentoComponent},
             { path: 'atrasados/envio', component: ProjetosAtrasadosEnvioComponent },
             { path: 'atrasados/instalacao', component: ProjetosAtrasadosInstalacaoComponent },
-            { path: 'atrasados/ativacao', component: ProjetosAtrasadosAtivacaoComponent }
+            { path: 'atrasados/ativacao', component: ProjetosAtrasadosAtivacaoComponent },
+            { path: 'concluidos', component: ProjetosConcluidosComponent},
+            { path: 'andamento', component: ProjetosAndamentoComponent},
+            { path: 'planejamento', component: ProjetosEmPlanejamentoComponent},
+            { path: 'enviados', component: ProjetosEnviadosComponent},
+            { path: 'entregues', component: ProjetosEntreguesComponent},
+            { path: 'instalados', component: ProjetosInstaladosComponent},
+            { path: 'cancelados', component: ProjetosCanceladosComponent},
+            { path: 'ativados', component: ProjetosConcluidosComponent},
+            { path: 'por-estado/:uf', component: ProjetosPorEstadosComponent}
             //{ path: ':id/etapa-envio/:etapaId', component: EtapaEnvioComponent }
         ]
     }

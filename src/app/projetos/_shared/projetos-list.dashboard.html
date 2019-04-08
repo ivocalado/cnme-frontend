@@ -3,6 +3,9 @@
         <mat-card>
             <mat-card-title>{{titulo}}</mat-card-title>
             <hr class="m-2">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+            </mat-form-field>
             <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
                 <!-- Position Column -->
                 <ng-container matColumnDef="numero">
@@ -14,7 +17,7 @@
                     <mat-cell *matCellDef="let row">{{row.unidade.nome}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="previsao">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Previsão </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Previsão de Conclusão </mat-header-cell>
                     <mat-cell *matCellDef="let row">{{row.data_fim_previsto | date:'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="status">

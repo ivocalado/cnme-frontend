@@ -6,13 +6,12 @@ import { Projeto } from 'src/app/_shared/models/projeto.model';
 import {Location} from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-projetos-andamento',
+  selector: 'app-projetos-em-planejamento',
   templateUrl: '../_shared/projetos-list.dashboard.html',
   styleUrls: ['../_shared/projetos-list.dashboard.scss']
 })
-export class ProjetosAndamentoComponent implements OnInit {
+export class ProjetosEmPlanejamentoComponent implements OnInit {
 
   displayedColumns: string[] = [
     "numero",
@@ -21,24 +20,25 @@ export class ProjetosAndamentoComponent implements OnInit {
     "status",
     "actions"
 ];
-projetosEmAndamento : Projeto[] = []
 dataSource;
 @ViewChild(MatSort) sort: MatSort;
-titulo: string = "Projetos em Andamento"
+titulo: string = "Projetos em Planejamento"
 
-constructor(
-  private projetoDataService: ProjetoDataService,
-  private snackBarService: SnackBarService,
-  private location: Location,
-  private route: ActivatedRoute,
-  private router: Router,
-  ) { }
+  constructor(
+    private projetoDataService: ProjetoDataService,
+    private snackBarService: SnackBarService,
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
+    ) { }
 
   ngOnInit() {
-    this.projetoDataService.getProjetosEmAndamento().subscribe((projetos: Projeto[]) => {
-      this.dataSource = new MatTableDataSource(projetos);
-      this.dataSource.sort = this.sort;
-     })
+    this.projetoDataService
+    .getProjetosPorStatus("PLANEJAMENTO")
+    .subscribe((projetos: Projeto[]) => {
+        this.dataSource = new MatTableDataSource(projetos);
+        this.dataSource.sort = this.sort;
+    });
   }
 
   onCancel() {
@@ -47,11 +47,10 @@ constructor(
 
   onDetails(id: number) {
     this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
-  }
+  } 
 
   applyFilter(filterValue: string) {
     console.log(filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }
