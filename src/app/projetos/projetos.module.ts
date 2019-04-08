@@ -30,6 +30,7 @@ import { ProjetosEnviadosComponent } from './projetos-enviados/projetos-enviados
 import { ProjetosEntreguesComponent } from './projetos-entregues/projetos-entregues.component';
 import { ProjetosInstaladosComponent } from './projetos-instalados/projetos-instalados.component';
 import { ProjetosCanceladosComponent } from './projetos-cancelados/projetos-cancelados.component';
+import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por-estados.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { ProjetosCanceladosComponent } from './projetos-cancelados/projetos-canc
         ProjetosEnviadosComponent,
         ProjetosEntreguesComponent,
         ProjetosInstaladosComponent,
-        ProjetosCanceladosComponent
+        ProjetosCanceladosComponent,
+        ProjetosPorEstadosComponent
     ],
     imports: [
         SharedModule,

@@ -3,6 +3,9 @@
         <mat-card>
             <mat-card-title>{{titulo}}</mat-card-title>
             <hr class="m-2">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+            </mat-form-field>
             <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
                 <!-- Position Column -->
                 <ng-container matColumnDef="numero">

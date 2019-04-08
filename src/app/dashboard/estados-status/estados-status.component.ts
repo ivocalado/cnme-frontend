@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { DashboardDataService } from 'src/app/_shared/services/dashboard.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-estados-status',
@@ -13,7 +14,9 @@ export class EstadosStatusComponent implements OnInit {
     dataSource;
 
     constructor(
-        private dashboardDataService:DashboardDataService
+        private dashboardDataService:DashboardDataService,
+        private route: ActivatedRoute,
+        private router: Router,
     ) { }
 
     ngOnInit() {
@@ -390,4 +393,8 @@ export class EstadosStatusComponent implements OnInit {
         this.dataSource.sort = this.sort;
     }
 
+    showProjetosPorEstados(row: any) {
+        let estado = row.uf 
+        this.router.navigate(["/projetos/por-estado/", estado], { relativeTo: this.route });
+    }
 }

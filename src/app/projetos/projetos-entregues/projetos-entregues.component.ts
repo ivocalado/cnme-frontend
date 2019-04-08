@@ -48,4 +48,9 @@ titulo: string = "Projetos Entregues"
   onDetails(id: number) {
     this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
   } 
+
+  applyFilter(filterValue: string) {
+    console.log(filterValue);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

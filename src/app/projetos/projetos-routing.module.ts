@@ -21,6 +21,7 @@ import { ProjetosEnviadosComponent } from './projetos-enviados/projetos-enviados
 import { ProjetosEntreguesComponent } from './projetos-entregues/projetos-entregues.component';
 import { ProjetosInstaladosComponent } from './projetos-instalados/projetos-instalados.component';
 import { ProjetosCanceladosComponent } from './projetos-cancelados/projetos-cancelados.component';
+import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por-estados.component';
 
 const routes: Routes = [
     {
@@ -49,6 +50,7 @@ const routes: Routes = [
             { path: 'instalados', component: ProjetosInstaladosComponent},
             { path: 'cancelados', component: ProjetosCanceladosComponent},
             { path: 'ativados', component: ProjetosConcluidosComponent},
+            { path: 'por-estado/:uf', component: ProjetosPorEstadosComponent}
             //{ path: ':id/etapa-envio/:etapaId', component: EtapaEnvioComponent }
         ]
     }
