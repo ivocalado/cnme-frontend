@@ -293,7 +293,6 @@ export class ProjetoDataService{
 
 
     getProjetosAtrasadosEmInstalacao() {
-        console.log("getProjetosAtrasadosEmInstalacao")
         return this.getProjetosAtrasadosPorEtapa("INSTALACAO")
     }
 
@@ -302,11 +301,7 @@ export class ProjetoDataService{
     }
 
     getProjetosPorEstado(uf: string) {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?uf=" + uf, {
-            headers: new HttpHeaders({
-                "Authorization": 'Bearer '+this.authService.getToken()
-            })
-        })
+        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?uf=" + uf)
         .pipe(map(res =>{
             let projetos:Projeto[] = [];
             for (var key in res["data"]) {
