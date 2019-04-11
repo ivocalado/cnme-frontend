@@ -1,3 +1,6 @@
+@import "~@angular/material/theming";
+@include mat-core();
+
 .mat-column-numero{
     flex: 0 0 20%;
 }
@@ -10,4 +13,15 @@
 .mat-column-status{
     flex: 0 0 15%;
     justify-content:center;
+}
+
+.hasAlert{
+    background-color: mat-color($mat-red,50);
+    .mat-cell{
+        color:mat-contrast($mat-red,50);
+    }
+}
+
+.icon-alert{
+    color:mat-color($mat-red,500);
 }

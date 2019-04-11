@@ -25,7 +25,9 @@
                 </ng-container>
                 <ng-container matColumnDef="previsao">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Previsão </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.data_fim_previsto | date:'dd/MM/yyyy'}}</mat-cell>
+                    <mat-cell *matCellDef="let row">{{row.data_fim_previsto | date:'dd/MM/yyyy'}}
+                        <mat-icon class="icon-alert" matTooltip="Mensagem sobre o alerta" *ngIf="row.status =='PLANEJAMENTO'" matTooltipPosition="after">notification_important</mat-icon>
+                    </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
@@ -48,7 +50,8 @@
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{'hasAlert' : row.status =='PLANEJAMENTO'}"></mat-row>
             </mat-table>
         </mat-card>
     </div>

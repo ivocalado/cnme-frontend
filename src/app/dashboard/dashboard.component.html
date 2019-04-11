@@ -5,7 +5,7 @@
 </div>
 <div class="row">
     <div class="col-lg-3">
-        <mat-card class="gray" (click)="showProjetos()">
+        <mat-card class="gray has-click" (click)="showProjetos()">
             <mat-card-title>
                 <mat-icon>cast_connected</mat-icon>
                 <span>&nbsp;</span>
@@ -17,7 +17,7 @@
         </mat-card>
     </div>
     <div class="col-lg-3">
-        <mat-card class="concluidos" (click)="showProjetosConcluidos()">
+        <mat-card class="concluidos has-click" (click)="showProjetosConcluidos()">
             <mat-card-title>
                 <mat-icon>cast</mat-icon>
                 <span>&nbsp;</span>
@@ -29,7 +29,7 @@
         </mat-card>
     </div>
     <div class="col-lg-3">
-        <mat-card class="andamento" (click)="showProjetosEmAndamento()">
+        <mat-card class="andamento has-click" (click)="showProjetosEmAndamento()">
             <mat-card-title>
                 <mat-icon>cast</mat-icon>
                 <span>&nbsp;</span>
@@ -41,7 +41,7 @@
         </mat-card>
     </div>
     <div class="col-lg-3">
-        <mat-card class="atrasados" (click)="showProjetosAtrasados()">
+        <mat-card class="atrasados has-click" (click)="showProjetosAtrasados()">
             <mat-card-title>
                 <mat-icon>cast_connected</mat-icon>
                 <span>&nbsp;</span>
@@ -69,7 +69,7 @@
 <!-- gestor e etapas -->
 <div class="row h-100">
     <div class="col-lg-4">
-        <mat-card class="gray">
+        <mat-card class="gray has-click">
             <mat-card-title>
                 <mat-icon>person</mat-icon>
                 <span>&nbsp;</span>
@@ -117,3 +117,11 @@
     </div>
 </div>
 <!-- fim estados -->
+<hr class="m-2">
+<!-- empresas -->
+<div class="row">
+    <div class="col-lg-12">
+        <app-envio-empresas></app-envio-empresas>
+    </div>
+</div>
+<!-- fim empresas -->

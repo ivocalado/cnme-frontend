@@ -7,18 +7,23 @@
   .mat-table {
         width: 100%;
         .mat-header-row{
-            background-color: mat-color($mat-blue-gray,500);
+            background-color: mat-color($mat-blue-gray,900);
             .mat-header-cell{
-                color:mat-contrast($mat-blue-gray,500);
+                color:mat-contrast($mat-blue-gray,900);
+                &:first-child{
+                    flex: 0 0 30%;
+                }
             }
             .mat-cell{
                 justify-content:center;
-
             }
         }
-        .mat-row:hover {
-            background-color: mat-color($mat-blue-gray,100);
-            cursor: pointer;
+        .mat-row{
+            .mat-cell{
+                &:first-child{
+                    flex: 0 0 30%;
+                }
+            }
         }
     }
 }

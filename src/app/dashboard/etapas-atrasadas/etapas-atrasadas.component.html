@@ -9,7 +9,7 @@
     </p>
     <div class="row h-100">
         <div class="col-lg-4 text-center">
-            <div class="wrap-circle-progress">
+            <div class="wrap-circle-progress has-click">
                 <circle-progress [percent]="projetosEtapas.pctEnvio" [radius]="100" title="{{projetosEtapas.pctEnvio}}%" [outerStrokeColor]="'#EF5350'"
                     [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
                     [animation]="true" [animationDuration]="300" (click)="showProjetosAtrasadosEmEnvio()">
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="col-lg-4 text-center">
-            <div class="wrap-circle-progress">
+            <div class="wrap-circle-progress has-click">
                 <circle-progress [percent]="projetosEtapas.pctInstalacao" [radius]="100" title="{{this.projetosEtapas.pctInstalacao}}%" [outerStrokeColor]="'#EF5350'"
                     [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
                     [animation]="true" [animationDuration]="300" (click)="showProjetosAtrasadosEmInstalacao()">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-lg-4 text-center">
-            <div class="wrap-circle-progress">
+            <div class="wrap-circle-progress has-click">
                 <circle-progress [percent]="projetosEtapas.pctAtivacao" [radius]="100" title="{{projetosEtapas.pctAtivacao}}%" [outerStrokeColor]="'#EF5350'"
                     [outerStrokeGradientStopColor]="'#EF5350'" [innerStrokeColor]="'#263238'" [titleColor]="'#263238'"
                     [animation]="true" [animationDuration]="300" (click)="showProjetosAtrasadosEmAtivacao()">

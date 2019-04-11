@@ -75,3 +75,10 @@ h1{
         height: 100%;
     }
 }
+
+.has-click{
+    &:hover{
+        opacity: 0.8;
+        cursor: pointer;
+    }
+}

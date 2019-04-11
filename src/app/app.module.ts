@@ -23,7 +23,7 @@ import { AuthService } from './_shared/services/auth.service';
         CoreModule
     ],
     providers: [AuthGuard, AuthService],
-    
+
     bootstrap: [AppComponent]
 })
 export class AppModule {}
