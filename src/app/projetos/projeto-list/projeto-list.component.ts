@@ -101,7 +101,6 @@ export class ProjetoListComponent implements OnInit {
 
     get exibeTvEscola() {
         let usuarioAutenticado = this.authService.getCurrentUser();
-        console.log(usuarioAutenticado);
         let classe = usuarioAutenticado.unidade.classe;
         return classe == "admin" || classe == "tvescola";
     }
