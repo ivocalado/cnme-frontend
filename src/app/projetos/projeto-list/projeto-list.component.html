@@ -53,6 +53,11 @@
                 <mat-row *matRowDef="let row; columns: displayedColumns;"
                 [ngClass]="{'hasAlert' : row.status =='PLANEJAMENTO'}"></mat-row>
             </mat-table>
+            <mat-paginator [length]="pagination.total" [hidePageSize]="true" (page)="newPaginationEvent($event)"
+              [pageSize]="10"
+              >
+            </mat-paginator>
+
         </mat-card>
     </div>
 </div>

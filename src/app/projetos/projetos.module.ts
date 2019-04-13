@@ -3,8 +3,11 @@ import { ProjetosRoutingModule } from './projetos-routing.module';
 import { ProjetosComponent } from './projetos.component';
 import { ProjetoEditComponent } from './projeto-edit/projeto-edit.component';
 import { SharedModule } from '../_shared/shared.module';
-import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule, MatChipsModule, MatRippleModule, MatCheckboxModule, MatExpansionModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, 
+    MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule, 
+    MatChipsModule, MatRippleModule, MatCheckboxModule, MatExpansionModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, 
+    DateAdapter, MatPaginatorModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { ProjetoListComponent } from './projeto-list/projeto-list.component';
 import { UnidadeDataService } from '../_shared/services/unidade-data.service';
 import { SnackBarService } from '../_shared/helpers/snackbar.service';
@@ -77,7 +80,8 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
         MatChipsModule,
         MatRippleModule,
         MatCheckboxModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatPaginatorModule
     ],
     providers: [
         UnidadeDataService,

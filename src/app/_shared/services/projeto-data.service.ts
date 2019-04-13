@@ -39,25 +39,34 @@ export class ProjetoDataService{
         //.pipe(catchError(this.handleError));
     }
 
-    getProjetos(){
+    getProjetos(pageIndex: number){
         // verifica se o usuario logado é polo e retorna somente seus projetos
         let q = "";
         let usuarioAutenticado = this.authService.getCurrentUser();
         let classe = usuarioAutenticado.unidade.classe
+        let url = ""
         if(classe=="polo"){
-            q = "/p/pesquisar?q=" + usuarioAutenticado.unidade.nome;
+            url = "/api/projeto-cnme/p/pesquisar?q="+ + usuarioAutenticado.unidade.nome + "&page=" +pageIndex
+        } else {
+            url = "/api/projeto-cnme?page="+pageIndex
         }
         //
 
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme"+q)
+        
+
+        return this.httpClient.get<any>(url)
         .pipe(map(res =>{
+            let resultado : any = {}
             let projetos:Projeto[] = [];
             for (var key in res["data"]) {
                 let projeto: Projeto;
                 projeto = <Projeto>res["data"][key];
                 projetos.push(projeto);
             }
-            return projetos;
+            resultado['projetos'] = projetos
+            resultado['links'] = res["links"]
+            resultado['meta'] = res["meta"]
+            return resultado
         }));
     }
 
