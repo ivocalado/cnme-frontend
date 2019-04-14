@@ -102,7 +102,7 @@ export class KitDataService {
         return this.httpClient.put("/api/kits/"+id, kit)
     }
 
-    getKits(){
+    getAllKits() {
         return this.httpClient.get<Kit[]>("/api/kits")
         .pipe(
             map(res =>{
@@ -112,7 +112,26 @@ export class KitDataService {
                     kit = <Kit>res["data"][key];
                     kits.push(kit);
                 }
-                return kits;
+                return kits
+            })
+        );
+    }
+
+    getKits(pageIndex: number){
+        return this.httpClient.get<any>("/api/kits?page="+pageIndex)
+        .pipe(
+            map(res =>{
+                let resultado : any = {}
+                let kits:Kit[] = [];
+                for(var key in res["data"]){
+                    let kit:Kit;
+                    kit = <Kit>res["data"][key];
+                    kits.push(kit);
+                }
+                resultado['kits'] = kits
+                resultado['links'] = res["links"]
+                resultado['meta'] = res["meta"]
+                return resultado
             })
         );
     }

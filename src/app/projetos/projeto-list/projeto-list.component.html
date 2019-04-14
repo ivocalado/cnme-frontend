@@ -54,7 +54,7 @@
                 [ngClass]="{'hasAlert' : row.status =='PLANEJAMENTO'}"></mat-row>
             </mat-table>
             <mat-paginator [length]="pagination.total" [hidePageSize]="true" (page)="newPaginationEvent($event)"
-              [pageSize]="10"
+              [pageSize]="pagination.itens_per_page"
               >
             </mat-paginator>
 
