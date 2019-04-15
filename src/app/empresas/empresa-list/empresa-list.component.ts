@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Unidade } from "src/app/_shared/models/unidade.model";
 import { UnidadeDataService } from "src/app/_shared/services/unidade-data.service";
-import { MatSort, MatTableDataSource } from "@angular/material";
+import { MatSort, MatTableDataSource, PageEvent } from "@angular/material";
 
 @Component({
     selector: 'app-empresa-list',
@@ -89,6 +89,10 @@ export class EmpresaListComponent implements OnInit {
 
     applyFilter(filterValue: string) {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    newPaginationEvent(pageEvent: PageEvent) {
+        this.fetchUnidades(pageEvent.pageIndex + 1)
     }
 
 
