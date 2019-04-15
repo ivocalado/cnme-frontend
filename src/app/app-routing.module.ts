@@ -14,7 +14,8 @@ const appRoutes: Routes = [
     { path: "kits",loadChildren: "./kits/kits.module#KitsModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "tipoEquipamentos",loadChildren: "./tipoEquipamentos/tipoEquipamentos.module#TipoEquipamentosModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "projetos", loadChildren: "./projetos/projetos.module#ProjetosModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard], runGuardsAndResolvers: 'always'},
-    { path: "auth", loadChildren: "./auth/auth.module#AuthModule"}
+    { path: "auth", loadChildren: "./auth/auth.module#AuthModule"},
+    { path: "chamados", loadChildren: "./chamados/chamados.module#ChamadosModule"}
 ];
 
 @NgModule({
