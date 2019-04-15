@@ -39,37 +39,6 @@ export class ProjetoDataService{
         //.pipe(catchError(this.handleError));
     }
 
-    getProjetos(pageIndex: number){
-        // verifica se o usuario logado é polo e retorna somente seus projetos
-        let q = "";
-        let usuarioAutenticado = this.authService.getCurrentUser();
-        let classe = usuarioAutenticado.unidade.classe
-        let url = ""
-        if(classe=="polo"){
-            url = "/api/projeto-cnme/p/pesquisar?q="+ + usuarioAutenticado.unidade.nome + "&page=" +pageIndex
-        } else {
-            url = "/api/projeto-cnme?page="+pageIndex
-        }
-        //
-
-        
-
-        return this.httpClient.get<any>(url)
-        .pipe(map(res =>{
-            let resultado : any = {}
-            let projetos:Projeto[] = [];
-            for (var key in res["data"]) {
-                let projeto: Projeto;
-                projeto = <Projeto>res["data"][key];
-                projetos.push(projeto);
-            }
-            resultado['projetos'] = projetos
-            resultado['links'] = res["links"]
-            resultado['meta'] = res["meta"]
-            return resultado
-        }));
-    }
-
     getProjeto(id:number){
         return this.httpClient.get<Projeto>("/api/projeto-cnme/"+id)
         .pipe(map(res=>{
@@ -151,21 +120,6 @@ export class ProjetoDataService{
             //.pipe(catchError(this.handleError));
     }
 
-    /*
-    deprecated
-    getTarefas(etapaId:number){
-        return this.httpClient.get<Tarefa[]>("/api/etapas/" + etapaId + "/tarefas")
-            .pipe(map(res => {
-                let tarefas: Tarefa[] = [];
-                for (var key in res["data"]) {
-                    let tarefa: Tarefa;
-                    tarefa = <Tarefa>res["data"][key];
-                    tarefas.push(tarefa);
-                }
-                return tarefas;
-            }));
-    }*/
-
     deleteTarefa(tarefaId:number){
         return this.httpClient.delete("/api/tarefas/"+tarefaId)
         //.pipe(catchError(this.handleError));
@@ -219,106 +173,129 @@ export class ProjetoDataService{
             //.pipe(catchError(this.handleError));
     }
 
-    getProjetosAtrasados() {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados")
+
+    /**
+     * Método genérico para recuperação de projetos. Deve ser utilizada apenas internamente 
+     * nesta classe
+     */
+    _genericGetProjetos(url: string, pageIndex: number) {
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex
+        } 
+
+        url = url + paginacao
+
+        return this.httpClient.get<Projeto[]>(url)
         .pipe(map(res =>{
-            let projetos:Projeto[] = [];
-            for (var key in res["data"]) {
-                let projeto: Projeto;
-                projeto = <Projeto>res["data"][key];
-                projetos.push(projeto);
+            if(pageIndex < 0) {
+                let projetos:Projeto[] = [];
+                for (var key in res["data"]) {
+                    let projeto: Projeto;
+                    projeto = <Projeto>res["data"][key];
+                    projetos.push(projeto);
+                }
+                return projetos;
+    
+            } else {
+                let resultado : any = {}
+                let projetos:Projeto[] = [];
+                for (var key in res["data"]) {
+                    let projeto: Projeto;
+                    projeto = <Projeto>res["data"][key];
+                    projetos.push(projeto);
+                }
+                resultado['projetos'] = projetos
+                resultado['links'] = res["links"]
+                resultado['meta'] = res["meta"]
+                return resultado                
             }
-            return projetos;
         }));
     }
 
-    getProjetosPorStatus(status: string) {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?status="+status)
-        .pipe(map(res =>{
-            let projetos:Projeto[] = [];
-            for (var key in res["data"]) {
-                let projeto: Projeto;
-                projeto = <Projeto>res["data"][key];
-                projetos.push(projeto);
-            }
-            return projetos;
-        }));
-    }
+    getProjetos(pageIndex: number){
+        // verifica se o usuario logado é polo e retorna somente seus projetos
+        let q = "";
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe
+        let url = ""
+        if(classe=="polo"){
+            url = "/api/projeto-cnme/p/pesquisar?q="+ + usuarioAutenticado.unidade.nome
+        } else {
+            url = "/api/projeto-cnme"
+        }
 
-    getProjetosEmPlanejamento() {
-        return this.getProjetosPorStatus("PLANEJAMENTO")
-    }
-
-    getProjetosEnviados() {
-        return this.getProjetosPorStatus("ENVIADO")
-    }
-
-    getProjetosEntregues() {
-        return this.getProjetosPorStatus("ENTREGUE")
-    }
-
-    getProjetosInstalados() {
-        return this.getProjetosPorStatus("INSTALADO")
-    }
-
-    getProjetosConcluidos() {
-        return this.getProjetosPorStatus("ATIVADO")
-    }
-
-    getProjetosCancelados() {
-        return this.getProjetosPorStatus("CANCELADO")
-    }
-
-    getProjetosEmAndamento() {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/andamento")
-        .pipe(map(res =>{
-            let projetos:Projeto[] = [];
-            for (var key in res["data"]) {
-                let projeto: Projeto;
-                projeto = <Projeto>res["data"][key];
-                projetos.push(projeto);
-            }
-            return projetos;
-        }));
-    }
-
-    getProjetosAtrasadosPorEtapa(etapa: string) {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/atrasados?etapa="+etapa)
-        .pipe(map(res =>{
-            let projetos:Projeto[] = [];
-            for (var key in res["data"]) {
-                let projeto: Projeto;
-                projeto = <Projeto>res["data"][key];
-                projetos.push(projeto);
-            }
-            console.log(projetos)
-            return projetos;
-        }));
-    }
-
-    getProjetosAtrasadosEmEnvio() {
-        return this.getProjetosAtrasadosPorEtapa("ENVIO")
+        return this._genericGetProjetos(url, pageIndex)
+        //
     }
 
 
-    getProjetosAtrasadosEmInstalacao() {
-        return this.getProjetosAtrasadosPorEtapa("INSTALACAO")
+    getProjetosAtrasados(pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/atrasados", pageIndex) 
     }
 
-    getProjetosAtrasadosEmAtivacao() {
-        return this.getProjetosAtrasadosPorEtapa("ATIVACAO")
+
+    /**
+     * 
+     * @param status 
+     * @param pageIndex se <=0 recuperar todos os registros 
+     */
+    getProjetosPorStatus(status: string, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?status="+status, pageIndex) 
     }
 
-    getProjetosPorEstado(uf: string) {
-        return this.httpClient.get<Projeto[]>("/api/projeto-cnme/p/pesquisar?uf=" + uf)
-        .pipe(map(res =>{
-            let projetos:Projeto[] = [];
-            for (var key in res["data"]) {
-                let projeto: Projeto;
-                projeto = <Projeto>res["data"][key];
-                projetos.push(projeto);
-            }
-            return projetos;
-        }));
+    getProjetosEmPlanejamento(pageIndex: number) {
+        return this.getProjetosPorStatus("PLANEJAMENTO", pageIndex)
+    }
+
+    getProjetosEnviados(pageIndex: number) {
+        return this.getProjetosPorStatus("ENVIADO", pageIndex)
+    }
+
+    getProjetosEntregues(pageIndex: number) {
+        return this.getProjetosPorStatus("ENTREGUE", pageIndex)
+    }
+
+    getProjetosInstalados(pageIndex: number) {
+        return this.getProjetosPorStatus("INSTALADO", pageIndex)
+    }
+
+    getProjetosConcluidos(pageIndex: number) {
+        return this.getProjetosPorStatus("ATIVADO", pageIndex)
+    }
+
+    getProjetosCancelados(pageIndex: number) {
+        return this.getProjetosPorStatus("CANCELADO", pageIndex)
+    }
+
+    /**
+     * 
+     * @param status 
+     * @param pageIndex se <=0 recuperar todos os registros 
+     */
+    getProjetosEmAndamento(pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/andamento", pageIndex)
+    }
+
+    getProjetosAtrasadosPorEtapa(etapa: string, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/atrasados?etapa="+etapa, pageIndex)
+    }
+
+    getProjetosAtrasadosEmEnvio(pageIndex: number) {
+        return this.getProjetosAtrasadosPorEtapa("ENVIO", pageIndex)
+    }
+
+
+    getProjetosAtrasadosEmInstalacao(pageIndex: number) {
+        return this.getProjetosAtrasadosPorEtapa("INSTALACAO", pageIndex)
+    }
+
+    getProjetosAtrasadosEmAtivacao(pageIndex: number) {
+        return this.getProjetosAtrasadosPorEtapa("ATIVACAO", pageIndex)
+    }
+
+    getProjetosPorEstado(uf: string, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?uf=" + uf, pageIndex)
     }
 }
