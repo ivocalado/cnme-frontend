@@ -46,7 +46,7 @@ export class EquipamentoDataService {
         //.pipe(catchError(this.handleError))
     }
 
-    getEquipamentos(){
+    getAllEquipamentos(){
         return this.httpClient.get<Equipamento[]>("/api/equipamentos")
         .pipe(
             map(res =>{
@@ -65,6 +65,33 @@ export class EquipamentoDataService {
                     equipamentos.push(equipamento);
                 }
                 return equipamentos;
+            })
+        );
+    }
+
+    getEquipamentos(pageIndex: number){
+        return this.httpClient.get<any>("/api/equipamentos?page="+pageIndex)
+        .pipe(
+            map(res =>{
+                let resultado : any = {}
+                let equipamentos:Equipamento[] = [];
+                for(var key in res["data"]){
+                    let equipamento:Equipamento;
+                    let tipoEquipamento: TipoEquipamento;
+                    equipamento = <Equipamento>res["data"][key];
+                    tipoEquipamento = <TipoEquipamento>res["data"][key]["tipo_equipamento"];
+                    if (tipoEquipamento != null) {
+                        equipamento.tipoEquipamento = tipoEquipamento;
+
+                    } else {
+                        equipamento.tipoEquipamento = TipoEquipamento.EMPTY_MODEL;
+                    }
+                    equipamentos.push(equipamento);
+                }
+                resultado['equipamentos'] = equipamentos
+                resultado['links'] = res["links"]
+                resultado['meta'] = res["meta"]
+                return resultado;
             })
         );
     }

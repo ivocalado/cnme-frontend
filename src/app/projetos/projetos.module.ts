@@ -81,7 +81,8 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
         MatRippleModule,
         MatCheckboxModule,
         MatExpansionModule,
-        MatPaginatorModule
+        MatPaginatorModule 
+        
     ],
     providers: [
         UnidadeDataService,
