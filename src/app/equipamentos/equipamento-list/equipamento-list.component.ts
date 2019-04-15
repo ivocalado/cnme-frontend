@@ -14,7 +14,7 @@ export class EquipamentoListComponent implements OnInit {
     displayedColumns: string[] = ["nome", "tipoEquipamento", "descricao", "requisitos", "actions"];
     dataSource;
 
-        // "links": {
+    // "links": {
     //     "first": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
     //     "last": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
     //     "prev": null,

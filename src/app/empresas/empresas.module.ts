@@ -7,7 +7,8 @@ import {
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
 } from "@angular/material";
 import { NgxMaskModule } from "ngx-mask";
 
@@ -31,6 +32,7 @@ import { EmpresasRoutingModule } from './empresas-routing.module';
         MatCardModule,
         MatTableModule,
         EmpresasRoutingModule,
+        MatPaginatorModule, 
         NgxMaskModule.forRoot()
     ]
 })

@@ -108,7 +108,7 @@ export class EtapaAtivacaoComponent implements OnInit {
 
 
     fetchEmpresas() {
-        this.unidadeDataService.getEmpresas().subscribe((unidades: Unidade[]) => {
+        this.unidadeDataService.getAllEmpresas().subscribe((unidades: Unidade[]) => {
             this.unidades = unidades;
         })
     }

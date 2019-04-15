@@ -173,7 +173,31 @@ export class UnidadeDataService {
         );
     }
 
-    getEmpresas() {
+    getEmpresas(pageIndex: number) {
+        return this.httpClient.get<Unidade[]>("api/unidades/u/empresas?page="+pageIndex)
+            .pipe(
+                map(res => {
+
+                    let resultado : any = {}
+                    let unidades: Unidade[] = [];
+                    for (var key in res["data"]) {
+                        let unidade: Unidade;
+                        unidade = <Unidade>res["data"][key];
+                        if (!unidade["localidade"]) {
+                            unidade.localidade = Localidade.EMPTY_MODEL;
+                            unidade.localidade.estado = Estado.EMPTY_MODEL;
+                        }
+                        unidades.push(unidade);
+                    }
+                    resultado['unidades'] = unidades
+                    resultado['links'] = res["links"]
+                    resultado['meta'] = res["meta"]
+                    return resultado;
+                })
+            );
+    }
+
+    getAllEmpresas() {
         return this.httpClient.get<Unidade[]>("api/unidades/u/empresas")
             .pipe(
                 map(res => {

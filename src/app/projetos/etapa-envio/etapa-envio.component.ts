@@ -139,7 +139,7 @@ export class EtapaEnvioComponent implements OnInit, OnDestroy {
     }
 
     fetchEmpresas(){
-        this.unidadeDataService.getEmpresas().subscribe((unidades:Unidade[])=>{
+        this.unidadeDataService.getAllEmpresas().subscribe((unidades:Unidade[])=>{
             this.unidades = unidades;
         })
     }
