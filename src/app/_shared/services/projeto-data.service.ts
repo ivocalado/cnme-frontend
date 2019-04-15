@@ -187,7 +187,7 @@ export class ProjetoDataService{
 
         url = url + paginacao
 
-        return this.httpClient.get<Projeto[]>(url)
+        return this.httpClient.get<any>(url)
         .pipe(map(res =>{
             if(pageIndex < 0) {
                 let projetos:Projeto[] = [];
