@@ -189,7 +189,7 @@ export class ProjetoDataService{
 
         return this.httpClient.get<any>(url)
         .pipe(map(res =>{
-            if(pageIndex < 0) {
+            if(pageIndex <= 0) {
                 let projetos:Projeto[] = [];
                 for (var key in res["data"]) {
                     let projeto: Projeto;

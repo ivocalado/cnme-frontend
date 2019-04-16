@@ -5,7 +5,7 @@ import { UsuariosComponent } from './usuarios.component';
 import { UsuarioListComponent } from './usuario-list/usuario-list.component';
 import { UsuarioEditComponent } from './usuario-edit/usuario-edit.component';
 import { SharedModule } from '../_shared/shared.module';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatCardModule, MatTableModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, MatCardModule, MatTableModule, MatPaginatorModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioDetailsComponent } from './usuario-details/usuario-details.component';
 import { UsuarioDataService } from '../_shared/services/usuario-data.service';
@@ -30,6 +30,7 @@ import { GestoresNaoConfirmadosComponent } from './gestores-nao-confirmados/gest
         MatCardModule,
         MatTableModule,
         UsuariosRoutingModule,
+        MatPaginatorModule,
         NgxMaskModule.forRoot()
     ],
     providers: [UsuarioDataService, AuthService, Permissions]

@@ -40,6 +40,10 @@
                 <mat-row *matRowDef="let row; columns: displayedColumnsUnidade;"></mat-row>
             </mat-table>
         </mat-card>
+        <mat-paginator [length]="pagination.total" [hidePageSize]="true" (page)="newPaginationEvent($event)"
+        [pageSize]="pagination.itens_per_page"
+        >
+        </mat-paginator>        
     </div>
 </div>
 <div class="row">

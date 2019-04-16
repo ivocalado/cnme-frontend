@@ -188,18 +188,39 @@ export class UsuarioDataService {
      * o acesso à plataforma
      * @param authToken
      */
-    getGestoresNaoConfirmados(authToken: string) {
-        return this.httpClient.get<Usuario[]>("/api/usuarios/u/gestores-nao-confirmados")
+    getGestoresNaoConfirmados(pageIndex: number, authToken: string) {
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            paginacao = "?page=" + pageIndex
+        }
+        let url = "/api/usuarios/u/gestores-nao-confirmados" + paginacao
+
+        return this.httpClient.get<any>(url)
         .pipe(
             map(res =>{
-                let usuarios:Usuario[] = [];
-                for(var key in res["data"]){
-                    let usuario:Usuario;
-                    usuario = <Usuario>res["data"][key];
-                    usuario.unidade_id = usuario.unidade.id
-                    usuarios.push(usuario);
-                }
-                return usuarios;
+                if(pageIndex <= 0) {
+                    let usuarios:Usuario[] = [];
+                    for(var key in res["data"]){
+                        let usuario:Usuario;
+                        usuario = <Usuario>res["data"][key];
+                        usuario.unidade_id = usuario.unidade.id
+                        usuarios.push(usuario);
+                    }
+                    return usuarios;
+                } else {
+                    let resultado : any = {}
+                    let usuarios:Usuario[] = [];
+                    for(var key in res["data"]){
+                        let usuario:Usuario;
+                        usuario = <Usuario>res["data"][key];
+                        usuario.unidade_id = usuario.unidade.id
+                        usuarios.push(usuario);
+                    }
+                    resultado['usuarios'] = usuarios
+                    resultado['links'] = res["links"]
+                    resultado['meta'] = res["meta"]
+                    return resultado 
+                }                
             })
         );
     }

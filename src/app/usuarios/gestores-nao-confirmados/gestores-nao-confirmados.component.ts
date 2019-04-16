@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { Usuario } from 'src/app/_shared/models/usuario.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
@@ -25,6 +25,33 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
   usuarioAutenticado: Usuario; 
   title: string = "Lista de Gestores Não Confirmados"
 
+  // "links": {
+  //   "first": "https://cnme-dev.nees.com.br/api/usuarios/u/gestores-nao-confirmados?page=1",
+  //   "last": "https://cnme-dev.nees.com.br/api/usuarios/u/gestores-nao-confirmados?page=4",
+  //   "prev": null,
+  //   "next": "https://cnme-dev.nees.com.br/api/usuarios/u/gestores-nao-confirmados?page=2"
+  // },
+  // "meta": {
+  //     "current_page": 1,
+  //     "from": 1,
+  //     "last_page": 4,
+  //     "path": "https://cnme-dev.nees.com.br/api/usuarios/u/gestores-nao-confirmados",
+  //     "per_page": 25,
+  //     "to": 25,
+  //     "total": 81
+  // }
+  pagination = {
+    firstPageLink: null,
+    lastPageLink: null,
+    previousPageLink: null,
+    nextPageLink: null,
+    currentPageIndex: null,
+    itens_per_page: null,
+    total: null
+  }
+
+  INITIAL_PAGE_INDEX: number = 1  
+
 
   constructor(
       private route: ActivatedRoute,
@@ -37,7 +64,7 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
 
   ngOnInit() {
       this.usuarioAutenticado = this.authService.getCurrentUser()
-      this.fetchUsuarios()
+      this.fetchUsuarios(this.INITIAL_PAGE_INDEX)
   }
 
   onDetails(id:number){
@@ -45,12 +72,13 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
   }
 
 
-  fetchUsuarios() {
-    this.usuarioDataService.getGestoresNaoConfirmados(this.authService.getToken())
+  fetchUsuarios(pageIndex: number) {
+    this.usuarioDataService.getGestoresNaoConfirmados(pageIndex, this.authService.getToken())
     .subscribe(
-      (gestores: Usuario[]) => {
-        this.dataSourceUnidade = new MatTableDataSource(gestores);
+      (res) => {
+        this.dataSourceUnidade = new MatTableDataSource(res.usuarios);
         this.dataSourceUnidade.sort = this.sortUnidade;
+        this.buildPagination(res.links, res.meta)
       },
       error => {
         this.snackBarService.openSnackBar("Ocorreu um erro ao processar a requisição. Tente novamente.")
@@ -59,11 +87,25 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
     )
   }
 
+  buildPagination(links: any, meta: any) {
+    this.pagination.firstPageLink = links.first
+    this.pagination.lastPageLink = links.last
+    this.pagination.previousPageLink = links.prev
+    this.pagination.nextPageLink = links.next
+    this.pagination.currentPageIndex = meta.current_page
+    this.pagination.itens_per_page = meta.per_page
+    this.pagination.total = meta.total
+  }
+
   applyFilter(filterValue: string) {
       this.dataSourceUnidade.filter = filterValue.trim().toLowerCase();
   }
 
   onCancel() {
     this.location.back()
+  }
+
+  newPaginationEvent(pageEvent: PageEvent) {
+    this.fetchUsuarios(pageEvent.pageIndex + 1)
   }
 }
