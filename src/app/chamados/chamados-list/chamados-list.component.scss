@@ -1,0 +1,14 @@
+mat-table {
+    width: 100%;
+    .mat-column-actions{
+        flex: 0 0 20%;
+        justify-content:center;
+    }
+    .mat-column-nome{
+        flex: 0 0 40%;
+    }
+}
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  } 

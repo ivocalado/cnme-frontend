@@ -14,15 +14,6 @@ export class ProjetoDataService{
 
     constructor(private httpClient:HttpClient, private authService: AuthService){}
 
-    /*private handleError(errorResponse: HttpErrorResponse) {
-        if (errorResponse.error instanceof Error) {
-            return throwError("client-side error");
-        } else {
-            return throwError(errorResponse.error.error);
-        }
-
-    }*/
-
     storeProjeto(projeto:Projeto):Observable<Projeto>{
         console.log(projeto);
         projeto.usuario_id = this.authService.getCurrentUser().id; //TODO: substituir para id do usuário logado
