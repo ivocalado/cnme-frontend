@@ -103,18 +103,7 @@ export class KitDataService {
     }
 
     getAllKits() {
-        return this.httpClient.get<Kit[]>("/api/kits")
-        .pipe(
-            map(res =>{
-                let kits:Kit[] = [];
-                for(var key in res["data"]){
-                    let kit:Kit;
-                    kit = <Kit>res["data"][key];
-                    kits.push(kit);
-                }
-                return kits
-            })
-        );
+        return this.getKits(1000, 1)
     }
 
     getKits(pageSize: number, pageIndex: number){

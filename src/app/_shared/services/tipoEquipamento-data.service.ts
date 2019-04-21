@@ -23,7 +23,7 @@ export class TipoEquipamentoDataService{
      * retorna a lista completa de equipamentos sem paginação
      */
     getAllTipoEquipamentos() {
-        return this.getTipoEquipamentos(0, -1)
+        return this.getTipoEquipamentos(1000, 1)
     }
 
     getTipoEquipamentos(pageSize: number, pageIndex: number) {

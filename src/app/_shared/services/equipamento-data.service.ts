@@ -47,26 +47,7 @@ export class EquipamentoDataService {
     }
 
     getAllEquipamentos(){
-        return this.httpClient.get<Equipamento[]>("/api/equipamentos")
-        .pipe(
-            map(res =>{
-                let equipamentos:Equipamento[] = [];
-                for(var key in res["data"]){
-                    let equipamento:Equipamento;
-                    let tipoEquipamento: TipoEquipamento;
-                    equipamento = <Equipamento>res["data"][key];
-                    tipoEquipamento = <TipoEquipamento>res["data"][key]["tipo_equipamento"];
-                    if (tipoEquipamento != null) {
-                        equipamento.tipoEquipamento = tipoEquipamento;
-
-                    } else {
-                        equipamento.tipoEquipamento = TipoEquipamento.EMPTY_MODEL;
-                    }
-                    equipamentos.push(equipamento);
-                }
-                return equipamentos;
-            })
-        );
+        return this.getEquipamentos(1000, 1)
     }
 
     getEquipamentos(pageSize: number, pageIndex: number){

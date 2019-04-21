@@ -37,8 +37,8 @@ export class AdicionarKitsComponent implements OnInit {
             });
         });
 
-        this.kitDataService.getAllKits().subscribe((kits:Kit[])=>{
-            this.kits = kits;
+        this.kitDataService.getAllKits().subscribe((res: any)=>{
+            this.kits = res.kits;
         });
     }
 

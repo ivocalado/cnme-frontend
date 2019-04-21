@@ -118,8 +118,8 @@ export class KitEditComponent implements OnInit {
     fetchEquipamentos() {
         this.equipamentoDataService
             .getAllEquipamentos()
-            .subscribe((equipamentos: Equipamento[]) => {
-                this.dataSource = new MatTableDataSource(equipamentos);
+            .subscribe((res: any) => {
+                this.dataSource = new MatTableDataSource(res.equipamentos);
                 this.dataSource.sort = this.sort;
                 if(this.kit != null && this.kit.equipamentos != null) {
                     this.kit.equipamentos.forEach(equi => {
