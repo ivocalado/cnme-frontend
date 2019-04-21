@@ -40,6 +40,9 @@ export class EquipamentoListComponent implements OnInit {
     }
 
     INITIAL_PAGE_INDEX: number = 1
+    INITIAL_PAGE_SIZE: number = 10
+    pageSizeOptions: number[] = [5, 10, 25, 100];
+
 
     constructor(
         private route: ActivatedRoute,
@@ -48,7 +51,7 @@ export class EquipamentoListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.fetchEquipamentos(this.INITIAL_PAGE_INDEX);
+        this.fetchEquipamentos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
     }
 
     onEdit(id: number) {
@@ -62,14 +65,14 @@ export class EquipamentoListComponent implements OnInit {
     onDelete(id: number) {
         if (confirm("Tem certeza que deseja deletar esta equipamento")) {
             this.equipamentoDataService.deleteEquipamento(id).subscribe(res => {
-                this.fetchEquipamentos(this.INITIAL_PAGE_INDEX);
+                this.fetchEquipamentos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
             });
         }
     }
 
-    fetchEquipamentos(pageIndex: number) {
+    fetchEquipamentos(pageSize: number, pageIndex: number) {
         this.equipamentoDataService
-            .getEquipamentos(pageIndex)
+            .getEquipamentos(pageSize, pageIndex)
             .subscribe((res: any) => {
                 this.dataSource = new MatTableDataSource(res.equipamentos);
                 this.dataSource.sort = this.sort;
@@ -91,6 +94,6 @@ export class EquipamentoListComponent implements OnInit {
     }
 
     newPaginationEvent(pageEvent: PageEvent) {
-        this.fetchEquipamentos(pageEvent.pageIndex + 1)
+        this.fetchEquipamentos(pageEvent.pageSize, pageEvent.pageIndex + 1)
     }
 }

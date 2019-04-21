@@ -69,12 +69,21 @@ export class EquipamentoDataService {
         );
     }
 
-    getEquipamentos(pageIndex: number){
-        return this.httpClient.get<any>("/api/equipamentos?page="+pageIndex)
+    getEquipamentos(pageSize: number, pageIndex: number){
+        let url: string = "/api/equipamentos"
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+        } 
+
+        url = url + paginacao
+
+
+        return this.httpClient.get<any>(url)
         .pipe(
             map(res =>{
-                let resultado : any = {}
-                let equipamentos:Equipamento[] = [];
+                     let equipamentos:Equipamento[] = [];
                 for(var key in res["data"]){
                     let equipamento:Equipamento;
                     let tipoEquipamento: TipoEquipamento;
@@ -88,6 +97,17 @@ export class EquipamentoDataService {
                     }
                     equipamentos.push(equipamento);
                 }
+                let resultado : any = {}
+                if(pageIndex <= 0) {
+                    return equipamentos;
+                } else {
+                    let resultado : any = {}
+                    resultado['equipamentos'] = equipamentos
+                    resultado['links'] = res["links"]
+                    resultado['meta'] = res["meta"]
+                    return resultado                
+                }
+
                 resultado['equipamentos'] = equipamentos
                 resultado['links'] = res["links"]
                 resultado['meta'] = res["meta"]
