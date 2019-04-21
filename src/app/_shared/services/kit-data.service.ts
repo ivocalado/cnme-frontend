@@ -117,8 +117,17 @@ export class KitDataService {
         );
     }
 
-    getKits(pageIndex: number){
-        return this.httpClient.get<any>("/api/kits?page="+pageIndex)
+    getKits(pageSize: number, pageIndex: number){
+        let url: string = "/api/kits"
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+        } 
+
+        url = url + paginacao
+        
+        return this.httpClient.get<any>(url)
         .pipe(
             map(res =>{
                 let resultado : any = {}

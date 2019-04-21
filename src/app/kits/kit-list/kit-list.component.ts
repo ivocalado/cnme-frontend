@@ -41,6 +41,8 @@ export class KitListComponent implements OnInit {
     }
     
     INITIAL_PAGE_INDEX: number = 1  
+    INITIAL_PAGE_SIZE: number = 10
+    pageSizeOptions: number[] = [5, 10, 25, 100];
 
     constructor(
         private route: ActivatedRoute,
@@ -49,7 +51,7 @@ export class KitListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.fetchKits(this.INITIAL_PAGE_INDEX);
+        this.fetchKits(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
     }
 
     onEdit(id: number) {
@@ -63,14 +65,14 @@ export class KitListComponent implements OnInit {
     onDelete(id: number) {
         if (confirm("Tem certeza que deseja deletar este kit")) {
             this.kitDataService.deleteKit(id).subscribe(res => {
-                this.fetchKits(this.INITIAL_PAGE_INDEX);
+                this.fetchKits(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
             });
         }
     }
 
-    fetchKits(pageIndex: number) {
+    fetchKits(pageSize: number, pageIndex: number) {
         this.kitDataService
-            .getKits(pageIndex)
+            .getKits(pageSize, pageIndex)
             .subscribe((res: any)  => {
                 this.dataSource = new MatTableDataSource(res.kits);
                 this.dataSource.sort = this.sort;
@@ -93,6 +95,6 @@ export class KitListComponent implements OnInit {
     }
 
     newPaginationEvent(pageEvent: PageEvent) {
-        this.fetchKits(pageEvent.pageIndex + 1)
+        this.fetchKits(pageEvent.pageSize, pageEvent.pageIndex + 1)
     }
 }
