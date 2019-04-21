@@ -141,10 +141,43 @@ export class UnidadeDataService {
         return this.httpClient.delete("/api/unidades/"+id);
     }
 
-    getPolos(){
-        return this.httpClient.get<Unidade[]>("/api/unidades/u/polos")
-        .pipe(
-            map(res => {
+    getAllPolos() {
+        return this.getPolos(-1, 1)
+    }
+
+    getPolos(pageSize: number, pageIndex: number){
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe
+        if (classe == "polo") {
+            let url = "/api/unidades/u/polos?per_page=-1"
+            
+
+            return this.httpClient.get<any>(url)
+            .pipe(
+                map(res => {
+                    let polo:Unidade;
+                    polo = res["data"].find(obj => obj.nome == usuarioAutenticado.unidade.nome);
+
+                let resultado : any = {}
+                resultado['unidades'] = [polo]
+                resultado['links'] = res["links"]
+                resultado['meta'] = res["meta"]
+                return resultado  
+            })
+
+            );
+        } else {
+            let url = "/api/unidades/u/polos"
+            let paginacao: string = ""
+            if(pageIndex > 0) {
+                let token = (url.includes("?"))? "&":"?"
+                paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+            }
+
+            url = url + paginacao
+            return this.httpClient.get<any>(url)
+            .pipe(
+                map(res => {
                 let unidades: Unidade[] = [];
                 for (var key in res["data"]) {
                     let unidade: Unidade;
@@ -155,22 +188,17 @@ export class UnidadeDataService {
                     }
                     unidades.push(unidade);
                 }
-
-                // verifica se o usuario logado é polo e retorna somente seu polo
-                // verificar a possibilidade e adicionar uma query na chamada da api para melhorar performance
-                    let q = "";
-                    let usuarioAutenticado = this.authService.getCurrentUser();
-                    let classe = usuarioAutenticado.unidade.classe
-                    if (classe == "polo") {
-                        let polo:Unidade;
-                        polo = unidades.find(obj => obj.nome == usuarioAutenticado.unidade.nome);
-                        unidades = [];
-                        unidades.push(polo);
-                    }
-                //
-                return unidades;
+                let resultado : any = {}
+                resultado['unidades'] = unidades
+                resultado['links'] = res["links"]
+                resultado['meta'] = res["meta"]
+                return resultado  
             })
-        );
+            );
+        }
+
+
+        
     }
 
     getEmpresas(pageSize: number, pageIndex: number) {

@@ -7,7 +7,8 @@ import {
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
 } from "@angular/material";
 import { NgxMaskModule } from "ngx-mask";
 
@@ -32,6 +33,7 @@ import { PoloInvitationComponent } from './polo-invitation/polo-invitation.compo
         MatCardModule,
         MatTableModule,
         PolosRoutingModule,
+        MatPaginatorModule, 
         NgxMaskModule.forRoot()
     ]
 })
