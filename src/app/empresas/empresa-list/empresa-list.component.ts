@@ -40,6 +40,8 @@ export class EmpresaListComponent implements OnInit {
     }
 
     INITIAL_PAGE_INDEX: number = 1
+    INITIAL_PAGE_SIZE: number = 10
+    pageSizeOptions: number[] = [5, 10, 25, 100];
 
     constructor(
         private route: ActivatedRoute,
@@ -48,7 +50,7 @@ export class EmpresaListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.fetchUnidades(this.INITIAL_PAGE_INDEX);
+        this.fetchUnidades(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
     }
 
     onEdit(id: number) {
@@ -62,14 +64,14 @@ export class EmpresaListComponent implements OnInit {
     onDelete(id: number) {
         if (confirm("Tem certeza que deseja deletar esta empresa?")) {
             this.unidadeDataService.deleteUnidade(id).subscribe(res => {
-                this.fetchUnidades(this.INITIAL_PAGE_INDEX);
+                this.fetchUnidades(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
             });
         }
     }
 
-    fetchUnidades(pageIndex: number) {
+    fetchUnidades(pageSize: number, pageIndex: number) {
         this.unidadeDataService
-            .getEmpresas(pageIndex)
+            .getEmpresas(pageSize, pageIndex)
             .subscribe((res: any) => {
                 this.dataSource = new MatTableDataSource(res.unidades);
                 this.dataSource.sort = this.sort;
@@ -92,7 +94,7 @@ export class EmpresaListComponent implements OnInit {
     }
 
     newPaginationEvent(pageEvent: PageEvent) {
-        this.fetchUnidades(pageEvent.pageIndex + 1)
+        this.fetchUnidades(pageEvent.pageSize, pageEvent.pageIndex + 1)
     }
 
 

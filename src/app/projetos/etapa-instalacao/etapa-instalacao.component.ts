@@ -118,8 +118,8 @@ export class EtapaInstalacaoComponent implements OnInit {
 
 
     fetchEmpresas(){
-        this.unidadeDataService.getAllEmpresas().subscribe((unidades:Unidade[])=>{
-            this.unidades = unidades;
+        this.unidadeDataService.getAllEmpresas().subscribe((res: any)=>{
+            this.unidades = res.unidades;
         })
     }
 

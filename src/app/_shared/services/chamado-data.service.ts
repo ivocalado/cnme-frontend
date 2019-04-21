@@ -59,4 +59,8 @@ export class ChamadoDataService{
     getChamados(pageSize: number, pageIndex: number) {
         return this._genericGetChamados("/api/chamados", pageSize, pageIndex)
     }
+
+    getAllChamados() {
+        return this.getChamados(1000, 1)
+    }
 }

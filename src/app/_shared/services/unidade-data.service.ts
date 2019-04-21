@@ -173,8 +173,17 @@ export class UnidadeDataService {
         );
     }
 
-    getEmpresas(pageIndex: number) {
-        return this.httpClient.get<Unidade[]>("api/unidades/u/empresas?page="+pageIndex)
+    getEmpresas(pageSize: number, pageIndex: number) {
+        let url: string = "/api/unidades/u/empresas"
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+        } 
+
+        url = url + paginacao
+
+        return this.httpClient.get<any>(url)
             .pipe(
                 map(res => {
 
@@ -198,22 +207,7 @@ export class UnidadeDataService {
     }
 
     getAllEmpresas() {
-        return this.httpClient.get<Unidade[]>("api/unidades/u/empresas")
-            .pipe(
-                map(res => {
-                    let unidades: Unidade[] = [];
-                    for (var key in res["data"]) {
-                        let unidade: Unidade;
-                        unidade = <Unidade>res["data"][key];
-                        if (!unidade["localidade"]) {
-                            unidade.localidade = Localidade.EMPTY_MODEL;
-                            unidade.localidade.estado = Estado.EMPTY_MODEL;
-                        }
-                        unidades.push(unidade);
-                    }
-                    return unidades;
-                })
-            );
+        return this.getEmpresas(10000, 1)
     }
 }
 

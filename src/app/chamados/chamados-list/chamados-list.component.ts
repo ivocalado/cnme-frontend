@@ -41,7 +41,7 @@ export class ChamadosListComponent implements OnInit {
 
   INITIAL_PAGE_INDEX: number = 1
   INITIAL_PAGE_SIZE: number = 10
-    pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
 
   constructor(

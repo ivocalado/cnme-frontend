@@ -107,11 +107,6 @@ export class EquipamentoDataService {
                     resultado['meta'] = res["meta"]
                     return resultado                
                 }
-
-                resultado['equipamentos'] = equipamentos
-                resultado['links'] = res["links"]
-                resultado['meta'] = res["meta"]
-                return resultado;
             })
         );
     }
