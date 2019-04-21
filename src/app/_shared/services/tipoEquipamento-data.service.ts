@@ -19,8 +19,24 @@ export class TipoEquipamentoDataService{
 
     }*/
 
-    getTipoEquipamentos() {
-        return this.httpClient.get<TipoEquipamento[]>("/api/tipoequipamentos")
+    /**
+     * retorna a lista completa de equipamentos sem paginação
+     */
+    getAllTipoEquipamentos() {
+        return this.getTipoEquipamentos(0, -1)
+    }
+
+    getTipoEquipamentos(pageSize: number, pageIndex: number) {
+        let url: string = "/api/tipoequipamentos"
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+        } 
+
+        url = url + paginacao
+
+        return this.httpClient.get<any>(url)
         .pipe(
             map(res => {
                 let tipoEquipamentos:TipoEquipamento[]=[];
@@ -29,7 +45,16 @@ export class TipoEquipamentoDataService{
                     tipoEquipamento = <TipoEquipamento>res["data"][key];
                     tipoEquipamentos.push(tipoEquipamento);
                 }
-                return tipoEquipamentos;
+
+                if(pageIndex <= 0) {
+                    return tipoEquipamentos;
+                } else {
+                    let resultado : any = {}
+                    resultado['tipoEquipamentos'] = tipoEquipamentos
+                    resultado['links'] = res["links"]
+                    resultado['meta'] = res["meta"]
+                    return resultado                
+                }
             })
         );
     }

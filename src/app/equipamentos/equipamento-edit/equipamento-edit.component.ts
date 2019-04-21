@@ -37,7 +37,7 @@ export class EquipamentoEditComponent implements OnInit {
 
     ngOnInit() {
 
-        this.tipoEquipamentoDataService.getTipoEquipamentos().subscribe((tipoEquipamentos: TipoEquipamento[]) => {
+        this.tipoEquipamentoDataService.getAllTipoEquipamentos().subscribe((tipoEquipamentos: TipoEquipamento[]) => {
             this.tipoEquipamentos = tipoEquipamentos;
         });
 

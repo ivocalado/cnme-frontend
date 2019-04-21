@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
-import { Chamado } from '../models/chamado.mode';
-import { ChamadoStatus } from '../models/chamadoStatus.mode';
+import { Chamado } from '../models/chamado.model';
+import { ChamadoStatus } from '../models/chamadoStatus.model';
 import { Projeto } from '../models/projeto.model';
-import { ChamadoTipo } from '../models/chamadoTipo.mode';
+import { ChamadoTipo } from '../models/chamadoTipo.model';
 import { Unidade } from '../models/unidade.model';
 import { Usuario } from '../models/usuario.model';
 
@@ -15,7 +15,7 @@ export class ChamadoDataService{
     constructor(private httpClient:HttpClient, private authService: AuthService){}
 
     /**
-     * Método genérico para recuperação de projetos. Deve ser utilizada apenas internamente 
+     * Método genérico para recuperação de chamados. Deve ser utilizada apenas internamente 
      * nesta classe
      */
     _genericGetChamados(url: string, pageSize: number, pageIndex: number) {

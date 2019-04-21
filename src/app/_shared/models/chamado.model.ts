@@ -1,8 +1,8 @@
 import { Unidade } from './unidade.model';
 import { Usuario } from './usuario.model';
-import { ChamadoStatus } from './chamadoStatus.mode';
+import { ChamadoStatus } from './chamadoStatus.model';
 import { Projeto } from './projeto.model';
-import { ChamadoTipo } from './chamadoTipo.mode';
+import { ChamadoTipo } from './chamadoTipo.model';
 
 export class Chamado {
     constructor(

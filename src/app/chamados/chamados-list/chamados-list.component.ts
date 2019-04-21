@@ -82,7 +82,6 @@ export class ChamadosListComponent implements OnInit {
   }
 
   newPaginationEvent(pageEvent: PageEvent) {
-    console.log(pageEvent)
     this.fetchChamados(pageEvent.pageSize,  pageEvent.pageIndex + 1)
   }
 
