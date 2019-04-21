@@ -52,6 +52,8 @@ export class ProjetosPorEstadosComponent implements OnInit {
     }
   
   INITIAL_PAGE_INDEX: number = 1 
+  INITIAL_PAGE_SIZE: number = 10
+  pageSizeOptions: number[] = [5, 10, 25, 100];
   
   uf: string
 
@@ -72,14 +74,14 @@ export class ProjetosPorEstadosComponent implements OnInit {
       } else {
         this.titulo += uf
         this.uf = uf
-        this.fetchProjetos(this.INITIAL_PAGE_INDEX)
+        this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
       }  
     });
   }
 
-  fetchProjetos(pageIndex: number) {
+  fetchProjetos(pageSize: number, pageIndex: number) {
     this.projetoDataService
-    .getProjetosPorEstado(this.uf, pageIndex)
+    .getProjetosPorEstado(this.uf, pageSize, pageIndex)
         .subscribe((res: any) => {
             this.dataSource = new MatTableDataSource(res.projetos);
             this.dataSource.sort = this.sort;
@@ -112,6 +114,6 @@ export class ProjetosPorEstadosComponent implements OnInit {
   }
 
   newPaginationEvent(pageEvent: PageEvent) {
-    this.fetchProjetos(pageEvent.pageIndex + 1)
+    this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
   }
 }

@@ -50,7 +50,9 @@ export class ProjetosAtrasadosEnvioComponent implements OnInit {
       total: null
     }
   
-  INITIAL_PAGE_INDEX: number = 1  
+    INITIAL_PAGE_INDEX: number = 1  
+    INITIAL_PAGE_SIZE: number = 10
+    pageSizeOptions: number[] = [5, 10, 25, 100];
 
   
   constructor(
@@ -62,12 +64,12 @@ export class ProjetosAtrasadosEnvioComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.fetchProjetos(this.INITIAL_PAGE_INDEX)
+    this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
   }
 
-  fetchProjetos(pageIndex: number) {
+  fetchProjetos(pageSize: number, pageIndex: number) {
     this.projetoDataService
-    .getProjetosAtrasadosEmEnvio(pageIndex)
+    .getProjetosAtrasadosEmEnvio(pageSize, pageIndex)
         .subscribe((res: any) => {
             this.dataSource = new MatTableDataSource(res.projetos);
             this.dataSource.sort = this.sort;
@@ -98,6 +100,6 @@ export class ProjetosAtrasadosEnvioComponent implements OnInit {
   }
 
   newPaginationEvent(pageEvent: PageEvent) {
-    this.fetchProjetos(pageEvent.pageIndex + 1)
+    this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
   }
 }

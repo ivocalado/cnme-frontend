@@ -169,11 +169,11 @@ export class ProjetoDataService{
      * Método genérico para recuperação de projetos. Deve ser utilizada apenas internamente 
      * nesta classe
      */
-    _genericGetProjetos(url: string, pageIndex: number) {
+    _genericGetProjetos(url: string, pageSize: number, pageIndex: number) {
         let paginacao: string = ""
         if(pageIndex > 0) {
             let token = (url.includes("?"))? "&":"?"
-            paginacao = token + "page="+pageIndex
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
         } 
 
         url = url + paginacao
@@ -205,7 +205,7 @@ export class ProjetoDataService{
         }));
     }
 
-    getProjetos(pageIndex: number){
+    getProjetos(pageSize: number, pageIndex: number){
         // verifica se o usuario logado é polo e retorna somente seus projetos
         let q = "";
         let usuarioAutenticado = this.authService.getCurrentUser();
@@ -217,76 +217,76 @@ export class ProjetoDataService{
             url = "/api/projeto-cnme"
         }
 
-        return this._genericGetProjetos(url, pageIndex)
+        return this._genericGetProjetos(url, pageSize, pageIndex)
         //
     }
 
 
-    getProjetosAtrasados(pageIndex: number) {
-        return this._genericGetProjetos("/api/projeto-cnme/p/atrasados", pageIndex) 
+    getProjetosAtrasados(pageSize: number, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/atrasados", pageSize, pageIndex) 
     }
 
 
     /**
      * 
      * @param status 
-     * @param pageIndex se <=0 recuperar todos os registros 
+     * @param pageIndex 
      */
-    getProjetosPorStatus(status: string, pageIndex: number) {
-        return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?status="+status, pageIndex) 
+    getProjetosPorStatus(status: string, pageSize: number, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?status="+status, pageSize, pageIndex) 
     }
 
-    getProjetosEmPlanejamento(pageIndex: number) {
-        return this.getProjetosPorStatus("PLANEJAMENTO", pageIndex)
+    getProjetosEmPlanejamento(pageSize: number, pageIndex: number) {
+        return this.getProjetosPorStatus("PLANEJAMENTO", pageSize, pageIndex)
     }
 
-    getProjetosEnviados(pageIndex: number) {
-        return this.getProjetosPorStatus("ENVIADO", pageIndex)
+    getProjetosEnviados(pageSize: number, pageIndex: number) {
+        return this.getProjetosPorStatus("ENVIADO", pageSize, pageIndex)
     }
 
-    getProjetosEntregues(pageIndex: number) {
-        return this.getProjetosPorStatus("ENTREGUE", pageIndex)
+    getProjetosEntregues(pageSize: number, pageIndex: number) {
+        return this.getProjetosPorStatus("ENTREGUE", pageSize, pageIndex)
     }
 
-    getProjetosInstalados(pageIndex: number) {
-        return this.getProjetosPorStatus("INSTALADO", pageIndex)
+    getProjetosInstalados(pageSize: number, pageIndex: number) {
+        return this.getProjetosPorStatus("INSTALADO", pageSize, pageIndex)
     }
 
-    getProjetosConcluidos(pageIndex: number) {
-        return this.getProjetosPorStatus("ATIVADO", pageIndex)
+    getProjetosConcluidos(pageSize: number, pageIndex: number) {
+        return this.getProjetosPorStatus("ATIVADO", pageSize, pageIndex)
     }
 
-    getProjetosCancelados(pageIndex: number) {
-        return this.getProjetosPorStatus("CANCELADO", pageIndex)
+    getProjetosCancelados(pageSize: number, pageIndex: number) {
+        return this.getProjetosPorStatus("CANCELADO", pageSize, pageIndex)
     }
 
     /**
      * 
      * @param status 
-     * @param pageIndex se <=0 recuperar todos os registros 
+     * @param pageIndex 
      */
-    getProjetosEmAndamento(pageIndex: number) {
-        return this._genericGetProjetos("/api/projeto-cnme/p/andamento", pageIndex)
+    getProjetosEmAndamento(pageSize: number, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/andamento", pageSize, pageIndex)
     }
 
-    getProjetosAtrasadosPorEtapa(etapa: string, pageIndex: number) {
-        return this._genericGetProjetos("/api/projeto-cnme/p/atrasados?etapa="+etapa, pageIndex)
+    getProjetosAtrasadosPorEtapa(etapa: string, pageSize: number, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/atrasados?etapa="+etapa, pageSize, pageIndex)
     }
 
-    getProjetosAtrasadosEmEnvio(pageIndex: number) {
-        return this.getProjetosAtrasadosPorEtapa("ENVIO", pageIndex)
+    getProjetosAtrasadosEmEnvio(pageSize: number, pageIndex: number) {
+        return this.getProjetosAtrasadosPorEtapa("ENVIO", pageSize, pageIndex)
     }
 
 
-    getProjetosAtrasadosEmInstalacao(pageIndex: number) {
-        return this.getProjetosAtrasadosPorEtapa("INSTALACAO", pageIndex)
+    getProjetosAtrasadosEmInstalacao(pageSize: number, pageIndex: number) {
+        return this.getProjetosAtrasadosPorEtapa("INSTALACAO", pageSize, pageIndex)
     }
 
-    getProjetosAtrasadosEmAtivacao(pageIndex: number) {
-        return this.getProjetosAtrasadosPorEtapa("ATIVACAO", pageIndex)
+    getProjetosAtrasadosEmAtivacao(pageSize: number, pageIndex: number) {
+        return this.getProjetosAtrasadosPorEtapa("ATIVACAO", pageSize, pageIndex)
     }
 
-    getProjetosPorEstado(uf: string, pageIndex: number) {
-        return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?uf=" + uf, pageIndex)
+    getProjetosPorEstado(uf: string, pageSize: number, pageIndex: number) {
+        return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?uf=" + uf, pageSize, pageIndex)
     }
 }

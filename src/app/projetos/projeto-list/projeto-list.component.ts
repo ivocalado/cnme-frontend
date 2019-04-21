@@ -48,6 +48,8 @@ export class ProjetoListComponent implements OnInit {
     }
     
     INITIAL_PAGE_INDEX: number = 1
+    INITIAL_PAGE_SIZE: number = 10
+    pageSizeOptions: number[] = [5, 10, 25, 100];
 
     constructor(
         private route: ActivatedRoute,
@@ -57,7 +59,7 @@ export class ProjetoListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.fetchProjetos(this.INITIAL_PAGE_INDEX);
+        this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
     }
 
     onDetails(id: number) {
@@ -71,9 +73,9 @@ export class ProjetoListComponent implements OnInit {
         this.router.navigate(["cancelar", id], { relativeTo: this.route });
     }
 
-    fetchProjetos(pageIndex: number) {
+    fetchProjetos(pageSize: number, pageIndex: number) {
         this.projetoDataService
-            .getProjetos(pageIndex)
+            .getProjetos(pageSize, pageIndex)
             .subscribe((res: any) => {
                 this.dataSource = new MatTableDataSource(res.projetos);
                 this.dataSource.sort = this.sort;
@@ -106,6 +108,6 @@ export class ProjetoListComponent implements OnInit {
     }
 
     newPaginationEvent(pageEvent: PageEvent) {
-        this.fetchProjetos(pageEvent.pageIndex + 1)
+        this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
     }
 }

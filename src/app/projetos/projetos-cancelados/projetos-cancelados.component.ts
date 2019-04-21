@@ -52,6 +52,8 @@ titulo: string = "Projetos Cancelados"
     }
   
   INITIAL_PAGE_INDEX: number = 1  
+  INITIAL_PAGE_SIZE: number = 10
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   constructor(
     private projetoDataService: ProjetoDataService,
@@ -62,12 +64,12 @@ titulo: string = "Projetos Cancelados"
     ) { }
 
   ngOnInit() {
-    this.fetchProjetos(this.INITIAL_PAGE_INDEX)
+    this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
   }
 
-  fetchProjetos(pageIndex: number) {
+  fetchProjetos(pageSize: number, pageIndex: number) {
     this.projetoDataService
-    .getProjetosPorStatus("CANCELADO", pageIndex)
+    .getProjetosPorStatus("CANCELADO", pageSize, pageIndex)
         .subscribe((res: any) => {
             this.dataSource = new MatTableDataSource(res.projetos);
             this.dataSource.sort = this.sort;
@@ -99,7 +101,6 @@ titulo: string = "Projetos Cancelados"
   }
 
   newPaginationEvent(pageEvent: PageEvent) {
-    this.fetchProjetos(pageEvent.pageIndex + 1)
+    this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
   }
-
 }
