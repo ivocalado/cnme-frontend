@@ -46,7 +46,7 @@ export class ProjetoListComponent implements OnInit {
         itens_per_page: null,
         total: null
     }
-    
+
     INITIAL_PAGE_INDEX: number = 1
     INITIAL_PAGE_SIZE: number = 10
     pageSizeOptions: number[] = [5, 10, 25, 100];

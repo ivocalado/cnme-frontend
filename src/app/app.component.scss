@@ -17,3 +17,11 @@ hr{
 .text-center{
     text-align: center;
 }
+
+.mat-row{
+    border-left:solid 3px transparent;
+    .mat-icon-button{
+        width: 25px;
+
+    }
+}

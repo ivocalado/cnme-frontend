@@ -1,5 +1,13 @@
+@import "~@angular/material/theming";
+@include mat-core();
+
+
 .mat-column-numero{
     flex: 0 0 20%;
+}
+
+.mat-column-unidade{
+    flex: 0 0 30%;
 }
 
 .mat-column-actions{
@@ -8,11 +16,123 @@
 }
 
 .mat-column-status{
-    flex: 0 0 15%;
-    justify-content:center;
+    flex: 0 0 8%;
+    justify-content:left;
 }
 
+.hasError{
+    background-color: mat-color($mat-red,50);
+    border-left: 3px solid mat-color($mat-red,800);
+    .mat-cell{
+        color:mat-contrast($mat-red,50);
+
+    }
+}
+
+.icon-error{
+    color:mat-color($mat-red,500);
+    font-size: 18px;
+    padding-top:3px;
+    padding-left:6px;
+}
+
+.icon-warning{
+    color:mat-color($mat-yellow,700);
+    font-size: 18px;
+    padding-top:3px;
+    padding-left:6px;
+}
+
+.icon-info{
+    color:mat-color($mat-cyan,500);
+    font-size: 18px;
+    padding-top:3px;
+    padding-left:6px;
+}
+
+.chip-legenda{
+    font-size: 12px;
+    font-weight: 400;
+    margin: 10px 0 0 0;
+    background: transparent;
+    padding: 0 10px 0 0;
+    color:mat-color($mat-blue-gray,200);
+    .mat-icon{
+        font-size: 16px;
+        padding-top:3px;
+    }
+}
+
+
+
+@media screen and (max-width: 960px) {
+  .mat-elevation-z8 {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .mat-table {
+    background: transparent;
+    * {
+      box-sizing: border-box;
+    }
+
+    .mat-row {
+      display: block;
+      overflow: hidden;
+      height: auto;
+      min-height: auto;
+      position: relative;
+      clear: both;
+      box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+      background-color: #fff;
+      border-radius: 3px;
+      + .mat-row {
+        margin-top: 24px;
+      }
+    }
+
+    .mat-cell {
+      display: block;
+      width: 100%;
+      padding: 0 16px;
+      margin: 6px 0;
+      border: 0 none;
+      min-height: auto;
+
+    }
+
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .title-on-mobile{
+        font-weight:500;
+        font-size: 16px;
+    }
+    .mat-column-actions {
+      width: auto;
+      padding: 0px 0 0 !important;
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      &:before {
+        display: none;
+      }
+    }
+  }
+}
 .mat-form-field {
     font-size: 14px;
     width: 100%;
-  } 
+  }

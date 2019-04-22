@@ -1,6 +1,7 @@
 import { Unidade } from './unidade.model';
 import { Usuario } from './usuario.model';
 import { EquipamentoProjeto } from './equipamentoProjeto.model';
+import { Messages } from './messages.model';
 
 export class Projeto{
     constructor(
@@ -17,7 +18,11 @@ export class Projeto{
         public unidade: Unidade,
         public usuario: Usuario,
         public unidade_id: number,
-        public usuario_id: number
+        public usuario_id: number,
+        public erros:boolean,
+        public infos:boolean,
+        public avisos:boolean,
+        public messages: Messages
     ){}
     static readonly EMPTY_MODEL = {
         id: null,
@@ -33,6 +38,10 @@ export class Projeto{
         unidade: Unidade.EMPTY_MODEL,
         usuario: Usuario.EMPTY_MODEL,
         unidade_id: null,
-        usuario_id: null
+        usuario_id: null,
+        erros: false,
+        infos: false,
+        avisos: false,
+        messages: null
     }
 }

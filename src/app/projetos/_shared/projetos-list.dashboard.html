@@ -3,6 +3,27 @@
         <mat-card>
             <mat-card-title>{{titulo}}</mat-card-title>
             <hr class="m-2">
+            <mat-chip-list>
+                <mat-chip color="default" class="chip-legenda">
+                    <mat-icon>input</mat-icon>Planejamento
+                </mat-chip>
+                <mat-chip color="default" class="chip-legenda">
+                    <mat-icon>flight_takeoff</mat-icon>Enviado
+                </mat-chip>
+                <mat-chip color="default" class="chip-legenda">
+                    <mat-icon>flight_land</mat-icon>Entregue
+                </mat-chip>
+                <mat-chip color="default" class="chip-legenda">
+                    <mat-icon>tv</mat-icon>Instalado
+                </mat-chip>
+                <mat-chip color="default" class="chip-legenda">
+                    <mat-icon>cast</mat-icon>Ativado
+                </mat-chip>
+                <mat-chip color="default" class="chip-legenda">
+                    <mat-icon>tv_off</mat-icon>Cancelado
+                </mat-chip>
+            </mat-chip-list>
+            <hr class="m-2">
             <mat-form-field>
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
             </mat-form-field>
@@ -18,11 +39,30 @@
                 </ng-container>
                 <ng-container matColumnDef="previsao">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Previsão de Conclusão </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.data_fim_previsto | date:'dd/MM/yyyy'}}</mat-cell>
+                    <mat-cell *matCellDef="let row">{{row.data_fim_previsto | date:'dd/MM/yyyy'}}
+                        <mat-icon class="icon-error" matTooltip="{{row.messages.erros}}" *ngIf="row.erros" matTooltipPosition="after">
+                            error
+                        </mat-icon>
+                        <mat-icon class="icon-warning" matTooltip="{{row.messages.avisos}}" *ngIf="!row.erros && row.avisos"
+                            matTooltipPosition="after">warning</mat-icon>
+                        <mat-icon class="icon-info" matTooltip="{{row.messages.infos}}" *ngIf="!row.erros && !row.avisos && row.infos"
+                            matTooltipPosition="after">info</mat-icon>
+                    </mat-cell>
+
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.status}}</mat-cell>
+                    <mat-cell *matCellDef="let row" [ngSwitch]="row.status">
+                        <mat-icon *ngSwitchCase="'PLANEJAMENTO'" matTooltip="{{row.status}}" matTooltipPosition="after">input</mat-icon>
+                        <mat-icon *ngSwitchCase="'ENVIADO'" matTooltip="{{row.status}}" matTooltipPosition="after">flight_takeoff
+                        </mat-icon>
+                        <mat-icon *ngSwitchCase="'ENTREGUE'" matTooltip="{{row.status}}" matTooltipPosition="after">flight_land
+                        </mat-icon>
+                        <mat-icon *ngSwitchCase="'INSTALADO'" matTooltip="{{row.status}}" matTooltipPosition="after">tv</mat-icon>
+                        <mat-icon *ngSwitchCase="'ATIVADO'" matTooltip="{{row.status}}" matTooltipPosition="after">cast</mat-icon>
+                        <mat-icon *ngSwitchCase="'CANCELADO'" matTooltip="{{row.status}}" matTooltipPosition="after">tv_off</mat-icon>
+                        <mat-icon *ngSwitchDefault matTooltip="{{row.status}}" matTooltipPosition="after">input</mat-icon>
+                    </mat-cell>
                 </ng-container>
                 <!-- actions -->
                 <ng-container matColumnDef="actions">
@@ -35,7 +75,7 @@
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'hasError' : row.erros}"></mat-row>
             </mat-table>
         </mat-card>
         <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
