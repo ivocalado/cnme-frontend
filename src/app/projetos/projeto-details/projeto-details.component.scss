@@ -1,3 +1,7 @@
+@import "~@angular/material/theming";
+@include mat-core();
+@import "../../../assets/styles/_variables.scss";
+
 mat-expansion-panel{
     box-sizing: border-box;
 }
@@ -16,4 +20,128 @@ table {
 .example-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
+}
+
+.mat-card{
+    background-color: mat-color($mat-blue-gray,50);
+    color:mat-contrast($mat-blue-gray,50);
+    margin-bottom: 15px;
+    .mat-card-title{
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        font-size: 20px;
+        p{
+            span{
+                display: block;
+                font-size: 14px;
+                font-weight: 400;
+                color: mat-color($mat-blue-gray,700);
+            }
+            sub{
+                color: mat-color($mat-blue-gray,700);
+                display: block;
+                font-weight: 400;
+                font-size: 12px;
+
+            }
+        }
+    }
+    .icon-title{
+        background-color: mat-color($mat-cyan,500);
+        color:mat-contrast($mat-cyan,500);
+        border-radius: 30px;
+        padding:10px;
+        width: auto;
+        height: auto;
+    }
+
+    &.date{
+        background-color: mat-color($mat-blue-gray,500);
+        color:mat-contrast($mat-blue-gray,500);
+        .mat-card-title{
+            font-size: 16px;
+            p{
+                span{
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: mat-contrast($mat-blue-gray,500);
+                }
+                sub{
+                    color: mat-contrast($mat-blue-gray,500);
+                    font-weight: 400;
+                    font-size: 12px;
+
+                }
+            }
+        }
+        .icon-title{
+            background-color: mat-color($mat-cyan,500);
+            color:mat-contrast($mat-cyan,500);
+            font-size: 22px;
+            border-radius: 20px;
+            padding:5px;
+            width: auto;
+            height: auto;
+        }
+    }
+}
+
+.alert-label{
+    align-items: center;
+    display: flex;
+    font-size: 12px;
+
+    background-color: mat-color($mat-blue-gray,50);
+    border-radius: 15px;
+    margin-bottom: 8px;
+    &.error{
+        background-color: mat-color($mat-red,100);
+        color: mat-color($mat-red,800);
+    }
+    &.warning{
+        background-color:mat-color($mat-yellow,50);
+        color:mat-color($mat-yellow,800);
+    }
+    &.info{
+        background-color:mat-color($mat-cyan,50);
+        color:mat-color($mat-cyan,800);
+    }
+    span{
+        padding:0 10px;
+    }
+}
+
+
+.icon-error{
+    color:mat-color($mat-red,500);
+    font-size: 18px;
+    padding-top:3px;
+    padding-left:6px;
+}
+
+.icon-warning{
+    color:mat-color($mat-yellow,700);
+    font-size: 18px;
+    padding-top:3px;
+    padding-left:6px;
+}
+
+.icon-info{
+    color:mat-color($mat-cyan,500);
+    font-size: 18px;
+    padding-top:3px;
+    padding-left:6px;
+}
+
+.wrap-circle-progress{
+    p{
+        margin-top:-6px;
+    }
+}
+
+.h-100{
+    mat-card{
+        height: 100%;
+    }
 }

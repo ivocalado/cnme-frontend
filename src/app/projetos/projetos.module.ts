@@ -3,9 +3,9 @@ import { ProjetosRoutingModule } from './projetos-routing.module';
 import { ProjetosComponent } from './projetos.component';
 import { ProjetoEditComponent } from './projeto-edit/projeto-edit.component';
 import { SharedModule } from '../_shared/shared.module';
-import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, 
-    MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule, 
-    MatChipsModule, MatRippleModule, MatCheckboxModule, MatExpansionModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS, 
+import { MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule,
+    MatButtonModule, MatCardModule, MatTableModule, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatRadioModule,
+    MatChipsModule, MatRippleModule, MatCheckboxModule, MatExpansionModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS,
     DateAdapter, MatPaginatorModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { ProjetoListComponent } from './projeto-list/projeto-list.component';
@@ -81,8 +81,8 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
         MatRippleModule,
         MatCheckboxModule,
         MatExpansionModule,
-        MatPaginatorModule 
-        
+        MatPaginatorModule
+
     ],
     providers: [
         UnidadeDataService,

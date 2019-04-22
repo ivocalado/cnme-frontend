@@ -11,20 +11,78 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="row">
-            <div class="col-lg-12">
-                <p>
-                    <strong>Status do projeto: </strong>{{projeto.status}}<br />
-                    <strong>Unidade: </strong>{{projeto.unidade.nome}} (Cod. INEP:
-                    {{projeto.unidade.codigo_inep}})<br />
-                    <strong>Número de projeto: </strong>{{projeto.numero}}<br />
-                    <strong>Descrição: </strong>{{projeto.descricao}}<br />
-                    <strong>Data Prevista para Início:
-                    </strong>{{projeto.data_inicio_previsto | date : 'dd/MM/yyyy'}}<br />
-                    <strong>Data Prevista de Fim: </strong>{{projeto.data_fim_previsto | date : 'dd/MM/yyyy'}}<br />
-                </p>
+            <div class="col-lg-7">
+                <mat-card>
+                    <mat-card-title>
+                        <p>
+                            {{projeto.numero}}<br />
+                            <span>Nome do Polo do projeto</span>
+                            <span *ngIf="projeto.unidade.codigo_inep">Cod. INEP:{{projeto.unidade.codigo_inep}}</span>
+                            <sub><i>{{projeto.status}}</i></sub>
+                            <sub>Projeto Teste da Unidade Polo Pernambuco(2)</sub>
+                        </p>
+                        <span>&nbsp;</span>
+
+                        <div [ngSwitch]="projeto.status">
+                            <mat-icon class="icon-title" *ngSwitchCase="'PLANEJAMENTO'" matTooltip="{{projeto.status}}"
+                                matTooltipPosition="after">input</mat-icon>
+                            <mat-icon class="icon-title" *ngSwitchCase="'ENVIADO'" matTooltip="{{projeto.status}}"
+                                matTooltipPosition="after">flight_takeoff</mat-icon>
+                            <mat-icon class="icon-title" *ngSwitchCase="'ENTREGUE'" matTooltip="{{projeto.status}}"
+                                matTooltipPosition="after">flight_land</mat-icon>
+                            <mat-icon class="icon-title" *ngSwitchCase="'INSTALADO'" matTooltip="{{projeto.status}}"
+                                matTooltipPosition="after">tv</mat-icon>
+                            <mat-icon class="icon-title" *ngSwitchCase="'ATIVADO'" matTooltip="{{projeto.status}}"
+                                matTooltipPosition="after">cast</mat-icon>
+                            <mat-icon class="icon-title" *ngSwitchCase="'CANCELADO'" matTooltip="{{projeto.status}}"
+                                matTooltipPosition="after">tv_off</mat-icon>
+                            <mat-icon class="icon-title" *ngSwitchDefault matTooltip="{{projeto.status}}"
+                                matTooltipPosition="after">input</mat-icon>
+                        </div>
+                    </mat-card-title>
+                    <div class="alert-label error" *ngIf="projeto.erros">
+                        <mat-icon class="icon-error">error</mat-icon>
+                        <span>{{projeto.messages.erros}}</span>
+                    </div>
+                    <div class="alert-label warning" *ngIf="projeto.avisos">
+                        <mat-icon class="icon-warning">warning</mat-icon>
+                        <span>{{projeto.messages.avisos}}</span>
+                    </div>
+                    <div class="alert-label info" *ngIf="projeto.infos">
+                        <mat-icon class="icon-info">info</mat-icon>
+                        <span>{{projeto.messages.infos}}</span>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <mat-card class="date">
+                            <mat-card-title>
+                                <p>
+                                    {{projeto.data_inicio_previsto | date : 'dd/MM/yyyy'}}<br />
+                                    <sub>Data Prevista para início</sub>
+                                </p>
+                                <span>&nbsp;</span>
+                                <mat-icon class="icon-title">event</mat-icon>
+                            </mat-card-title>
+                        </mat-card>
+                    </div>
+                    <div class="col-lg-12">
+                        <mat-card class="date">
+                            <mat-card-title>
+                                <p>
+                                    {{projeto.data_inicio_previsto | date : 'dd/MM/yyyy'}}<br />
+                                    <sub>Data Prevista para o fim</sub>
+                                </p>
+                                <span>&nbsp;</span>
+                                <mat-icon class="icon-title">event</mat-icon>
+                            </mat-card-title>
+                        </mat-card>
+                    </div>
+                </div>
             </div>
         </div>
-
     </mat-expansion-panel>
 
     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" (closed)="setStep(-1)" hideToggle>
@@ -98,11 +156,10 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <mat-form-field>
-                                    <input matInput [min]="tarefa.data_inicio"
-                                        [(ngModel)]="tarefa.data_fim"
-                                        id="data_fim" name="data_fim"
-                                        [matDatepicker]="pickerData" placeholder="Data do recebimento"
-                                        [disabled]="tarefa.status!='ANDAMENTO'" required>
+                                    <input matInput [min]="tarefa.data_inicio" [(ngModel)]="tarefa.data_fim"
+                                        id="data_fim" name="data_fim" [matDatepicker]="pickerData"
+                                        placeholder="Data do recebimento" [disabled]="tarefa.status!='ANDAMENTO'"
+                                        required>
                                     <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerData></mat-datepicker>
                                 </mat-form-field>
@@ -170,8 +227,9 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <mat-form-field>
-                                <input matInput [(ngModel)]="etapaInstalacao.tarefas[0].data_fim" [min]="etapaInstalacao.tarefas[0].data_inicio" id="data_fim"
-                                    name="data_fim" [matDatepicker]="pickerData" placeholder="Data da instalação"
+                                <input matInput [(ngModel)]="etapaInstalacao.tarefas[0].data_fim"
+                                    [min]="etapaInstalacao.tarefas[0].data_inicio" id="data_fim" name="data_fim"
+                                    [matDatepicker]="pickerData" placeholder="Data da instalação"
                                     [disabled]="!emInstalacao" required>
                                 <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
                                 <mat-datepicker #pickerData></mat-datepicker>
@@ -226,18 +284,18 @@
                                 <mat-form-field>
                                     <input matInput [(ngModel)]="etapaAtivacao.tarefas[0].data_fim"
                                         ng-model-options="{timezone: 'utc'}"
-                                        [min]="etapaAtivacao.tarefas[0].data_inicio" id="data_fim"
-                                        name="data_fim" [matDatepicker]="pickerData" placeholder="Data da ativação"
+                                        [min]="etapaAtivacao.tarefas[0].data_inicio" id="data_fim" name="data_fim"
+                                        [matDatepicker]="pickerData" placeholder="Data da ativação"
                                         [disabled]="!emAtivacao" required>
                                     <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
                                     <mat-datepicker #pickerData></mat-datepicker>
                                 </mat-form-field>
 
 
-                                    <button mat-raised-button color="primary" type="submit"
-                                        [disabled]="!emAtivacao || !fi.valid">
-                                        {{etapaAtivacao.tarefas[0].status == 'CONCLUIDA'?"Ativação confirmada":"Confirmar ativação"}}
-                                    </button>
+                                <button mat-raised-button color="primary" type="submit"
+                                    [disabled]="!emAtivacao || !fi.valid">
+                                    {{etapaAtivacao.tarefas[0].status == 'CONCLUIDA'?"Ativação confirmada":"Confirmar ativação"}}
+                                </button>
 
                             </div>
                         </div>
