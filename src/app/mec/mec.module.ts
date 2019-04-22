@@ -7,7 +7,8 @@ import {
     MatSelectModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
 } from "@angular/material";
 import { NgxMaskModule } from "ngx-mask";
 
@@ -31,6 +32,7 @@ import { MecInvitationComponent } from './mec-invitation/mec-invitation.componen
         MatCardModule,
         MatTableModule,
         MecRoutingModule,
+        MatPaginatorModule, 
         NgxMaskModule.forRoot()
     ]
 })

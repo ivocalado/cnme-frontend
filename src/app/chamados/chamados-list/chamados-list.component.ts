@@ -95,6 +95,6 @@ export class ChamadosListComponent implements OnInit {
         //     this.fetchUnidades(this.INITIAL_PAGE_INDEX);
         // });
     }
-}
+  }
 
 }

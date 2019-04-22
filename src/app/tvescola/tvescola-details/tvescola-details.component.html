@@ -92,6 +92,10 @@
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
         </mat-card>
+        <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
+        [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
+        >
+        </mat-paginator>
     </div>
 </div>
 <ng-template #showInativos>
@@ -132,6 +136,10 @@
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 </mat-table>
             </mat-card>
+            <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
+            [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
+            >
+            </mat-paginator>
         </div>
     </div>
 

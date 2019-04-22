@@ -103,7 +103,7 @@ export class PoloEditComponent implements OnInit {
                             relativeTo: this.route
                         });
 
-                        this.unidadeDataService.getUsuariosAtivosByUnidade(unidade.id).subscribe((usuarios: Usuario[]) => {
+                        this.unidadeDataService.getAllUsuariosAtivosByUnidade(unidade.id).subscribe((usuarios: Usuario[]) => {
                             this.usuarioDataService.sendInvitation(usuarios[0].id, this.authService.getToken()).subscribe(msg => {
                                 this.snackBarService.openSnackBar("Convite enviado com sucesso!");
                               }, error2 => {

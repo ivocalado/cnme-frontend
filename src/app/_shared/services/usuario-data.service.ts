@@ -188,12 +188,15 @@ export class UsuarioDataService {
      * o acesso à plataforma
      * @param authToken
      */
-    getGestoresNaoConfirmados(pageIndex: number, authToken: string) {
+    getGestoresNaoConfirmados(pageSize: number, pageIndex: number, authToken: string) {
+        let url : string = "/api/usuarios/u/gestores-nao-confirmados" 
         let paginacao: string = ""
         if(pageIndex > 0) {
-            paginacao = "?page=" + pageIndex
-        }
-        let url = "/api/usuarios/u/gestores-nao-confirmados" + paginacao
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+        } 
+
+        url = url + paginacao
 
         return this.httpClient.get<any>(url)
         .pipe(

@@ -68,8 +68,20 @@ export class UnidadeDataService {
         );
     }
 
-    getUsuariosAtivosByUnidade(id_unidade:number) {
-        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios")
+    getAllUsuariosAtivosByUnidade(id_unidade:number) {
+        return this.getUsuariosAtivosByUnidade(id_unidade, -1, 1)
+    }
+    getUsuariosAtivosByUnidade(id_unidade:number, pageSize: number, pageIndex: number) {
+        let url: string = "/api/unidades/"+id_unidade+"/usuarios"
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+        } 
+
+        url = url + paginacao
+
+        return this.httpClient.get<any>(url)
         .pipe(
             map(res =>{
                 let usuarios:Usuario[] = [];
@@ -81,13 +93,31 @@ export class UnidadeDataService {
                         usuarios.push(usuario);
                     }
                 }
-                return usuarios;
+
+                if(pageIndex <= 0) {
+                    return usuarios;
+                } else {
+                    let resultado : any = {}
+                    resultado['usuarios'] = usuarios
+                    resultado['links'] = res["links"]
+                    resultado['meta'] = res["meta"]
+                    return resultado                
+                }
             })
         );
     }
 
-    getUsuariosInativosByUnidade(id_unidade:number) {
-        return this.httpClient.get<Usuario[]>("/api/unidades/"+id_unidade+"/usuarios")
+    getUsuariosInativosByUnidade(id_unidade:number, pageSize: number, pageIndex: number) {
+        let url: string = "/api/unidades/"+id_unidade+"/usuarios"
+        let paginacao: string = ""
+        if(pageIndex > 0) {
+            let token = (url.includes("?"))? "&":"?"
+            paginacao = token + "page="+pageIndex+"&per_page="+pageSize
+        } 
+
+        url = url + paginacao
+
+        return this.httpClient.get<any>(url)
         .pipe(
             map(res =>{
                 let usuarios:Usuario[] = [];
@@ -99,7 +129,15 @@ export class UnidadeDataService {
                         usuarios.push(usuario);
                     }
                 }
-                return usuarios;
+                if(pageIndex <= 0) {
+                    return usuarios;
+                } else {
+                    let resultado : any = {}
+                    resultado['usuarios'] = usuarios
+                    resultado['links'] = res["links"]
+                    resultado['meta'] = res["meta"]
+                    return resultado                
+                }
             })
         );
     }

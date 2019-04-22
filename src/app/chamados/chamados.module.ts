@@ -9,9 +9,10 @@ import { ChamadosComponent } from './chamados.component';
 import { ChamadosListComponent } from './chamados-list/chamados-list.component';
 import { ChamadosRoutingModule } from './chamados-routing.module';
 import { ChamadoDataService } from '../_shared/services/chamado-data.service';
+import { ChamadoDetailsComponent } from './chamado-details/chamado-details.component';
 
 @NgModule({
-  declarations: [ChamadosComponent, ChamadosListComponent],
+  declarations: [ChamadosComponent, ChamadosListComponent, ChamadoDetailsComponent],
   imports: [
     SharedModule,
     FormsModule,

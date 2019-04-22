@@ -50,7 +50,10 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
     total: null
   }
 
-  INITIAL_PAGE_INDEX: number = 1  
+  INITIAL_PAGE_INDEX: number = 1
+  INITIAL_PAGE_SIZE: number = 10
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
 
 
   constructor(
@@ -64,7 +67,7 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
 
   ngOnInit() {
       this.usuarioAutenticado = this.authService.getCurrentUser()
-      this.fetchUsuarios(this.INITIAL_PAGE_INDEX)
+      this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
   }
 
   onDetails(id:number){
@@ -72,8 +75,8 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
   }
 
 
-  fetchUsuarios(pageIndex: number) {
-    this.usuarioDataService.getGestoresNaoConfirmados(pageIndex, this.authService.getToken())
+  fetchUsuarios(pageSize: number, pageIndex: number) {
+    this.usuarioDataService.getGestoresNaoConfirmados(pageSize, pageIndex, this.authService.getToken())
     .subscribe(
       (res) => {
         this.dataSourceUnidade = new MatTableDataSource(res.usuarios);
@@ -106,6 +109,6 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
   }
 
   newPaginationEvent(pageEvent: PageEvent) {
-    this.fetchUsuarios(pageEvent.pageIndex + 1)
+    this.fetchUsuarios(pageEvent.pageSize, pageEvent.pageIndex + 1)
   }
 }
