@@ -75,6 +75,8 @@ export class PoloDetailsComponent implements OnInit {
             this.unidadeDataService.getUnidade(unidadeId).subscribe((unidade: Unidade) => {
                 this.currentUser = this.authService.getCurrentUser()
                 this.unidade = unidade;
+                console.log("ngOnInit -> details")
+                console.log(this.unidade)
                 this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
             })
         })
@@ -127,6 +129,10 @@ export class PoloDetailsComponent implements OnInit {
         let usuario = <Usuario>this.authService.getCurrentUser()
         let classe = usuario.unidade.classe 
         return classe == "admin" || classe == "mec" || classe ==  "tvescola" || (classe == "polo" && usuario.tipo == "gestor")
+    }
+
+    isOwner(id_usuario: number) { 
+        return this.unidade.responsavel.id == id_usuario
     }
 
     onDelete(id: number) {

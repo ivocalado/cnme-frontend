@@ -127,8 +127,8 @@ export class ProjetoEditComponent implements OnInit {
 
 
     fetchPolos(){
-        this.unidadeDataService.getAllPolos().subscribe((unidades: Unidade[]) => {
-            this.unidades = unidades;
+        this.unidadeDataService.getAllPolos().subscribe((res: any) => {
+            this.unidades = res.unidades;
         });
     }
 

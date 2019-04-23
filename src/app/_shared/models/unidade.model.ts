@@ -1,4 +1,5 @@
 import { Localidade } from './localidade.model';
+import { Usuario } from './usuario.model';
 
 export class Unidade {
     constructor(
@@ -11,7 +12,8 @@ export class Unidade {
         public telefone: string,
         public tipo_unidade_id: number,
         public classe: string,
-        public localidade: Localidade
+        public localidade: Localidade,
+        public responsavel: Usuario
     ) { }
     static readonly EMPTY_MODEL = {
         id: null,
@@ -24,5 +26,6 @@ export class Unidade {
         tipo_unidade_id: null,
         classe:'',
         localidade: Localidade.EMPTY_MODEL,
+        responsavel: null
     };
 }
