@@ -102,6 +102,19 @@ export class PoloDetailsComponent implements OnInit {
         }
     }
 
+    onReactivate(id: number) {
+        if(confirm("Confirma a reativação do usuário?")) {
+            this.usuarioDataService.reactivateUsuario(id, this.authService.getToken()).subscribe(res => {
+                this.snackBarService.openSnackBar("Usuário reativado com sucesso!")
+                this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+            },
+            error => {
+                this.snackBarService.openSnackBar(error)
+                this.router.navigate(['/'], { relativeTo: this.route });
+            })
+        }
+    }
+
     buildPagination(links: any, meta: any) {
         this.pagination.firstPageLink = links.first
         this.pagination.lastPageLink = links.last
