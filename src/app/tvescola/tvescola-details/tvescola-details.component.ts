@@ -95,6 +95,10 @@ export class TvEscolaDetailsComponent implements OnInit {
         }
     }
 
+    isOwner(id_usuario: number) { 
+        return this.unidade.responsavel.id == id_usuario
+    }
+
     onReactivate(id: number) {
         if(confirm("Confirma a reativação do usuário?")) {
             this.usuarioDataService.reactivateUsuario(id, this.authService.getToken()).subscribe(res => {

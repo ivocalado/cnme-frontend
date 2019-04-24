@@ -129,6 +129,10 @@ export class MecDetailsComponent implements OnInit {
         return classe == "admin" || (classe == "mec" && usuario.tipo == "gestor")
     }
 
+    isOwner(id_usuario: number) { 
+        return this.unidade.responsavel.id == id_usuario
+    }
+
     onDelete(id: number) {
         if(confirm("Confirma a desativação do usuário?")) {
             this.usuarioDataService.deactivateUsuario(id, this.authService.getToken()).subscribe(res => {

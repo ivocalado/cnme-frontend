@@ -82,7 +82,7 @@
                         <button mat-icon-button color="accent" (click)="onEdit(row.id)" *ngIf="hasPermission">
                             <mat-icon aria-label="Edit">edit</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent" (click)="onDelete(row.id)" *ngIf="hasPermission && (currentUser.id != row.id)">
+                        <button mat-icon-button color="accent" (click)="onDelete(row.id)" *ngIf="hasPermission && (currentUser.id != row.id) && !isOwner(row.id)">
                             <mat-icon aria-label="Delete">delete</mat-icon>
                         </button>
                     </mat-cell>
