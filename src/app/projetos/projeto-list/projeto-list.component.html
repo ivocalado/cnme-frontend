@@ -76,8 +76,8 @@
                 [ngClass]="{'hasError' : row.erros}"></mat-row>
             </mat-table>
         </mat-card>
-        <mat-paginator [length]="pagination.total" [hidePageSize]="true" (page)="newPaginationEvent($event)"
-        [pageSize]="pagination.itens_per_page"
+        <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
+        [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
         >
       </mat-paginator>
     </div>
