@@ -110,7 +110,7 @@ export class ProjetoListComponent implements OnInit {
     }
 
     canCancelProject(projeto: Projeto) {
-        return projeto.status != "CANCELADO";
+        return projeto.status != "CANCELADO" && this.isAdmin;
     }
 
     get exibeTvEscola() {
