@@ -209,10 +209,11 @@ export class ProjetoDataService{
         // verifica se o usuario logado é polo e retorna somente seus projetos
         let q = "";
         let usuarioAutenticado = this.authService.getCurrentUser();
+        console.log(usuarioAutenticado)
         let classe = usuarioAutenticado.unidade.classe
         let url = ""
         if(classe=="polo"){
-            url = "/api/projeto-cnme/p/pesquisar?q="+ + usuarioAutenticado.unidade.nome
+            url = "/api/projeto-cnme/p/pesquisar?q="+ usuarioAutenticado.unidade.nome
         } else {
             url = "/api/projeto-cnme"
         }
@@ -234,6 +235,27 @@ export class ProjetoDataService{
      */
     getProjetosPorStatus(status: string, pageSize: number, pageIndex: number) {
         return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?status="+status, pageSize, pageIndex) 
+    }
+
+        /**
+     * 
+     * @param status 
+     * @param pageIndex 
+     */
+    getProjetosPorVariosStatus(status: string[], pageSize: number, pageIndex: number) {
+        // /api/projeto-cnme/p/pesquisar?status[]=PLANEJAMENTO;ENVIADO
+        let statuses = status.join(";")
+        // verifica se o usuario logado é polo e retorna somente seus projetos
+        let q = "";
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        console.log(usuarioAutenticado)
+        let classe = usuarioAutenticado.unidade.classe
+        let url = ""
+        if(classe=="polo"){
+            q = "q="+ usuarioAutenticado.unidade.nome
+        } 
+
+        return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?" + q +"&status[]="+statuses, pageSize, pageIndex) 
     }
 
     getProjetosEmPlanejamento(pageSize: number, pageIndex: number) {

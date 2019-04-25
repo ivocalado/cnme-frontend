@@ -74,13 +74,25 @@ export class ProjetoListComponent implements OnInit {
     }
 
     fetchProjetos(pageSize: number, pageIndex: number) {
-        this.projetoDataService
+        if(this.isAdmin) {
+            this.projetoDataService
             .getProjetos(pageSize, pageIndex)
             .subscribe((res: any) => {
                 this.dataSource = new MatTableDataSource(res.projetos);
                 this.dataSource.sort = this.sort;
                 this.buildPagination(res.links, res.meta)
             });
+        } else {
+            this.projetoDataService
+            .getProjetosPorVariosStatus(["ENVIADO", "ENTREGUE", "INSTALADO", "ATIVADO", "CANCELADO"], pageSize, pageIndex)
+            .subscribe((res: any) => {
+                this.dataSource = new MatTableDataSource(res.projetos);
+                this.dataSource.sort = this.sort;
+                this.buildPagination(res.links, res.meta)
+            });
+            
+        }
+        
     }
 
     buildPagination(links: any, meta: any) {
@@ -109,5 +121,11 @@ export class ProjetoListComponent implements OnInit {
 
     newPaginationEvent(pageEvent: PageEvent) {
         this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
+    }
+
+    get isAdmin() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola" || classe == "mec";
     }
 }

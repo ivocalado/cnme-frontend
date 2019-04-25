@@ -14,7 +14,7 @@
             <mat-card-title>Lista de Projetos</mat-card-title>
             <hr class="m-2">
             <mat-chip-list>
-                <mat-chip color="default" class="chip-legenda">
+                <mat-chip *ngIf="isAdmin" color="default" class="chip-legenda">
                     <mat-icon>input</mat-icon>
                     Planejamento
                 </mat-chip>
