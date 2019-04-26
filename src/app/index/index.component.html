@@ -1,0 +1,16 @@
+<ng-container *ngIf="isUserDataLoaded">
+        <ng-container *ngIf="isAdmin; then dashboard; else projetos"></ng-container>
+
+        <ng-template #dashboard>
+        <app-dashboard>
+        
+        </app-dashboard>
+        </ng-template>
+        <ng-template #projetos>
+            <app-projeto-list>
+        
+            </app-projeto-list>
+        </ng-template>
+</ng-container>
+
+

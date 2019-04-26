@@ -84,6 +84,9 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
         MatPaginatorModule
 
     ],
+    exports: [
+        ProjetoListComponent
+    ],
     providers: [
         UnidadeDataService,
         ProjetoDataService,

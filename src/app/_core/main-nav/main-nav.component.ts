@@ -70,7 +70,9 @@ export class MainNavComponent implements OnInit {
     }
 
     get exibeDashboard() {
-        return true
+        let usuarioAutenticado = this.authService.getCurrentUser()
+        let classe = usuarioAutenticado.unidade.classe
+        return classe == "admin" || classe == "mec" || classe == "tvescola"
     }
 
     get exibeProjetos() {

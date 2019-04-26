@@ -33,7 +33,9 @@ export class Permissions {
 				"/equipamentos",
 				"/kits",
 				"/tipoEquipamentos",
-				"/usuarios"
+				"/usuarios",
+				"/auth/logout",
+				"/dashboard"
 			],
 			mec: [
 				"/projetos", 
@@ -42,7 +44,9 @@ export class Permissions {
 				"/equipamentos",
 				"/kits",
 				"/tipoEquipamentos",
-				"/usuarios"
+				"/usuarios",
+				"/auth/logout",
+				"/dashboard"
 			],
 			tvescola: [
 				"/projetos", 
@@ -51,12 +55,15 @@ export class Permissions {
 				"/equipamentos",
 				"/kits",
 				"/tipoEquipamentos",
-				"/usuarios"
+				"/usuarios",
+				"/auth/logout",
+				"/dashboard"
 			],
 			polo: [
 				"/projetos", 
 				"/polos",
-				"/usuarios"
+				"/usuarios",
+				"/auth/logout"
 			],
 		}
 
@@ -111,8 +118,10 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 	{
 
 		let url: string = state.url
-		// console.log("URL acessada: " + url)
-		return this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)// && this.permissions.canActivate(url));
+		console.log("canActivate")
+		console.log("URL acessada: " + url)
+		let isHome = url == "/"
+		return (this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) && (isHome || this.permissions.canActivate(url))
 	}
 
 	canActivateChild(
@@ -121,8 +130,17 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 	{
 
 		let url: string = state.url
-		// console.log("URL acessada: " + url)
-		return this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles) //&& this.permissions.canActivateChild(url))
+		console.log("canActivateChild")
+		console.log("URL acessada: " + url)
+		let isAnExcludedPage = this.permissions.isAnExcludedPage(url)
+		let checkLogin = this.checkLogin(url, next.data.roles)
+		let cd = this.permissions.canActivateChild(url)
+
+		console.log("isAnExcludedPage: " + isAnExcludedPage)
+		console.log("checkLogin: " + checkLogin)
+		console.log("canActivateChild: " + cd)
+		let isHome = url == "/"
+		return (isAnExcludedPage || checkLogin) && (isHome || cd)
 	}
 
 	checkLogin(url: string, allowedRoles: string[]): boolean {

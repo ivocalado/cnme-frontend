@@ -49,6 +49,7 @@ import { EnvioEmpresasComponent } from './envio-empresas/envio-empresas.componen
             titleFontWeight:"700"
         })
     ],
+    exports: [DashboardComponent],
     providers:[DashboardDataService]
 })
 export class DashboardModule { }
