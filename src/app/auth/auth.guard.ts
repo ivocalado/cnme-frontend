@@ -77,7 +77,13 @@ export class Permissions {
 		if(this.usuarioLogado == null)
 			return true
 		let tipoUnidade = this.usuarioLogado.unidade.classe
-		let permissao = (this.pagePermissions[tipoUnidade].includes(url))
+		let permissao = false
+		for (let u of this.pagePermissions[tipoUnidade]) {
+			if(url.startsWith(u)) {
+				permissao = true
+				break
+			}
+		}
 		return permissao
 	}
 
@@ -97,11 +103,15 @@ export class Permissions {
 	}
 
 	isAnExcludedPage(url: string) {
+		let result: boolean = false
 		for(let u of this.excludedPages) {
-			if(url.includes(u))
-				return true
+			if(url.includes(u)) {
+				result = true
+				break
+			}
+				
 		}
-		return false
+		return result
 	}
 }
 
@@ -132,15 +142,10 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 		let url: string = state.url
 		console.log("canActivateChild")
 		console.log("URL acessada: " + url)
-		let isAnExcludedPage = this.permissions.isAnExcludedPage(url)
-		let checkLogin = this.checkLogin(url, next.data.roles)
-		let cd = this.permissions.canActivateChild(url)
 
-		console.log("isAnExcludedPage: " + isAnExcludedPage)
-		console.log("checkLogin: " + checkLogin)
-		console.log("canActivateChild: " + cd)
 		let isHome = url == "/"
-		return (isAnExcludedPage || checkLogin) && (isHome || cd)
+		return (this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) 
+			&& (isHome || this.permissions.canActivateChild(url))
 	}
 
 	checkLogin(url: string, allowedRoles: string[]): boolean {
@@ -148,12 +153,14 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 		//return true;
 		if (this.authService.isAuthenticated) {
+			console.log("Result: true")
 			return true;
 		}
 		console.log("credirect");
 
 		this.authService.redirectUrl = url;
 		this.router.navigate(['/auth/login']);
+		console.log("Result: false")
 		return false;
 
 	}
