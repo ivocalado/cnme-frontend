@@ -14,15 +14,15 @@
             <mat-card-title>Lista de Projetos</mat-card-title>
             <hr class="m-2">
             <mat-chip-list>
-                <mat-chip *ngIf="isAdmin" color="default" class="chip-legenda">
+                <mat-chip *ngIf="isAdmin" color="default" class="chip-legenda" (click)="toogleStatus('PLANEJAMENTO')">
                     <mat-icon>input</mat-icon>
                     Planejamento
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda"><mat-icon>flight_takeoff</mat-icon>Enviado</mat-chip>
-                <mat-chip color="default" class="chip-legenda"><mat-icon>flight_land</mat-icon>Entregue</mat-chip>
-                <mat-chip color="default" class="chip-legenda"><mat-icon>tv</mat-icon>Instalado</mat-chip>
-                <mat-chip color="default" class="chip-legenda"><mat-icon>cast</mat-icon>Ativado</mat-chip>
-                <mat-chip color="default" class="chip-legenda"><mat-icon>tv_off</mat-icon>Cancelado</mat-chip>
+                <mat-chip color="default" class="chip-legenda {{isStatusActive('ENVIADO')}}" (click)="toogleStatus('ENVIADO')"><mat-icon>flight_takeoff</mat-icon>Enviado</mat-chip>
+                <mat-chip color="default" class="chip-legenda {{isStatusActive('ENTREGUE')}}" (click)="toogleStatus('ENTREGUE')"><mat-icon>flight_land</mat-icon>Entregue</mat-chip>
+                <mat-chip color="default" class="chip-legenda {{isStatusActive('INSTALADO')}}" (click)="toogleStatus('INSTALADO')"><mat-icon>tv</mat-icon>Instalado</mat-chip>
+                <mat-chip color="default" class="chip-legenda {{isStatusActive('ATIVADO')}}" (click)="toogleStatus('ATIVADO')"><mat-icon>cast</mat-icon>Ativado</mat-chip>
+                <mat-chip color="default" class="chip-legenda {{isStatusActive('CANCELADO')}}" (click)="toogleStatus('CANCELADO')"><mat-icon>tv_off</mat-icon>Cancelado</mat-chip>
             </mat-chip-list>
             <hr class="m-2">
             <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">

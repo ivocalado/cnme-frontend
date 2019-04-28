@@ -21,6 +21,14 @@ export class ProjetoListComponent implements OnInit {
     dataSource;
     @ViewChild(MatSort) sort: MatSort;
 
+    statusFlag: any = {
+        PLANEJAMENTO: true,
+        ENVIADO: true,
+        ENTREGUE: true,
+        INSTALADO: true,
+        ATIVADO: true,
+        CANCELADO: true
+    }
 
     // "links": {
     //     "first": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
@@ -75,12 +83,17 @@ export class ProjetoListComponent implements OnInit {
 
     fetchProjetos(pageSize: number, pageIndex: number) {
         if(this.isAdmin) {
+            let statusToFind = []
+            Object.keys(this.statusFlag).forEach(key => {
+                if(this.statusFlag[key])
+                    statusToFind.push(key)
+            })
             this.projetoDataService
-            .getProjetos(pageSize, pageIndex)
+            .getProjetosPorVariosStatus(statusToFind, pageSize, pageIndex)
             .subscribe((res: any) => {
                 this.dataSource = new MatTableDataSource(res.projetos);
                 this.dataSource.sort = this.sort;
-                this.buildPagination(res.links, res.meta)
+                this.buildPagination(res.links, res.meta)   
             });
         } else {
             this.projetoDataService
@@ -127,5 +140,14 @@ export class ProjetoListComponent implements OnInit {
         let usuarioAutenticado = this.authService.getCurrentUser();
         let classe = usuarioAutenticado.unidade.classe;
         return classe == "admin" || classe == "tvescola" || classe == "mec";
+    }
+
+    toogleStatus(status: string) {
+        this.statusFlag[status] = !this.statusFlag[status]
+        this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+    }
+
+    isStatusActive(status: string) {
+        return this.statusFlag[status]?"active": ""
     }
 }
