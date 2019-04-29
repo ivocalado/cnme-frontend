@@ -93,7 +93,7 @@ export class ProjetoListComponent implements OnInit {
             .subscribe((res: any) => {
                 this.dataSource = new MatTableDataSource(res.projetos);
                 this.dataSource.sort = this.sort;
-                this.buildPagination(res.links, res.meta)   
+                this.buildPagination(res.links, res.meta)
             });
         } else {
             this.projetoDataService
@@ -103,9 +103,9 @@ export class ProjetoListComponent implements OnInit {
                 this.dataSource.sort = this.sort;
                 this.buildPagination(res.links, res.meta)
             });
-            
+
         }
-        
+
     }
 
     buildPagination(links: any, meta: any) {
@@ -148,6 +148,6 @@ export class ProjetoListComponent implements OnInit {
     }
 
     isStatusActive(status: string) {
-        return this.statusFlag[status]?"active": ""
+        return this.statusFlag[status]?"active": "";
     }
 }

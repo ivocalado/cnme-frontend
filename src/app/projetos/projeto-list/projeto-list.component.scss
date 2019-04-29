@@ -55,11 +55,20 @@
     font-weight: 400;
     margin: 10px 0 0 0;
     background: transparent;
-    padding: 0 10px 0 0;
+    padding: 0 10px 0;
     color:mat-color($mat-blue-gray,200);
     .mat-icon{
         font-size: 16px;
         padding-top:3px;
+    }
+    &::after{
+        background: transparent;
+    }
+    &:hover::after{
+        background: mat-color($mat-blue-gray,200);
+    }
+    &.active, &.active::after{
+        background: mat-color($mat-blue-gray,50);
     }
 }
 
@@ -131,4 +140,21 @@
       }
     }
   }
+}
+
+.btn-checklist{
+    border-radius: 20px;
+    padding:0px 18px;
+    font-size: 12px;
+    line-height: 30px;
+    //margin:right;
+    .mat-icon{
+        font-size: 20px;
+        width:auto;
+        height:auto;
+    }
+}
+
+.text-right{
+    text-align: right;
 }

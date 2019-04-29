@@ -42,15 +42,33 @@
                     </mat-card-title>
                     <div class="alert-label error" *ngIf="projeto.erros">
                         <mat-icon class="icon-error">error</mat-icon>
-                        <span>{{projeto.messages.erros}}</span>
+                        <span>
+                            <ul>
+                                <li *ngFor="let erro of projeto.messages.erros">
+                                    {{erro}}
+                                </li>
+                            </ul>
+                        </span>
                     </div>
                     <div class="alert-label warning" *ngIf="projeto.avisos">
                         <mat-icon class="icon-warning">warning</mat-icon>
-                        <span>{{projeto.messages.avisos}}</span>
+                        <span>
+                            <ul>
+                                <li *ngFor="let erro of projeto.messages.avisos">
+                                    {{erro}}
+                                </li>
+                            </ul>
+                        </span>
                     </div>
                     <div class="alert-label info" *ngIf="projeto.infos">
                         <mat-icon class="icon-info">info</mat-icon>
-                        <span>{{projeto.messages.infos}}</span>
+                        <span>
+                            <ul>
+                                <li *ngFor="let erro of projeto.messages.infos">
+                                    {{erro}}
+                                </li>
+                            </ul>
+                        </span>
                     </div>
                 </mat-card>
             </div>

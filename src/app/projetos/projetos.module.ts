@@ -34,6 +34,9 @@ import { ProjetosEntreguesComponent } from './projetos-entregues/projetos-entreg
 import { ProjetosInstaladosComponent } from './projetos-instalados/projetos-instalados.component';
 import { ProjetosCanceladosComponent } from './projetos-cancelados/projetos-cancelados.component';
 import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por-estados.component';
+import { ChecklistComponent } from './checklist/checklist.component';
+import {QuillModule} from 'ngx-quill';
+import { CheckListsDataService } from '../_shared/services/checklists-data.service';
 
 @NgModule({
     declarations: [
@@ -58,7 +61,8 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
         ProjetosEntreguesComponent,
         ProjetosInstaladosComponent,
         ProjetosCanceladosComponent,
-        ProjetosPorEstadosComponent
+        ProjetosPorEstadosComponent,
+        ChecklistComponent
     ],
     imports: [
         SharedModule,
@@ -81,7 +85,8 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
         MatRippleModule,
         MatCheckboxModule,
         MatExpansionModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        QuillModule
 
     ],
     exports: [
@@ -92,6 +97,7 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
         ProjetoDataService,
         SnackBarService,
         KitDataService,
+        CheckListsDataService,
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
         { provide: DateAdapter, useClass: MomentUtcDateAdapter },

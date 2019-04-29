@@ -1,0 +1,33 @@
+<div class="row" *ngIf="editForm">
+    <div class="col-lg-12">
+        <mat-card>
+            <mat-card-title>Termo de aceite do Checklist</mat-card-title>
+
+            <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                <div class="row mt-1">
+                    <div class="col-lg-6">
+                        <mat-form-field>
+                            <input matInput formControlName="versao" id="versao" placeholder="Versão anterior {{checklist.versao}}" [required]="true" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-12">
+                        <quill-editor formControlName="descricao" id="descricao" placeholder="Descrição"[required]="true"></quill-editor>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 mt-3">
+                        <button mat-raised-button color="primary" class="m-1" type="submit"
+                            [disabled]="!editForm.valid">
+                            Salvar
+                        </button>
+                        <button mat-raised-button type="button" class="m-1" color="warn" (click)="onCancel()">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</div>
