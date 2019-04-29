@@ -5,6 +5,7 @@ import { UnidadeDataService } from '../../_shared/services/unidade-data.service'
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import {Location} from '@angular/common';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
     selector: 'app-empresa-details',
@@ -21,12 +22,14 @@ export class EmpresaDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authService: AuthService,
-        private location: Location
+        private location: Location,
+        private snackBarService: SnackBarService
     ) { }
 
     ngOnInit() {
-        if(!this.canProcess()) {
-            this.router.navigate(['/'], { relativeTo: this.route });
+        if(!this.isAdmin) {
+            this.snackBarService.openSnackBar("Requisição inválida.");
+            this.router.navigate(["/"], { relativeTo: this.route });
             return
         }
         this.route.params.subscribe((params: Params) => {
@@ -37,12 +40,13 @@ export class EmpresaDetailsComponent implements OnInit {
         })
     }
 
+    get isAdmin() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola" || classe == "mec";
+    }
+
     onCancel() {
         this.location.back()
     }
-
-    private canProcess() {
-        return false
-    }
-    
 }
