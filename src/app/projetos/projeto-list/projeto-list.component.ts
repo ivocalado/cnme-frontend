@@ -4,6 +4,7 @@ import { Projeto } from 'src/app/_shared/models/projeto.model';
 import { MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     selector: "app-projeto-list",
@@ -65,6 +66,8 @@ export class ProjetoListComponent implements OnInit {
         private projetoDataService: ProjetoDataService,
         private authService: AuthService
     ) {}
+
+    buscaAvancada: boolean = false
 
     ngOnInit() {
         this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
@@ -149,5 +152,13 @@ export class ProjetoListComponent implements OnInit {
 
     isStatusActive(status: string) {
         return this.statusFlag[status]?"active": ""
+    }
+
+    toogleBuscaAvancada() {
+        this.buscaAvancada = !this.buscaAvancada
+    }
+    
+    onBuscaAvancada() {
+        
     }
 }
