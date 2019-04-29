@@ -38,6 +38,12 @@ export class EtapaInstalacaoComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        if(!this.isAdmin) {
+            this.snackBarService.openSnackBar("Requisição inválida.");
+            this.router.navigate(["/"], { relativeTo: this.route });
+            return
+        }
+
         this.route.params.subscribe((params:Params)=>{
             this.projetoId = +params["id"];
             this.projetoDataService.getEtapaInstalacao(this.projetoId).subscribe((etapa:Etapa)=>{
@@ -67,6 +73,12 @@ export class EtapaInstalacaoComponent implements OnInit {
         });
 
 
+    }
+
+    get isAdmin() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola" || classe == "mec";
     }
 
     onAddInstalacao(){

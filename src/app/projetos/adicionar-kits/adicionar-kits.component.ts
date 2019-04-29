@@ -8,6 +8,8 @@ import { Projeto } from 'src/app/_shared/models/projeto.model';
 import { Equipamento } from 'src/app/_shared/models/equipamento.model';
 import { Etapa } from 'src/app/_shared/models/etapa.model';
 import {Location} from '@angular/common';
+import { AuthService } from 'src/app/_shared/services/auth.service';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
     selector: 'app-adicionar-kits',
@@ -25,10 +27,19 @@ export class AdicionarKitsComponent implements OnInit {
         private projetoDataService:ProjetoDataService,
         private route:ActivatedRoute,
         private router:Router,
-        private location: Location
+        private location: Location,
+        private authService: AuthService,
+        private snackBarService: SnackBarService
         ) { }
 
     ngOnInit() {
+
+        if(!this.isAdmin) {
+            this.snackBarService.openSnackBar("Requisição inválida.");
+            this.router.navigate(["/"], { relativeTo: this.route });
+            return
+        }
+        
         this.route.params.subscribe((params:Params)=>{
             this.projetoId = +params["id"];
             this.projetoDataService.getProjeto(this.projetoId).subscribe((projeto:Projeto)=>{
@@ -40,6 +51,12 @@ export class AdicionarKitsComponent implements OnInit {
         this.kitDataService.getAllKits().subscribe((res: any)=>{
             this.kits = res.kits;
         });
+    }
+
+    get isAdmin() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola" || classe == "mec";
     }
 
     onSubmit(form: NgForm) {

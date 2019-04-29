@@ -11,6 +11,7 @@ import { Tarefa } from '../../_shared/models/tarefa.model';
 import { Etapa } from '../../_shared/models/etapa.model';
 import { EquipamentoProjeto } from '../../_shared/models/equipamentoProjeto.model';
 import {Location} from '@angular/common';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 
 @Component({
@@ -39,12 +40,19 @@ export class ProjetoEditComponent implements OnInit {
         private projetoDataService:ProjetoDataService,
         private snackBarService:SnackBarService,
         private dateAdapter: DateAdapter<any>,
-        private location: Location
+        private location: Location,
+        private authService: AuthService
     ) {
         this.dateAdapter.setLocale('pt-BR');
     }
 
     ngOnInit() {
+        if(!this.isAdmin) {
+            this.snackBarService.openSnackBar("Requisição inválida.");
+            this.router.navigate(["/"], { relativeTo: this.route });
+            return
+        }
+
         this.fetchPolos();
         this.route.params.subscribe((params:Params)=>{
             this.projetoId = +params["id"];
@@ -77,6 +85,12 @@ export class ProjetoEditComponent implements OnInit {
         });
 
 
+    }
+
+    get isAdmin() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola" || classe == "mec";
     }
 
     initForm(projeto:Projeto){

@@ -131,7 +131,18 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 		console.log("canActivate")
 		console.log("URL acessada: " + url)
 		let isHome = url == "/"
-		return (this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) && (isHome || this.permissions.canActivate(url))
+		if(this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) {
+			if(isHome) {
+				return true
+			} else if (this.permissions.canActivate(url)) {
+				return true
+			} else {
+				this.router.navigate(['/']);
+				return false
+			}
+		} else {
+			return false
+		}
 	}
 
 	canActivateChild(
@@ -144,8 +155,18 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 		console.log("URL acessada: " + url)
 
 		let isHome = url == "/"
-		return (this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) 
-			&& (isHome || this.permissions.canActivateChild(url))
+		if(this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) {
+			if(isHome) {
+				return true
+			} else if (this.permissions.canActivateChild(url)) {
+				return true
+			} else {
+				this.router.navigate(['/']);
+				return false
+			}
+		} else {
+			return false
+		}
 	}
 
 	checkLogin(url: string, allowedRoles: string[]): boolean {

@@ -66,8 +66,19 @@ export class GestoresNaoConfirmadosComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-      this.usuarioAutenticado = this.authService.getCurrentUser()
-      this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+    if(!this.isAdmin) {
+      this.snackBarService.openSnackBar("Requisição inválida.");
+      this.router.navigate(["/"], { relativeTo: this.route });
+      return
+    }
+    this.usuarioAutenticado = this.authService.getCurrentUser()
+    this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+  }
+
+  get isAdmin() {
+    let usuarioAutenticado = this.authService.getCurrentUser();
+    let classe = usuarioAutenticado.unidade.classe;
+    return classe == "admin" || classe == "tvescola" || classe == "mec";
   }
 
   onDetails(id:number){

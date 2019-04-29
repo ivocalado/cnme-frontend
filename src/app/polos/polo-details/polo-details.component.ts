@@ -72,14 +72,27 @@ export class PoloDetailsComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
             const unidadeId = +params["id"];
-            this.unidadeDataService.getUnidade(unidadeId).subscribe((unidade: Unidade) => {
-                this.currentUser = this.authService.getCurrentUser()
-                this.unidade = unidade;
-                console.log("ngOnInit -> details")
-                console.log(this.unidade)
-                this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
-            })
+            if(this.isAdmin || this.authService.getCurrentUser().unidade.id == unidadeId) {
+                this.unidadeDataService.getUnidade(unidadeId).subscribe((unidade: Unidade) => {
+                    this.currentUser = this.authService.getCurrentUser()
+                    this.unidade = unidade;
+                    console.log("ngOnInit -> details")
+                    console.log(this.unidade)
+                    this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+                })
+            } else {
+                this.snackBarService.openSnackBar("Requisição inválida.");
+                this.router.navigate(["/"], { relativeTo: this.route });
+                return
+            }
+            
         })
+    }
+
+    get isAdmin() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola" || classe == "mec";
     }
 
     onCancel() {

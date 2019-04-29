@@ -5,6 +5,7 @@ import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 import { Projeto } from 'src/app/_shared/models/projeto.model';
 import {Location} from '@angular/common';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 
 
@@ -63,9 +64,16 @@ export class ProjetosPorEstadosComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService
     ) { }
 
   ngOnInit() {
+    if(!this.isAdmin) {
+      this.snackBarService.openSnackBar("Requisição inválida.");
+      this.router.navigate(["/"], { relativeTo: this.route });
+      return
+    }
+
     this.route.params.subscribe((params: Params) => {
       let uf : string = params["uf"];
       if(uf == null) {
@@ -77,6 +85,12 @@ export class ProjetosPorEstadosComponent implements OnInit {
         this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
       }  
     });
+  }
+
+  get isAdmin() {
+    let usuarioAutenticado = this.authService.getCurrentUser();
+    let classe = usuarioAutenticado.unidade.classe;
+    return classe == "admin" || classe == "tvescola" || classe == "mec";
   }
 
   fetchProjetos(pageSize: number, pageIndex: number) {

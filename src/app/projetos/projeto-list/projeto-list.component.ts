@@ -71,14 +71,14 @@ export class ProjetoListComponent implements OnInit {
     }
 
     onDetails(id: number) {
-        this.router.navigate(["detalhes", id], { relativeTo: this.route });
+        this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
     }
 
     onEdit(id: number) {
-        this.router.navigate(["editar", id], { relativeTo: this.route });
+        this.router.navigate(["/projetos/editar", id], { relativeTo: this.route });
     }
     onDelete(id: number) {
-        this.router.navigate(["cancelar", id], { relativeTo: this.route });
+        this.router.navigate(["/projetos/cancelar", id], { relativeTo: this.route });
     }
 
     fetchProjetos(pageSize: number, pageIndex: number) {

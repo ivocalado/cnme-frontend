@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
 import { Unidade } from 'src/app/_shared/models/unidade.model';
 import { MatTableDataSource, MatSort, PageEvent } from '@angular/material';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
     selector: "app-polo-list",
@@ -47,11 +49,25 @@ export class PoloListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private unidadeDataService: UnidadeDataService
+        private unidadeDataService: UnidadeDataService,
+        private snackBarService: SnackBarService,
+        private authService: AuthService,
     ) {}
 
     ngOnInit() {
-        this.fetchUnidades(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
+        if(this.isAdmin) {
+            this.fetchUnidades(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
+        } else {
+            this.snackBarService.openSnackBar("Requisição inválida.");
+            this.router.navigate(["/"], { relativeTo: this.route });
+            return
+        }
+    }
+
+    get isAdmin() {
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe;
+        return classe == "admin" || classe == "tvescola" || classe == "mec";
     }
 
     onEdit(id: number) {
