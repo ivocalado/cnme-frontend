@@ -148,3 +148,14 @@ table {
         height: 100%;
     }
 }
+
+.scroll-viewport {
+  height: 250px;
+  padding:10px;
+  width: 100%;
+  border: 1px solid mat-color($mat-blue-gray,100);
+  div{
+      padding:20px;
+  }
+}
+

@@ -25,7 +25,7 @@ export class ChecklistComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.checklistDataService.getChecklists(1).subscribe(
+        this.checklistDataService.getLastChecklist().subscribe(
         (checklist:Checklist) => {
             console.log(checklist);
             this.checklist = checklist;

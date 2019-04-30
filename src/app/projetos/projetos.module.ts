@@ -37,6 +37,7 @@ import { ProjetosPorEstadosComponent } from './projetos-por-estados/projetos-por
 import { ChecklistComponent } from './checklist/checklist.component';
 import {QuillModule} from 'ngx-quill';
 import { CheckListsDataService } from '../_shared/services/checklists-data.service';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 @NgModule({
     declarations: [
@@ -73,6 +74,7 @@ import { CheckListsDataService } from '../_shared/services/checklists-data.servi
         MatInputModule,
         MatSelectModule,
         MatButtonModule,
+        MatCheckboxModule,
         MatCardModule,
         MatTableModule,
         MatSortModule,
@@ -86,21 +88,19 @@ import { CheckListsDataService } from '../_shared/services/checklists-data.servi
         MatCheckboxModule,
         MatExpansionModule,
         MatPaginatorModule,
-        QuillModule
-
+        QuillModule,
+        ScrollDispatchModule
     ],
-    exports: [
-        ProjetoListComponent
-    ],
+    exports: [ProjetoListComponent],
     providers: [
         UnidadeDataService,
         ProjetoDataService,
         SnackBarService,
         KitDataService,
         CheckListsDataService,
-        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+        { provide: MAT_DATE_LOCALE, useValue: "pt-BR" },
         { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-        { provide: DateAdapter, useClass: MomentUtcDateAdapter },
+        { provide: DateAdapter, useClass: MomentUtcDateAdapter }
     ]
 })
 export class ProjetosModule {}

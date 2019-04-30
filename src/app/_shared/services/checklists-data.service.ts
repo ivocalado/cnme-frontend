@@ -16,15 +16,22 @@ export class CheckListsDataService{
         })
     }
 
-    getChecklists(id:number){
+    getLastChecklist(){
         return this.httpClient.get<Checklist>("api/checklists")
             .pipe(map(res => {
-                console.log(res);
                 let checklists: Checklist[];
                 checklists = res["data"];
                 checklists.reverse();
                 let checklist = checklists[0];
                 return checklist;
             }));
+    }
+
+    setChecklistToProjeto(checklistId:number, projetoId:number){
+        return this.httpClient.post<Checklist>("/api/checklists/"+checklistId+"/projeto-cnme/"+projetoId,{
+            headers: new HttpHeaders({
+                "Content-Type": "application/json; charset=UTF-8"
+            })
+        });
     }
 }

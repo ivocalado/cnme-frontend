@@ -134,8 +134,23 @@
                 </mat-table>
             </div>
         </div>
+        <div class="row mt-5" *ngIf="projeto.checklist_id">
+            <div class="col-lg-12">
+                <cdk-virtual-scroll-viewport itemSize="50" class="scroll-viewport">
+                    <div [innerHTML]="checklist.descricao"></div>
+                </cdk-virtual-scroll-viewport>
+                <form (ngSubmit)="onSubmitChecklist(fchk)" #fchk="ngForm" class="mt-3">
+                <mat-checkbox id="checklist" name="checklist" [(ngModel)]="isChecked">Li e concordo com os termos do checklist.</mat-checkbox>
+                <br />
+                <button mat-raised-button color="primary" type="submit" [disabled]="!isChecked">
+                    Continuar
+                </button>
+                </form>
+            </div>
+        </div>
     </mat-expansion-panel>
-
+    <!-- exibe este bloco apenas se tiver um termo de checklist associado ao projeto -->
+    <ng-container *ngIf="projeto.checklist_id">
     <mat-expansion-panel *ngIf="etapaEnvio && etapaEnvio.tarefas && etapaEnvio.tarefas.length" [expanded]="step === 2"
         (opened)="setStep(2)" (closed)="setStep(-1)" hideToggle>
         <mat-expansion-panel-header>
@@ -331,5 +346,7 @@
             </div>
         </ng-template>
     </mat-expansion-panel>
+    </ng-container>
+    <!-- fim exibe este bloco apenas se tiver um termo de checklist associado ao projeto -->
 
 </mat-accordion>

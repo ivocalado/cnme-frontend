@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/_shared/services/auth.service';
 
 import { Moment } from "moment";
 import * as moment from "moment";
+import { CheckListsDataService } from 'src/app/_shared/services/checklists-data.service';
+import { Checklist } from 'src/app/_shared/models/checklist.model';
 
 @Component({
     selector: "app-projeto-details",
@@ -31,13 +33,17 @@ export class ProjetoDetailsComponent implements OnInit {
     etapaInstalacao: Etapa;
     etapaAtivacao: Etapa;
 
+    isChecked = false;
+    checklist:Checklist = Checklist.EMPTY_MODEL;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private projetoDataService: ProjetoDataService,
         private snackBarService: SnackBarService,
         private authService: AuthService,
-        private dateAdapter: DateAdapter<any>
+        private dateAdapter: DateAdapter<any>,
+        private checklistDataService: CheckListsDataService
     ) {
         //this.dateAdapter.setLocale("pt-BR");
     }
@@ -54,10 +60,12 @@ export class ProjetoDetailsComponent implements OnInit {
             .getProjeto(this.projetoId)
             .subscribe(projeto => {
                 this.projeto = projeto;
+                this.getChecklist();
                 this.dataSource = new MatTableDataSource(
                     this.projeto.equipamentos_projeto
                 );
                 this.dataSource.sort = this.sort;
+                if (this.projeto.checklist_id) this.isChecked = true;
             });
 
         this.projetoDataService
@@ -136,6 +144,28 @@ export class ProjetoDetailsComponent implements OnInit {
                     );
                 });
         }
+    }
+
+    //Confirma checklist
+    onSubmitChecklist(form: NgForm) {
+        console.log(form.value);
+        this.checklistDataService
+            .setChecklistToProjeto(this.checklist.id,this.projetoId)
+            .subscribe(res => {
+                console.log(res);
+                this.fetchProjeto();
+                this.snackBarService.openSnackBar(
+                    "Checklist aceito com sucesso."
+                );
+            });
+    }
+
+    getChecklist(){
+        this.checklistDataService
+            .getLastChecklist()
+            .subscribe((checklist: Checklist) => {
+                this.checklist = checklist;
+            });
     }
 
     get emEntrega() {

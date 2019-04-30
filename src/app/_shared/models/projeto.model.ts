@@ -22,7 +22,8 @@ export class Projeto{
         public erros:boolean,
         public infos:boolean,
         public avisos:boolean,
-        public messages: Messages
+        public messages: Messages,
+        public checklist_id:number
     ){}
     static readonly EMPTY_MODEL = {
         id: null,
@@ -42,6 +43,7 @@ export class Projeto{
         erros: false,
         infos: false,
         avisos: false,
-        messages: null
+        messages: null,
+        checklist_id:null
     }
 }
