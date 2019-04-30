@@ -3,25 +3,31 @@
 
 .table-container {
   height: 400px;
+  min-width: 400px;
   overflow: auto;
   .mat-table {
-        width: 100%;
+        width: 800px;
         .mat-header-row{
             background-color: mat-color($mat-blue-gray,900);
             .mat-header-cell{
                 color:mat-contrast($mat-blue-gray,900);
+                justify-content:center;
                 &:first-child{
+                    justify-content:left;
                     flex: 0 0 30%;
                 }
-            }
-            .mat-cell{
-                justify-content:center;
             }
         }
         .mat-row{
             .mat-cell{
+                justify-content:center;
                 &:first-child{
                     flex: 0 0 30%;
+                    border-right: 1px solid mat-color($mat-blue-gray,100);
+                    justify-content:left;
+                }
+                &:last-child{
+                    border-left: 1px solid mat-color($mat-blue-gray,100);
                 }
             }
         }
@@ -33,3 +39,4 @@
 .mat-form-field {
     width: 100%;
 }
+

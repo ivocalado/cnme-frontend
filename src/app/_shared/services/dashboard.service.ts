@@ -33,7 +33,17 @@ export class DashboardDataService {
         return this.httpClient.get("/api/dashboard/projetos/etapas/extrato");
     }
 
-    getEmpresasEnvio(){
+    getEmpresasEnvio() {
         return this.httpClient.get("/api/dashboard/projetos/envio/empresas");
+    }
+    getEmpresasInstalacao() {
+        return this.httpClient.get("/api/dashboard/projetos/instalacao/empresas");
+    }
+    getEmpresasAtivacao() {
+        return this.httpClient.get("/api/dashboard/projetos/instalacao/empresas");
+    }
+
+    getEmpresasFromStatus(status:string){
+        return this.httpClient.get("/api/dashboard/projetos/"+status+"/empresas");
     }
 }
