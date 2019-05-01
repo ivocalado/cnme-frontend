@@ -13,7 +13,7 @@ import { EstadosStatusComponent } from './estados-status/estados-status.componen
 import { MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCardModule, MatTableModule, MatSortModule } from '@angular/material';
 import {TimelineChartComponent } from './timeline-chart/timeline-chart.component';
 import { EtapasAtrasadasComponent } from './etapas-atrasadas/etapas-atrasadas.component';
-import { EnvioEmpresasComponent } from './envio-empresas/envio-empresas.component';
+import { EnvioEmpresasComponent } from './empresas-status/empresas-status.component';
 
 @NgModule({
     declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent, EstadosStatusComponent, TimelineChartComponent, EtapasAtrasadasComponent, EnvioEmpresasComponent],
