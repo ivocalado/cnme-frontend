@@ -6,7 +6,8 @@
   min-width: 400px;
   overflow: auto;
   .mat-table {
-        width: 800px;
+        width: 100%;
+        min-width: 800px;
         .mat-header-row{
             background-color: mat-color($mat-blue-gray,900);
             .mat-header-cell{

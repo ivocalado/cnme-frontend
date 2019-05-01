@@ -73,6 +73,24 @@
 }
 
 
+.btn-checklist{
+    border-radius: 20px;
+    padding:0px 18px;
+    font-size: 12px;
+    line-height: 30px;
+    //margin:right;
+    .mat-icon{
+        font-size: 20px;
+        width:auto;
+        height:auto;
+    }
+}
+
+.text-right{
+    text-align: right;
+}
+
+
 
 @media screen and (max-width: 960px) {
   .mat-elevation-z8 {
@@ -140,21 +158,4 @@
       }
     }
   }
-}
-
-.btn-checklist{
-    border-radius: 20px;
-    padding:0px 18px;
-    font-size: 12px;
-    line-height: 30px;
-    //margin:right;
-    .mat-icon{
-        font-size: 20px;
-        width:auto;
-        height:auto;
-    }
-}
-
-.text-right{
-    text-align: right;
 }
