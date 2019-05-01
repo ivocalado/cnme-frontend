@@ -44,7 +44,7 @@ export class EnvioEmpresasComponent implements OnInit {
 
     fetchEmpresas() {
         this.dashboardDataService
-            .getEmpresasInstalacao()
+            .getEmpresasFromStatus('envio')
             .subscribe((res: any[]) => {
                 this.dataSource = new MatTableDataSource(res);
                 this.dataSource.sort = this.sort;

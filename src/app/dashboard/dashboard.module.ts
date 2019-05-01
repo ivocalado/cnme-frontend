@@ -14,9 +14,10 @@ import { MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, M
 import {TimelineChartComponent } from './timeline-chart/timeline-chart.component';
 import { EtapasAtrasadasComponent } from './etapas-atrasadas/etapas-atrasadas.component';
 import { EnvioEmpresasComponent } from './empresas-status/empresas-status.component';
+import { EmpresasEstadosComponent } from './empresas-estados/empresas-estados.component';
 
 @NgModule({
-    declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent, EstadosStatusComponent, TimelineChartComponent, EtapasAtrasadasComponent, EnvioEmpresasComponent],
+    declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent, EstadosStatusComponent, TimelineChartComponent, EtapasAtrasadasComponent, EnvioEmpresasComponent, EmpresasEstadosComponent],
     imports: [
         SharedModule,
         DashboardRoutingModule,
