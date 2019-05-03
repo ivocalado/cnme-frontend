@@ -15,6 +15,7 @@ import {TimelineChartComponent } from './timeline-chart/timeline-chart.component
 import { EtapasAtrasadasComponent } from './etapas-atrasadas/etapas-atrasadas.component';
 import { EnvioEmpresasComponent } from './empresas-status/empresas-status.component';
 import { EmpresasEstadosComponent } from './empresas-estados/empresas-estados.component';
+import { UnidadeDataService } from '../_shared/services/unidade-data.service';
 
 @NgModule({
     declarations: [DashboardComponent, StatusChartComponent, EstadosStatusChartComponent, EstadosStatusComponent, TimelineChartComponent, EtapasAtrasadasComponent, EnvioEmpresasComponent, EmpresasEstadosComponent],
@@ -51,6 +52,6 @@ import { EmpresasEstadosComponent } from './empresas-estados/empresas-estados.co
         })
     ],
     exports: [DashboardComponent],
-    providers:[DashboardDataService]
+    providers:[DashboardDataService, UnidadeDataService]
 })
 export class DashboardModule { }
