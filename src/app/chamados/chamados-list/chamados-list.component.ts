@@ -86,6 +86,7 @@ export class ChamadosListComponent implements OnInit {
   }
 
   onDetails(id: Number) {
+    console.log("TESTEEEEEEEEEEEE")
     this.router.navigate(['detalhes', id], { relativeTo: this.route });
 }
 

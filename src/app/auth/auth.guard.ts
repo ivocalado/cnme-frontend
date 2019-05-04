@@ -25,6 +25,7 @@ export class Permissions {
 
 		this.pagePermissions = {
 			admin: [
+				"/chamados",
 				"/projetos", 
 				"/polos",
 				"/tvescola",
@@ -38,6 +39,7 @@ export class Permissions {
 				"/dashboard"
 			],
 			mec: [
+				"/chamados",
 				"/projetos", 
 				"/polos",
 				"/empresas",
@@ -49,6 +51,7 @@ export class Permissions {
 				"/dashboard"
 			],
 			tvescola: [
+				"/chamados",
 				"/projetos", 
 				"/polos",
 				"/empresas",
@@ -60,6 +63,7 @@ export class Permissions {
 				"/dashboard"
 			],
 			polo: [
+				"/chamados",
 				"/projetos", 
 				"/polos",
 				"/usuarios",
@@ -128,7 +132,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 	{
 
 		let url: string = state.url
-		console.log("canActivate")
+		console.log("canActivate: AQUIIIIIIIIII")
 		console.log("URL acessada: " + url)
 		let isHome = url == "/"
 		if(this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) {
@@ -138,9 +142,11 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 				return true
 			} else {
 				this.router.navigate(['/']);
+				console.log("FALSOOOOOOO 1")
 				return false
 			}
 		} else {
+			console.log("FALSOOOOOOO 2")
 			return false
 		}
 	}
