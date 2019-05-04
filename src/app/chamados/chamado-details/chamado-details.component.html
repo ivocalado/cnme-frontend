@@ -12,9 +12,83 @@
                     <mat-card-title>
                         ID: {{chamado.id}}
                     </mat-card-title>
-                    <div class="row">
-                        <p><strong>Status: </strong> {{chamado.status.nome}}</p>
-                    </div>
+                    <form [formGroup]="chamadoForm" (ngSubmit)="onUpdateChamado()">
+                        <div class="row">
+                                <div class="col-lg-5 mt-1">
+                                        <mat-form-field>
+                                            <input matInput formControlName="unidade" id="unidade" placeholder="Unidade demandante"/>
+                                        </mat-form-field>
+                                </div>
+                                <div class="col-lg-5 mt-1">
+                                        <mat-form-field>
+                                            <input matInput formControlName="criador" id="criador" placeholder="Criador do Chamado"/>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5 mt-1">
+                                <mat-form-field>
+                                    <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
+                                        placeholder="Unidade responsável" [required]="true">
+                                        <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id" (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
+                                            {{ unidade.nome }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-5 mt-1">
+                                    <mat-form-field>
+                                        <input matInput formControlName="us_resp" id="us_resp" placeholder="Usuário encarregado do chamado"/>
+                                    </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 mt-1">
+                                <mat-form-field>
+                                    <mat-select formControlName="status_id" id="status_id"
+                                        placeholder="Status" [required]="true">
+                                        <mat-option *ngFor="let st of status" [value]="st.id">
+                                            {{ st.nome }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-3 mt-1"></div>
+                            <div class="col-lg-3 mt-1">
+                                    <mat-form-field>
+                                        <mat-select formControlName="tipo_id" id="tipo_id"
+                                            placeholder="Tipo" [required]="true" >
+                                            <mat-option *ngFor="let tp of tipos" [value]="tp.id">
+                                                {{ tp.nome }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                        </div>
+                        
+                        <div class="row">
+                                <div class="col-lg-8 mt-1">
+                                    <mat-form-field>
+                                        <input matInput formControlName="assunto" id="assunto" placeholder="Assunto do chamado" [required]="true"/>
+                                    </mat-form-field>
+                                </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="col-lg-8 mt-1">
+                                    <mat-form-field>
+                                        <textarea matInput formControlName="descricao" id="descricao" placeholder="Descrição detalhada do chamado"></textarea>
+                                    </mat-form-field>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-lg-10 mt-1 pull-right">
+                                    <button mat-raised-button class="m-1" color="primary" [disabled]="!chamadoForm.dirty || !chamadoForm.valid">
+                                        Salvar modificações
+                                    </button>
+                                </div>
+                            </div>
+                    </form>
                 </mat-card>
             </div>
         </div>

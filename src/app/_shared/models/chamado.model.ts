@@ -15,11 +15,17 @@ export class Chamado {
         // public tarefa_id: number,  no momento não utilizado
         public tipo: ChamadoTipo,
         public unidade_responsavel: Unidade,
-        public usuario_responsavel: Usuario,
-        public usuario: Usuario,
         public unidade_responsavel_id: number,
-        public usuario_id: number,
+
+        public usuario_responsavel: Usuario,
         public usuario_responsavel_id: number,
+
+        public usuario: Usuario,
+        public usuario_id: number,
+        
+        public unidade: Unidade,
+        public unidade_id: number,
+        
         public prioridade: number,
         public privado: boolean,
         public data_inicio: string,
@@ -38,11 +44,17 @@ export class Chamado {
         projeto_id: null,
         tipo: ChamadoTipo.EMPTY_MODEL,
         unidade_responsavel: Unidade.EMPTY_MODEL,
-        usuario_responsavel: Usuario.EMPTY_MODEL,
-        usuario: Usuario.EMPTY_MODEL,
         unidade_responsavel_id: null,
-        usuario_id: null,
+
+        usuario_responsavel: Usuario.EMPTY_MODEL,
         usuario_responsavel_id: null,
+        
+        usuario: Usuario.EMPTY_MODEL,
+        usuario_id: null,
+        
+        unidade: Unidade.EMPTY_MODEL,
+        unidade_id: null,
+        
         prioridade: null,
         privado: null,
         data_inicio: '',

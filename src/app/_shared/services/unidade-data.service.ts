@@ -183,6 +183,27 @@ export class UnidadeDataService {
         return this.getPolos(-1, 1)
     }
 
+    getGestoras() {
+        let url: string = "/api/unidades/u/gestoras"
+        return this.httpClient.get<Unidade>(url)
+        .pipe(
+            map(res => {
+            let unidades: Unidade[] = [];
+            for (var key in res["data"]) {
+                let unidade: Unidade;
+                unidade = <Unidade>res["data"][key];
+                if (!unidade["localidade"]) {
+                    unidade.localidade = Localidade.EMPTY_MODEL;
+                    unidade.localidade.estado = Estado.EMPTY_MODEL;
+                }
+                unidades.push(unidade);
+            }
+            return unidades
+        })
+        );
+            
+    }    
+
     getPolos(pageSize: number, pageIndex: number){
         let usuarioAutenticado = this.authService.getCurrentUser();
         let classe = usuarioAutenticado.unidade.classe
@@ -269,8 +290,10 @@ export class UnidadeDataService {
                     resultado['meta'] = res["meta"]
                     return resultado;
                 })
-            );
+        );
     }
+
+
 
     getAllEmpresas() {
         return this.getEmpresas(10000, 1)

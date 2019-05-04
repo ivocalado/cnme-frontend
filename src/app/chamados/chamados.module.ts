@@ -10,6 +10,7 @@ import { ChamadosListComponent } from './chamados-list/chamados-list.component';
 import { ChamadosRoutingModule } from './chamados-routing.module';
 import { ChamadoDataService } from '../_shared/services/chamado-data.service';
 import { ChamadoDetailsComponent } from './chamado-details/chamado-details.component';
+import { UnidadeDataService } from '../_shared/services/unidade-data.service';
 
 @NgModule({
   declarations: [ChamadosComponent, ChamadosListComponent, ChamadoDetailsComponent],
@@ -28,7 +29,7 @@ import { ChamadoDetailsComponent } from './chamado-details/chamado-details.compo
     MatExpansionModule,
     NgxMaskModule.forRoot()
 ],
-providers: [ChamadoDataService]
+providers: [ChamadoDataService, UnidadeDataService]
 
 })
 export class ChamadosModule { }
