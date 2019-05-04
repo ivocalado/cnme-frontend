@@ -1,1 +1,22 @@
 <h1>Detalhes do chamado</h1>
+<mat-accordion class="example-headers-align" *ngIf="chamado">
+    <mat-expansion-panel [expanded]="true"hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <strong>Dados do Chamado</strong>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+            <div class="col-lg-12">
+                <mat-card>
+                    <mat-card-title>
+                        ID: {{chamado.id}}
+                    </mat-card-title>
+                    <div class="row">
+                        <p><strong>Status: </strong> {{chamado.status.nome}}</p>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

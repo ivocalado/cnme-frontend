@@ -63,4 +63,53 @@ export class ChamadoDataService{
     getAllChamados() {
         return this.getChamados(1000, 1)
     }
+
+    getChamado(id:number){
+        return this.httpClient.get<Chamado>("/api/chamados/"+id)
+        .pipe(map(res=>{
+            let chamado: Chamado;
+            chamado = <Chamado>res["data"];
+            chamado.status = <ChamadoStatus>res["data"]["status"];
+            chamado.projeto = <Projeto>res["data"]["projeto_cnme"];
+            chamado.projeto_id = (chamado.projeto != null)? chamado.projeto.id : null
+            chamado.tipo = <ChamadoTipo>res["data"]["tipo"];
+            chamado.unidade_responsavel = <Unidade>res["data"]["unidade_responsavel"];
+            chamado.unidade_responsavel_id = (chamado.unidade_responsavel != null)? chamado.unidade_responsavel.id : null
+            chamado.usuario_responsavel = <Usuario>res["data"]["usuario_responsavel"];
+            chamado.usuario_responsavel_id = (chamado.usuario_responsavel != null)? chamado.usuario_responsavel.id :  null
+            chamado.usuario = <Usuario>res["data"]["usuario"];
+            chamado.usuario_id = (chamado.usuario != null)? chamado.usuario.id :  null
+            return chamado
+        }));
+    }
+
+    getStatus() {
+        return this.httpClient.get<ChamadoStatus[]>("/api/chamados/c/status")
+        .pipe(map(res=>{
+            let ret: ChamadoStatus[] = []
+
+            let chamadoStatus: ChamadoStatus[] = [];
+            for (var key in res["data"]) {
+                let status: ChamadoStatus;
+                status = <ChamadoStatus>res["data"][key];
+                chamadoStatus.push(status);
+            }
+            return chamadoStatus;
+        }));
+    }
+
+    getTipos() {
+        return this.httpClient.get<ChamadoTipo[]>("/api/chamados/c/tipos")
+        .pipe(map(res=>{
+            let ret: ChamadoTipo[] = []
+
+            let chamadoTipo: ChamadoTipo[] = [];
+            for (var key in res["data"]) {
+                let tipo: ChamadoTipo;
+                tipo = <ChamadoTipo>res["data"][key];
+                chamadoTipo.push(tipo);
+            }
+            return chamadoTipo;
+        }));
+    }    
 }
