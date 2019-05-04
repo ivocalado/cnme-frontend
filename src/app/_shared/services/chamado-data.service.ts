@@ -8,6 +8,7 @@ import { Projeto } from '../models/projeto.model';
 import { ChamadoTipo } from '../models/chamadoTipo.model';
 import { Unidade } from '../models/unidade.model';
 import { Usuario } from '../models/usuario.model';
+import { Comentario } from '../models/comentario.model';
 
 @Injectable()
 export class ChamadoDataService{
@@ -101,8 +102,6 @@ export class ChamadoDataService{
     getTipos() {
         return this.httpClient.get<ChamadoTipo[]>("/api/chamados/c/tipos")
         .pipe(map(res=>{
-            let ret: ChamadoTipo[] = []
-
             let chamadoTipo: ChamadoTipo[] = [];
             for (var key in res["data"]) {
                 let tipo: ChamadoTipo;
@@ -111,5 +110,19 @@ export class ChamadoDataService{
             }
             return chamadoTipo;
         }));
-    }    
+    }  
+    
+    getComentarios(chamado_id: number) {
+        
+        return this.httpClient.get<Comentario[]>("/api/comments/chamado/"+chamado_id+"/comments")
+        .pipe(map(res=>{
+            let comentarios: Comentario[] = [];
+            for (var key in res["data"]) {
+                let comentario: Comentario;
+                comentario = <Comentario>res["data"][key];
+                comentarios.push(comentario);
+            }
+            return comentarios;
+        }));
+    }
 }

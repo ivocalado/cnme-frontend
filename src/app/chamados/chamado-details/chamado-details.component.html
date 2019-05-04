@@ -1,6 +1,6 @@
 <h1>Detalhes do chamado</h1>
 <mat-accordion class="example-headers-align" *ngIf="chamado">
-    <mat-expansion-panel [expanded]="true"hideToggle>
+    <mat-expansion-panel [expanded]="true" hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <strong>Dados do Chamado</strong>
@@ -93,4 +93,40 @@
             </div>
         </div>
     </mat-expansion-panel>
+    <mat-expansion-panel *ngFor="let comentario of comentarios" [expanded]="false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <strong>Evento do chamado</strong>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-card>
+            <mat-card-title>
+                ID: {{comentario.id}}
+            </mat-card-title>
+            <p><strong>Tipo do evento: </strong>{{getTipoComentario(comentario)}}</p>
+            <p><strong>Mensagem: </strong>{{comentario.content}}</p>
+        </mat-card>
+    </mat-expansion-panel>
 </mat-accordion>
+<br>
+<mat-card *ngIf="comentarioForm">
+    <mat-card-title>
+        Novo comentário
+    </mat-card-title>
+    <form [formGroup]="comentarioForm" (ngSubmit)="onNewComentario()">
+        <div class="row">
+            <div class="col-lg-8 mt-1">
+                <mat-form-field>
+                    <textarea matInput formControlName="comentario" id="comentario" placeholder="Comentário:"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 mt-1 pull-right">
+                <button mat-raised-button class="m-1" color="primary" [disabled]="!comentarioForm.dirty || !comentarioForm.valid">
+                    Adicionar comentário
+                </button>
+            </div>
+        </div>
+    </form>
+</mat-card>

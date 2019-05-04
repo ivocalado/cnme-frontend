@@ -9,6 +9,7 @@ import { ChamadoTipo } from 'src/app/_shared/models/chamadoTipo.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
 import { Unidade } from 'src/app/_shared/models/unidade.model';
+import { Comentario } from 'src/app/_shared/models/comentario.model';
 
 @Component({
   selector: 'app-chamado-details',
@@ -19,11 +20,13 @@ export class ChamadoDetailsComponent implements OnInit {
 
 
   chamado: Chamado
+  comentarios: Comentario[] = []
   chamadoId: number
   status: ChamadoStatus[]
   tipos: ChamadoTipo[]
   unidadesResponsaveis: Unidade[] = []
   chamadoForm: FormGroup;
+  comentarioForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +57,9 @@ export class ChamadoDetailsComponent implements OnInit {
               this.chamado = res
               console.log(res)
               this.initForm(this.chamado);
+              this.chamadoDataService.getComentarios(this.chamadoId).subscribe((cmts: Comentario[]) => {
+                this.comentarios = cmts
+              })
             })
           })
         })
@@ -72,10 +78,20 @@ export class ChamadoDetailsComponent implements OnInit {
         assunto: new FormControl(chamado.assunto, Validators.required),
         descricao: new FormControl(chamado.descricao)        
     });
-    console.log("DIRTY: " + this.chamadoForm.dirty)
+
+    this.comentarioForm = new FormGroup({
+      comentario: new FormControl('', Validators.required)
+    })
   }
 
   unidadeEvent(ev: any) {
     console.log(ev)
+  }
+
+  getTipoComentario(comentario : Comentario) {
+    let tipos : any  = {
+      comment: "Comentário"
+    }
+    return tipos[comentario.tipo]
   }
 }
