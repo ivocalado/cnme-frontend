@@ -13,7 +13,10 @@ import { Comentario } from '../models/comentario.model';
 @Injectable()
 export class ChamadoDataService{
 
-    constructor(private httpClient:HttpClient, private authService: AuthService){}
+    constructor(
+        private httpClient:HttpClient, 
+        private authService: AuthService
+    ){}
 
     /**
      * Método genérico para recuperação de chamados. Deve ser utilizada apenas internamente 
@@ -58,7 +61,17 @@ export class ChamadoDataService{
     }
     
     getChamados(pageSize: number, pageIndex: number) {
-        return this._genericGetChamados("/api/chamados", pageSize, pageIndex)
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe
+        let url = ""
+        if(classe=="polo"){
+            let unidade_id: number = usuarioAutenticado.unidade.id
+            url = "/api/unidades/"+unidade_id+"/chamados"
+        } else {
+            url = "/api/chamados"
+        }
+
+        return this._genericGetChamados(url, pageSize, pageIndex)
     }
 
     getAllChamados() {
@@ -123,6 +136,33 @@ export class ChamadoDataService{
                 comentarios.push(comentario);
             }
             return comentarios;
+        }));
+    }
+
+    updateChamado(id: number, updates: any) {
+        return this.httpClient.put<Chamado>("/api/chamados/"+id, updates)
+        .pipe(map(res=>{
+            let chamado: Chamado;
+            chamado = <Chamado>res["data"];
+            chamado.status = <ChamadoStatus>res["data"]["status"];
+            chamado.projeto = <Projeto>res["data"]["projeto_cnme"];
+            chamado.projeto_id = (chamado.projeto != null)? chamado.projeto.id : null
+            chamado.tipo = <ChamadoTipo>res["data"]["tipo"];
+            chamado.unidade_responsavel = <Unidade>res["data"]["unidade_responsavel"];
+            chamado.unidade_responsavel_id = (chamado.unidade_responsavel != null)? chamado.unidade_responsavel.id : null
+            chamado.usuario_responsavel = <Usuario>res["data"]["usuario_responsavel"];
+            chamado.usuario_responsavel_id = (chamado.usuario_responsavel != null)? chamado.usuario_responsavel.id :  null
+            chamado.usuario = <Usuario>res["data"]["usuario"];
+            chamado.usuario_id = (chamado.usuario != null)? chamado.usuario.id :  null
+            return chamado
+        }));
+    }
+
+    addComentario(chamado_id: number, comentario: Comentario) {
+        
+        return this.httpClient.post<Comentario>("/api/comments/chamado/"+chamado_id+"/add-comment", comentario)
+        .pipe(map(res=>{
+            return <Comentario>res["data"];
         }));
     }
 }

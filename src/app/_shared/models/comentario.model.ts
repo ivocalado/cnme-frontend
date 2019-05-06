@@ -6,7 +6,8 @@ export class Comentario {
         public content: string,
         public comment_type: string,
         public tipo: string,
-        public usuario: Usuario
+        public usuario: Usuario,
+        public created_at: string,
 
     ){}
     static readonly EMPTY_MODEL = {
@@ -14,6 +15,7 @@ export class Comentario {
         content: '',
         comment_type: '',
         tipo: '',
-        usuario: Usuario.EMPTY_MODEL
+        usuario: Usuario.EMPTY_MODEL,
+        created_at: ''
     }
 }

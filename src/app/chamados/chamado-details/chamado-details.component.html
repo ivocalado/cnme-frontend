@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="col-lg-5 mt-1">
                                         <mat-form-field>
-                                            <input matInput formControlName="criador" id="criador" placeholder="Criador do Chamado"/>
+                                            <input matInput formControlName="criador" id="criador" placeholder="Criador do chamado"/>
                                         </mat-form-field>
                                 </div>
                         </div>
@@ -96,13 +96,14 @@
     <mat-expansion-panel *ngFor="let comentario of comentarios" [expanded]="false">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <strong>Evento do chamado</strong>
+                <strong>Evento do chamado <i>({{getTipoComentario(comentario)}})</i></strong>
             </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-card>
             <mat-card-title>
                 ID: {{comentario.id}}
             </mat-card-title>
+            <p><strong>Data da ocorrência: </strong>{{comentario.created_at | date : 'dd/MM/yyyy - HH:mm:ss'}}</p>
             <p><strong>Tipo do evento: </strong>{{getTipoComentario(comentario)}}</p>
             <p><strong>Mensagem: </strong>{{comentario.content}}</p>
         </mat-card>
@@ -117,7 +118,7 @@
         <div class="row">
             <div class="col-lg-8 mt-1">
                 <mat-form-field>
-                    <textarea matInput formControlName="comentario" id="comentario" placeholder="Comentário:"></textarea>
+                    <textarea matInput formControlName="content" id="content" placeholder="Comentário:"></textarea>
                 </mat-form-field>
             </div>
         </div>

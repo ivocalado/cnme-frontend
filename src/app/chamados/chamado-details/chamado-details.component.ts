@@ -53,17 +53,21 @@ export class ChamadoDetailsComponent implements OnInit {
           this.tipos = res
           this.unidadeDataService.getGestoras().subscribe((res: Unidade[]) => {
             this.unidadesResponsaveis = res
-            this.chamadoDataService.getChamado(this.chamadoId).subscribe((res: Chamado) => {
-              this.chamado = res
-              console.log(res)
-              this.initForm(this.chamado);
-              this.chamadoDataService.getComentarios(this.chamadoId).subscribe((cmts: Comentario[]) => {
-                this.comentarios = cmts
-              })
-            })
+            this.fetchChamado()
           })
         })
       });
+    })
+  }
+
+  fetchChamado() {
+    this.chamadoDataService.getChamado(this.chamadoId).subscribe((res: Chamado) => {
+      this.chamado = res
+      console.log(res)
+      this.initForm(this.chamado);
+      this.chamadoDataService.getComentarios(this.chamadoId).subscribe((cmts: Comentario[]) => {
+        this.comentarios = cmts
+      })
     })
   }
 
@@ -80,7 +84,7 @@ export class ChamadoDetailsComponent implements OnInit {
     });
 
     this.comentarioForm = new FormGroup({
-      comentario: new FormControl('', Validators.required)
+      content: new FormControl('', Validators.required)
     })
   }
 
@@ -90,8 +94,44 @@ export class ChamadoDetailsComponent implements OnInit {
 
   getTipoComentario(comentario : Comentario) {
     let tipos : any  = {
-      comment: "Comentário"
+      comment: "Comentário",
+      auto: "Atualização do chamado"
     }
     return tipos[comentario.tipo]
+  }
+
+  onUpdateChamado() {
+    let objectToUpdate = this.getDirtyValues(this.chamadoForm)
+    this.chamadoDataService.updateChamado(this.chamado.id, objectToUpdate).subscribe(res => {
+      this.snackBarService.openSnackBar("Chamado atualizado com sucesso!")
+      this.fetchChamado()
+    })
+    console.log(objectToUpdate)
+  }
+
+  onNewComentario() {
+    let comentario: Comentario = this.comentarioForm.value
+    this.chamadoDataService.addComentario(this.chamadoId, comentario).subscribe(res => {
+      this.snackBarService.openSnackBar("Chamado atualizado com sucesso!")
+      this.fetchChamado()
+    })
+  }
+
+  private getDirtyValues(form: any) {
+    let dirtyValues = {};
+
+    Object.keys(form.controls)
+        .forEach(key => {
+            let currentControl = form.controls[key];
+
+            if (currentControl.dirty) {
+                if (currentControl.controls)
+                    dirtyValues[key] = this.getDirtyValues(currentControl);
+                else
+                    dirtyValues[key] = currentControl.value;
+            }
+        });
+
+    return dirtyValues;
   }
 }
