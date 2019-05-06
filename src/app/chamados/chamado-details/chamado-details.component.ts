@@ -84,6 +84,7 @@ export class ChamadoDetailsComponent implements OnInit {
         unidade_responsavel_id: new FormControl(chamado.unidade_responsavel_id, Validators.required),
         criador: new FormControl({value: chamado.usuario.name, disabled: true}),
         us_resp: new FormControl({value: chamado.usuario_responsavel.name, disabled: true}),
+        projeto_cnme: new FormControl({value: chamado.projeto.numero + " - " + chamado.projeto.descricao, disabled: true}),
         status_id: new FormControl(chamado.status.id, Validators.required),
         tipo_id: new FormControl(chamado.tipo.id, Validators.required),
         assunto: new FormControl(chamado.assunto, Validators.required),
@@ -140,5 +141,9 @@ export class ChamadoDetailsComponent implements OnInit {
         });
 
     return dirtyValues;
+  }
+
+  showProject(id: number) {
+    this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
   }
 }

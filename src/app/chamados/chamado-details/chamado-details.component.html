@@ -27,6 +27,17 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-5 mt-1">
+                                    <mat-form-field>
+                                        <input matInput formControlName="projeto_cnme" id="projeto_cnme" placeholder="Projeto relacionado"/>
+                                    </mat-form-field>
+                                    <button mat-icon-button color="accent" *ngIf="chamado.projeto_id" (click)="showProject(chamado.projeto_id)">
+                                        <mat-icon aria-label="Details">description</mat-icon>
+                                    </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-5 mt-1">
                                 <mat-form-field>
                                     <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
                                         placeholder="Unidade responsável" [required]="true">
