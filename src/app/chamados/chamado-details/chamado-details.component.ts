@@ -27,6 +27,13 @@ export class ChamadoDetailsComponent implements OnInit {
   unidadesResponsaveis: Unidade[] = []
   chamadoForm: FormGroup;
   comentarioForm: FormGroup;
+  prioridades: any = [
+    {id: 1, text: "Baixa"},
+    {id: 2, text: "Normal"},
+    {id: 3, text: "Alta"},
+    {id: 4, text: "Urgente"},
+    {id: 5, text: "Imediata"}
+  ]
 
   constructor(
     private route: ActivatedRoute,
@@ -80,7 +87,8 @@ export class ChamadoDetailsComponent implements OnInit {
         status_id: new FormControl(chamado.status.id, Validators.required),
         tipo_id: new FormControl(chamado.tipo.id, Validators.required),
         assunto: new FormControl(chamado.assunto, Validators.required),
-        descricao: new FormControl(chamado.descricao)        
+        descricao: new FormControl(chamado.descricao),
+        prioridade: new FormControl(chamado.prioridade, Validators.required),       
     });
 
     this.comentarioForm = new FormGroup({
@@ -106,7 +114,6 @@ export class ChamadoDetailsComponent implements OnInit {
       this.snackBarService.openSnackBar("Chamado atualizado com sucesso!")
       this.fetchChamado()
     })
-    console.log(objectToUpdate)
   }
 
   onNewComentario() {

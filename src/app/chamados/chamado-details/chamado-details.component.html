@@ -53,7 +53,18 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-3 mt-1"></div>
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-3 mt-1">
+                                <mat-form-field>
+                                    <mat-select formControlName="prioridade" id="prioridade"
+                                        placeholder="Prioridade" [required]="true" >
+                                        <mat-option *ngFor="let pr of prioridades" [value]="pr.id">
+                                           ({{pr.id}}) {{ pr.text }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-1"></div>                          
                             <div class="col-lg-3 mt-1">
                                     <mat-form-field>
                                         <mat-select formControlName="tipo_id" id="tipo_id"
