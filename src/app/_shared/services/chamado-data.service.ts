@@ -67,6 +67,8 @@ export class ChamadoDataService{
         if(classe=="polo"){
             let unidade_id: number = usuarioAutenticado.unidade.id
             url = "/api/unidades/"+unidade_id+"/chamados"
+        } else if(classe == "mec" || classe == "tvescola"){
+            url = "/api/chamados/c/pesquisar?unidade_responsavel_id="+usuarioAutenticado.unidade.id
         } else {
             url = "/api/chamados"
         }
