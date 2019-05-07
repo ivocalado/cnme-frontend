@@ -24,7 +24,7 @@ export class ChamadoDetailsComponent implements OnInit {
   chamadoId: number
   status: ChamadoStatus[]
   tipos: ChamadoTipo[]
-  unidadesResponsaveis: Unidade[] = []
+  unidadesResponsaveis: Unidade[]
   chamadoForm: FormGroup;
   comentarioForm: FormGroup;
   prioridades: any = [
@@ -56,14 +56,14 @@ export class ChamadoDetailsComponent implements OnInit {
       }
       this.chamadoDataService.getStatus().subscribe((res: ChamadoStatus[]) => {
         this.status = res
-        this.chamadoDataService.getTipos().subscribe((res: ChamadoTipo[]) => {
-          this.tipos = res
-          this.unidadeDataService.getGestoras().subscribe((res: Unidade[]) => {
-            this.unidadesResponsaveis = res
-            this.fetchChamado()
-          })
-        })
       });
+      this.chamadoDataService.getTipos().subscribe((res: ChamadoTipo[]) => {
+        this.tipos = res
+      })
+      this.unidadeDataService.getGestoras().subscribe((res: Unidade[]) => {
+        this.unidadesResponsaveis = res
+      })
+      this.fetchChamado()      
     })
   }
 
@@ -97,8 +97,16 @@ export class ChamadoDetailsComponent implements OnInit {
     })
   }
 
+  checkEvent: boolean = true
   unidadeEvent(ev: any) {
-    console.log(ev)
+    if(this.checkEvent) {
+      this.checkEvent = false
+      return
+    }
+
+    this.unidadeDataService.getUnidade(ev.source.value).subscribe((unidade: Unidade) => {
+        this.chamadoForm.patchValue({us_resp: unidade.usuarioChamados.name})
+    })
   }
 
   getTipoComentario(comentario : Comentario) {

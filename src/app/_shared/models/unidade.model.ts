@@ -13,7 +13,8 @@ export class Unidade {
         public tipo_unidade_id: number,
         public classe: string,
         public localidade: Localidade,
-        public responsavel: Usuario
+        public responsavel: Usuario,
+        public usuarioChamados: Usuario,
     ) { }
     static readonly EMPTY_MODEL = {
         id: null,
@@ -26,6 +27,7 @@ export class Unidade {
         tipo_unidade_id: null,
         classe:'',
         localidade: Localidade.EMPTY_MODEL,
-        responsavel: null
+        responsavel: null,
+        usuarioChamados: null
     };
 }

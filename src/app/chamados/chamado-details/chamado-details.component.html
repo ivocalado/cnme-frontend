@@ -1,5 +1,5 @@
 <h1>Detalhes do chamado</h1>
-<mat-accordion class="example-headers-align" *ngIf="chamado">
+<mat-accordion class="example-headers-align" *ngIf="status && tipos && chamado">
     <mat-expansion-panel [expanded]="true" hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -41,7 +41,8 @@
                                 <mat-form-field>
                                     <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
                                         placeholder="Unidade responsável" [required]="true">
-                                        <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id" (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
+                                        <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id" 
+                                        (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
                                             {{ unidade.nome }}
                                         </mat-option>
                                     </mat-select>
@@ -53,6 +54,7 @@
                                     </mat-form-field>
                             </div>
                         </div>
+                        
                         <div class="row">
                             <div class="col-lg-3 mt-1">
                                 <mat-form-field>
