@@ -25,6 +25,7 @@ export class ChamadoDetailsComponent implements OnInit {
   status: ChamadoStatus[]
   tipos: ChamadoTipo[]
   unidadesResponsaveis: Unidade[]
+  usuariosResponsaveis: Unidade[]
   chamadoForm: FormGroup;
   comentarioForm: FormGroup;
   prioridades: any = [
@@ -71,6 +72,12 @@ export class ChamadoDetailsComponent implements OnInit {
   fetchChamado() {
     this.chamadoDataService.getChamado(this.chamadoId).subscribe((res: Chamado) => {
       this.chamado = res
+      if(this.isResponsavel) {
+        this.unidadeDataService.getUsuariosAtivosByUnidade(this.chamado.unidade_responsavel_id, -1, 1).subscribe(res => {
+          this.usuariosResponsaveis = res.usuarios
+        })
+      }
+
       console.log(res)
       this.initForm(this.chamado);
       this.chamadoDataService.getComentarios(this.chamadoId).subscribe((cmts: Comentario[]) => {
@@ -81,7 +88,8 @@ export class ChamadoDetailsComponent implements OnInit {
 
   get isResponsavel() {
     let usuarioAutenticado = this.authService.getCurrentUser();
-    return this.chamado.usuario_responsavel_id == usuarioAutenticado.unidade.id
+    let isAdmin:boolean = this.authService.getCurrentUser().unidade.classe == "admin"
+    return isAdmin || this.chamado.unidade_responsavel_id == usuarioAutenticado.unidade.id
   }
 
   private initForm(chamado : Chamado){
@@ -89,7 +97,8 @@ export class ChamadoDetailsComponent implements OnInit {
       unidade: new FormControl({value: chamado.unidade.nome, disabled: true}),
       unidade_responsavel_id: new FormControl(chamado.unidade_responsavel_id, Validators.required),
       criador: new FormControl({value: chamado.usuario.name, disabled: true}),
-      us_resp: new FormControl(chamado.usuario_responsavel.name),
+      us_resp: new FormControl({value: chamado.usuario_responsavel.name, disabled: true}),
+      usuario_responsavel_id: new FormControl(chamado.usuario_responsavel.id),
       projeto_cnme: new FormControl({value: chamado.projeto.numero + " - " + chamado.projeto.descricao, disabled: true}),
       status_id: new FormControl(chamado.status.id, Validators.required),
       tipo_id: new FormControl(chamado.tipo.id, Validators.required),
@@ -97,15 +106,6 @@ export class ChamadoDetailsComponent implements OnInit {
       descricao: new FormControl(chamado.descricao),
       prioridade: new FormControl(chamado.prioridade, Validators.required),       
     });
-
-    if(this.isResponsavel) {
-      this.chamadoForm.patchValue({us_resp: chamado.usuario_responsavel.name})
-      this.chamadoForm.controls['us_resp'].disable();
-    } else {
-      this.chamadoForm.patchValue({us_resp: chamado.usuario_responsavel.name})
-      this.chamadoForm.controls['us_resp'].disable();
-    }
-
 
     this.comentarioForm = new FormGroup({
       content: new FormControl('', Validators.required)
@@ -119,8 +119,18 @@ export class ChamadoDetailsComponent implements OnInit {
       return
     }
 
-    this.unidadeDataService.getUnidade(ev.source.value).subscribe((unidade: Unidade) => {
-        this.chamadoForm.patchValue({us_resp: unidade.usuarioChamados.name})
+    let unidade_id: number = ev.source.value
+
+    this.unidadeDataService.getUnidade(unidade_id).subscribe((unidade: Unidade) => {
+        if(this.isResponsavel) {
+          this.unidadeDataService.getUsuariosAtivosByUnidade(unidade_id, -1, 1).subscribe(res => {
+            this.usuariosResponsaveis = res.usuarios
+            this.chamadoForm.patchValue({usuario_responsavel_id: unidade.usuarioChamados.id})  
+          })
+        } else {
+          this.chamadoForm.patchValue({us_resp: unidade.usuarioChamados.name})
+        }
+        
     })
   }
 

@@ -48,10 +48,23 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
+
                             <div class="col-lg-5 mt-1">
+                                <ng-container *ngIf="isResponsavel; else usuarioComum">
+                                    <mat-form-field>
+                                        <mat-select formControlName="usuario_responsavel_id" id="usuario_responsavel_id"
+                                            placeholder="Usuário responsável" [required]="true">
+                                            <mat-option *ngFor="let usuario of usuariosResponsaveis" [value]="usuario.id" >
+                                                {{ usuario.name }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+                                <ng-template #usuarioComum>
                                     <mat-form-field>
                                         <input matInput formControlName="us_resp" id="us_resp" placeholder="Usuário encarregado do chamado"/>
                                     </mat-form-field>
+                                </ng-template>
                             </div>
                         </div>
                         
