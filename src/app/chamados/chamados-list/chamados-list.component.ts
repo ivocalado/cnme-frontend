@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChamadoDataService } from 'src/app/_shared/services/chamado-data.service';
 import { MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/_shared/services/auth.service';
 
 @Component({
   selector: 'app-chamados-list',
@@ -47,7 +48,8 @@ export class ChamadosListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public chamadoDataService: ChamadoDataService
+    private chamadoDataService: ChamadoDataService,
+    private authService: AuthService
     ) { }
 
 
@@ -86,7 +88,6 @@ export class ChamadosListComponent implements OnInit {
   }
 
   onDetails(id: Number) {
-    console.log("TESTEEEEEEEEEEEE")
     this.router.navigate(['detalhes', id], { relativeTo: this.route });
 }
 
@@ -97,5 +98,19 @@ export class ChamadosListComponent implements OnInit {
         // });
     }
   }
+
+  get isPolo() {
+    let usuarioAutenticado = this.authService.getCurrentUser();
+
+    return usuarioAutenticado.unidade.classe == "polo"
+    
+  }
+
+  get isAdmin() {
+    let usuarioAutenticado = this.authService.getCurrentUser();
+
+    return usuarioAutenticado.unidade.classe == "admin"
+  }
+
 
 }

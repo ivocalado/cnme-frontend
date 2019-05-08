@@ -5,50 +5,222 @@
       </button>
   </div>
 </div>
-<hr class="m-2">
-<div class="row">
-  <div class="col-lg-12">
-      <mat-card>
-          <mat-card-title>Lista de Chamados</mat-card-title>
-          <hr class="m-2">
-          <mat-form-field>
-                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
-          </mat-form-field>
-      
-          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-              <!-- Position Column -->
-              <ng-container matColumnDef="id">
-                  <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="status">
-                  <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{row.status.nome}}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="assunto">
-                <mat-header-cell *matHeaderCellDef> Assunto </mat-header-cell>
-                <mat-cell *matCellDef="let row">{{row.assunto}}</mat-cell>
-              </ng-container>
-              <!-- actions -->
-              <ng-container matColumnDef="actions">
-                  <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
-                  <mat-cell *matCellDef="let row; let i=index;">
-                      <button mat-icon-button color="accent" (click)="onDetails(row.id)">
-                          <mat-icon aria-label="Details">description</mat-icon>
-                      </button>
-                      <button mat-icon-button color="accent">
-                          <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
-                      </button>
-                  </mat-cell>
-              </ng-container>
 
-              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
-      </mat-card>
-      <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
-      [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
-      >
-      </mat-paginator>
-  </div>
-</div>
+<ng-container *ngIf="isPolo; then polo; else naoPolo"></ng-container>
+<ng-template #polo>
+    <hr class="m-2">
+    <div class="row">
+        <div class="col-lg-12">
+            <mat-card>
+                <mat-card-title>Lista de Chamados Criados na Unidade</mat-card-title>
+                <hr class="m-2">
+                <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+                </mat-form-field>
+            
+                <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.status.nome}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="assunto">
+                    <mat-header-cell *matHeaderCellDef> Assunto </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.assunto}}</mat-cell>
+                    </ng-container>
+                    <!-- actions -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                        <mat-cell *matCellDef="let row; let i=index;">
+                            <button mat-icon-button color="accent" (click)="onDetails(row.id)">
+                                <mat-icon aria-label="Details">description</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent">
+                                <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </mat-card>
+            <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
+            [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
+            >
+            </mat-paginator>
+        </div>
+    </div>
+</ng-template>
+<ng-template #naoPolo>
+    <hr class="m-2">
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <strong>Chamados Recebidos</strong>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+                    <div class="col-lg-12">
+                        <mat-card>
+                            <hr class="m-2">
+                            <mat-form-field>
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+                            </mat-form-field>
+                        
+                            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="id">
+                                    <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">{{row.status.nome}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="assunto">
+                                <mat-header-cell *matHeaderCellDef> Assunto </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.assunto}}</mat-cell>
+                                </ng-container>
+                                <!-- actions -->
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                                    <mat-cell *matCellDef="let row; let i=index;">
+                                        <button mat-icon-button color="accent" (click)="onDetails(row.id)">
+                                            <mat-icon aria-label="Details">description</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="accent">
+                                            <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
+                                        </button>
+                                    </mat-cell>
+                                </ng-container>
+                
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                        </mat-card>
+                        <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
+                        [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
+                        >
+                        </mat-paginator>
+                    </div>
+                </div>
+        </mat-expansion-panel>
+
+        <ng-container *ngIf="isAdmin">
+            <mat-expansion-panel hideToggle >
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <strong>Chamados Recebidos</strong>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <mat-card>
+                            <hr class="m-2">
+                            <mat-form-field>
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+                            </mat-form-field>
+                        
+                            <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="id">
+                                    <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">{{row.status.nome}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="assunto">
+                                <mat-header-cell *matHeaderCellDef> Assunto </mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.assunto}}</mat-cell>
+                                </ng-container>
+                                <!-- actions -->
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                                    <mat-cell *matCellDef="let row; let i=index;">
+                                        <button mat-icon-button color="accent" (click)="onDetails(row.id)">
+                                            <mat-icon aria-label="Details">description</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="accent">
+                                            <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
+                                        </button>
+                                    </mat-cell>
+                                </ng-container>
+                
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                        </mat-card>
+                        <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
+                        [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
+                        >
+                        </mat-paginator>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+            <!--Painel chamados TV Escola-->
+            <mat-expansion-panel hideToggle >
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <strong>Chamados Recebidos</strong>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="row">
+                        <div class="col-lg-12">
+                            <mat-card>
+                                <hr class="m-2">
+                                <mat-form-field>
+                                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+                                </mat-form-field>
+                            
+                                <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                                    <!-- Position Column -->
+                                    <ng-container matColumnDef="id">
+                                        <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="status">
+                                        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.status.nome}}</mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="assunto">
+                                    <mat-header-cell *matHeaderCellDef> Assunto </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">{{row.assunto}}</mat-cell>
+                                    </ng-container>
+                                    <!-- actions -->
+                                    <ng-container matColumnDef="actions">
+                                        <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+                                        <mat-cell *matCellDef="let row; let i=index;">
+                                            <button mat-icon-button color="accent" (click)="onDetails(row.id)">
+                                                <mat-icon aria-label="Details">description</mat-icon>
+                                            </button>
+                                            <button mat-icon-button color="accent">
+                                                <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
+                                            </button>
+                                        </mat-cell>
+                                    </ng-container>
+                    
+                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                </mat-table>
+                            </mat-card>
+                            <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
+                            [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
+                            >
+                            </mat-paginator>
+                        </div>
+                    </div>
+            </mat-expansion-panel>
+        </ng-container>
+    </mat-accordion>                
+</ng-template>
+
+
