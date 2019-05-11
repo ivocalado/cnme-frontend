@@ -125,6 +125,8 @@ export class ChamadosListComponent implements OnInit {
         this.tv_escola_id = unidade.id
         this.fetchChamadosTvEscolaAsResponsavel(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)  
       })
+
+      this.fetchChamadosPolosAsCriador(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX )
       
     }
   }
