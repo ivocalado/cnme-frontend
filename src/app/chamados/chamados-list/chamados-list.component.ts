@@ -3,6 +3,8 @@ import { ChamadoDataService } from 'src/app/_shared/services/chamado-data.servic
 import { MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
+import { Unidade } from 'src/app/_shared/models/unidade.model';
+import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
 
 @Component({
   selector: 'app-chamados-list',
@@ -12,7 +14,14 @@ import { AuthService } from 'src/app/_shared/services/auth.service';
 export class ChamadosListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     displayedColumns: string[] = ["id", "status", "assunto", "actions"];
-    dataSource;
+    dataSourceOriginados; //usado por todos
+    dataSourceRecebidos; //usado pelo admin, mec e tvescola
+    dataSourceMec; //usado pelo admin
+    dataSourceTvEscola; //usado pelo admin
+    dataSourcePolos; //usado pelo admin
+    currentUnidade: Unidade
+    mec_id: number//usado pelo admin
+    tv_escola_id: number//usado pelo admin
 
   // "links": {
   //   "first": "https://cnme-dev.nees.com.br/api/chamados?page=1",
@@ -31,6 +40,47 @@ export class ChamadosListComponent implements OnInit {
   // }
 
   pagination = {
+    ORIGINADOS: {//usado por todos
+    firstPageLink: null,
+    lastPageLink: null,
+    previousPageLink: null,
+    nextPageLink: null,
+    currentPageIndex: null,
+    itens_per_page: null,
+    total: null
+  },
+
+  RECEBIDOS: {//usado pelo admin, mec e tvescola
+    firstPageLink: null,
+    lastPageLink: null,
+    previousPageLink: null,
+    nextPageLink: null,
+    currentPageIndex: null,
+    itens_per_page: null,
+    total: null
+  },
+
+  MEC: {//usado pelo admin
+    firstPageLink: null,
+    lastPageLink: null,
+    previousPageLink: null,
+    nextPageLink: null,
+    currentPageIndex: null,
+    itens_per_page: null,
+    total: null
+  },
+
+   TV_ESCOLA: {//usado pelo admin
+    firstPageLink: null,
+    lastPageLink: null,
+    previousPageLink: null,
+    nextPageLink: null,
+    currentPageIndex: null,
+    itens_per_page: null,
+    total: null
+  },
+
+  POLOS: {//usado pelo admin
     firstPageLink: null,
     lastPageLink: null,
     previousPageLink: null,
@@ -39,6 +89,8 @@ export class ChamadosListComponent implements OnInit {
     itens_per_page: null,
     total: null
   }
+}
+  
 
   INITIAL_PAGE_INDEX: number = 1
   INITIAL_PAGE_SIZE: number = 10
@@ -49,42 +101,127 @@ export class ChamadosListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private chamadoDataService: ChamadoDataService,
-    private authService: AuthService
+    private authService: AuthService,
+    private unidadeDataService: UnidadeDataService
     ) { }
 
 
   
 
   ngOnInit() {
-    this.fetchChamados(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+    this.currentUnidade = this.authService.getCurrentUser().unidade
+    this.fetchChamadosOriginados(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+    if(!this.isPolo) {
+      this.fetchChamadosRecebidos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+    }
+
+    if(this.isAdmin) {
+      this.unidadeDataService.getMec().subscribe((unidade: Unidade) => {
+        this.mec_id = unidade.id
+        this.fetchChamadosMecAsResponsavel(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+      })
+
+      this.unidadeDataService.getTvEscola().subscribe((unidade: Unidade) =>{
+        this.tv_escola_id = unidade.id
+        this.fetchChamadosTvEscolaAsResponsavel(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)  
+      })
+      
+    }
   }
 
-  fetchChamados(pageSize: number, pageIndex: number) {
+  fetchChamadosOriginados(pageSize: number, pageIndex: number) {
+    let unidade_id: number = this.currentUnidade.id
     this.chamadoDataService
-        .getChamados(pageSize, pageIndex)
+        .getChamadosAsCriador(unidade_id, pageSize, pageIndex)
         .subscribe((res: any) => {
-            this.dataSource = new MatTableDataSource(res.chamados);
-            this.dataSource.sort = this.sort;
-            this.buildPagination(res.links, res.meta)
+            this.dataSourceOriginados = new MatTableDataSource(res.chamados);
+            this.dataSourceOriginados.sort = this.sort;
+            this.buildPagination(this.pagination["ORIGINADOS"], res.links, res.meta)
         });
   }
 
-  buildPagination(links: any, meta: any) {
-      this.pagination.firstPageLink = links.first
-      this.pagination.lastPageLink = links.last
-      this.pagination.previousPageLink = links.prev
-      this.pagination.nextPageLink = links.next
-      this.pagination.currentPageIndex = meta.current_page
-      this.pagination.itens_per_page = meta.per_page
-      this.pagination.total = meta.total
-  }  
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  fetchChamadosRecebidos(pageSize: number, pageIndex: number) {
+    let unidade_id: number = this.currentUnidade.id
+    this.chamadoDataService
+        .getChamadosAsResponsavel(unidade_id, pageSize, pageIndex)
+        .subscribe((res: any) => {
+            this.dataSourceRecebidos = new MatTableDataSource(res.chamados);
+            this.dataSourceRecebidos.sort = this.sort;
+            this.buildPagination(this.pagination["RECEBIDOS"], res.links, res.meta)
+        });    
   }
 
-  newPaginationEvent(pageEvent: PageEvent) {
-    this.fetchChamados(pageEvent.pageSize, pageEvent.pageIndex + 1)
+  fetchChamadosMecAsResponsavel(pageSize: number, pageIndex: number) {
+    let unidade_id: number = this.mec_id
+    this.chamadoDataService
+        .getChamadosAsResponsavel(unidade_id, pageSize, pageIndex)
+        .subscribe((res: any) => {
+            this.dataSourceMec = new MatTableDataSource(res.chamados);
+            this.dataSourceMec.sort = this.sort;
+            this.buildPagination(this.pagination["MEC"], res.links, res.meta)
+        });    
+  }
+
+  fetchChamadosTvEscolaAsResponsavel(pageSize: number, pageIndex: number) {
+    let unidade_id: number = this.tv_escola_id
+    this.chamadoDataService
+        .getChamadosAsResponsavel(unidade_id, pageSize, pageIndex)
+        .subscribe((res: any) => {
+            this.dataSourceTvEscola = new MatTableDataSource(res.chamados);
+            this.dataSourceTvEscola.sort = this.sort;
+            this.buildPagination(this.pagination["TV_ESCOLA"], res.links, res.meta)
+        });    
+  }
+
+  fetchChamadosPolosAsCriador(pageSize: number, pageIndex: number) {
+    this.chamadoDataService
+        .getChamadosPolosAsCriador(pageSize, pageIndex)
+        .subscribe((res: any) => {
+            this.dataSourcePolos = new MatTableDataSource(res.chamados);
+            this.dataSourcePolos.sort = this.sort;
+            this.buildPagination(this.pagination["POLOS"], res.links, res.meta)
+        });
+  }
+  
+  buildPagination(pagination: any, links: any, meta: any) {
+      if(!links)
+        return
+      pagination.firstPageLink = links.first
+      pagination.lastPageLink = links.last
+      pagination.previousPageLink = links.prev
+      pagination.nextPageLink = links.next
+      pagination.currentPageIndex = meta.current_page
+      pagination.itens_per_page = meta.per_page
+      pagination.total = meta.total
+  }  
+
+  applyFilter(tipo: string, filterValue: string) {
+    if(tipo == "ORIGINADOS") {
+      this.dataSourceOriginados.filter = filterValue.trim().toLowerCase();
+    } else if(tipo == "RECEBIDOS") {
+      this.dataSourceRecebidos.filter = filterValue.trim().toLowerCase();
+    } else if(tipo == "MEC") {
+      this.dataSourceMec.filter = filterValue.trim().toLowerCase();
+    } else if(tipo == "TV_ESCOLA") {
+      this.dataSourceTvEscola.filter = filterValue.trim().toLowerCase();
+    } else {
+      this.dataSourcePolos.filter = filterValue.trim().toLowerCase();
+    }
+    
+  }
+
+  newPaginationEvent(tipo: string, pageEvent: PageEvent) {
+    if(tipo == "ORIGINADOS") {
+      this.fetchChamadosOriginados(pageEvent.pageSize, pageEvent.pageIndex + 1)
+    } else if(tipo == "RECEBIDOS") {
+      this.fetchChamadosRecebidos(pageEvent.pageSize, pageEvent.pageIndex + 1)
+    } else if(tipo == "MEC") {
+      this.fetchChamadosMecAsResponsavel(pageEvent.pageSize, pageEvent.pageIndex + 1)
+    } else if(tipo == "TV_ESCOLA") {
+      this.fetchChamadosTvEscolaAsResponsavel(pageEvent.pageSize, pageEvent.pageIndex + 1)
+    } else {
+      this.fetchChamadosPolosAsCriador(pageEvent.pageSize, pageEvent.pageIndex + 1)
+    }
   }
 
   onDetails(id: Number) {
@@ -100,17 +237,11 @@ export class ChamadosListComponent implements OnInit {
   }
 
   get isPolo() {
-    let usuarioAutenticado = this.authService.getCurrentUser();
-
-    return usuarioAutenticado.unidade.classe == "polo"
-    
+    return this.currentUnidade.classe == "polo"
   }
 
   get isAdmin() {
-    let usuarioAutenticado = this.authService.getCurrentUser();
-
-    return usuarioAutenticado.unidade.classe == "admin"
+    return this.currentUnidade.classe == "admin"
   }
-
 
 }

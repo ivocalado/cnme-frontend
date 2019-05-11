@@ -60,24 +60,19 @@ export class ChamadoDataService{
         }));
     }
     
-    getChamados(pageSize: number, pageIndex: number) {
-        let usuarioAutenticado = this.authService.getCurrentUser();
-        let classe = usuarioAutenticado.unidade.classe
-        let url = ""
-        if(classe=="polo"){
-            let unidade_id: number = usuarioAutenticado.unidade.id
-            url = "/api/unidades/"+unidade_id+"/chamados"
-        } else if(classe == "mec" || classe == "tvescola"){
-            url = "/api/chamados/c/pesquisar?unidade_responsavel_id="+usuarioAutenticado.unidade.id
-        } else {
-            url = "/api/chamados"
-        }
-
+    getChamadosAsCriador(unidade_id: number, pageSize: number, pageIndex: number) {
+        let url: string = "/api/unidades/"+unidade_id+"/chamados"
         return this._genericGetChamados(url, pageSize, pageIndex)
     }
 
-    getAllChamados() {
-        return this.getChamados(1000, 1)
+    getChamadosPolosAsCriador(pageSize: number, pageIndex: number) {
+        let url: string = "/api/chamados/c/pesquisar?polos=true"
+        return this._genericGetChamados(url, pageSize, pageIndex)
+    }
+
+    getChamadosAsResponsavel(unidade_id: number, pageSize: number, pageIndex: number) {
+        let url: string = "/api/chamados/c/pesquisar?unidade_responsavel_id="+unidade_id
+        return this._genericGetChamados(url, pageSize, pageIndex)
     }
 
     getChamado(id:number){
