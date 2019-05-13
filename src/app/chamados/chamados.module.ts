@@ -11,9 +11,11 @@ import { ChamadosRoutingModule } from './chamados-routing.module';
 import { ChamadoDataService } from '../_shared/services/chamado-data.service';
 import { ChamadoDetailsComponent } from './chamado-details/chamado-details.component';
 import { UnidadeDataService } from '../_shared/services/unidade-data.service';
+import { ChamadoCreateComponent } from './chamado-create/chamado-create.component';
+import { ProjetoDataService } from '../_shared/services/projeto-data.service';
 
 @NgModule({
-  declarations: [ChamadosComponent, ChamadosListComponent, ChamadoDetailsComponent],
+  declarations: [ChamadosComponent, ChamadosListComponent, ChamadoDetailsComponent, ChamadoCreateComponent],
   imports: [
     SharedModule,
     FormsModule,
@@ -29,7 +31,7 @@ import { UnidadeDataService } from '../_shared/services/unidade-data.service';
     MatExpansionModule,
     NgxMaskModule.forRoot()
 ],
-providers: [ChamadoDataService, UnidadeDataService]
+providers: [ChamadoDataService, UnidadeDataService, ProjetoDataService]
 
 })
 export class ChamadosModule { }

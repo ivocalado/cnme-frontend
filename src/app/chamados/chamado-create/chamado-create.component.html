@@ -1,0 +1,111 @@
+
+<div class="row">
+    <div class="col-lg-12">
+        <mat-card>
+            <mat-card-title>
+                Cadastrar novo chamado
+            </mat-card-title>
+            <form [formGroup]="chamadoForm" (ngSubmit)="onNewChamado()">
+                <div class="row">
+                    <div class="col-lg-5 mt-1">
+                        <mat-form-field>
+                            <mat-select formControlName="projeto_cnme_id" id="projeto_cnme_id"
+                                placeholder="Projeto relacionado">
+                                <mat-option [value]="" 
+                                (onSelectionChange)="updateProjeto(null)">
+                                    Selecione o projeto associado
+                                </mat-option>
+                                <mat-option *ngFor="let projeto of projetos" [value]="projeto.id" 
+                                (onSelectionChange)="$event.source.selected? updateProjeto($event.source.value) : null">
+                                    {{ projeto.numero }} - {{projeto.descricao}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-icon-button color="accent" *ngIf="projeto_id" (click)="showProject()">
+                            <mat-icon aria-label="Details">description</mat-icon>
+                        </button>
+                    </div>
+                </div>
+<!-- 
+                <div class="row">
+                    <div class="col-lg-5 mt-1">
+                        <mat-form-field>
+                            <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
+                                placeholder="Unidade responsável" [required]="true">
+                                <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id" 
+                                (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
+                                    {{ unidade.nome }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-lg-5 mt-1">
+                        <ng-container *ngIf="isResponsavel; else usuarioComum">
+                            <mat-form-field>
+                                <mat-select formControlName="usuario_responsavel_id" id="usuario_responsavel_id"
+                                    placeholder="Usuário responsável" [required]="true">
+                                    <mat-option *ngFor="let usuario of usuariosResponsaveis" [value]="usuario.id" >
+                                        {{ usuario.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-template #usuarioComum>
+                            <mat-form-field>
+                                <input matInput formControlName="us_resp" id="us_resp" placeholder="Usuário encarregado do chamado"/>
+                            </mat-form-field>
+                        </ng-template>
+                    </div>
+                </div>
+                -->
+                <div class="row">
+                    <div class="col-lg-3 mt-1">
+                        <mat-form-field>
+                            <mat-select formControlName="prioridade" id="prioridade"
+                                placeholder="Prioridade" [required]="true" >
+                                <mat-option *ngFor="let pr of prioridades" [value]="pr.id">
+                                   ({{pr.id}}) {{ pr.text }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-1"></div>                          
+                    <div class="col-lg-3 mt-1">
+                            <mat-form-field>
+                                <mat-select formControlName="tipo_id" id="tipo_id"
+                                    placeholder="Tipo" [required]="true" >
+                                    <mat-option *ngFor="let tp of tipos" [value]="tp.id">
+                                        {{ tp.nome }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                </div>
+                
+                <div class="row">
+                        <div class="col-lg-8 mt-1">
+                            <mat-form-field>
+                                <input matInput formControlName="assunto" id="assunto" placeholder="Assunto do chamado" [required]="true"/>
+                            </mat-form-field>
+                        </div>
+                </div>
+
+                <div class="row">
+                        <div class="col-lg-8 mt-1">
+                            <mat-form-field>
+                                <textarea matInput formControlName="descricao" id="descricao" placeholder="Descrição detalhada do chamado"></textarea>
+                            </mat-form-field>
+                        </div>
+                </div> 
+                <div class="row">
+                        <div class="col-lg-10 mt-1 pull-right">
+                            <button mat-raised-button class="m-1" color="primary" [disabled]="!chamadoForm.dirty || !chamadoForm.valid">
+                                Salvar modificações
+                            </button>
+                        </div>
+                    </div>
+            </form>
+        </mat-card>
+    </div>
+</div>

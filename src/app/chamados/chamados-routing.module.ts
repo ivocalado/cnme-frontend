@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ChamadosComponent } from './chamados.component';
 import { ChamadosListComponent } from './chamados-list/chamados-list.component';
 import { ChamadoDetailsComponent } from './chamado-details/chamado-details.component';
+import { ChamadoCreateComponent } from './chamado-create/chamado-create.component';
 
 const chamadosRoutes: Routes = [
     {
@@ -10,10 +11,8 @@ const chamadosRoutes: Routes = [
         component: ChamadosComponent,
         children: [
              { path: "", component: ChamadosListComponent },
-            // { path: "novo", component: MecEditComponent },
-            // { path: "editar", component: MecEditComponent },
+             { path: "novo", component: ChamadoCreateComponent },
              { path: "detalhes/:id", component: ChamadoDetailsComponent },
-            // { path: "convidar", component: MecInvitationComponent },
         ]
     }
 ];

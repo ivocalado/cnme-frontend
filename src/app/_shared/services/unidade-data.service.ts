@@ -175,6 +175,17 @@ export class UnidadeDataService {
         );
     }
 
+    getAdmin(){
+        return this.httpClient.get<Unidade>("/api/unidades/u/admin")
+        .pipe(
+            map(res =>{
+                let unidade:Unidade;
+                unidade = res["data"];
+                return unidade;
+            })
+        );
+    }
+
     deleteUnidade(id:number){
         return this.httpClient.delete("/api/unidades/"+id);
     }
