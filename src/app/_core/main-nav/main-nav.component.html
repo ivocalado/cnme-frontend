@@ -42,9 +42,12 @@
             </a>-->
 
             <ng-template [ngIf]="isUsuarioAutenticado">
-                <button mat-flat-button routerLink="chamados" class="btn-chamados">Chamados <mat-icon>contact_support</mat-icon></button>
+                <button mat-flat-button routerLink="chamados" class="btn-chamados">
+                    Chamados
+                    <mat-icon>contact_support</mat-icon>
+                </button>
                 &nbsp;
-                <span class="mat-body">{{emailUser}}</span>
+                <span class="mat-body d-none d-sm-block">{{emailUser}}</span>
                 <button mat-icon-button [matMenuTriggerFor]="menu">
                     <mat-icon>more_vert</mat-icon>
                 </button>

@@ -17,12 +17,12 @@
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                 <!-- Position Column -->
                 <ng-container matColumnDef="nome">
-                    <mat-header-cell *matHeaderCellDef> Polo </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef class="title-on-mobile"> Polo </mat-header-cell>
                     <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="tipo">
                     <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.tipo_unidade.nome}}</mat-cell>
+                    <mat-cell *matCellDef="let row" class="hide-on-mobile">{{row.tipo_unidade.nome}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="estado">
                     <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>

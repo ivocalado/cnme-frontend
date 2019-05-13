@@ -20,31 +20,31 @@
                         <mat-cell *matCellDef="let row">{{row.uf}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total_planejamento">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Planejamento </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef ><mat-icon>input</mat-icon><span class="d-none d-sm-block">Planejamento</span> </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_planejamento}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total_enviado">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Enviado </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef ><mat-icon>flight_takeoff</mat-icon><span class="d-none d-sm-block">Enviado</span> </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_enviado}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total_entregue">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Entregue </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef ><mat-icon>flight_land</mat-icon><span class="d-none d-sm-block">Entregue</span> </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_entregue}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total_instalado">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Instalado </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef ><mat-icon>tv</mat-icon><span class="d-none d-sm-block">Instalado</span> </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_instalado}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total_finalizado">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Finalidado </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef ><mat-icon>cast</mat-icon><span class="d-none d-sm-block">Finalidzado</span> </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_finalizado}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total_cancelado">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Cancelado </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef ><mat-icon>tv_off</mat-icon><span class="d-none d-sm-block">Cancelado</span> </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_cancelado}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef >Total</mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total}}</mat-cell>
                     </ng-container>
 

@@ -3,11 +3,11 @@
 
 .table-container {
   height: 400px;
-  min-width: 400px;
+  min-width: 100%;
   overflow: auto;
   .mat-table {
         width: 100%;
-        min-width: 800px;
+        min-width: 750px;
         .mat-header-row{
             background-color: mat-color($mat-blue-gray,900);
             .mat-header-cell{
@@ -34,9 +34,6 @@
         }
     }
 }
-
-
-
 .mat-form-field {
     width: 100%;
 }

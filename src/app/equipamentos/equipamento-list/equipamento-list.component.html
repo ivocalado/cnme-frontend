@@ -17,8 +17,8 @@
 		    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 			<!-- Position Column -->
 			<ng-container matColumnDef="nome">
-			    <mat-header-cell *matHeaderCellDef> Equipamento </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
+			    <mat-header-cell *matHeaderCellDef > Equipamento </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="title-on-mobile">{{row.nome}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="tipoEquipamento">
                     <mat-header-cell *matHeaderCellDef> Tipo do Equipamento </mat-header-cell>
