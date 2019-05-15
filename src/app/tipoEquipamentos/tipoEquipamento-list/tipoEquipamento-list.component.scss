@@ -8,4 +8,73 @@ table {
 .mat-form-field {
     font-size: 14px;
     width: 100%;
-  } 
+  }
+
+
+@media screen and (max-width: 960px) {
+  .mat-elevation-z8 {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .mat-table {
+    background: transparent;
+    * {
+      box-sizing: border-box;
+    }
+
+    .mat-row {
+      display: block;
+      overflow: hidden;
+      height: auto;
+      min-height: auto;
+      position: relative;
+      clear: both;
+      box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+      background-color: #fff;
+      border-radius: 3px;
+      + .mat-row {
+        margin-top: 24px;
+      }
+    }
+
+    .mat-cell {
+      display: block;
+      width: 100%;
+      padding: 0 16px;
+      margin: 6px 0;
+      border: 0 none;
+      min-height: auto;
+
+    }
+
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .title-on-mobile{
+        font-weight:500;
+        font-size: 16px;
+    }
+    .mat-column-actions {
+      width: auto;
+      padding: 0px 0 0 !important;
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      &:before {
+        display: none;
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@
 			<!-- Position Column -->
 			<ng-container matColumnDef="nome">
 			    <mat-header-cell *matHeaderCellDef> Kit </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
+                    <mat-cell *matCellDef="let row" class="title-on-mobile">{{row.nome}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="descricao">
                     <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>

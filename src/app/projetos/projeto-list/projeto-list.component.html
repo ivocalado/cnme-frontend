@@ -7,7 +7,7 @@
     </div>
     <div class="col-lg-6 text-right">
         <button mat-flat-button *ngIf="isAdmin" class="btn-checklist" color="default" routerLink="checklist">
-            Editar termo de aceite do checklist <mat-icon>list_alt</mat-icon>
+            <span class="d-none d-sm-block">Editar termo de aceite do checklist</span><mat-icon>list_alt</mat-icon>
         </button>
     </div>
 </div>
@@ -35,7 +35,7 @@
                         <mat-card-title>Busca avançada</mat-card-title>
                         <form [formGroup]="buscaAvancadaForm" (ngSubmit)="onBuscaAvancada()">
 
-                            
+
                         </form>
                     </mat-card>
                 </div>

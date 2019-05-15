@@ -18,7 +18,7 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="nome">
                     <mat-header-cell *matHeaderCellDef> TipoEquipamento </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.nome}}</mat-cell>
+                    <mat-cell *matCellDef="let row" class="title-on-mobile">{{row.nome}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="descricao">
                     <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
@@ -47,6 +47,6 @@
         <mat-paginator [length]="pagination.total" (page)="newPaginationEvent($event)"
         [pageSize]="pagination.itens_per_page" [pageSizeOptions]="pageSizeOptions"
         >
-        </mat-paginator>        
+        </mat-paginator>
     </div>
 </div>

@@ -10,16 +10,33 @@
             background-color: mat-color($mat-blue-gray,500);
             .mat-header-cell{
                 color:mat-contrast($mat-blue-gray,500);
+                justify-content:center;
+
+                mat-icon{
+                    font-size: 18px;
+                    line-height: 24px;
+                }
+                &:first-child{
+                    justify-content:left;
+                    flex: 0 0 20%;
+                }
+            }
+        }
+        .mat-row{
+            &:hover {
+                background-color: mat-color($mat-blue-gray,100);
+                cursor: pointer;
             }
             .mat-cell{
                 justify-content:center;
-
+                &:first-child{
+                    flex: 0 0 20%;
+                    border-right: 1px solid mat-color($mat-blue-gray,100);
+                    justify-content:left;
+                }
             }
         }
-        .mat-row:hover {
-            background-color: mat-color($mat-blue-gray,100);
-            cursor: pointer;
-        }
+
     }
 }
 
@@ -28,3 +45,4 @@
 .mat-form-field {
     width: 100%;
 }
+

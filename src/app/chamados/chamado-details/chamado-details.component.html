@@ -8,10 +8,7 @@
         </mat-expansion-panel-header>
         <div class="row">
             <div class="col-lg-12">
-                <mat-card>
-                    <mat-card-title>
-                        ID: {{chamado.id}}
-                    </mat-card-title>
+                <h2>ID: {{chamado.id}}</h2>
                     <form [formGroup]="chamadoForm" (ngSubmit)="onUpdateChamado()">
                         <div class="row">
                                 <div class="col-lg-5 mt-1">
@@ -41,7 +38,7 @@
                                 <mat-form-field>
                                     <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
                                         placeholder="Unidade responsável" [required]="true">
-                                        <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id" 
+                                        <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id"
                                         (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
                                             {{ unidade.nome }}
                                         </mat-option>
@@ -67,7 +64,7 @@
                                 </ng-template>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-lg-3 mt-1">
                                 <mat-form-field>
@@ -90,7 +87,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-1"></div>                          
+                            <div class="col-lg-1"></div>
                             <div class="col-lg-3 mt-1">
                                     <mat-form-field>
                                         <mat-select formControlName="tipo_id" id="tipo_id"
@@ -102,7 +99,7 @@
                                     </mat-form-field>
                                 </div>
                         </div>
-                        
+
                         <div class="row">
                                 <div class="col-lg-8 mt-1">
                                     <mat-form-field>
@@ -126,7 +123,7 @@
                                 </div>
                             </div>
                     </form>
-                </mat-card>
+
             </div>
         </div>
     </mat-expansion-panel>

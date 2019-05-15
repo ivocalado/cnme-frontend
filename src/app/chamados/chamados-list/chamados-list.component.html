@@ -8,16 +8,16 @@
 
 <ng-container *ngIf="isPolo; then polo; else naoPolo"></ng-container>
 <ng-template #polo>
-    <hr class="m-2">
+    <hr class="mt-2">
     <div class="row">
         <div class="col-lg-12">
             <mat-card>
                 <mat-card-title>Lista de Chamados Criados na Unidade</mat-card-title>
-                <hr class="m-2">
+                <hr class="mt-2">
                 <mat-form-field>
                         <input matInput (keyup)="applyFilter('ORIGINADOS', $event.target.value)" placeholder="Filtro">
                 </mat-form-field>
-            
+
                 <mat-table [dataSource]="dataSourceOriginados" class="mat-elevation-z8">
                     <!-- Position Column -->
                     <ng-container matColumnDef="id">
@@ -26,7 +26,7 @@
                     </ng-container>
                     <ng-container matColumnDef="status">
                         <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.status.nome}}</mat-cell>
+                        <mat-cell *matCellDef="let row" class="title-on-mobile">{{row.status.nome}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="assunto">
                     <mat-header-cell *matHeaderCellDef> Assunto </mat-header-cell>
@@ -44,7 +44,7 @@
                             </button>
                         </mat-cell>
                     </ng-container>
-    
+
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 </mat-table>
@@ -57,9 +57,9 @@
     </div>
 </ng-template>
 <ng-template #naoPolo>
-    <hr class="m-2">
+    <hr class="mt-2">
     <h1>Lista de Chamados</h1>
-    <hr class="m-2">
+    <hr class="mt-2">
     <mat-accordion class="example-headers-align">
             <mat-expansion-panel [expanded]="true" hideToggle>
                     <mat-expansion-panel-header>
@@ -69,12 +69,11 @@
                     </mat-expansion-panel-header>
                     <div class="row">
                         <div class="col-lg-12">
-                            <mat-card>
-                                <hr class="m-2">
+
                                 <mat-form-field>
                                         <input matInput (keyup)="applyFilter('RECEBIDOS', $event.target.value)" placeholder="Filtro">
                                 </mat-form-field>
-                            
+
                                 <mat-table [dataSource]="dataSourceRecebidos" class="mat-elevation-z8">
                                     <!-- Position Column -->
                                     <ng-container matColumnDef="id">
@@ -83,7 +82,7 @@
                                     </ng-container>
                                     <ng-container matColumnDef="status">
                                         <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-                                        <mat-cell *matCellDef="let row">{{row.status.nome}}</mat-cell>
+                                        <mat-cell *matCellDef="let row" class="title-on-mobile">{{row.status.nome}}</mat-cell>
                                     </ng-container>
                                     <ng-container matColumnDef="assunto">
                                     <mat-header-cell *matHeaderCellDef> Assunto </mat-header-cell>
@@ -101,11 +100,11 @@
                                             </button>
                                         </mat-cell>
                                     </ng-container>
-                    
+
                                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                                 </mat-table>
-                            </mat-card>
+
                             <mat-paginator [length]="pagination['RECEBIDOS'].total" (page)="newPaginationEvent('RECEBIDOS', $event)"
                             [pageSize]="pagination['RECEBIDOS'].itens_per_page" [pageSizeOptions]="pageSizeOptions"
                             >
@@ -113,9 +112,7 @@
                         </div>
                     </div>
                 </mat-expansion-panel>
-                
 
-                
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -124,12 +121,11 @@
                 </mat-expansion-panel-header>
                 <div class="row">
                     <div class="col-lg-12">
-                        <mat-card>
-                            <hr class="m-2">
+
                             <mat-form-field>
                                     <input matInput (keyup)="applyFilter('ORIGINADOS', $event.target.value)" placeholder="Filtro">
                             </mat-form-field>
-                        
+
                             <mat-table [dataSource]="dataSourceOriginados" class="mat-elevation-z8">
                                 <!-- Position Column -->
                                 <ng-container matColumnDef="id">
@@ -156,11 +152,11 @@
                                         </button>
                                     </mat-cell>
                                 </ng-container>
-                
+
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                             </mat-table>
-                        </mat-card>
+
                         <mat-paginator [length]="pagination['ORIGINADOS'].total" (page)="newPaginationEvent('ORIGINADOS', $event)"
                         [pageSize]="pagination['ORIGINADOS'].itens_per_page" [pageSizeOptions]="pageSizeOptions"
                         >
@@ -178,12 +174,11 @@
                         </mat-expansion-panel-header>
                         <div class="row">
                             <div class="col-lg-12">
-                                <mat-card>
-                                    <hr class="m-2">
+
                                     <mat-form-field>
                                             <input matInput (keyup)="applyFilter('MEC', $event.target.value)" placeholder="Filtro">
                                     </mat-form-field>
-                                
+
                                     <mat-table [dataSource]="dataSourceMec" class="mat-elevation-z8">
                                         <!-- Position Column -->
                                         <ng-container matColumnDef="id">
@@ -210,11 +205,11 @@
                                                 </button>
                                             </mat-cell>
                                         </ng-container>
-                        
+
                                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                                     </mat-table>
-                                </mat-card>
+
                                 <mat-paginator [length]="pagination['MEC'].total" (page)="newPaginationEvent('MEC', $event)"
                                 [pageSize]="pagination['MEC'].itens_per_page" [pageSizeOptions]="pageSizeOptions"
                                 >
@@ -231,12 +226,11 @@
                             </mat-expansion-panel-header>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <mat-card>
-                                        <hr class="m-2">
+
                                         <mat-form-field>
                                                 <input matInput (keyup)="applyFilter('TV_ESCOLA', $event.target.value)" placeholder="Filtro">
                                         </mat-form-field>
-                                    
+
                                         <mat-table [dataSource]="dataSourceTvEscola" class="mat-elevation-z8">
                                             <!-- Position Column -->
                                             <ng-container matColumnDef="id">
@@ -263,11 +257,11 @@
                                                     </button>
                                                 </mat-cell>
                                             </ng-container>
-                            
+
                                             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                                         </mat-table>
-                                    </mat-card>
+
                                     <mat-paginator [length]="pagination['TV_ESCOLA'].total" (page)="newPaginationEvent('TV_ESCOLA', $event)"
                                     [pageSize]="pagination['TV_ESCOLA'].itens_per_page" [pageSizeOptions]="pageSizeOptions"
                                     >
@@ -284,12 +278,11 @@
                             </mat-expansion-panel-header>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <mat-card>
-                                        <hr class="m-2">
+
                                         <mat-form-field>
                                                 <input matInput (keyup)="applyFilter('POLOS', $event.target.value)" placeholder="Filtro">
                                         </mat-form-field>
-                                    
+
                                         <mat-table [dataSource]="dataSourcePolos" class="mat-elevation-z8">
                                             <!-- Position Column -->
                                             <ng-container matColumnDef="id">
@@ -316,11 +309,11 @@
                                                     </button>
                                                 </mat-cell>
                                             </ng-container>
-                            
+
                                             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                                         </mat-table>
-                                    </mat-card>
+
                                     <mat-paginator [length]="pagination['POLOS'].total" (page)="newPaginationEvent('POLOS', $event)"
                                     [pageSize]="pagination['POLOS'].itens_per_page" [pageSizeOptions]="pageSizeOptions"
                                     >
@@ -333,7 +326,7 @@
 
 
 
-    </mat-accordion>                
+    </mat-accordion>
 </ng-template>
 
 

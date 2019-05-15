@@ -64,7 +64,7 @@
                         <mat-header-cell *matHeaderCellDef mat-sort-header> Concluídas </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_concluida}}</mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="total_concluida_atrasada" stickyEnd>
+                    <ng-container matColumnDef="total_concluida_atrasada" >
                         <mat-header-cell *matHeaderCellDef mat-sort-header> Concluídas atrasadas </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.total_concluida_atrasada}}</mat-cell>
                     </ng-container>
