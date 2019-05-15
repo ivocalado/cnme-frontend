@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import { Unidade } from 'src/app/_shared/models/unidade.model';
 import { UnidadeDataService } from 'src/app/_shared/services/unidade-data.service';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
   selector: 'app-chamados-list',
@@ -102,7 +103,8 @@ export class ChamadosListComponent implements OnInit {
     private router: Router,
     private chamadoDataService: ChamadoDataService,
     private authService: AuthService,
-    private unidadeDataService: UnidadeDataService
+    private unidadeDataService: UnidadeDataService,
+    private snackBarService: SnackBarService
     ) { }
 
 
@@ -110,6 +112,10 @@ export class ChamadosListComponent implements OnInit {
 
   ngOnInit() {
     this.currentUnidade = this.authService.getCurrentUser().unidade
+    this.fetchAllChamados()
+  }
+
+  fetchAllChamados() {
     this.fetchChamadosOriginados(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
     if(!this.isPolo) {
       this.fetchChamadosRecebidos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
@@ -232,9 +238,11 @@ export class ChamadosListComponent implements OnInit {
 
   onDelete(id: number) {
     if (confirm("Tem certeza que deseja deletar esta empresa?")) {
-        // this.unidadeDataService.deleteUnidade(id).subscribe(res => {
-        //     this.fetchUnidades(this.INITIAL_PAGE_INDEX);
-        // });
+        this.chamadoDataService.deleteChamado(id).subscribe(res => {
+          this.snackBarService.openSnackBar("Chamado deletado com sucesso!")
+          this.fetchAllChamados()
+          this.router.navigate(['/chamados'], { relativeTo: this.route });
+        })
     }
   }
 

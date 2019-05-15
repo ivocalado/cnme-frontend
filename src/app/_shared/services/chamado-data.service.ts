@@ -182,5 +182,7 @@ export class ChamadoDataService{
         }));
     }
 
-    
+    deleteChamado(chamado_id: number) {
+        return this.httpClient.delete("/api/chamados/"+chamado_id)
+    }
 }
