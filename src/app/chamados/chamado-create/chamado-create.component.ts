@@ -76,9 +76,33 @@ export class ChamadoCreateComponent implements OnInit {
     
   }
 
+  updateProjeto(res: any) {
+    this.projeto_id = res
+  }
+
+  showProject() {
+    this.router.navigate(["/projetos/detalhes", this.projeto_id], { relativeTo: this.route });
+  }
+
+  get isReady() {
+    return true
+  }
+
+  onNewChamado() {
+     console.log("onNewChamado")
+     console.log(this.getDirtyValues(this.chamadoForm))
+     let chamadoToSend : any = this.getDirtyValues(this.chamadoForm)
+     chamadoToSend['usuario_id'] = this.criadorChamado.id
+     chamadoToSend['unidade_id'] = this.unidadeDemandante.id
+     this.chamadoDataService.storeChamado(chamadoToSend).subscribe(chamado => {
+        this.router.navigate(["/chamados/detalhes", chamado.id], { relativeTo: this.route });
+        this.snackBarService.openSnackBar("Chamado salvo com sucesso!")
+     })
+  }
+  
   private initForm(){
     this.chamadoForm = new FormGroup({
-      projeto_cnme_id: new FormControl('', Validators.required),
+      projeto_cnme_id: new FormControl(''),
       unidade_responsavel_id: new FormControl('', Validators.required),
       us_resp: new FormControl({value: '', disabled: true}),
       usuario_responsavel_id: new FormControl(''),
@@ -90,11 +114,42 @@ export class ChamadoCreateComponent implements OnInit {
     });
   }
 
-  updateProjeto(res: any) {
-    this.projeto_id = res
+  private getDirtyValues(form: any) {
+    let dirtyValues = {};
+
+    Object.keys(form.controls)
+        .forEach(key => {
+            let currentControl = form.controls[key];
+
+            if (currentControl.dirty && currentControl.value !== undefined) {
+                if (currentControl.controls)
+                    dirtyValues[key] = this.getDirtyValues(currentControl);
+                else
+                    dirtyValues[key] = currentControl.value;
+            }
+        });
+
+    return dirtyValues;
   }
 
-  showProject() {
-    this.router.navigate(["/projetos/detalhes", this.projeto_id], { relativeTo: this.route });
+  
+  unidadeEvent(unidade_id: number) {
+
+    this.unidadeDataService.getUnidade(unidade_id).subscribe((unidade: Unidade) => {
+        if(this.canDefineUsuario) {
+          this.unidadeDataService.getUsuariosAtivosByUnidade(unidade_id, -1, 1).subscribe(res => {
+            this.usuariosResponsaveis = res.usuarios
+            this.chamadoForm.patchValue({usuario_responsavel_id: unidade.usuarioChamados.id})  
+          })
+        } else {
+          this.chamadoForm.patchValue({us_resp: unidade.usuarioChamados.name})
+        }
+        
+    })
+  }
+
+  get canDefineUsuario() {
+    let usuarioLogado = this.authService.getCurrentUser()
+    return usuarioLogado.unidade.classe == "admin" || usuarioLogado.unidade.id == this.getDirtyValues(this.chamadoForm)['unidade_responsavel_id']
   }
 }

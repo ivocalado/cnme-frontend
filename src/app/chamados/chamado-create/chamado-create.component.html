@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row" *ngIf="isReady">
     <div class="col-lg-12">
         <mat-card>
             <mat-card-title>
@@ -26,14 +26,14 @@
                         </button>
                     </div>
                 </div>
-<!-- 
+
                 <div class="row">
                     <div class="col-lg-5 mt-1">
                         <mat-form-field>
                             <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
-                                placeholder="Unidade responsável" [required]="true">
+                                placeholder="Unidade responsável" [required]="true" >
                                 <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id" 
-                                (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
+                                (onSelectionChange)="$event.isUserInput? unidadeEvent($event.source.value) : null">
                                     {{ unidade.nome }}
                                 </mat-option>
                             </mat-select>
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="col-lg-5 mt-1">
-                        <ng-container *ngIf="isResponsavel; else usuarioComum">
+                        <ng-container *ngIf="canDefineUsuario; else usuarioComum">
                             <mat-form-field>
                                 <mat-select formControlName="usuario_responsavel_id" id="usuario_responsavel_id"
                                     placeholder="Usuário responsável" [required]="true">
@@ -58,12 +58,12 @@
                         </ng-template>
                     </div>
                 </div>
-                -->
+                
                 <div class="row">
                     <div class="col-lg-3 mt-1">
                         <mat-form-field>
                             <mat-select formControlName="prioridade" id="prioridade"
-                                placeholder="Prioridade" [required]="true" >
+                                placeholder="Prioridade" [required]="true" [value]="2">
                                 <mat-option *ngFor="let pr of prioridades" [value]="pr.id">
                                    ({{pr.id}}) {{ pr.text }}
                                 </mat-option>
@@ -94,7 +94,7 @@
                 <div class="row">
                         <div class="col-lg-8 mt-1">
                             <mat-form-field>
-                                <textarea matInput formControlName="descricao" id="descricao" placeholder="Descrição detalhada do chamado"></textarea>
+                                <textarea matInput formControlName="descricao" id="descricao" placeholder="Descrição detalhada do chamado" [required]="true"></textarea>
                             </mat-form-field>
                         </div>
                 </div> 

@@ -35,15 +35,25 @@
 
                         <div class="row">
                             <div class="col-lg-5 mt-1">
-                                <mat-form-field>
-                                    <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
-                                        placeholder="Unidade responsável" [required]="true">
-                                        <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id"
-                                        (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
-                                            {{ unidade.nome }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                                <ng-container *ngIf="isResponsavel; else unidadeComum">
+                                    <mat-form-field>
+                                        <mat-select formControlName="unidade_responsavel_id" id="unidade_responsavel_id"
+                                            placeholder="Unidade responsável" [required]="true">
+                                            <mat-option *ngFor="let unidade of unidadesResponsaveis" [value]="unidade.id"
+                                            (onSelectionChange)="$event.isUserInput? unidadeEvent($event): null">
+                                                {{ unidade.nome }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-template #unidadeComum>
+                                    <mat-form-field>
+                                        <input matInput formControlName="un_resp" id="un_resp" placeholder="Unidade encarregada do chamado"/>
+                                    </mat-form-field>                                    
+                                </ng-template>
+                                
+                                
                             </div>
 
                             <div class="col-lg-5 mt-1">
@@ -139,7 +149,12 @@
             </mat-card-title>
             <p><strong>Data da ocorrência: </strong>{{comentario.created_at | date : 'dd/MM/yyyy - HH:mm:ss'}}</p>
             <p><strong>Tipo do evento: </strong>{{getTipoComentario(comentario)}}</p>
-            <p><strong>Mensagem: </strong>{{comentario.content}}</p>
+            <p><strong>Mensagem (ns): </strong></p>
+                <ul>
+                    <li *ngFor="let content of getContents(comentario.content)">{{content}}</li>
+                </ul>
+
+            
         </mat-card>
     </mat-expansion-panel>
 </mat-accordion>

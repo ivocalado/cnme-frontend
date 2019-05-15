@@ -61,9 +61,7 @@ export class ChamadoDetailsComponent implements OnInit {
       this.chamadoDataService.getTipos().subscribe((res: ChamadoTipo[]) => {
         this.tipos = res
       })
-      this.unidadeDataService.getGestoras().subscribe((res: Unidade[]) => {
-        this.unidadesResponsaveis = res
-      })
+
       this.fetchChamado()      
     })
   }
@@ -78,10 +76,20 @@ export class ChamadoDetailsComponent implements OnInit {
         })
       }
 
-      console.log(res)
       this.initForm(this.chamado);
       this.chamadoDataService.getComentarios(this.chamadoId).subscribe((cmts: Comentario[]) => {
         this.comentarios = cmts
+      })
+
+      this.unidadeDataService.getGestoras().subscribe((res: Unidade[]) => {
+        this.unidadesResponsaveis = res
+        console.log("CARREGOUUUUUUU")
+        if(this.authService.getCurrentUser().unidade.classe != "polo") {
+          this.unidadeDataService.getAdmin().subscribe((admin: Unidade) => {
+            console.log("CADASTRO DE ADMINNN")
+            this.unidadesResponsaveis.push(admin)
+          })
+        }
       })
     })
   }
@@ -98,6 +106,7 @@ export class ChamadoDetailsComponent implements OnInit {
       unidade_responsavel_id: new FormControl(chamado.unidade_responsavel_id, Validators.required),
       criador: new FormControl({value: chamado.usuario.name, disabled: true}),
       us_resp: new FormControl({value: chamado.usuario_responsavel.name, disabled: true}),
+      un_resp: new FormControl({value: chamado.unidade_responsavel.nome, disabled: true}),
       usuario_responsavel_id: new FormControl(chamado.usuario_responsavel.id),
       projeto_cnme: new FormControl({value: chamado.projeto.numero + " - " + chamado.projeto.descricao, disabled: true}),
       status_id: new FormControl(chamado.status.id, Validators.required),
@@ -178,5 +187,11 @@ export class ChamadoDetailsComponent implements OnInit {
 
   showProject(id: number) {
     this.router.navigate(["/projetos/detalhes", id], { relativeTo: this.route });
+  }
+
+  getContents(content: string) {
+    if(content.length > 0)
+      return content.substr(0, content.length - 1).split('\n')
+    return []
   }
 }
