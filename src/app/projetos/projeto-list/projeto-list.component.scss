@@ -84,6 +84,7 @@
         width:auto;
         height:auto;
     }
+
 }
 
 
@@ -91,6 +92,9 @@
 
 
 @media screen and (max-width: 960px) {
+    .hide-on-mobile {
+        display: none;
+    }
   .mat-elevation-z8 {
     background: transparent;
     box-shadow: none;
@@ -136,9 +140,6 @@
 
     }
 
-    .hide-on-mobile {
-        display: none;
-    }
 
     .title-on-mobile{
         font-weight:500;
