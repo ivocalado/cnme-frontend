@@ -10,7 +10,7 @@
                     <div class="col-lg-5 mt-1">
                         <mat-form-field>
                             <mat-select formControlName="projeto_cnme_id" id="projeto_cnme_id"
-                                placeholder="Projeto relacionado">
+                                placeholder="Projeto relacionado" [required]="true">
                                 <mat-option [value]="" 
                                 (onSelectionChange)="updateProjeto(null)">
                                     Selecione o projeto associado

@@ -102,7 +102,7 @@ export class ChamadoCreateComponent implements OnInit {
   
   private initForm(){
     this.chamadoForm = new FormGroup({
-      projeto_cnme_id: new FormControl(''),
+      projeto_cnme_id: new FormControl('', Validators.required),
       unidade_responsavel_id: new FormControl('', Validators.required),
       us_resp: new FormControl({value: '', disabled: true}),
       usuario_responsavel_id: new FormControl(''),

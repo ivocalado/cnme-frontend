@@ -112,7 +112,8 @@ export class ChamadosListComponent implements OnInit {
 
   ngOnInit() {
     this.currentUnidade = this.authService.getCurrentUser().unidade
-    this.fetchAllChamados()
+    if(this.currentUnidade)
+      this.fetchAllChamados()
   }
 
   fetchAllChamados() {
@@ -237,7 +238,7 @@ export class ChamadosListComponent implements OnInit {
 }
 
   onDelete(id: number) {
-    if (confirm("Tem certeza que deseja deletar esta empresa?")) {
+    if (confirm("Tem certeza que deseja deletar este chamado?")) {
         this.chamadoDataService.deleteChamado(id).subscribe(res => {
           this.snackBarService.openSnackBar("Chamado deletado com sucesso!")
           this.fetchAllChamados()
