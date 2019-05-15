@@ -39,7 +39,7 @@
                             <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                                 <mat-icon aria-label="Details">description</mat-icon>
                             </button>
-                            <button mat-icon-button color="accent">
+                            <button mat-icon-button color="accent" *ngIf="canDelete(row.unidade_responsavel.classe)">
                                 <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                             </button>
                         </mat-cell>
@@ -95,7 +95,7 @@
                                             <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                                                 <mat-icon aria-label="Details">description</mat-icon>
                                             </button>
-                                            <button mat-icon-button color="accent">
+                                            <button mat-icon-button color="accent" *ngIf="canDelete(row.unidade_responsavel.classe)">
                                                 <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                                             </button>
                                         </mat-cell>
@@ -147,7 +147,7 @@
                                         <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                                             <mat-icon aria-label="Details">description</mat-icon>
                                         </button>
-                                        <button mat-icon-button color="accent">
+                                        <button mat-icon-button color="accent" *ngIf="canDelete(row.unidade_responsavel.classe)">
                                             <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                                         </button>
                                     </mat-cell>
@@ -200,7 +200,7 @@
                                                 <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                                                     <mat-icon aria-label="Details">description</mat-icon>
                                                 </button>
-                                                <button mat-icon-button color="accent">
+                                                <button mat-icon-button color="accent" *ngIf="canDelete(row.unidade_responsavel.classe)">
                                                     <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                                                 </button>
                                             </mat-cell>
@@ -252,7 +252,7 @@
                                                     <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                                                         <mat-icon aria-label="Details">description</mat-icon>
                                                     </button>
-                                                    <button mat-icon-button color="accent">
+                                                    <button mat-icon-button color="accent" *ngIf="canDelete(row.unidade_responsavel.classe)">
                                                         <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                                                     </button>
                                                 </mat-cell>
@@ -304,7 +304,7 @@
                                                     <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                                                         <mat-icon aria-label="Details">description</mat-icon>
                                                     </button>
-                                                    <button mat-icon-button color="accent">
+                                                    <button mat-icon-button color="accent" *ngIf="canDelete(row.unidade_responsavel.classe)">
                                                         <mat-icon aria-label="Delete" (click)="onDelete(row.id)">delete</mat-icon>
                                                     </button>
                                                 </mat-cell>
