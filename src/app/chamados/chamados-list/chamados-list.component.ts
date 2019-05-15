@@ -255,8 +255,8 @@ export class ChamadosListComponent implements OnInit {
     return this.currentUnidade.classe == "admin"
   }
 
-  canDelete(classe: string) {
-    return this.isAdmin || this.currentUnidade.classe == classe
+  canDelete(unidade_responsavel_classe: string) {
+    return this.isAdmin || this.currentUnidade.classe == unidade_responsavel_classe
   }
 
 }
