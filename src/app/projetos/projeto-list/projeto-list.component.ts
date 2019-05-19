@@ -5,6 +5,7 @@ import { MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: "app-projeto-list",
@@ -12,6 +13,36 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
     styleUrls: ["./projeto-list.component.scss"]
 })
 export class ProjetoListComponent implements OnInit {
+    estados: any[] = [
+        {estado: "Acre", sigla: "AC"},
+        {estado: "Alagoas", sigla: "AL"},
+        {estado: "Amapá", sigla: "AP"},
+        {estado: "Amazonas", sigla: "AM"},
+        {estado: "Bahia", sigla: "BA"},
+        {estado: "Ceará", sigla: "CE"},
+        {estado: "Distrito Federal", sigla: "DF"},
+        {estado: "Espírito Santo", sigla: "ES"},
+        {estado: "Goiás", sigla: "GO"},
+        {estado: "MAranhão", sigla: "MA"},
+        {estado: "Mato Gross", sigla: "MT"},
+        {estado: "Mato Grosso do Sul", sigla: "MS"},
+        {estado: "Minas Gerais", sigla: "MG"},
+        {estado: "Pará", sigla: "PA"},
+        {estado: "Paraíba", sigla: "PB"},
+        {estado: "Paraná", sigla: "PR"},
+        {estado: "Pernambuco", sigla: "PE"},
+        {estado: "Piauí", sigla: "PI"},
+        {estado: "Rio de Janeiro", sigla: "RJ"},
+        {estado: "Rio Grande do Norte", sigla: "RN"},
+        {estado: "Rio Grande do Sul", sigla: "RS"},
+        {estado: "Rondônia", sigla: "RO"},
+        {estado: "Roraima", sigla: "RR"},
+        {estado: "Santa Catarina", sigla: "SC"},
+        {estado: "São Paulo", sigla: "SP"},
+        {estado: "Sergipe", sigla: "SE"},
+        {estado: "Tocantinhs", sigla: "TO"},        
+    ]
+    
     displayedColumns: string[] = [
         "numero",
         "unidade",
@@ -30,6 +61,15 @@ export class ProjetoListComponent implements OnInit {
         ATIVADO: true,
         CANCELADO: true
     }
+
+    statusNames = [
+        "PLANEJAMENTO",
+        "ENVIADO",
+        "ENTREGUE",
+        "INSTALADO",
+        "ATIVADO",
+        "CANCELADO"
+    ]
 
     // "links": {
     //     "first": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
@@ -68,9 +108,12 @@ export class ProjetoListComponent implements OnInit {
     ) {}
 
     buscaAvancada: boolean = false
+    buscaAvancadaForm: FormGroup;
 
     ngOnInit() {
+        this.initForm()
         this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
+        
     }
 
     onDetails(id: number) {
@@ -85,7 +128,15 @@ export class ProjetoListComponent implements OnInit {
     }
 
     fetchProjetos(pageSize: number, pageIndex: number) {
-        if(this.isAdmin) {
+        if(this.buscaAvancada) {
+            this.projetoDataService.getProjetosComFiltros(this.buscaAvancadaForm.value, pageSize, pageIndex)
+            .subscribe((res: any) => {
+                this.dataSource = new MatTableDataSource(res.projetos);
+                this.dataSource.sort = this.sort;
+                this.buildPagination(res.links, res.meta)
+            });
+
+        } else {
             let statusToFind = []
             Object.keys(this.statusFlag).forEach(key => {
                 if(this.statusFlag[key])
@@ -98,17 +149,8 @@ export class ProjetoListComponent implements OnInit {
                 this.dataSource.sort = this.sort;
                 this.buildPagination(res.links, res.meta)
             });
-        } else {
-            this.projetoDataService
-            .getProjetosPorVariosStatus(["ENVIADO", "ENTREGUE", "INSTALADO", "ATIVADO", "CANCELADO"], pageSize, pageIndex)
-            .subscribe((res: any) => {
-                this.dataSource = new MatTableDataSource(res.projetos);
-                this.dataSource.sort = this.sort;
-                this.buildPagination(res.links, res.meta)
-            });
-
+    
         }
-
     }
 
     buildPagination(links: any, meta: any) {
@@ -146,12 +188,14 @@ export class ProjetoListComponent implements OnInit {
     }
 
     toogleStatus(status: string) {
+        if(this.buscaAvancada)
+            return
         this.statusFlag[status] = !this.statusFlag[status]
         this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
     }
 
     isStatusActive(status: string) {
-        return this.statusFlag[status]?"active": "";
+        return this.statusFlag[status]? "active": "";
     }
 
     toogleBuscaAvancada() {
@@ -159,6 +203,38 @@ export class ProjetoListComponent implements OnInit {
     }
     
     onBuscaAvancada() {
-        
+        this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+    }
+
+    initForm() {
+        this.buscaAvancadaForm = new FormGroup({
+            q: new FormControl({value: '', disabled: true}),
+            uf: new FormControl({value: '', disabled: true}),
+            status: new FormControl({value: '', disabled: true})
+        })
+    }
+
+    isSearchValid() {
+        let controls = ['q', 'uf', 'status']
+        let result : boolean = false
+        for(let control of controls) {
+            let ct = this.buscaAvancadaForm.controls[control]
+            if(ct.status == "VALID" && ct.value && ct.value.trim() != "")
+                result = true
+            if(ct.status == "VALID" && (!ct.value || ct.value.trim() == ""))
+                return false
+        }
+        return result
+    }
+
+    toogleEvent(event: string, status: boolean) {
+        if(status) 
+            this.buscaAvancadaForm.controls[event].enable()
+        else 
+            this.buscaAvancadaForm.controls[event].disable()
+    }
+
+    get isPolo() {
+        return this.authService.getCurrentUser().unidade.classe == "polo"
     }
 }

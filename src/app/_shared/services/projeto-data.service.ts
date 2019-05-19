@@ -15,7 +15,6 @@ export class ProjetoDataService{
     constructor(private httpClient:HttpClient, private authService: AuthService){}
 
     storeProjeto(projeto:Projeto):Observable<Projeto>{
-        console.log(projeto);
         projeto.usuario_id = this.authService.getCurrentUser().id; //TODO: substituir para id do usuário logado
         projeto.status = StatusProjeto.CRIADO;
         return this.httpClient.post<Projeto>("/api/projeto-cnme", projeto, {
@@ -221,6 +220,32 @@ export class ProjetoDataService{
         return this._genericGetProjetos(url, pageSize, pageIndex)
         //
     }
+
+    /**
+     * NAO DEVE SER CHAMADO POR USUARIO DE POLO
+     * @param filtros 
+     * @param pageSize 
+     * @param pageIndex 
+     */
+    getProjetosComFiltros(filtros: any, pageSize: number, pageIndex: number){
+        // verifica se o usuario logado é polo e retorna somente seus projetos
+        let q = "";
+        let usuarioAutenticado = this.authService.getCurrentUser();
+
+        let classe = usuarioAutenticado.unidade.classe
+        let url = "/api/projeto-cnme/p/pesquisar?"
+        let params: string = ""
+        Object.keys(filtros).forEach(key => {
+            if(params != "")
+                params += "&"
+            params+= key + "=" +filtros[key]
+        })
+        
+        url += params
+        return this._genericGetProjetos(url, pageSize, pageIndex)
+        //
+    }
+
 
 
     getProjetosAtrasados(pageSize: number, pageIndex: number) {

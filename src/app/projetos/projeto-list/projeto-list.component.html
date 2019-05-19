@@ -29,14 +29,65 @@
                 <mat-chip color="default" disableRipple class="chip-legenda" [ngClass]="isStatusActive('ATIVADO')" (click)="toogleStatus('ATIVADO')"><mat-icon>cast</mat-icon>Ativado</mat-chip>
                 <mat-chip color="default" disableRipple class="chip-legenda" [ngClass]="isStatusActive('CANCELADO')" (click)="toogleStatus('CANCELADO')"><mat-icon>tv_off</mat-icon>Cancelado</mat-chip>
             </mat-chip-list>
+            <hr class="m-2">
+            <button mat-raised-button class="mr-1" color="primary" (click)="toogleBuscaAvancada()" *ngIf="!isPolo && !buscaAvancada">
+                Busca avançada
+            </button>
             <div class="row" *ngIf="buscaAvancada">
                 <div class="col-lg-12">
                     <mat-card>
-                        <mat-card-title>Busca avançada</mat-card-title>
+                        <h3>Busca avançada</h3>
                         <form [formGroup]="buscaAvancadaForm" (ngSubmit)="onBuscaAvancada()">
-
-
+                            <div class="row">
+                                <div class="col-lg-4 mt-1">
+                                    <mat-checkbox (change)="toogleEvent('q', $event.checked)"></mat-checkbox>&nbsp;
+                                    <mat-form-field>
+                                        <input matInput formControlName="q" id="q" placeholder="Unidade, Código INEP, Código Projeto ou Descrição">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 mt-1">
+                                    <mat-checkbox (change)="toogleEvent('uf', $event.checked)"></mat-checkbox>&nbsp;
+                                    <mat-form-field>
+                                        <mat-select formControlName="uf" id="uf" placeholder="Unidade federativa">
+                                            <mat-option></mat-option>
+                                            <mat-option *ngFor="let estado of estados" [value]="estado.sigla">
+                                                {{ estado.estado }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 mt-1">
+                                    <mat-checkbox (change)="toogleEvent('status', $event.checked)"></mat-checkbox>&nbsp;
+                                    <mat-form-field>
+                                        <input matInput formControlName="status" id="status" placeholder="status">
+                                        <mat-select formControlName="status" id="status" placeholder="Status do projeto">
+                                            <mat-option></mat-option>
+                                            <mat-option *ngFor="let status of statusNames" [value]="status">
+                                                {{ status }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-lg-10 mt-1 pull-right">
+                                    <button mat-raised-button class="mr-1" color="primary" [disabled]="!isSearchValid()">
+                                        Busca
+                                    </button>
+                                
+                                    <button mat-raised-button type="button" class="m-1" color="warn" (click)="toogleBuscaAvancada()">
+                                        Fechar busca avançada
+                                    </button>    
+                                </div>
+                            </div>
+    
                         </form>
+    
+
                     </mat-card>
                 </div>
             </div>
