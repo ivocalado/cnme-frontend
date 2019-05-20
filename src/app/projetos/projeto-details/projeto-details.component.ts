@@ -33,6 +33,7 @@ export class ProjetoDetailsComponent implements OnInit {
     etapaInstalacao: Etapa;
     etapaAtivacao: Etapa;
 
+    isPolo = false;
     isChecked = false;
     checklist:Checklist = Checklist.EMPTY_MODEL;
 
@@ -49,6 +50,7 @@ export class ProjetoDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isPolo = this.authService.getCurrentUser().unidade.classe == "polo";
         this.route.params.subscribe((params: Params) => {
             this.projetoId = +params["id"];
             this.fetchProjeto();
@@ -148,7 +150,6 @@ export class ProjetoDetailsComponent implements OnInit {
 
     //Confirma checklist
     onSubmitChecklist(form: NgForm) {
-        console.log(form.value);
         this.checklistDataService
             .setChecklistToProjeto(this.checklist.id,this.projetoId)
             .subscribe(res => {
@@ -184,5 +185,11 @@ export class ProjetoDetailsComponent implements OnInit {
         let usuarioAutenticado = this.authService.getCurrentUser();
         let classe = usuarioAutenticado.unidade.classe;
         return classe == "admin" || classe == "tvescola";
+    }
+
+    get exibeCheckList() {
+        console.log('ta rolando');
+        return true;
+
     }
 }

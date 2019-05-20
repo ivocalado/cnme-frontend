@@ -134,7 +134,7 @@
                 </mat-table>
             </div>
         </div>
-        <div class="row mt-5" *ngIf="!projeto.checklist_id">
+        <div class="row mt-5" *ngIf="!projeto.checklist_id && isPolo">
             <div class="col-lg-12">
                 <cdk-virtual-scroll-viewport itemSize="50" class="scroll-viewport">
                     <div [innerHTML]="checklist.descricao"></div>
@@ -150,7 +150,7 @@
         </div>
     </mat-expansion-panel>
     <!-- exibe este bloco apenas se tiver um termo de checklist associado ao projeto -->
-    <ng-container *ngIf="projeto.checklist_id">
+    <ng-container *ngIf="projeto.checklist_id || !isPolo">
     <mat-expansion-panel *ngIf="etapaEnvio && etapaEnvio.tarefas && etapaEnvio.tarefas.length" [expanded]="step === 2"
         (opened)="setStep(2)" (closed)="setStep(-1)" hideToggle>
         <mat-expansion-panel-header>
