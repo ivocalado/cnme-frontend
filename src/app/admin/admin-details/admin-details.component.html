@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <mat-card>
-            <mat-card-title>Detalhes da Tv Escola</mat-card-title>
+            <mat-card-title>Detalhes do Admin</mat-card-title>
             <hr>
             <div>
                 <p>
@@ -52,7 +52,7 @@
 <div class="row mt-4" *ngIf="usuariosAtivos; else showInativos">
     <div class="col-lg-12">
         <mat-card>
-            <mat-card-title>Lista de Usuários Ativos da Tv Escola</mat-card-title>
+            <mat-card-title>Lista de Usuários Ativos do Admin</mat-card-title>
             <hr class="m-2">
             <mat-form-field>
             <input matInput (keyup)="applyFilter(dataSource, $event.target.value)" placeholder="Filtro">
@@ -102,7 +102,7 @@
     <div class="row">
         <div class="col-lg-12">
             <mat-card>
-                <mat-card-title>Lista de Usuários Inativos da Tv Escola</mat-card-title>
+                <mat-card-title>Lista de Usuários Inativos do Admin</mat-card-title>
                 <hr class="m-2">
                 <mat-form-field>
                 <input matInput (keyup)="applyFilter(dataSourceInativos, $event.target.value)" placeholder="Filtro">

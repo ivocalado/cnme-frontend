@@ -5,6 +5,7 @@ import { AuthGuard } from './auth/auth.guard'
 const appRoutes: Routes = [
     { path: "", loadChildren: "./index/index.module#IndexModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
     { path: "dashboard", loadChildren: "./dashboard/dashboard.module#DashboardModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
+    { path: "admin", loadChildren: "./admin/admin.module#AdminModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
     { path: "polos", loadChildren: "./polos/polos.module#PolosModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "empresas", loadChildren: "./empresas/empresas.module#EmpresasModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},
     { path: "tvescola", loadChildren: "./tvescola/tvescola.module#TvEscolaModule", canActivate: [AuthGuard], canActivateChild: [AuthGuard]},

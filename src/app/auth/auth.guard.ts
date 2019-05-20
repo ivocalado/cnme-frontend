@@ -26,7 +26,7 @@ export class Permissions {
 		this.pagePermissions = {
 			admin: [
 				"/chamados",
-				"/projetos", 
+				"/projetos",
 				"/polos",
 				"/tvescola",
 				"/mec",
@@ -36,11 +36,12 @@ export class Permissions {
 				"/tipoEquipamentos",
 				"/usuarios",
 				"/auth/logout",
-				"/dashboard"
+				"/dashboard",
+				"/admin"
 			],
 			mec: [
 				"/chamados",
-				"/projetos", 
+				"/projetos",
 				"/polos",
 				"/empresas",
 				"/equipamentos",
@@ -52,7 +53,7 @@ export class Permissions {
 			],
 			tvescola: [
 				"/chamados",
-				"/projetos", 
+				"/projetos",
 				"/polos",
 				"/empresas",
 				"/equipamentos",
@@ -60,11 +61,12 @@ export class Permissions {
 				"/tipoEquipamentos",
 				"/usuarios",
 				"/auth/logout",
-				"/dashboard"
+				"/dashboard",
+				"/tvescola"
 			],
 			polo: [
 				"/chamados",
-				"/projetos", 
+				"/projetos",
 				"/polos",
 				"/usuarios",
 				"/auth/logout"
@@ -75,7 +77,7 @@ export class Permissions {
 			"/usuarios/confirmar",
 			"/usuarios/novasenha/validar",
 		]
-	}	
+	}
 
 	canActivate(url: string) {
 		if(this.usuarioLogado == null)
@@ -92,7 +94,7 @@ export class Permissions {
 	}
 
 	canActivateChild(url: string) {
-		
+
 		if(this.usuarioLogado == null)
 			return true
 		let tipoUnidade = this.usuarioLogado.unidade.classe
@@ -113,7 +115,7 @@ export class Permissions {
 				result = true
 				break
 			}
-				
+
 		}
 		return result
 	}
