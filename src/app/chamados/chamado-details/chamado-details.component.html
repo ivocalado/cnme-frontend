@@ -50,10 +50,10 @@
                                 <ng-template #unidadeComum>
                                     <mat-form-field>
                                         <input matInput formControlName="un_resp" id="un_resp" placeholder="Unidade encarregada do chamado"/>
-                                    </mat-form-field>                                    
+                                    </mat-form-field>
                                 </ng-template>
-                                
-                                
+
+
                             </div>
 
                             <div class="col-lg-5 mt-1">
@@ -137,6 +137,8 @@
             </div>
         </div>
     </mat-expansion-panel>
+
+    <!-- histórico de comentarios
     <mat-expansion-panel *ngFor="let comentario of comentarios" [expanded]="false">
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -153,30 +155,50 @@
                 <ul>
                     <li *ngFor="let content of getContents(comentario.content)">{{content}}</li>
                 </ul>
-
-            
         </mat-card>
     </mat-expansion-panel>
+    fim histórico de comentarios -->
+
+    <mat-card *ngIf="comentarioForm">
+        <mat-card-title>
+            Novo comentário
+        </mat-card-title>
+        <form [formGroup]="comentarioForm" (ngSubmit)="onNewComentario()">
+            <div class="row">
+                <div class="col-lg-8 mt-1">
+                    <mat-form-field>
+                        <textarea matInput formControlName="content" id="content" placeholder="Comentário:"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mt-1 pull-right">
+                    <button mat-raised-button class="m-1" color="primary"
+                        [disabled]="!comentarioForm.dirty || !comentarioForm.valid">
+                        Adicionar comentário
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+
+    <!-- histórico de comentarios -->
+    <mat-card class="historico mt-3">
+        <mat-card-title >
+            Histórico de interações
+        </mat-card-title>
+        <ul>
+            <li *ngFor="let comentario of comentarios">
+                <strong>{{comentario.usuario.name}} </strong><i>{{getTipoComentario(comentario)}} às
+                {{comentario.created_at | date : 'dd/MM/yyyy - HH:mm:ss'}}</i>
+                <p>
+                    <span *ngFor="let content of getContents(comentario.content)">{{content}} <br /></span>
+                </p>
+            </li>
+        </ul>
+    </mat-card>
+    <!-- fim histórico de comentarios -->
+
 </mat-accordion>
 <br>
-<mat-card *ngIf="comentarioForm">
-    <mat-card-title>
-        Novo comentário
-    </mat-card-title>
-    <form [formGroup]="comentarioForm" (ngSubmit)="onNewComentario()">
-        <div class="row">
-            <div class="col-lg-8 mt-1">
-                <mat-form-field>
-                    <textarea matInput formControlName="content" id="content" placeholder="Comentário:"></textarea>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-10 mt-1 pull-right">
-                <button mat-raised-button class="m-1" color="primary" [disabled]="!comentarioForm.dirty || !comentarioForm.valid">
-                    Adicionar comentário
-                </button>
-            </div>
-        </div>
-    </form>
-</mat-card>
+

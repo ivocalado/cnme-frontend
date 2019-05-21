@@ -159,3 +159,47 @@ table {
   }
 }
 
+
+.historico{
+    ul{
+        list-style-type: none;
+        li{
+            position:relative;
+            margin-bottom: 0;
+            padding-bottom: 10px;
+            p{
+                margin-top: 4px;
+            }
+            strong{
+                color: mat-color($mat-blue-gray,800);
+            }
+            i{
+                 color: mat-color($mat-blue-gray,500);
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                width:7px;
+                height:7px;
+                background: mat-color($mat-cyan,400);
+                left: -19px;
+                top: 7px;
+                border-radius:8px;
+            }
+            &::before {
+                content:"";
+                position: absolute;
+                left: -16px;
+                border-left: 1px solid mat-color($mat-cyan,200);
+                height: 100%;
+                width: 1px;
+            }
+            &:first-child::before {
+                top: 8px;
+            }
+            &:last-child::before {
+                height: 8px;
+            }
+        }
+    }
+}

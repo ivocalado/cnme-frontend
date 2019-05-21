@@ -45,7 +45,7 @@ export class ChamadoDetailsComponent implements OnInit {
     private unidadeDataService: UnidadeDataService
 
   ) { }
-  
+
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -62,10 +62,10 @@ export class ChamadoDetailsComponent implements OnInit {
         this.tipos = res
       })
 
-      this.fetchChamado()      
+      this.fetchChamado()
     })
   }
-  
+
 
   fetchChamado() {
     this.chamadoDataService.getChamado(this.chamadoId).subscribe((res: Chamado) => {
@@ -79,6 +79,7 @@ export class ChamadoDetailsComponent implements OnInit {
       this.initForm(this.chamado);
       this.chamadoDataService.getComentarios(this.chamadoId).subscribe((cmts: Comentario[]) => {
         this.comentarios = cmts
+          console.log(this.comentarios);
       })
 
       this.unidadeDataService.getGestoras().subscribe((res: Unidade[]) => {
@@ -113,7 +114,7 @@ export class ChamadoDetailsComponent implements OnInit {
       tipo_id: new FormControl(chamado.tipo.id, Validators.required),
       assunto: new FormControl(chamado.assunto, Validators.required),
       descricao: new FormControl(chamado.descricao),
-      prioridade: new FormControl(chamado.prioridade, Validators.required),       
+      prioridade: new FormControl(chamado.prioridade, Validators.required),
     });
 
     this.comentarioForm = new FormGroup({
@@ -134,19 +135,19 @@ export class ChamadoDetailsComponent implements OnInit {
         if(this.isResponsavel) {
           this.unidadeDataService.getUsuariosAtivosByUnidade(unidade_id, -1, 1).subscribe(res => {
             this.usuariosResponsaveis = res.usuarios
-            this.chamadoForm.patchValue({usuario_responsavel_id: unidade.usuarioChamados.id})  
+            this.chamadoForm.patchValue({usuario_responsavel_id: unidade.usuarioChamados.id})
           })
         } else {
           this.chamadoForm.patchValue({us_resp: unidade.usuarioChamados.name})
         }
-        
+
     })
   }
 
   getTipoComentario(comentario : Comentario) {
     let tipos : any  = {
-      comment: "Comentário",
-      auto: "Atualização do chamado"
+      comment: "adicionou um comentário",
+      auto: "atualizou o chamado"
     }
     return tipos[comentario.tipo]
   }
