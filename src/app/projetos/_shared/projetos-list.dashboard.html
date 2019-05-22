@@ -3,23 +3,23 @@
         <mat-card>
             <mat-card-title>{{titulo}}</mat-card-title>
             <hr class="m-2">
-            <mat-chip-list>
-                <mat-chip color="default" class="chip-legenda">
+            <mat-chip-list *ngIf="enableLegenda">
+                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('PLANEJAMENTO')">
                     <mat-icon>input</mat-icon>Planejamento
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda">
+                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('ENVIADO')">
                     <mat-icon>flight_takeoff</mat-icon>Enviado
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda">
+                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('ENTREGUE')">
                     <mat-icon>flight_land</mat-icon>Entregue
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda">
+                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('INSTALADO')">
                     <mat-icon>tv</mat-icon>Instalado
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda">
+                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('ATIVADO')">
                     <mat-icon>cast</mat-icon>Ativado
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda">
+                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('CANCELADO')">
                     <mat-icon>tv_off</mat-icon>Cancelado
                 </mat-chip>
             </mat-chip-list>

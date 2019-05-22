@@ -54,6 +54,15 @@ titulo: string = "Projetos em Atraso"
   INITIAL_PAGE_SIZE: number = 10
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  legendsToShow = {
+    PLANEJAMENTO: false ,
+    ENVIADO: true ,
+    ENTREGUE: true,
+    INSTALADO: true,
+    ATIVADO: false,
+    CANCELADO: false,
+  }
+
   constructor(
     private projetoDataService: ProjetoDataService,
     private snackBarService: SnackBarService,
@@ -113,5 +122,13 @@ titulo: string = "Projetos em Atraso"
 
   newPaginationEvent(pageEvent: PageEvent) {
     this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
+  }
+
+  get enableLegenda() {
+    return true
+  }
+
+  showLegenda(status: string) {
+    return this.legendsToShow[status]
   }
 }

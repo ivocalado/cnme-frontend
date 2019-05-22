@@ -113,4 +113,8 @@ titulo: string = "Projetos Instalado"
   newPaginationEvent(pageEvent: PageEvent) {
     this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
   }  
+  
+  get enableLegenda() {
+    return false
+  }
 }

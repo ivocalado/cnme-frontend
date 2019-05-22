@@ -58,6 +58,15 @@ export class ProjetosPorEstadosComponent implements OnInit {
   
   uf: string
 
+  legendsToShow = {
+    PLANEJAMENTO: true ,
+    ENVIADO: true ,
+    ENTREGUE: true,
+    INSTALADO: true,
+    ATIVADO: true,
+    CANCELADO: true,
+  }
+
   constructor(
     private projetoDataService: ProjetoDataService,
     private snackBarService: SnackBarService,
@@ -129,5 +138,13 @@ export class ProjetosPorEstadosComponent implements OnInit {
 
   newPaginationEvent(pageEvent: PageEvent) {
     this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
+  }
+
+  get enableLegenda() {
+    return true
+  }
+
+  showLegenda(status: string) {
+    return this.legendsToShow[status]
   }
 }

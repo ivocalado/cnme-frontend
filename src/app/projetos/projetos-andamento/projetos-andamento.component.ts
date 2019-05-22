@@ -21,50 +21,58 @@ export class ProjetosAndamentoComponent implements OnInit {
     "previsao",
     "status",
     "actions"
-];
-projetosEmAndamento : Projeto[] = []
-dataSource;
-@ViewChild(MatSort) sort: MatSort;
-titulo: string = "Projetos em Andamento"
+  ];
+  projetosEmAndamento : Projeto[] = []
+  dataSource;
+  @ViewChild(MatSort) sort: MatSort;
+  titulo: string = "Projetos em Andamento"
 
 
-      // "links": {
-    //     "first": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
-    //     "last": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
-    //     "prev": null,
-    //     "next": null
-    // },
-    // "meta": {
-    //     "current_page": 1,
-    //     "from": 1,
-    //     "last_page": 1,
-    //     "path": "https://cnme-dev.nees.com.br/api/projeto-cnme",
-    //     "per_page": 25,
-    //     "to": 1,
-    //     "total": 1
-    // }
-    pagination = {
-      firstPageLink: null,
-      lastPageLink: null,
-      previousPageLink: null,
-      nextPageLink: null,
-      currentPageIndex: null,
-      itens_per_page: null,
-      total: null
-    }
+  // "links": {
+  //     "first": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
+  //     "last": "https://cnme-dev.nees.com.br/api/projeto-cnme?page=1",
+  //     "prev": null,
+  //     "next": null
+  // },
+  // "meta": {
+  //     "current_page": 1,
+  //     "from": 1,
+  //     "last_page": 1,
+  //     "path": "https://cnme-dev.nees.com.br/api/projeto-cnme",
+  //     "per_page": 25,
+  //     "to": 1,
+  //     "total": 1
+  // }
+  pagination = {
+    firstPageLink: null,
+    lastPageLink: null,
+    previousPageLink: null,
+    nextPageLink: null,
+    currentPageIndex: null,
+    itens_per_page: null,
+    total: null
+  }
   
   INITIAL_PAGE_INDEX: number = 1  
   INITIAL_PAGE_SIZE: number = 10
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
+  legendsToShow = {
+    PLANEJAMENTO: false ,
+    ENVIADO: true ,
+    ENTREGUE: true,
+    INSTALADO: true,
+    ATIVADO: false,
+    CANCELADO: false,
+  }
 
-constructor(
-  private projetoDataService: ProjetoDataService,
-  private snackBarService: SnackBarService,
-  private location: Location,
-  private route: ActivatedRoute,
-  private router: Router,
-  private authService: AuthService
+  constructor(
+    private projetoDataService: ProjetoDataService,
+    private snackBarService: SnackBarService,
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService
   ) { }
   
   ngOnInit() {
@@ -117,5 +125,13 @@ constructor(
 
   newPaginationEvent(pageEvent: PageEvent) {
     this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
+  }
+
+  get enableLegenda() {
+    return true
+  }
+
+  showLegenda(status: string) {
+    return this.legendsToShow[status]
   }
 }
