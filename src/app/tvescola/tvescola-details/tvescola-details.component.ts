@@ -162,6 +162,12 @@ export class TvEscolaDetailsComponent implements OnInit {
         this.router.navigate(['/tvescola/editar'], { relativeTo: this.route });
     }
 
+    onEditUsuario(id: number) {
+        this.router.navigate(['/usuarios/editar', id], { relativeTo: this.route });
+    }
+
+
+
     toogleUsuarios() {
         this.usuariosAtivos = !this.usuariosAtivos
         this.fetchUsuarios(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)

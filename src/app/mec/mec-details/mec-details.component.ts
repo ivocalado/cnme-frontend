@@ -123,6 +123,10 @@ export class MecDetailsComponent implements OnInit {
         this.router.navigate(['/mec/editar'], { relativeTo: this.route });
     }
 
+    onEditUsuario(id: number) {
+        this.router.navigate(['/usuarios/editar', id], { relativeTo: this.route });
+    }
+    
     get hasPermission() {
         let usuario = <Usuario>this.authService.getCurrentUser()
         let classe = usuario.unidade.classe 

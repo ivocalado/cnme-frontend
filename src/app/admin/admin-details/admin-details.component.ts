@@ -158,7 +158,11 @@ export class AdminDetailsComponent implements OnInit {
         this.router.navigate(['/admin/convidar'], { relativeTo: this.route });
     }
 
-    onEdit(id: number) {
+    onEdit() {
+        this.router.navigate(['/admin/editar'], { relativeTo: this.route });
+    }
+
+    onEditUsuario(id: number) {
         this.router.navigate(['/usuarios/editar', id], { relativeTo: this.route });
     }
 

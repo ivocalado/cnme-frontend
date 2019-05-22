@@ -77,7 +77,7 @@
                         <button mat-icon-button color="accent" (click)="onDetails(row.id)">
                             <mat-icon aria-label="Details">description</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent" (click)="onEdit(row.id)" *ngIf="hasPermission">
+                        <button mat-icon-button color="accent" (click)="onEditUsuario(row.id)" *ngIf="hasPermission">
                             <mat-icon aria-label="Edit">edit</mat-icon>
                         </button>
                         <button mat-icon-button color="accent" (click)="onDelete(row.id)" *ngIf="hasPermission && (currentUser.id != row.id) && !isOwner(row.id)">
