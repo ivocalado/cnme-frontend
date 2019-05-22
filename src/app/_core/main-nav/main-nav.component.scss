@@ -11,14 +11,46 @@
     height: 100%;
 }
 
-.sidenav {
+mat-sidenav {
     width: 230px;
+    max-width:230px;
     box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
     background: map_get($mat-blue-grey, 800);
     border: none;
+    .sidebar-itens{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        .sidebar-footer{
+            small{
+                display: block;
+                color:rgba(255,255,255,0.5);
+                font-style: italic;
+            }
+            padding:0 0 20px 40px;
+        }
+    }
     .mat-toolbar {
         background: map_get($mat-blue-grey, 800);
     }
+}
+
+.flex-start {
+	align-self: flex-start;
+}
+
+.flex-end {
+	display: inline-block;
+  align-self: flex-end;
+}
+
+.center {
+	align-self: center;
+}
+
+.baseline {
+	align-self: baseline;
 }
 
 .topnav-icon {

@@ -1,29 +1,34 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-        <img class="img-logo" src="assets/images/logo-cnme.png" srcset="assets/images/logo-cnme@2x.png 2x" alt="CNME">
-        <mat-nav-list class="mat-custom-menu-item" *ngIf="isUsuarioAutenticado">
-            <button mat-menu-item routerLink="dashboard" *ngIf="exibeDashboard">DashBoard</button>
-            <button mat-menu-item routerLink="projetos" *ngIf="exibeProjetos">Projetos</button>
-            <button mat-menu-item routerLink="polos" *ngIf="exibePolos">Polos</button>
-            <button mat-menu-item routerLink="tvescola" *ngIf="exibeTvEscola">TV Escola</button>
-            <button mat-menu-item routerLink="mec" *ngIf="exibeMec">MEC</button>
-            <button mat-menu-item routerLink="empresas" *ngIf="exibeEmpresas">Empresas</button>
-            <button mat-menu-item routerLink="equipamentos" *ngIf="exibeEquipamentos">Equipamentos</button>
-            <button mat-menu-item routerLink="kits" *ngIf="exibeKits">Kits</button>
-            <button mat-menu-item routerLink="tipoEquipamentos" *ngIf="exibeTipoEquipamentos">Tipos de Equipamentos</button>
-            <!-- <a mat-list-item routerLink="usuarios" >Usuários</a> -->
-            <!--
-            menu com submenu
-            <a mat-list-item routerLink="polos" (click)="showSubmenu = !showSubmenu">Parent Menu</a>
-            <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
-                <a mat-list-item href="javascript:;">Novo Polo</a>
+        <div class="sidebar-itens">
+            <div class="sidemar-menu">
+                <img class="img-logo" src="assets/images/logo-cnme.png" srcset="assets/images/logo-cnme@2x.png 2x" alt="CNME">
+                <mat-nav-list class="mat-custom-menu-item" *ngIf="isUsuarioAutenticado">
+                    <button mat-menu-item routerLink="dashboard" *ngIf="exibeDashboard">DashBoard</button>
+                    <button mat-menu-item routerLink="projetos" *ngIf="exibeProjetos">Projetos</button>
+                    <button mat-menu-item routerLink="polos" *ngIf="exibePolos">Polos</button>
+                    <button mat-menu-item routerLink="tvescola" *ngIf="exibeTvEscola">TV Escola</button>
+                    <button mat-menu-item routerLink="mec" *ngIf="exibeMec">MEC</button>
+                    <button mat-menu-item routerLink="empresas" *ngIf="exibeEmpresas">Empresas</button>
+                    <button mat-menu-item routerLink="equipamentos" *ngIf="exibeEquipamentos">Equipamentos</button>
+                    <button mat-menu-item routerLink="kits" *ngIf="exibeKits">Kits</button>
+                    <button mat-menu-item routerLink="tipoEquipamentos" *ngIf="exibeTipoEquipamentos">Tipos de Equipamentos</button>
+                    <!-- <a mat-list-item routerLink="usuarios" >Usuários</a> -->
+                    <!--
+                    menu com submenu
+                    <a mat-list-item routerLink="polos" (click)="showSubmenu = !showSubmenu">Parent Menu</a>
+                    <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
+                        <a mat-list-item href="javascript:;">Novo Polo</a>
+                    </div>
+                    -->
+                </mat-nav-list>
             </div>
-            -->
-        </mat-nav-list>
-
-
-
+            <div class="sidebar-footer">
+                <small>Desenvolvido por:</small>
+                <img src="assets/images/logo-nees-branca.png" srcset="assets/images/logo-nees-branca@2x.png 2x" alt="NESS">
+            </div>
+        </div>
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar color="primary">
