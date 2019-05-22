@@ -57,13 +57,15 @@ export class ProjetosAndamentoComponent implements OnInit {
   INITIAL_PAGE_SIZE: number = 10
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
-  legendsToShow = {
-    PLANEJAMENTO: false ,
-    ENVIADO: true ,
-    ENTREGUE: true,
-    INSTALADO: true,
-    ATIVADO: false,
-    CANCELADO: false,
+  //enable indica se a legenda é exibida
+  //active indica se a classe active deve ser aplicada
+  statusFlag = {
+    PLANEJAMENTO: {enabled: false, active: true},
+    ENVIADO: {enabled: true, active: true},
+    ENTREGUE: {enabled: true, active: true},
+    INSTALADO: {enabled: true, active: true},
+    ATIVADO: {enabled: false, active: true},
+    CANCELADO: {enabled: false, active: true},
   }
 
   constructor(
@@ -132,6 +134,10 @@ export class ProjetosAndamentoComponent implements OnInit {
   }
 
   showLegenda(status: string) {
-    return this.legendsToShow[status]
+    return this.statusFlag[status].enabled
+  }
+
+  isStatusActive(status: string) {
+    return this.statusFlag[status].active? "active": "";
   }
 }

@@ -4,22 +4,22 @@
             <mat-card-title>{{titulo}}</mat-card-title>
             <hr class="m-2">
             <mat-chip-list *ngIf="enableLegenda">
-                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('PLANEJAMENTO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('PLANEJAMENTO')" [ngClass]="isStatusActive('PLANEJAMENTO')">
                     <mat-icon>input</mat-icon>Planejamento
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('ENVIADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ENVIADO')" [ngClass]="isStatusActive('ENVIADO')">
                     <mat-icon>flight_takeoff</mat-icon>Enviado
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('ENTREGUE')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ENTREGUE')" [ngClass]="isStatusActive('ENTREGUE')">
                     <mat-icon>flight_land</mat-icon>Entregue
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('INSTALADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('INSTALADO')" [ngClass]="isStatusActive('INSTALADO')">
                     <mat-icon>tv</mat-icon>Instalado
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('ATIVADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ATIVADO')" [ngClass]="isStatusActive('ATIVADO')">
                     <mat-icon>cast</mat-icon>Ativado
                 </mat-chip>
-                <mat-chip color="default" class="chip-legenda" *ngIf="showLegenda('CANCELADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('CANCELADO')" [ngClass]="isStatusActive('CANCELADO')">
                     <mat-icon>tv_off</mat-icon>Cancelado
                 </mat-chip>
             </mat-chip-list>

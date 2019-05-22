@@ -58,13 +58,15 @@ export class ProjetosPorEstadosComponent implements OnInit {
   
   uf: string
 
-  legendsToShow = {
-    PLANEJAMENTO: true ,
-    ENVIADO: true ,
-    ENTREGUE: true,
-    INSTALADO: true,
-    ATIVADO: true,
-    CANCELADO: true,
+  //enable indica se a legenda é exibida
+  //active indica se a classe active deve ser aplicada
+  statusFlag = {
+    PLANEJAMENTO: {enabled: true, active: true},
+    ENVIADO: {enabled: true, active: true},
+    ENTREGUE: {enabled: true, active: true},
+    INSTALADO: {enabled: true, active: true},
+    ATIVADO: {enabled: true, active: true},
+    CANCELADO: {enabled: true, active: true},
   }
 
   constructor(
@@ -145,6 +147,10 @@ export class ProjetosPorEstadosComponent implements OnInit {
   }
 
   showLegenda(status: string) {
-    return this.legendsToShow[status]
+    return this.statusFlag[status].enabled
+  }
+
+  isStatusActive(status: string) {
+    return this.statusFlag[status].active? "active": "";
   }
 }
