@@ -132,21 +132,25 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
 	{
-
+		console.log("canActivate")
 		let url: string = state.url
 		console.log("canActivate")
 		console.log("URL acessada: " + url)
 		let isHome = url == "/"
 		if(this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) {
 			if(isHome) {
+				console.log("true 1")
 				return true
 			} else if (this.permissions.canActivate(url)) {
+				console.log("true 2")
 				return true
 			} else {
 				this.router.navigate(['/']);
+				console.log("false 1")
 				return false
 			}
 		} else {
+			console.log("false 2")
 			return false
 		}
 	}
@@ -155,22 +159,25 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
 	{
-
-		let url: string = state.url
 		console.log("canActivateChild")
+		let url: string = state.url
 		console.log("URL acessada: " + url)
 
 		let isHome = url == "/"
 		if(this.permissions.isAnExcludedPage(url) || this.checkLogin(url, next.data.roles)) {
 			if(isHome) {
+				console.log("true 1")
 				return true
 			} else if (this.permissions.canActivateChild(url)) {
+				console.log("true 2")
 				return true
 			} else {
+				console.log("false 1")
 				this.router.navigate(['/']);
 				return false
 			}
 		} else {
+			console.log("false 2")
 			return false
 		}
 	}
