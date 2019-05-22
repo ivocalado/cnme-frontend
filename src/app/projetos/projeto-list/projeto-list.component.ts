@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_shared/services/auth.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { FormGroup, FormControl } from '@angular/forms';
+import { SnackBarService } from 'src/app/_shared/helpers/snackbar.service';
 
 @Component({
     selector: "app-projeto-list",
@@ -104,10 +105,12 @@ export class ProjetoListComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private projetoDataService: ProjetoDataService,
-        private authService: AuthService
+        private authService: AuthService,
+        private snackBarService: SnackBarService
     ) {}
 
     buscaAvancada: boolean = false
+    hasResultadosBuscaAvancada: boolean = false
     buscaAvancadaForm: FormGroup;
 
     ngOnInit() {
@@ -131,6 +134,7 @@ export class ProjetoListComponent implements OnInit {
         if(this.buscaAvancada) {
             this.projetoDataService.getProjetosComFiltros(this.buscaAvancadaForm.value, pageSize, pageIndex)
             .subscribe((res: any) => {
+                this.hasResultadosBuscaAvancada = true
                 this.dataSource = new MatTableDataSource(res.projetos);
                 this.dataSource.sort = this.sort;
                 this.buildPagination(res.links, res.meta)
@@ -148,8 +152,7 @@ export class ProjetoListComponent implements OnInit {
                 this.dataSource = new MatTableDataSource(res.projetos);
                 this.dataSource.sort = this.sort;
                 this.buildPagination(res.links, res.meta)
-            });
-    
+            });    
         }
     }
 
@@ -200,10 +203,14 @@ export class ProjetoListComponent implements OnInit {
 
     toogleBuscaAvancada() {
         this.buscaAvancada = !this.buscaAvancada
+        this.hasResultadosBuscaAvancada = !this.buscaAvancada
+        if(!this.buscaAvancada)
+            this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX);
     }
     
     onBuscaAvancada() {
         this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
+        this.snackBarService.openSnackBar("Buscando dados...")
     }
 
     initForm() {

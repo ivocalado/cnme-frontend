@@ -228,7 +228,6 @@ export class ProjetoDataService{
      * @param pageIndex 
      */
     getProjetosComFiltros(filtros: any, pageSize: number, pageIndex: number){
-        // verifica se o usuario logado é polo e retorna somente seus projetos
         let q = "";
         let usuarioAutenticado = this.authService.getCurrentUser();
 

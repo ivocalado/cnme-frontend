@@ -144,11 +144,9 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 				return true
 			} else {
 				this.router.navigate(['/']);
-				console.log("FALSOOOOOOO 1")
 				return false
 			}
 		} else {
-			console.log("FALSOOOOOOO 2")
 			return false
 		}
 	}
@@ -179,6 +177,7 @@ export class AuthGuard implements CanActivate, CanActivateChild  {
 
 	checkLogin(url: string, allowedRoles: string[]): boolean {
 		console.log("checking Login");
+		console.log(url)
 
 		//return true;
 		if (this.authService.isAuthenticated) {

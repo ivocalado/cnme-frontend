@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { UsuarioDataService } from './usuario-data.service';
 import { Usuario } from '../models/usuario.model';
+import { Router } from '@angular/router';
 
 export const jwtTokenName: string = 'jwtToken';
 export const currentUser: string = 'currentUser';
@@ -16,7 +17,10 @@ export class AuthService {
 	redirectUrl: string; // store the URL so we can redirect after logging in
 	//token: string;
 
-	constructor(private httpClient: HttpClient, private usuarioDataService: UsuarioDataService) {}
+	constructor(
+		private httpClient: HttpClient, 
+		private usuarioDataService: UsuarioDataService,
+		private router: Router) {}
 
 	login(email: string, password: string) {
 		const body = { email: email, password: password };
