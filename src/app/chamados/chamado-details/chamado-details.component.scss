@@ -7,6 +7,9 @@ mat-expansion-panel{
 }
 .mat-form-field {
     width: 100%;
+    &.inline-btn{
+        width:auto;
+    }
 }
 table {
   width: 100%;
