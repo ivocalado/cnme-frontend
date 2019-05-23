@@ -16,10 +16,10 @@
                     <mat-card-title>
                         <p>
                             {{projeto.numero}}<br />
-                            <span>Nome do Polo do projeto</span>
+                            <span>{{projeto.unidade.nome}}</span>
                             <span *ngIf="projeto.unidade.codigo_inep">Cod. INEP:{{projeto.unidade.codigo_inep}}</span>
                             <sub><i>{{projeto.status}}</i></sub>
-                            <sub>Projeto Teste da Unidade Polo Pernambuco(2)</sub>
+                            <sub>{{projeto.descricao}}</sub>
                         </p>
                         <span>&nbsp;</span>
 
