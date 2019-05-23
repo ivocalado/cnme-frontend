@@ -135,6 +135,10 @@ titulo: string = "Projetos em Atraso"
   }
 
   isStatusActive(status: string) {
-    return this.statusFlag[status].active? "active": "";
+    return false
+  }
+
+  toogleStatus(status: string) {
+    console.log("Intencionamento não implementado")
   }
 }

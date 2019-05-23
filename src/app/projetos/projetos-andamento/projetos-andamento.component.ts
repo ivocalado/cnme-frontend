@@ -93,13 +93,18 @@ export class ProjetosAndamentoComponent implements OnInit {
   }
 
   fetchProjetos(pageSize: number, pageIndex: number) {
+    let statusToFind = []
+    Object.keys(this.statusFlag).forEach(key => {
+        if(this.statusFlag[key].enabled && this.statusFlag[key].active)
+            statusToFind.push(key)
+    })
     this.projetoDataService
-    .getProjetosEmAndamento(pageSize, pageIndex)
-        .subscribe((res: any) => {
-            this.dataSource = new MatTableDataSource(res.projetos);
-            this.dataSource.sort = this.sort;
-            this.buildPagination(res.links, res.meta)
-        });
+    .getProjetosPorVariosStatus(statusToFind, pageSize, pageIndex)
+    .subscribe((res: any) => {
+        this.dataSource = new MatTableDataSource(res.projetos);
+        this.dataSource.sort = this.sort;
+        this.buildPagination(res.links, res.meta)
+    });    
   }
 
   buildPagination(links: any, meta: any) {
@@ -139,5 +144,10 @@ export class ProjetosAndamentoComponent implements OnInit {
 
   isStatusActive(status: string) {
     return this.statusFlag[status].active? "active": "";
+  }
+
+  toogleStatus(status: string) {
+    this.statusFlag[status].active = !this.statusFlag[status].active
+    this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
   }
 }

@@ -4,22 +4,22 @@
             <mat-card-title>{{titulo}}</mat-card-title>
             <hr class="m-2">
             <mat-chip-list *ngIf="enableLegenda">
-                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('PLANEJAMENTO')" [ngClass]="isStatusActive('PLANEJAMENTO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('PLANEJAMENTO')" [ngClass]="isStatusActive('PLANEJAMENTO')" (click)="toogleStatus('PLANEJAMENTO')">
                     <mat-icon>input</mat-icon>Planejamento
                 </mat-chip>
-                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ENVIADO')" [ngClass]="isStatusActive('ENVIADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ENVIADO')" [ngClass]="isStatusActive('ENVIADO')" (click)="toogleStatus('ENVIADO')">
                     <mat-icon>flight_takeoff</mat-icon>Enviado
                 </mat-chip>
-                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ENTREGUE')" [ngClass]="isStatusActive('ENTREGUE')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ENTREGUE')" [ngClass]="isStatusActive('ENTREGUE')" (click)="toogleStatus('ENTREGUE')">
                     <mat-icon>flight_land</mat-icon>Entregue
                 </mat-chip>
-                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('INSTALADO')" [ngClass]="isStatusActive('INSTALADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('INSTALADO')" [ngClass]="isStatusActive('INSTALADO')" (click)="toogleStatus('INSTALADO')">
                     <mat-icon>tv</mat-icon>Instalado
                 </mat-chip>
-                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ATIVADO')" [ngClass]="isStatusActive('ATIVADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('ATIVADO')" [ngClass]="isStatusActive('ATIVADO')" (click)="toogleStatus('ATIVADO')">
                     <mat-icon>cast</mat-icon>Ativado
                 </mat-chip>
-                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('CANCELADO')" [ngClass]="isStatusActive('CANCELADO')">
+                <mat-chip color="default" disableRipple class="chip-legenda" *ngIf="showLegenda('CANCELADO')" [ngClass]="isStatusActive('CANCELADO')" (click)="toogleStatus('CANCELADO')">
                     <mat-icon>tv_off</mat-icon>Cancelado
                 </mat-chip>
             </mat-chip-list>

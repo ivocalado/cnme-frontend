@@ -318,6 +318,20 @@ export class ProjetoDataService{
         return this._genericGetProjetos("/api/projeto-cnme/p/atrasados?etapa="+etapa, pageSize, pageIndex)
     }
 
+    getProjetosAtrasadosPorVariasEtapas(etapas: string[], pageSize: number, pageIndex: number) {
+        // /api/projeto-cnme/p/pesquisar?status[]=PLANEJAMENTO;ENVIADO
+        let etp = etapas.join(";")
+        // verifica se o usuario logado é polo e retorna somente seus projetos
+        let q = "";
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe
+        let url = ""
+        if(classe=="polo"){
+            q = "q="+ usuarioAutenticado.unidade.nome
+        }
+        return this._genericGetProjetos("/api/projeto-cnme/p/atrasados?" + q +"&etapa[]="+etp, pageSize, pageIndex) 
+    }
+
     getProjetosAtrasadosEmEnvio(pageSize: number, pageIndex: number) {
         return this.getProjetosAtrasadosPorEtapa("ENVIO", pageSize, pageIndex)
     }
@@ -333,5 +347,28 @@ export class ProjetoDataService{
 
     getProjetosPorEstado(uf: string, pageSize: number, pageIndex: number) {
         return this._genericGetProjetos("/api/projeto-cnme/p/pesquisar?uf=" + uf, pageSize, pageIndex)
+    }
+
+            /**
+     * 
+     * @param status 
+     * @param pageIndex 
+     */
+    getProjetosPorUfEVariosStatus(uf: string, status: string[], pageSize: number, pageIndex: number) {
+        // /api/projeto-cnme/p/pesquisar?status[]=PLANEJAMENTO;ENVIADO
+        let statuses = status.join(";")
+        // verifica se o usuario logado é polo e retorna somente seus projetos
+        let q = "";
+        let usuarioAutenticado = this.authService.getCurrentUser();
+        let classe = usuarioAutenticado.unidade.classe
+        
+        if(classe=="polo"){
+            q = "q="+ usuarioAutenticado.unidade.nome
+        } 
+
+        let url: string = "/api/projeto-cnme/p/pesquisar?uf="+uf+"&q=" + q +"&status[]="+statuses
+        console.log("Query gerada:")
+        console.log(url)
+        return this._genericGetProjetos(url, pageSize, pageIndex) 
     }
 }

@@ -105,13 +105,18 @@ export class ProjetosPorEstadosComponent implements OnInit {
   }
 
   fetchProjetos(pageSize: number, pageIndex: number) {
+    let statusToFind = []
+    Object.keys(this.statusFlag).forEach(key => {
+        if(this.statusFlag[key].enabled && this.statusFlag[key].active)
+            statusToFind.push(key)
+    })
     this.projetoDataService
-    .getProjetosPorEstado(this.uf, pageSize, pageIndex)
-        .subscribe((res: any) => {
-            this.dataSource = new MatTableDataSource(res.projetos);
-            this.dataSource.sort = this.sort;
-            this.buildPagination(res.links, res.meta)
-        });
+    .getProjetosPorUfEVariosStatus(this.uf, statusToFind, pageSize, pageIndex)
+    .subscribe((res: any) => {
+        this.dataSource = new MatTableDataSource(res.projetos);
+        this.dataSource.sort = this.sort;
+        this.buildPagination(res.links, res.meta)
+    });   
   }
 
   buildPagination(links: any, meta: any) {
@@ -142,15 +147,27 @@ export class ProjetosPorEstadosComponent implements OnInit {
     this.fetchProjetos(pageEvent.pageSize, pageEvent.pageIndex + 1)
   }
 
+  /**
+   * Indica se deve ser exibida a paleta de legendas
+   */
   get enableLegenda() {
     return true
   }
 
+  /**
+   * Indica se o ícone específico deve ser exibido
+   * @param status 
+   */
   showLegenda(status: string) {
     return this.statusFlag[status].enabled
   }
 
   isStatusActive(status: string) {
     return this.statusFlag[status].active? "active": "";
+  }
+
+  toogleStatus(status: string) {
+    this.statusFlag[status].active = !this.statusFlag[status].active
+    this.fetchProjetos(this.INITIAL_PAGE_SIZE, this.INITIAL_PAGE_INDEX)
   }
 }
