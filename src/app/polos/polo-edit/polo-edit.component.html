@@ -63,11 +63,17 @@
                 </div>
                 <div formGroupName="localidade">
                     <div class="row">
-                        <div class="col-lg-4 mt-1">
+                        <div class="col-lg-2 mt-1">
                             <mat-form-field>
                                 <input matInput formControlName="cep" id="cep" placeholder="Cep" [required]="true" mask="00000-000" />
                             </mat-form-field>
                         </div>
+                        <div class="col-lg-2 mt-1">
+                            <button type="button" mat-raised-button class="m-1" color="primary" (click)="consultarCep()" [disabled]="!isCepInformed">
+                                Consultar CEP
+                            </button>
+                        </div>
+
                         <div class="col-lg-8 mt-1">
                             <mat-form-field>
                                 <input matInput formControlName="logradouro" id="logradouro" placeholder="Logradouro"

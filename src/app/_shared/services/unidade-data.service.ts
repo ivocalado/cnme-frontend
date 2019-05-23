@@ -304,10 +304,14 @@ export class UnidadeDataService {
         );
     }
 
-
-
     getAllEmpresas() {
         return this.getEmpresas(10000, 1)
+    }
+
+    consultarCep(cep: string) {
+        let url: string = "/v1/cep/"+cep
+        return this.httpClient.get<any>(url)
+            
     }
 }
 
