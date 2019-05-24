@@ -11,8 +11,8 @@ import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-tvescola-invitation',
-  templateUrl: './tvescola-invitation.component.html',
-  styleUrls: ['./tvescola-invitation.component.scss']
+  templateUrl: '../../unidades/_shared/unidade-invitation.component.html',
+  styleUrls: ['../../unidades/_shared/unidade-invitation.component.scss']
 })
 export class TvEscolaInvitationComponent implements OnInit {
 

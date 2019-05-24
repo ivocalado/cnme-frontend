@@ -11,8 +11,8 @@ import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-mec-invitation',
-  templateUrl: './mec-invitation.component.html',
-  styleUrls: ['./mec-invitation.component.scss']
+  templateUrl: '../../unidades/_shared/unidade-invitation.component.html',
+  styleUrls: ['../../unidades/_shared/unidade-invitation.component.scss']
 })
 export class MecInvitationComponent implements OnInit {
 
