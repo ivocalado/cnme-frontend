@@ -130,4 +130,54 @@ export class EmpresaEditComponent implements OnInit {
         });
     }
 
+    consultarCep() {
+        let cep: string = this.empresaForm.controls['localidade'].value.cep
+        console.log(cep)
+        console.log("COnsultar cep")
+        this.unidadeDataService.consultarCep(cep).subscribe((res: any) => {
+            let est_id: number = this.findEstadoIdBySigla(res.estado)
+            this.estadoDataService
+            .getMunicipios(res.estado)
+            .subscribe((municipios: Municipio[]) => {
+                this.municipios = municipios;
+                    this.empresaForm.patchValue({
+                    localidade: {
+                        municipio_id: this.findMunicipioIdByNome(res.cidade)
+                    }
+                });
+            });
+            this.empresaForm.controls['localidade'].patchValue({
+                bairro: res.bairro,
+                cep: res.cep,
+                estado_id: est_id,
+                logradouro: res.logradouro
+            })
+            this.snackBarService.openSnackBar("Endereço carregado com sucesso!")
+        }, error => {
+            this.snackBarService.openSnackBar("CEP não encontrado!")
+        })
+    }
+
+    get isCepInformed() {
+        return this.empresaForm.controls['localidade'].value.cep
+    }
+
+    findEstadoIdBySigla(sigla: string) {
+        console.log("findEstadoIdBySigla")
+        for(let estado of this.estados) {
+            if(estado.sigla == sigla)
+                return estado.id
+        }
+        return -1
+    }
+
+    findMunicipioIdByNome(nome: string) {
+        console.log("findMunicipioIdByNome")
+        for(let municipio of this.municipios) {
+            if(municipio.nome == nome)
+                return municipio.id
+        }
+        return -1
+    }
+
 }
