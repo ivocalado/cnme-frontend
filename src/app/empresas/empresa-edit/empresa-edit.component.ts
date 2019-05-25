@@ -86,6 +86,7 @@ export class EmpresaEditComponent implements OnInit {
                 )
         }
         else {
+            console.log(this.empresaForm.value)
             this.unidadeDataService.storeUnidade(this.empresaForm.value, 4, "empresa")
                 .subscribe(
                     (unidade: Unidade) => {
@@ -110,7 +111,7 @@ export class EmpresaEditComponent implements OnInit {
     private initForm(unidade: Unidade) {
         this.empresaForm = new FormGroup({
             nome: new FormControl(unidade.nome, Validators.required),
-            'codigo_inep': new FormControl(unidade.codigo_inep, Validators.minLength(8)),
+            cnpj: new FormControl(unidade.cnpj, Validators.required),
             diretor: new FormControl(unidade.diretor),
             email: new FormControl(unidade.email, [Validators.required, Validators.email,]),
             url: new FormControl(

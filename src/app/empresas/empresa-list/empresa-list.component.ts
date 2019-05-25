@@ -11,7 +11,7 @@ import { MatSort, MatTableDataSource, PageEvent } from "@angular/material";
 })
 export class EmpresaListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
-    displayedColumns: string[] = ["nome", "tipo", "estado", "actions"];
+    displayedColumns: string[] = ["nome", "cnpj", "estado", "actions"];
     dataSource;
 
     // "links": {

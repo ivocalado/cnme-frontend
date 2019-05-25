@@ -21,9 +21,9 @@
                     <mat-header-cell *matHeaderCellDef> Empresa </mat-header-cell>
                     <mat-cell *matCellDef="let row" class="title-on-mobile">{{row.nome}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="tipo">
-                    <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
-                    <mat-cell *matCellDef="let row" class="hide-on-mobile">{{row.tipo_unidade.nome}}</mat-cell>
+                <ng-container matColumnDef="cnpj">
+                    <mat-header-cell *matHeaderCellDef> CNPJ </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="hide-on-mobile">{{row.cnpj}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="estado">
                     <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
