@@ -133,3 +133,14 @@ mat-sidenav {
         height:auto;
     }
 }
+
+
+mat-sidenav-content{
+    .wrap-content{
+        min-height: calc(100vh - 70px);
+    }
+}
+.footer{
+    text-align: right;
+    height: 50px;
+}

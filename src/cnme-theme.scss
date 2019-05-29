@@ -19,4 +19,3 @@ $cnme-app-theme: map-merge($cnme-app-theme, (custom-colors: $mat-cnme));
 @include angular-material-theme($cnme-app-theme);
 
 
-
